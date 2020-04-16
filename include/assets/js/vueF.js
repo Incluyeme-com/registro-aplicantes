@@ -98,7 +98,7 @@ Vue.component('step12', {
 var app = new Vue({
     el: '#incluyeme-login-wpjb',
     data: {
-        currentStep: 1,
+        currentStep: 6,
         step1: {
             name: '',
             email: ''
@@ -112,7 +112,13 @@ var app = new Vue({
         email: null,
         password: null,
         lastName: null,
-        dateBirthDay: null
+        dateBirthDay: null,
+        disCap: null,
+        disClass: 'w-100',
+        mPhone: null,
+        phone: null,
+        fPhone: null,
+        fiPhone: null
     },
     ready: function() {
         console.log('ready');
