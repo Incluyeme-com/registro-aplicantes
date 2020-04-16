@@ -145,17 +145,19 @@ $baseurl = $baseurl['baseurl'];
 						       style="color: black"><?php _e("Masculino", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" id="inlineCheckbox1"
+						<input class="form-check-input" type="radio" id="inlineCheckbox2"
+						       name="inlineCheckbox1"
 						       value="Female" v-model="genre">
 						<label class="form-check-label"
-						       for="inlineCheckbox1"
+						       for="inlineCheckbox2"
 						       style="color: black"><?php _e("Femenino", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" id="inlineCheckbox1"
+						<input class="form-check-input" type="radio" id="inlineCheckbox3"
+						       name="inlineCheckbox1"
 						       value="Bin" v-model="genre">
 						<label class="form-check-label"
-						       for="inlineCheckbox1"
+						       for="inlineCheckbox3"
 						       style="color: black"><?php _e("No Binario", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 				</x-incluyeme>
@@ -288,43 +290,43 @@ $baseurl = $baseurl['baseurl'];
 				<div class="container">
 					<x-incluyeme v-if="disCap" class="row">
 						<x-incluyeme class="col">
-							<input class="form-check-input" type="checkbox" value="" id="Motriz">
+							<input class="form-check-input" type="checkbox" v-model="motriz" id="Motriz">
 							<label class="form-check-label" for="Motriz">
 								Motriz
 							</label>
 						</x-incluyeme>
 						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" value="" id="Visceral">
+							<input class="form-check-input" type="checkbox" v-model="visceral" id="Visceral">
 							<label class="form-check-label" for="Visceral">
 								Visceral
 							</label>
 						</x-incluyeme>
 						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" value="" id="Auditiva">
+							<input class="form-check-input" type="checkbox" v-model="auditiva" id="Auditiva">
 							<label class="form-check-label" for="Auditiva">
 								Auditiva
 							</label>
 						</x-incluyeme>
 						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" value="" id="Psíquica">
+							<input class="form-check-input" type="checkbox" v-model="psiquica" id="Psíquica">
 							<label class="form-check-label" for="Psíquica">
 								Psíquica
 							</label>
 						</x-incluyeme>
 						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" value="" id="Visual">
+							<input class="form-check-input" type="checkbox" v-model="visual" id="Visual">
 							<label class="form-check-label" for="Visual">
 								Visual
 							</label>
 						</x-incluyeme>
 						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" value="" id="Habla">
+							<input class="form-check-input" type="checkbox" v-model="habla" id="Habla">
 							<label class="form-check-label" for="Habla">
 								Habla
 							</label>
 						</x-incluyeme>
 						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" value="" id="Intelectual">
+							<input class="form-check-input" type="checkbox" v-model="intelectual" id="Intelectual">
 							<label class="form-check-label" for="Intelectual">
 								Intelectual
 							</label>
@@ -350,7 +352,7 @@ $baseurl = $baseurl['baseurl'];
 		</template>
 		<template id="step6" v-if="currentStep == 6">
 			<x-incluyeme id="accordion">
-				<x-incluyeme class="card">
+				<x-incluyeme v-if="motriz" class="card">
 					<x-incluyeme class="card-header p-0 m-0" id="headingOne">
 						<h5 class="mb-0">
 							<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
@@ -532,7 +534,7 @@ $baseurl = $baseurl['baseurl'];
 						</x-incluyeme>
 					</x-incluyeme>
 				</x-incluyeme>
-				<x-incluyeme class="card">
+				<x-incluyeme v-if="visceral" class="card">
 					<x-incluyeme class="card-header m-0 p-0" id="headingTwo">
 						<h5 class="mb-0">
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
@@ -543,18 +545,119 @@ $baseurl = $baseurl['baseurl'];
 					</x-incluyeme>
 					<x-incluyeme id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					             data-parent="#accordion">
-						<x-incluyeme class="card-body">
-							Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-							squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-							nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-							single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-							beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-							probably haven't heard of them accusamus labore sustainable VHS.
-						</x-incluyeme>
+						<div class="card-body">
+							<div class="container">
+								<x-incluyeme class="row">
+									<x-incluyeme class="col-12">
+										<span> ¿Tienes alguna dificultad en trabajar en ambientes húmedos?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vHumedos"
+											       value="true" v-model="vHumedos" name="vHumedos">
+											<label class="form-check-label"
+											       for="vHumedos"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vHumedosS"
+											       value="false" v-model="vHumedos" name="vHumedos">
+											<label class="form-check-label"
+											       for="vHumedosS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+								<span>¿Presentas alguna dificultad al trabajar en ambientes con alta o baja
+temperatura? </span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vTemp"
+											       value="true" v-model="vTemp" name="vTemp">
+											<label class="form-check-label"
+											       for="vTemp"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vTempN"
+											       value="false" v-model="vTemp" name="vTemp">
+											<label class="form-check-label"
+											       for="vTempN"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Tienes dificultades para trabajar en ambientes con polvo?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vPolvo"
+											       value="true" v-model="vPolvo" name="vPolvo">
+											<label class="form-check-label"
+											       for="vPolvo"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vPolvov"
+											       value="false" v-model="vPolvo" name="vPolvo">
+											<label class="form-check-label"
+											       for="vPolvov"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Tienes la posibilidad de trabajar durante una jornada completa sin
+dificultad?
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vCompleta"
+											       value="true" v-model="vCompleta" name="vCompleta">
+											<label class="form-check-label"
+											       for="vCompleta"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vCompletaS"
+											       value="false" v-model="vCompleta" name="vCompleta">
+											<label class="form-check-label"
+											       for="vCompletaS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Requieres alguna adaptación para realizar tu trabajo?
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vAdap"
+											       value="Jornada Parcial" v-model="vAdap" name="vAdap">
+											<label class="form-check-label"
+											       for="vAdap"
+											       style="color: black"><?php _e("Jornada parcial", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vAdapS"
+											       value="Turnos Fijos" v-model="vAdap" name="vAdap">
+											<label class="form-check-label"
+											       for="vAdapS"
+											       style="color: black"><?php _e("Turnos fijos", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vAdapAS"
+											       value="Permisos para salidas medicas" v-model="vAdap" name="vAdap">
+											<label class="form-check-label"
+											       for="vAdapAS"
+											       style="color: black"><?php _e("Permiso para salidas médicas", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<label class="form-check-label mr-2"
+											       style="color: black; font-weight: 400"
+											       for='vSalidas'><?php _e("Otro", "incluyeme-login-extension"); ?></label>
+											<input class="form-check-input" type="text" id="vSalidas"
+											       v-model="vAdap" name="aImplante" placeholder="Escribe aqui">
+										</x-incluyeme>
+									</x-incluyeme>
+								</x-incluyeme>
+							</div>
+						</div>
 					</x-incluyeme>
 				</x-incluyeme>
-				<x-incluyeme class="card">
+				<x-incluyeme v-if="auditiva" class="card">
 					<x-incluyeme class="card-header m-0 p-0" id="headingThree">
 						<h5 class="mb-0">
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
@@ -566,110 +669,408 @@ $baseurl = $baseurl['baseurl'];
 					<x-incluyeme id="collapseThree" class="collapse" aria-labelledby="headingThree"
 					             data-parent="#accordion">
 						<x-incluyeme class="card-body">
-							Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-							squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-							nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-							single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-							beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-							probably haven't heard of them accusamus labore sustainable VHS.
+							<div class="container">
+								<x-incluyeme class="row">
+									<x-incluyeme class="col-12">
+										<span>¿Puedes discriminar sonidos del ambiente?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aAmbient"
+											       value="true" v-model="aAmbient" name="aAmbient">
+											<label class="form-check-label"
+											       for="aAmbient"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aAmbientS"
+											       value="false" v-model="aAmbient" name="aAmbient">
+											<label class="form-check-label"
+											       for="aAmbientS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Utilizas lenguaje oral?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aOral"
+											       value="true" v-model="aOral" name="aOral">
+											<label class="form-check-label"
+											       for="aOral"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aOralN"
+											       value="false" v-model="aOral" name="aOral">
+											<label class="form-check-label"
+											       for="aOralN"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Utilizas lengua de señas para comunicarse?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aSennas"
+											       value="true" v-model="aSennas" name="aSennas">
+											<label class="form-check-label"
+											       for="aSennas"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aSennasS"
+											       value="false" v-model="aSennas" name="aSennas">
+											<label class="form-check-label"
+											       for="aSennasS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Puedes utilizar lectura labial?
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aLabial"
+											       value="true" v-model="aLabial" name="aLabial">
+											<label class="form-check-label"
+											       for="aLabial"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aLabialS"
+											       value="false" v-model="aLabial" name="aLabial">
+											<label class="form-check-label"
+											       for="aLabialS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿En un ambiente con bajo ruido (por ejemplo: oficina) puedes
+establecer una comunicación oral fluida con otra persona?
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aBajo"
+											       value="true" v-model="aBajo" name="aBajo">
+											<label class="form-check-label"
+											       for="aBajo"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aBajoS"
+											       value="false" v-model="aBajo" name="aBajo">
+											<label class="form-check-label"
+											       for="aBajoS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Utilizas alguna ayuda técnica?
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aImplante"
+											       value="Implante" v-model="aImplante" name="aImplante">
+											<label class="form-check-label"
+											       for="aImplante"
+											       style="color: black"><?php _e("Implante", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="aImplantes"
+											       value="Audífonos" v-model="aImplante" name="aImplante">
+											<label class="form-check-label"
+											       for="aImplantes"
+											       style="color: black"><?php _e("Audífonos", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<label class="form-check-label mr-2"
+											       style="color: black; font-weight: 400"
+											       for="aImplantesText"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
+											<input class="form-check-input" type="text" id="aImplantesText"
+											       v-model="aImplante" name="aImplante" placeholder="">
+										</x-incluyeme>
+									</x-incluyeme>
+								</x-incluyeme>
+							</div>
 						</x-incluyeme>
 					</x-incluyeme>
 				</x-incluyeme>
-				<x-incluyeme class="card">
-					<x-incluyeme class="card-header p-0 m-0" id="headingOne">
+				<x-incluyeme v-if='visual'class="card">
+					<x-incluyeme class="card-header m-0 p-0" id="headingFive">
 						<h5 class="mb-0">
-							<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-							        aria-expanded="true" aria-controls="collapseOne">
-								Psíquica
-							</button>
-						</h5>
-					</x-incluyeme>
-					
-					<x-incluyeme id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-					             data-parent="#accordion">
-						<x-incluyeme class="card-body">
-							Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-							squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-							nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-							single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-							beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-							probably haven't heard of them accusamus labore sustainable VHS.
-						</x-incluyeme>
-					</x-incluyeme>
-				</x-incluyeme>
-				<x-incluyeme class="card">
-					<x-incluyeme class="card-header m-0 p-0" id="headingTwo">
-						<h5 class="mb-0">
-							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-							        aria-expanded="false" aria-controls="collapseTwo">
+							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+							        aria-expanded="false" aria-controls="collapseFive">
 								Visual
 							</button>
 						</h5>
 					</x-incluyeme>
-					<x-incluyeme id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+					<x-incluyeme id="collapseFive" class="collapse" aria-labelledby="headingFive"
 					             data-parent="#accordion">
 						<x-incluyeme class="card-body">
-							Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-							squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-							nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-							single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-							beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-							probably haven't heard of them accusamus labore sustainable VHS.
+							<div class="container">
+								<x-incluyeme class="row">
+									<x-incluyeme class="col-12">
+										<span> ¿Tienes dificultades para distinguir objetos que estén lejos?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vLejos"
+											       value="true" v-model="vLejos" name="vLejos">
+											<label class="form-check-label"
+											       for="vLejos"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vLejosS"
+											       value="false" v-model="vLejos" name="vLejos">
+											<label class="form-check-label"
+											       for="vLejosS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+								<span>¿Tienes dificultades en distinguir u observar objetos o textos a una
+distancia próxima?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vObservar"
+											       value="true" v-model="vObservar" name="vObservar">
+											<label class="form-check-label"
+											       for="vObservar"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vObservarS"
+											       value="false" v-model="vTemp" name="vObservar">
+											<label class="form-check-label"
+											       for="vObservarS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Discriminas colores?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vColores"
+											       value="true" v-model="vColores" name="vColores">
+											<label class="form-check-label"
+											       for="vColores"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vColoresS"
+											       value="false" v-model="vColores" name="vColores">
+											<label class="form-check-label"
+											       for="vColoresS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Puede identificar elementos visuales que se encuentren en
+distintos planos, por ejemplo: adelante o atrás (perspectiva)?
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vDPlanos"
+											       value="true" v-model="vDPlanos" name="vDPlanos">
+											<label class="form-check-label"
+											       for="vDPlanos"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vDPlanos"
+											       value="false" v-model="vDPlanos" name="vDPlanos">
+											<label class="form-check-label"
+											       for="vDPlanosS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Utilizas alguna ayuda técnica?
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vTecniA"
+											       value="Lectores de pantalla
+como Jaws o Lupa" v-model="vTecniA" name="vTecniA">
+											<label class="form-check-label"
+											       for="vTecniA"
+											       style="color: black"><?php _e("Lectores de pantalla
+como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vTecniAS"
+											       value="Aumentadores de letras" v-model="vTecniA" name="vTecniA">
+											<label class="form-check-label"
+											       for="vTecniAS"
+											       style="color: black"><?php _e("Aumentadores de letras", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="vTecniASS"
+											       value="Anteojos" v-model="vTecniA" name="vTecniAS">
+											<label class="form-check-label"
+											       for="vTecniASS"
+											       style="color: black"><?php _e("Anteojos", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<label class="form-check-label mr-2"
+											       style="color: black; font-weight: 400"
+											       for="aImplantes"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
+											<input class="form-check-input" type="text" id="aImplantes"
+											       v-model="vTecniA" name="aImplante" placeholder="Escribe aqui">
+										</x-incluyeme>
+									</x-incluyeme>
+								</x-incluyeme>
+							</div>
 						</x-incluyeme>
 					</x-incluyeme>
 				</x-incluyeme>
-				<x-incluyeme class="card">
-					<x-incluyeme class="card-header m-0 p-0" id="headingThree">
+				<x-incluyeme v-if="intelectual" class="card">
+					<x-incluyeme class="card-header m-0 p-0" id="headingFourt">
 						<h5 class="mb-0">
-							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
-							        aria-expanded="false" aria-controls="collapseThree">
-								Habla
-							</button>
-						</h5>
-					</x-incluyeme>
-					<x-incluyeme id="collapseThree" class="collapse" aria-labelledby="headingThree"
-					             data-parent="#accordion">
-						<x-incluyeme class="card-body">
-							Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-							squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-							nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-							single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-							beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-							probably haven't heard of them accusamus labore sustainable VHS.
-						</x-incluyeme>
-					</x-incluyeme>
-				</x-incluyeme>
-				<x-incluyeme class="card">
-					<x-incluyeme class="card-header m-0 p-0" id="headingThree">
-						<h5 class="mb-0">
-							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
-							        aria-expanded="false" aria-controls="collapseThree">
+							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collatseFourt"
+							        aria-expanded="false" aria-controls="collatseFourt">
 								Intelectual
 							</button>
 						</h5>
 					</x-incluyeme>
-					<x-incluyeme id="collapseThree" class="collapse" aria-labelledby="headingThree"
+					<x-incluyeme id="collatseFourt" class="collapse" aria-labelledby="headingFourt"
 					             data-parent="#accordion">
 						<x-incluyeme class="card-body">
-							Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-							squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-							nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-							single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-							beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-							probably haven't heard of them accusamus labore sustainable VHS.
+							<div class="container">
+								<x-incluyeme class="row">
+									<x-incluyeme class="col-12">
+										<span>¿Sabes leer y escribir?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteEscri"
+											       value="true" v-model="inteEscri" name="inteEscri">
+											<label class="form-check-label"
+											       for="inteEscri"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteEscriS"
+											       value="false" v-model="inteEscri" name="inteEscri">
+											<label class="form-check-label"
+											       for="inteEscriS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Te trasladas solo/a en transporte público? </span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTransla"
+											       value="true" v-model="inteTransla" name="inteTransla">
+											<label class="form-check-label"
+											       for="inteTransla"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTranslaS"
+											       value="false" v-model="inteTransla" name="inteTransla">
+											<label class="form-check-label"
+											       for="inteTranslaS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Necesitas ayuda para empezar y terminar una tarea?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTarea"
+											       value="true" v-model="inteTarea" name="inteTarea">
+											<label class="form-check-label"
+											       for="inteTarea"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTareaS"
+											       value="false" v-model="inteTarea" name="inteTarea">
+											<label class="form-check-label"
+											       for="inteTareaS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Te molesta que te corrijan cuando realizas una actividad?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteActividad"
+											       value="true" v-model="inteActividad" name="inteActividad">
+											<label class="form-check-label"
+											       for="inteActividad"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteActividadS"
+											       value="false" v-model="inteActividad" name="inteActividad">
+											<label class="form-check-label"
+											       for="inteActividadS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Te molesta si te cambian las actividades durante la jornada
+laboral?</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteMolesto"
+											       value="true" v-model="inteMolesto" name="inteMolesto">
+											<label class="form-check-label"
+											       for="inteMolesto"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteMolestoS"
+											       value="false" v-model="inteMolesto" name="inteMolesto">
+											<label class="form-check-label"
+											       for="inteMolestoS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>Te gustra trabajar:
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTrabajar"
+											       value="true" v-model="inteTrabajar" name="inteTrabajar">
+											<label class="form-check-label"
+											       for="inteTrabajar"
+											       style="color: black"><?php _e("Solo", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTrabajarS"
+											       value="false" v-model="inteTrabajar" name="inteTrabajar">
+											<label class="form-check-label"
+											       for="inteTrabajarS"
+											       style="color: black"><?php _e("Con otras personas", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>Prefieres trabajar en:
+										</span>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTrabajarSolo"
+											       value="Lugares cerrados (oficinas)" v-model="inteTrabajarSolo"
+											       name="inteTrabajarSolo">
+											<label class="form-check-label"
+											       for="inteTrabajarSolo"
+											       style="color: black"><?php _e("Lugares cerrados (oficinas)", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTrabajarSoloS"
+											       value="Ambientes
+exteriores (jardines, parques, centros deportivos, otros)" v-model="inteTrabajarSolo" name="inteTrabajarSolo">
+											<label class="form-check-label"
+											       for="inteTrabajarSoloS"
+											       style="color: black"><?php _e("Ambientes
+exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+								</x-incluyeme>
+							</div>
 						</x-incluyeme>
 					</x-incluyeme>
 				</x-incluyeme>
 			</x-incluyeme>
+			<div class="container mt-1">
+				<x-incluyeme class="w-100 ">
+					<label for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad</label>
+					<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis" rows="3"></textarea>
+				</x-incluyeme>
+			</div>
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(6)">
+					        @click.prevent="goToStep(5)">
 						Atras
 					</button>
 				</x-incluyeme>
