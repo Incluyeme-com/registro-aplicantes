@@ -26,6 +26,156 @@ $baseurl = wp_upload_dir();
 $baseurl = $baseurl['baseurl'];
 ?>
 <style>
+	#drop-zone {
+		border: 2px dashed rgba(0, 0, 0, .3);
+		border-radius: 20px;
+		text-align: center;
+		line-height: 180px;
+		font-size: 20px;
+		color: rgba(0, 0, 0, .3);
+	}
+	
+	#drop-zone input {
+		/*Important*/
+		position: absolute;
+		/*Important*/
+		cursor: pointer;
+		left: 0;
+		top: 0;
+		/*Important This is only comment out for demonstration purposes.
+		opacity:0; */
+	}
+	
+	/*Important*/
+	#drop-zone.mouse-over {
+		border: 2px dashed rgba(0, 0, 0, .5);
+		color: rgba(0, 0, 0, .5);
+	}
+	
+	
+	/*If you dont want the button*/
+	#clickHere {
+		position: absolute;
+		cursor: pointer;
+		left: 50%;
+		top: 50%;
+		margin-left: -50px;
+		margin-top: 20px;
+		line-height: 26px;
+		color: white;
+		font-size: 12px;
+		width: 100px;
+		height: 26px;
+		border-radius: 4px;
+		background-color: #3b85c3;
+		
+	}
+	
+	#clickHere:hover {
+		background-color: #4499DD;
+		
+	}
+	
+	#drop-zoneCV {
+		border: 2px dashed rgba(0, 0, 0, .3);
+		border-radius: 20px;
+		text-align: center;
+		line-height: 180px;
+		font-size: 20px;
+		color: rgba(0, 0, 0, .3);
+	}
+	
+	#drop-zoneCV input {
+		/*Important*/
+		position: absolute;
+		/*Important*/
+		cursor: pointer;
+		left: 0;
+		top: 0;
+		/*Important This is only comment out for demonstration purposes.
+		opacity:0; */
+	}
+	
+	/*Important*/
+	#drop-zoneCV.mouse-over {
+		border: 2px dashed rgba(0, 0, 0, .5);
+		color: rgba(0, 0, 0, .5);
+	}
+	
+	
+	/*If you dont want the button*/
+	#clickHereCV {
+		position: absolute;
+		cursor: pointer;
+		left: 50%;
+		top: 50%;
+		margin-left: -50px;
+		margin-top: 20px;
+		line-height: 26px;
+		color: white;
+		font-size: 12px;
+		width: 100px;
+		height: 26px;
+		border-radius: 4px;
+		background-color: #3b85c3;
+		
+	}
+	
+	#clickHereCV:hover {
+		background-color: #4499DD;
+		
+	}
+	
+	#drop-zoneCUD {
+		border: 2px dashed rgba(0, 0, 0, .3);
+		border-radius: 20px;
+		text-align: center;
+		line-height: 180px;
+		font-size: 20px;
+		color: rgba(0, 0, 0, .3);
+	}
+	
+	#drop-zoneCUD input {
+		/*Important*/
+		position: absolute;
+		/*Important*/
+		cursor: pointer;
+		left: 0;
+		top: 0;
+		/*Important This is only comment out for demonstration purposes.
+		opacity:0; */
+	}
+	
+	/*Important*/
+	#drop-zoneCUD.mouse-over {
+		border: 2px dashed rgba(0, 0, 0, .5);
+		color: rgba(0, 0, 0, .5);
+	}
+	
+	
+	/*If you dont want the button*/
+	#clickHereCUD {
+		position: absolute;
+		cursor: pointer;
+		left: 50%;
+		top: 50%;
+		margin-left: -50px;
+		margin-top: 20px;
+		line-height: 26px;
+		color: white;
+		font-size: 12px;
+		width: 100px;
+		height: 26px;
+		border-radius: 4px;
+		background-color: #3b85c3;
+		
+	}
+	
+	#clickHereCUD:hover {
+		background-color: #4499DD;
+		
+	}
+	
 	.myButton {
 		box-shadow: 2px 2px 4px 0px #bfbfbf;
 		background-color: #ffffff;
@@ -110,9 +260,13 @@ $baseurl = $baseurl['baseurl'];
 					<input type="password" class="form-control" id="inputPassword4"
 					       placeholder="Repite tu contraseña">
 				</x-incluyeme>
+				<x-incluyeme class="form-group col-12">
+					<button type="submit" class="btn btn-info w-100 w-100" @click.prevent="goToStep(2)">Registrarse con
+					                                                                                    E-mail
+					</button>
+				</x-incluyeme>
 			</x-incluyeme>
-			<button type="submit" class="btn btn-info w-100 w-100" @click.prevent="goToStep(2)">Registrarse con E-mail
-			</button>
+		
 		</template>
 		<template id="step2" v-if="currentStep == 2">
 			<x-incluyeme class="container text-center">
@@ -162,11 +316,12 @@ $baseurl = $baseurl['baseurl'];
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="form-group">
-					<label for="lastNames"><?php _e("Fecha de Nacimiento", "incluyeme-login-extension"); ?></label>
-					<input type="date" class="form-control" id="dateBirthDay" placeholder="Ingresa tus apellidos">
+					<label for="dateBirthDay"><?php _e("Fecha de Nacimiento", "incluyeme-login-extension"); ?></label>
+					<input type="date" name="dateBirthDay" class="form-control" id="dateBirthDay"
+					       placeholder="Ingresa tus apellidos">
 				</x-incluyeme>
 			</x-incluyeme>
-			<x-incluyeme class="row">
+			<x-incluyeme class="row mt-2">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100" @click.prevent="goToStep(2)">Atras</button>
 				</x-incluyeme>
@@ -223,7 +378,7 @@ $baseurl = $baseurl['baseurl'];
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
-			<div class="container">
+			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="col-6">
 						<label for="state"><?php _e("Provincia/Estado", "incluyeme-login-extension"); ?></label>
@@ -233,7 +388,7 @@ $baseurl = $baseurl['baseurl'];
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
-			<div class="container">
+			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="col-6">
 						<label for="city"><?php _e("Ciudad", "incluyeme-login-extension"); ?></label>
@@ -243,7 +398,7 @@ $baseurl = $baseurl['baseurl'];
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
-			<div class="container">
+			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="col-12">
 						<label for="city"><?php _e("Calle", "incluyeme-login-extension"); ?></label>
@@ -278,16 +433,16 @@ $baseurl = $baseurl['baseurl'];
 				</x-incluyeme>
 				<x-incluyeme class="form-group col">
 					<x-incluyeme class="form-check form-check-inline">
-						<input type="radio" id="disCap" name="disCap" v-on:click='disCap = false'
+						<input type="radio" id="disCapF" name="disCap" v-on:click='disCap = false'
 						       v-on:click='disClass = "w-100"'
 						       class="form-check-input">
-						<label class="form-check-label" for="disCap">NO tengo una disCapacidad</label>
+						<label class="form-check-label" for="disCapF">NO tengo una disCapacidad</label>
 					</x-incluyeme>
 				</x-incluyeme>
 			</x-incluyeme>
 			<div class="container">
 				<h5 v-if="disCap">Indica cuales</h5>
-				<div class="container">
+				<div class="container m-auto">
 					<x-incluyeme v-if="disCap" class="row">
 						<x-incluyeme class="col">
 							<input class="form-check-input" type="checkbox" v-model="motriz" id="Motriz">
@@ -296,7 +451,8 @@ $baseurl = $baseurl['baseurl'];
 							</label>
 						</x-incluyeme>
 						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" v-model="visceral" id="Visceral">
+							<input class="form-check-input" type="checkbox" v-model="visceral" id="Visceral"
+							       name="Visceral">
 							<label class="form-check-label" for="Visceral">
 								Visceral
 							</label>
@@ -790,7 +946,7 @@ establecer una comunicación oral fluida con otra persona?
 						</x-incluyeme>
 					</x-incluyeme>
 				</x-incluyeme>
-				<x-incluyeme v-if='visual'class="card">
+				<x-incluyeme v-if='visual' class="card">
 					<x-incluyeme class="card-header m-0 p-0" id="headingFive">
 						<h5 class="mb-0">
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
@@ -1064,7 +1220,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			<div class="container mt-1">
 				<x-incluyeme class="w-100 ">
 					<label for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad</label>
-					<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis" rows="3"></textarea>
+					<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis"
+					          rows="3"></textarea>
 				</x-incluyeme>
 			</div>
 			<x-incluyeme class="row">
@@ -1081,18 +1238,76 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</x-incluyeme>
 		</template>
 		<template id="step7" v-if="currentStep == 7">
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(6)">
-						Atras
-					</button>
+			<div class="container">
+				<h1>Adjunta tu Foto, CV y Certificado Único de Discapacidad</h1>
+				<div class="container">
+					<h3>Foto de Perfil</h3>
+					<x-incluyeme class="row m-auto">
+						<x-incluyeme class="col-8">
+							<div id="drop-zone">
+								Drop files here...
+								<div id="clickHere">
+									or click here..
+									<input v-on:change="cargaImg()" type="file" name="userIMG" id="userIMG"/>
+								</div>
+							</div>
+						</x-incluyeme>
+						<x-incluyeme class="col-4">
+							<img :src="img" class="rounded-circle" alt="Imagen"
+							     v-if="img!==null">
+						</x-incluyeme>
+					</x-incluyeme>
+				</div>
+				<div class="container">
+					<h3>Curriculum Vitae</h3>
+					<x-incluyeme class="row m-auto">
+						<x-incluyeme class="col-8">
+							<div id="drop-zoneCV">
+								Drop files here...
+								<div id="clickHereCV">
+									or click here..
+									<input v-on:change="cargaCV()" type="file" name="userCV" id="userCV"/>
+								</div>
+							</div>
+						</x-incluyeme>
+						<x-incluyeme class="col-4">
+							<embed :src="cvSHOW"/>
+						</x-incluyeme>
+					</x-incluyeme>
+				</div>
+				<div class="container">
+					<h3>Certificado Único de Discapacidad</h3>
+					<x-incluyeme class="row m-auto">
+						<x-incluyeme class="col-8">
+							<div id="drop-zoneCUD">
+								Drop files here...
+								<div id="clickHereCUD">
+									or click here..
+									<input v-on:change="cargaCUD()" type="file" name="userCUD" id="userCUD"/>
+								</div>
+							</div>
+						</x-incluyeme>
+						<x-incluyeme class="col-4">
+							<embed :src="cudSHOW"/>
+						</x-incluyeme>
+					</x-incluyeme>
+				</div>
+			</div>
+			<div class="container">
+				<x-incluyeme class="row m-auto">
+					<x-incluyeme class="col">
+						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+						        @click.prevent="goToStep(6)">
+							Atras
+						</button>
+					</x-incluyeme>
+					<x-incluyeme class="col">
+						<button type="submit" class="btn btn-info w-100 w-100 mt-3" @click.prevent="goToStep(8)">
+							Siguiente
+						</button>
+					</x-incluyeme>
 				</x-incluyeme>
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3" @click.prevent="goToStep(8)">Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
+			</div>
 		</template>
 		<template id="step8" v-if="currentStep == 8">
 			<x-incluyeme class="row">

@@ -95,7 +95,7 @@ Vue.component('step12', {
         'step2'
     ]
 });
-var app = new Vue({
+let app = new Vue({
     el: '#incluyeme-login-wpjb',
     data: {
         currentStep: 1,
@@ -140,7 +140,7 @@ var app = new Vue({
         aBajo: null,
         aImplante: null,
         vLejos: null,
-        vObservar: null,
+        vObserlet: null,
         vTemp: null,
         vColores: null,
         vDPlanos: null,
@@ -159,15 +159,234 @@ var app = new Vue({
         visceral: false,
         visual: false,
         auditiva: false,
-        motriz: false
+        motriz: false,
+        image: null,
+        img: null,
+        reader: null,
+        cv: null,
+        cvSHOW: null,
+        cvReader: null,
+        cud: null,
+        cudSHOW: null,
+        cudReader: null
 
     },
     ready: function() {
         console.log('ready');
     },
     methods: {
-        goToStep: function(step) {
+        goToStep: async function (step) {
+            if (step === 7) {
+                await this.drop();
+                this.dropzone();
+            }
             this.currentStep = step;
-        }
+        },
+        drop: async function () {
+            this.currentStep = 7;
+        },
+        dropzone: function () {
+
+            const $ = jQuery;
+            $(function () {
+                let dropZoneId = "drop-zone";
+                let buttonId = "clickHere";
+                let mouseOverClass = "mouse-over";
+
+                let dropZone = $("#" + dropZoneId);
+                let ooleft = dropZone.offset().left;
+                let ooright = dropZone.outerWidth() + ooleft;
+                let ootop = dropZone.offset().top;
+                let oobottom = dropZone.outerHeight() + ootop;
+                let inputFile = dropZone.find("input");
+                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.addClass(mouseOverClass);
+                    let x = e.pageX;
+                    let y = e.pageY;
+
+                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
+                        inputFile.offset({top: y - 15, left: x - 100});
+                    } else {
+                        inputFile.offset({top: -400, left: -400});
+                    }
+
+                }, true);
+
+                if (buttonId != "") {
+                    let clickZone = $("#" + buttonId);
+
+                    let oleft = clickZone.offset().left;
+                    let oright = clickZone.outerWidth() + oleft;
+                    let otop = clickZone.offset().top;
+                    let obottom = clickZone.outerHeight() + otop;
+
+                    $("#" + buttonId).mousemove(function (e) {
+                        let x = e.pageX;
+                        let y = e.pageY;
+                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
+                            inputFile.offset({top: y - 15, left: x - 160});
+                        } else {
+                            inputFile.offset({top: -400, left: -400});
+                        }
+                    });
+                }
+
+                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
+                    $("#" + dropZoneId).removeClass(mouseOverClass);
+                }, true);
+
+            })
+            $(function () {
+                let dropZoneId = "drop-zoneCV";
+                let buttonId = "clickHereCV";
+                let mouseOverClass = "mouse-over";
+
+                let dropZone = $("#" + dropZoneId);
+                let ooleft = dropZone.offset().left;
+                let ooright = dropZone.outerWidth() + ooleft;
+                let ootop = dropZone.offset().top;
+                let oobottom = dropZone.outerHeight() + ootop;
+                let inputFile = dropZone.find("input");
+                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.addClass(mouseOverClass);
+                    let x = e.pageX;
+                    let y = e.pageY;
+
+                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
+                        inputFile.offset({top: y - 15, left: x - 100});
+                    } else {
+                        inputFile.offset({top: -400, left: -400});
+                    }
+
+                }, true);
+
+                if (buttonId != "") {
+                    let clickZone = $("#" + buttonId);
+
+                    let oleft = clickZone.offset().left;
+                    let oright = clickZone.outerWidth() + oleft;
+                    let otop = clickZone.offset().top;
+                    let obottom = clickZone.outerHeight() + otop;
+
+                    $("#" + buttonId).mousemove(function (e) {
+                        let x = e.pageX;
+                        let y = e.pageY;
+                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
+                            inputFile.offset({top: y - 15, left: x - 160});
+                        } else {
+                            inputFile.offset({top: -400, left: -400});
+                        }
+                    });
+                }
+
+                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
+                    $("#" + dropZoneId).removeClass(mouseOverClass);
+                }, true);
+
+            })
+            $(function () {
+                let dropZoneId = "drop-zoneCUD";
+                let buttonId = "clickHereCUD";
+                let mouseOverClass = "mouse-over";
+
+                let dropZone = $("#" + dropZoneId);
+                let ooleft = dropZone.offset().left;
+                let ooright = dropZone.outerWidth() + ooleft;
+                let ootop = dropZone.offset().top;
+                let oobottom = dropZone.outerHeight() + ootop;
+                let inputFile = dropZone.find("input");
+                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.addClass(mouseOverClass);
+                    let x = e.pageX;
+                    let y = e.pageY;
+
+                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
+                        inputFile.offset({top: y - 15, left: x - 100});
+                    } else {
+                        inputFile.offset({top: -400, left: -400});
+                    }
+
+                }, true);
+
+                if (buttonId != "") {
+                    let clickZone = $("#" + buttonId);
+
+                    let oleft = clickZone.offset().left;
+                    let oright = clickZone.outerWidth() + oleft;
+                    let otop = clickZone.offset().top;
+                    let obottom = clickZone.outerHeight() + otop;
+
+                    $("#" + buttonId).mousemove(function (e) {
+                        let x = e.pageX;
+                        let y = e.pageY;
+                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
+                            inputFile.offset({top: y - 15, left: x - 160});
+                        } else {
+                            inputFile.offset({top: -400, left: -400});
+                        }
+                    });
+                }
+
+                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
+                    $("#" + dropZoneId).removeClass(mouseOverClass);
+                }, true);
+
+            })
+        },
+        cargaImg: async function () {
+            this.image = null;
+            this.img = null;
+            this.reader = null;
+            if (event.target.files[0]['type'] !== 'image/jpeg' && event.target.files[0]['type'] !== 'image/png' && event.target.files[0]['type'] !== 'image/jpg') {
+                alert('El tipo de archivo que ha subido no es valido, aceptamos imagenes en formato .jpg, .png, .jpeg');
+                document.getElementById("cargaImg").value = "";
+                return;
+            }
+            this.image = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = (event) => {
+                this.img = event.target.result;
+            };
+            this.reader = reader.readAsDataURL(this.image);
+        },
+        cargaCV: async function () {
+            this.cv = null;
+            this.cvSHOW = null;
+            this.cvReader = null;
+            if (event.target.files[0]['type'] !== 'application/pdf' && !(/\.(doc?x|pdf)$/i.test(event.target.files[0].name))) {
+                alert('El tipo de archivo que ha subido no es valido, aceptamos documentos en formato .doc, .docx, .pdf');
+                document.getElementById("userCV").value = "";
+                return;
+            }
+            this.cv = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = (event) => {
+                this.cvSHOW = event.target.result;
+            };
+            this.cvReader = reader.readAsDataURL(this.cv);
+        },
+        cargaCUD: async function () {
+            this.cud = null;
+            this.cudSHOW = null;
+            this.cudReader = null;
+            if (event.target.files[0]['type'] !== 'application/pdf' && !(/\.(doc?x|pdf)$/i.test(event.target.files[0].name))) {
+                alert('El tipo de archivo que ha subido no es valido, aceptamos documentos en formato .doc, .docx, .pdf');
+                document.getElementById("userCUD").value = "";
+                return;
+            }
+            this.cud = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = (event) => {
+                this.cudSHOW = event.target.result;
+            };
+            this.cudReader = reader.readAsDataURL(this.cud);
+        },
+
     }
 });
