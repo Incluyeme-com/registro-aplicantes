@@ -31,7 +31,8 @@ function incluyeme_requirements_Login_Extension()
 		if (isset($_GET['activate'])) {
 			unset($_GET['activate']);
 		}
-	} else {
+	}
+	if (is_admin() && current_user_can('activate_plugins') && is_plugin_active('wpjobboard/index.php')) {
 		incluyeme_login_load();
 	}
 }
