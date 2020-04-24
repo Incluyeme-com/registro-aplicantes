@@ -7,6 +7,9 @@ abstract class WP_Incluyeme_Countries_Abs
 	protected static $universitiesTable;
 	protected static $countriesTable;
 	protected static $studies;
+	protected static $experiencesAreas;
+	protected static $idioms;
+	protected static $levelsIdioms;
 	
 	public function __construct()
 	{
@@ -14,6 +17,9 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$countriesTable = $wpdb->prefix . 'incluyeme_countries';
 		self::$universitiesTable = $wpdb->prefix . 'incluyeme_academies';
 		self::$studies = $wpdb->prefix . 'incluyeme_areas';
+		self::$experiencesAreas = $wpdb->prefix . 'incluyeme_level_experience';
+		self::$levelsIdioms = $wpdb->prefix . 'incluyeme_idioms_level';
+		self::$idioms = $wpdb->prefix . 'incluyeme_idioms';
 		self::$country = false;
 	}
 	
@@ -49,5 +55,23 @@ abstract class WP_Incluyeme_Countries_Abs
 	{
 		global $wpdb;
 		return $wpdb->get_results("SELECT * from " . self::$studies . " WHERE active = 1");
+	}
+	
+	public static function allExpedienciesAreas()
+	{
+		global $wpdb;
+		return $wpdb->get_results("SELECT * from " . self::$experiencesAreas . " WHERE active = 1");
+	}
+	
+	public static function allIdioms()
+	{
+		global $wpdb;
+		return $wpdb->get_results("SELECT * from " . self::$idioms . " WHERE active = 1");
+	}
+	
+	public static function allLevels()
+	{
+		global $wpdb;
+		return $wpdb->get_results("SELECT * from " . self::$levelsIdioms . " WHERE active = 1");
 	}
 }

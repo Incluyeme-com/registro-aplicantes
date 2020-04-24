@@ -96,6 +96,8 @@ Vue.component('step12', {
 let app = new Vue({
     el: '#incluyeme-login-wpjb',
     data: {
+        dateStudiesDLaboral: [],
+        dateStudiesHLaboral: [],
         url: null,
         countries: [],
         universities: [],
@@ -108,6 +110,10 @@ let app = new Vue({
         lastName: null,
         dateBirthDay: null,
         disCap: null,
+        formFields3: [],
+        idioms: null,
+        levels: null,
+        university_otro: [],
         disClass: 'w-100',
         mPhone: null,
         country: null,
@@ -117,6 +123,9 @@ let app = new Vue({
         eduLevel: [],
         formFields: [],
         phone: null,
+        jobs: [],
+        levelExperience: [],
+        actuWork: [],
         fPhone: null,
         fiPhone: null,
         mPie: null,
@@ -140,17 +149,21 @@ let app = new Vue({
         aBajo: null,
         aImplante: null,
         vLejos: null,
+        jobsDescript: [],
         vObserlet: null,
         vTemp: null,
         universities: [],
         vColores: null,
         vDPlanos: null,
         vTecniA: null,
+        formFields2: [],
+        areaEmployed: [],
         inteEscri: null,
         inteTransla: null,
         inteTarea: null,
         inteActividad: null,
         inteMolesto: null,
+        employed: [],
         inteTrabajar: null,
         inteTrabajarSolo: null,
         moreDis: null,
@@ -160,11 +173,14 @@ let app = new Vue({
         intelectual: false,
         visceral: false,
         visual: false,
+        vObservar: null,
         city: null,
+        experiences: null,
         auditiva: false,
         motriz: false,
         image: null,
         img: null,
+        dateStudiesH: [],
         reader: null,
         cv: null,
         cvSHOW: null,
@@ -182,19 +198,26 @@ let app = new Vue({
     ready: function () {
         console.log('ready');
     },
+    mounted() {
+        this.formFields2.push(1);
+    },
     methods: {
         goToStep: async function (step, url = false) {
             this.url = url;
             switch (step) {
                 case 2:
                     await this.confirmStep2(step);
+                    this.getCountries();
+                    this.getStudies();
+                    this.getExperiences();
                     break;
                 case 3:
                     await this.confirmStep3(step);
                     break;
                 case 4:
-                    await this.getCountries();
                     await this.confirmStep4(step);
+                    this.getLevelsIdioms();
+                    this.getIdioms();
                     break;
                 case 5:
                     await this.confirmStep5(step);
@@ -203,8 +226,6 @@ let app = new Vue({
                     await this.confirmStep7(step);
                     break;
                 case 8:
-                    this.getCountries();
-                    this.getStudies();
                     await this.confirmStep8(step);
                     break;
                 default:
@@ -421,7 +442,7 @@ let app = new Vue({
             return re.test(email);
         },
         confirmStep2: async function (step) {
-            if (!this.isValidEmail(this.email) || this.password === null || !this.password) {
+            if (!await this.isValidEmail(this.email) || this.password === null || !this.password) {
                 iziToast.warning({
                     title: 'Verifique',
                     message: 'Por favor, llene todos los campos',
@@ -601,6 +622,9 @@ let app = new Vue({
                 this.university_edu[id] = null;
             }
         },
+        changeUniversity: function (id, changes) {
+            changes ? Vue.set(app.university_otro, id, null) : Vue.set(app.university_edu, id, null);
+        },
         getUniver: async function (id) {
             return axios.get(this.url + '/incluyeme-login-extension/include/search/countries.php?countries=' + this.country_edu[id], {})
                 .then(function (response) {
@@ -631,8 +655,42 @@ let app = new Vue({
             });
             this.study = studies.message
         },
+        getExperiences: async function (url) {
+            let experiences = await jQuery.ajax({
+                url: this.url + '/incluyeme-login-extension/include/search/experiencesAreas.php?experiences=all',
+                type: 'GET',
+                dataType: 'json'
+            }).done(success => {
+                return success;
+            });
+            this.experiences = experiences.message
+        },
+        getLevelsIdioms: async function (url) {
+            this.formFields3.push(1)
+            let levels = await jQuery.ajax({
+                url: this.url + '/incluyeme-login-extension/include/search/idioms.php?levels=all',
+                type: 'GET',
+                dataType: 'json'
+            }).done(success => {
+                return success;
+            });
+            this.levels = levels.message
+        },
+        getIdioms: async function (url) {
+            let idioms = await jQuery.ajax({
+                url: this.url + '/incluyeme-login-extension/include/search/idioms.php?idioms=all',
+                type: 'GET',
+                dataType: 'json'
+            }).done(success => {
+                return success;
+            });
+            this.idioms = idioms.message
+        },
         addStudies: async function () {
             this.formFields.push(1);
+        },
+        addExp: async function () {
+            this.formFields2.push(1);
         }
     }
 });

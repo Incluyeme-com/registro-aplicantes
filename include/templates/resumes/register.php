@@ -267,8 +267,9 @@ $baseurl = $baseurl['baseurl'];
 					       placeholder="Repite tu contraseña">
 				</x-incluyeme>
 				<x-incluyeme class="form-group col-12">
-					<button type="submit" class="btn btn-info w-100 w-100" @click.prevent="goToStep(2)">Registrarse con
-					                                                                                    E-mail
+					<button type="submit" class="btn btn-info w-100 w-100"
+					        @click.prevent="goToStep(2, '<?php echo plugins_url() ?>')">Registrarse con
+					                                                                    E-mail
 					</button>
 				</x-incluyeme>
 			</x-incluyeme>
@@ -289,7 +290,10 @@ $baseurl = $baseurl['baseurl'];
 					       placeholder="Ingresa tus apellidos">
 				</x-incluyeme>
 			</x-incluyeme>
-			<button type="submit" class="btn btn-info w-100 w-100 mt-3" @click.prevent="goToStep(3)">Siguiente</button>
+			<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+			        @click.prevent="goToStep(3, '<?php echo plugins_url() ?>')">
+				Siguiente
+			</button>
 		</template>
 		<template id="step3" v-if="currentStep == 3">
 			<x-incluyeme class="container text-center">
@@ -330,7 +334,9 @@ $baseurl = $baseurl['baseurl'];
 			</x-incluyeme>
 			<x-incluyeme class="row mt-2">
 				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100" @click.prevent="goToStep(2)">Atras</button>
+					<button type="submit" class="btn btn-info w-100"
+					        @click.prevent="goToStep(2, '<?php echo plugins_url() ?>')">Atras
+					</button>
 				</x-incluyeme>
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100"
@@ -421,10 +427,13 @@ $baseurl = $baseurl['baseurl'];
 			</div>
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 mt-3" @click.prevent="goToStep(3)">Atras</button>
+					<button type="submit" class="btn btn-info w-100 mt-3"
+					        @click.prevent="goToStep(3, '<?php echo plugins_url() ?>')">Atras
+					</button>
 				</x-incluyeme>
 				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 mt-3" @click.prevent="goToStep(5)">Siguiente
+					<button type="submit" class="btn btn-info w-100 mt-3"
+					        @click.prevent="goToStep(5, '<?php echo plugins_url() ?>')"> Siguiente
 					</button>
 				</x-incluyeme>
 			</x-incluyeme>
@@ -505,7 +514,7 @@ $baseurl = $baseurl['baseurl'];
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button v-if="disCap===true" type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(4)">
+					        @click.prevent="goToStep(4, '<?php echo plugins_url() ?>')">
 						Atras
 					</button>
 				</x-incluyeme>
@@ -1238,12 +1247,13 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(5)">
+					        @click.prevent="goToStep(5, '<?php echo plugins_url() ?>')">
 						Atras
 					</button>
 				</x-incluyeme>
 				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3" @click.prevent="goToStep(7)">Siguiente
+					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+					        @click.prevent="goToStep(7, '<?php echo plugins_url() ?>')">Siguiente
 					</button>
 				</x-incluyeme>
 			</x-incluyeme>
@@ -1308,7 +1318,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<x-incluyeme class="row m-auto">
 					<x-incluyeme class="col">
 						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-						        @click.prevent="goToStep(6)">
+						        @click.prevent="goToStep(6, '<?php echo plugins_url() ?>')">
 							Atras
 						</button>
 					</x-incluyeme>
@@ -1347,7 +1357,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					<x-incluyeme class="col-6">
 						<select id="university_edu" v-model="university_edu[pos]" class="form-control">
 							<option v-for="(university, index) of universities[pos]"
-							        :value="university.university">
+							        :value="university.university" v-on:change="changeUniversity(pos, true)">
 								{{university.university}}
 							</option>
 						</select>
@@ -1358,8 +1368,9 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						<label for="university_eduText"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="col-6">
-						<input type="text" v-model="university_edu[pos]" class="form-control" id="university_eduText"
-						       placeholder="Institución">
+						<input type="text" v-model="university_otro[pos]" class="form-control" id="university_eduText"
+						       placeholder="Institución"
+						       v-on:change="changeUniversity(pos, false)">
 					</x-incluyeme>
 					<x-incluyeme class="col-12"><small>Escriba el nombre de su Institución Educativa si no aparece en el
 					                                   listado</small></x-incluyeme>
@@ -1417,20 +1428,20 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<label for="dateStudiesD"><?php _e("Hasta *", "incluyeme-login-extension"); ?></label>
+									<label for="dateStudiesH"><?php _e("Hasta *", "incluyeme-login-extension"); ?></label>
 								</x-incluyeme>
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<input type="date" v-model="dateStudiesD[pos]" name="dateStudiesD"
+									<input type="date" v-model="dateStudiesH[pos]" name="dateStudiesH"
 									       class="form-control"
-									       id="dateStudiesD">
+									       id="dateStudiesH" :disabled="dateStudieB[pos]===true">
 								</x-incluyeme>
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
 								<div class="container">
 									<input class="form-check-input" type="checkbox" id="dateStudieB"
-									       value="false" v-model="dateStudieB[pos]">
+									       v-model="dateStudieB[pos]">
 									<label class="form-check-label"
 									       for="dateStudieB"
 									       style="color: black"><?php _e("¿En curso?", "incluyeme-login-extension"); ?></label>
@@ -1455,12 +1466,13 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<x-incluyeme class="row">
 					<x-incluyeme class="col">
 						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-						        @click.prevent="goToStep(7)">
+						        @click.prevent="goToStep(7, '<?php echo plugins_url() ?>')">
 							Atras
 						</button>
 					</x-incluyeme>
 					<x-incluyeme class="col">
-						<button type="submit" class="btn btn-info w-100 w-100 mt-3" @click.prevent="goToStep(9)">
+						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+						        @click.prevent="goToStep(9, '<?php echo plugins_url() ?>')">
 							Siguiente
 						</button>
 					</x-incluyeme>
@@ -1468,15 +1480,114 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</div>
 		</template>
 		<template id="step9" v-if="currentStep == 9">
+			<div class="container">
+				<h1>Experiencia Laboral</h1>
+			</div>
+			<div class="container" v-for="(formFields2, pos) in formFields2" :key="pos">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col">
+						<label for="companies">Empresa</label>
+						<input v-model="employed[pos]" type="text" class="form-control" id="companies"
+						       placeholder="Empresa">
+					</x-incluyeme>
+				</x-incluyeme>
+				<x-incluyeme class="row mt-2">
+					<x-incluyeme class="col-6">
+						<label for="studies" class="">Area</label>
+						<select id="studies" v-model="areaEmployed[pos]" class="form-control mt-2">
+							<option v-for="(estudies, index) of study"
+							        :value="estudies.id" class="text-capitalize">
+								{{estudies.name_inc_area}}
+							</option>
+						</select>
+					</x-incluyeme>
+					<x-incluyeme class="col-6">
+						<label for="names">Puesto </label>
+						<input v-model="jobs[pos]" type="text" class="form-control" id="names"
+						       placeholder="Puesto">
+					</x-incluyeme>
+				</x-incluyeme>
+				<x-incluyeme class="row mt-2">
+					<x-incluyeme class="col-6">
+						<label for="studies" class="">Nivel de Experiencia</label>
+						<select id="studies" v-model="levelExperience[pos]" class="form-control">
+							<option v-for="(experiences, index) of experiences"
+							        :value="experiences.id" class="text-capitalize">
+								{{experiences.name_incluyeme_exp}}
+							</option>
+						</select>
+					</x-incluyeme>
+					<x-incluyeme class="col-6" style="margin: auto; float: left;">
+						<div style="position: relative;  top: 3px;">
+							<input class="form-check-input" type="checkbox" :id="actuWork[pos]" v-model="actuWork[pos]">
+							<label class="form-check-label"
+							       :for="actuWork[pos]"
+							       style="color: black"><?php _e("¿Actualmente trabajas aquí?", "incluyeme-login-extension"); ?></label>
+						</div>
+					</x-incluyeme>
+				</x-incluyeme>
+				<div class="row mt-2">
+					<x-incluyeme class="col-6">
+						<x-incluyeme class="row">
+							<x-incluyeme class="col-12">
+								<x-incluyeme class="form-group">
+									<label for="dateStudiesDLaboral"><?php _e("Desde *", "incluyeme-login-extension"); ?></label>
+								</x-incluyeme>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<x-incluyeme class="form-group">
+									<input type="date" v-model="dateStudiesDLaboral[pos]" name="dateStudiesDLaboral"
+									       class="form-control"
+									       id="dateStudiesDLaboral">
+								</x-incluyeme>
+							</x-incluyeme>
+						</x-incluyeme>
+					</x-incluyeme>
+					<x-incluyeme class="col-6">
+						<x-incluyeme class="row">
+							<x-incluyeme class="col-12">
+								<x-incluyeme class="form-group">
+									<label for="dateStudiesHLaboral"><?php _e("Hasta *", "incluyeme-login-extension"); ?></label>
+								</x-incluyeme>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<x-incluyeme class="form-group">
+									<input type="date" v-model="dateStudiesHLaboral[pos]" name="dateStudiesHLaboral"
+									       class="form-control"
+									       id="dateStudiesHLaboral" :disabled="actuWork[pos]===true">
+								</x-incluyeme>
+							</x-incluyeme>
+						</x-incluyeme>
+					</x-incluyeme>
+				</div>
+				<x-incluyeme class="row mt-2">
+					<x-incluyeme class="col-12">
+						<label for="jobsDescript">Descripción del Puesto</label>
+						<textarea class="form-control" id="jobsDescript" v-model="jobsDescript[pos]"
+						          rows="3"></textarea>
+					</x-incluyeme>
+				</x-incluyeme>
+				<hr class="w-100" v-if="formFields2.length !== 1">
+			</div>
+			<div class="container">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col text-center">
+						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+						        @click.prevent="addExp()">
+							+ Agregar Experiencia
+						</button>
+					</x-incluyeme>
+			</div>
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(8)">
+					        @click.prevent="goToStep(8, '<?php echo plugins_url() ?>')">
 						Atras
 					</button>
 				</x-incluyeme>
 				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3" @click.prevent="goToStep(10)">
+					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+					        @click.prevent="goToStep(10, '<?php echo plugins_url() ?>')">
 						Siguiente
 					</button>
 				</x-incluyeme>
@@ -1486,12 +1597,13 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(9)">
+					        @click.prevent="goToStep(9, '<?php echo plugins_url() ?>')">
 						Atras
 					</button>
 				</x-incluyeme>
 				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3" @click.prevent="goToStep(11)">
+					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+					        @click.prevent="goToStep(11, '<?php echo plugins_url() ?>')">
 						Siguiente
 					</button>
 				</x-incluyeme>
@@ -1501,12 +1613,13 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(10)">
+					        @click.prevent="goToStep(10, '<?php echo plugins_url() ?>')">
 						Atras
 					</button>
 				</x-incluyeme>
 				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3" @click.prevent="goToStep(12)">
+					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+					        @click.prevent="goToStep(12, '<?php echo plugins_url() ?>')">
 						Siguiente
 					</button>
 				</x-incluyeme>
@@ -1516,12 +1629,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(11)">
+					        @click.prevent="goToStep(11, '<?php echo plugins_url() ?>')">
 						Atras
 					</button>
 				</x-incluyeme>
 				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100" @click.prevent="goToStep(13)">Siguiente
+					<button type="submit" class="btn btn-info w-100 w-100"
+					        @click.prevent="goToStep(13, '<?php echo plugins_url() ?>')">
+						Siguiente
 					</button>
 				</x-incluyeme>
 			</x-incluyeme>

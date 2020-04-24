@@ -10098,3 +10098,49 @@ VALUES ("Abogacía/Derecho/Leyes"),
        ("Turismo"),
        ("Ventas Internacionales/Exportación"),
        ("Veterinaria"); --
+create table `{$wpdb->prefix}incluyeme_level_experience`
+(
+	id                 int auto_increment,
+	name_incluyeme_exp varchar(50)          not null,
+	active             boolean default true null,
+	constraint incluyeme_level_experience_pk
+		primary key (id)
+); --
+
+
+INSERT INTO `{$wpdb->prefix}incluyeme_level_experience` (`name_incluyeme_exp`)
+VALUES ('Training'),
+       ('Junior'),
+       ('SemiSenior'),
+       ('Senior'); --
+create table `{$wpdb->prefix}incluyeme_idioms`
+(
+	id          int auto_increment,
+	name_idioms varchar(50)          not null,
+	active      boolean default true null,
+	constraint incluyeme_level_experience_pk
+		primary key (id)
+); --
+
+
+INSERT INTO `{$wpdb->prefix}incluyeme_idioms` (`name_idioms`)
+VALUES ('Inglés'),
+       ('Frances'),
+       ('Portugues'),
+       ('Aleman'); --
+       
+create table `{$wpdb->prefix}incluyeme_idioms_level`
+(
+	id         int auto_increment,
+	name_level varchar(50)          not null,
+	active     boolean default true null,
+	constraint incluyeme_level_experience_pk
+		primary key (id)
+); --
+
+
+INSERT INTO `{$wpdb->prefix}incluyeme_idioms_level` (`name_level`)
+VALUES ('Básico'),
+       ('Intermedio'),
+       ('Avanzado'),
+       ('Nativo'); --
