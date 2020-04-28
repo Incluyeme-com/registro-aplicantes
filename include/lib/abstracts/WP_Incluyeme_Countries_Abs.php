@@ -10,6 +10,7 @@ abstract class WP_Incluyeme_Countries_Abs
 	protected static $experiencesAreas;
 	protected static $idioms;
 	protected static $levelsIdioms;
+	protected static $prefersJobs;
 	
 	public function __construct()
 	{
@@ -20,6 +21,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$experiencesAreas = $wpdb->prefix . 'incluyeme_level_experience';
 		self::$levelsIdioms = $wpdb->prefix . 'incluyeme_idioms_level';
 		self::$idioms = $wpdb->prefix . 'incluyeme_idioms';
+		self::$prefersJobs = $wpdb->prefix . 'incluyeme_prefersJobs';
 		self::$country = false;
 	}
 	
@@ -73,5 +75,11 @@ abstract class WP_Incluyeme_Countries_Abs
 	{
 		global $wpdb;
 		return $wpdb->get_results("SELECT * from " . self::$levelsIdioms . " WHERE active = 1");
+	}
+	
+	public static function allPrefersJobs()
+	{
+		global $wpdb;
+		return $wpdb->get_results("SELECT * from " . self::$prefersJobs . " WHERE active = 1");
 	}
 }

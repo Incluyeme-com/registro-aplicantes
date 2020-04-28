@@ -1338,7 +1338,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			<div v-for="(fieldName, pos) in formFields" :key="pos" class="container">
 				<div class="row">
 					<x-incluyeme class="col">
-						<label for="country_edu"><?php _e("Pais *", "incluyeme-login-extension"); ?></label>
+						<label for="country_edu"><?php _e("Pais", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="col-6">
 						<select id="country_edu" v-model="country_edu[pos]" class="form-control"
@@ -1352,7 +1352,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<div class="row mt-2">
 					<x-incluyeme class="col">
 						<label
-								for="university_edu"><?php _e("Institución Educativa *", "incluyeme-login-extension"); ?></label>
+								for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="col-6">
 						<select id="university_edu" v-model="university_edu[pos]" class="form-control">
@@ -1378,7 +1378,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<div class="row mt-2">
 					<x-incluyeme class="col">
 						<label
-								for="studies"><?php _e("Area de Estudio *", "incluyeme-login-extension"); ?></label>
+								for="studies"><?php _e("Area de Estudio", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="col-6">
 						<select id="studies" v-model="studies[pos]" class="form-control">
@@ -1391,7 +1391,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				</div>
 				<div class="row mt-2">
 					<x-incluyeme class="col">
-						<label for="titleEdu"><?php _e("Título *", "incluyeme-login-extension"); ?></label>
+						<label for="titleEdu"><?php _e("Título", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="col-6">
 						<input type="text" v-model="titleEdu[pos]" class="form-control" id="titleEdu"
@@ -1400,7 +1400,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				</div>
 				<div class="row mt-2">
 					<x-incluyeme class="col">
-						<label for="eduLevel"><?php _e("Nivel Educativo *", "incluyeme-login-extension"); ?></label>
+						<label for="eduLevel"><?php _e("Nivel Educativo", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="col-6">
 						<input type="text" v-model="eduLevel[pos]" class="form-control" id="eduLevel"
@@ -1412,7 +1412,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<label for="dateStudiesD"><?php _e("Desde *", "incluyeme-login-extension"); ?></label>
+									<label for="dateStudiesD"><?php _e("Desde", "incluyeme-login-extension"); ?></label>
 								</x-incluyeme>
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
@@ -1428,7 +1428,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<label for="dateStudiesH"><?php _e("Hasta *", "incluyeme-login-extension"); ?></label>
+									<label for="dateStudiesH"><?php _e("Hasta", "incluyeme-login-extension"); ?></label>
 								</x-incluyeme>
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
@@ -1531,7 +1531,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<label for="dateStudiesDLaboral"><?php _e("Desde *", "incluyeme-login-extension"); ?></label>
+									<label for="dateStudiesDLaboral"><?php _e("Desde", "incluyeme-login-extension"); ?></label>
 								</x-incluyeme>
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
@@ -1547,7 +1547,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<label for="dateStudiesHLaboral"><?php _e("Hasta *", "incluyeme-login-extension"); ?></label>
+									<label for="dateStudiesHLaboral"><?php _e("Hasta", "incluyeme-login-extension"); ?></label>
 								</x-incluyeme>
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
@@ -1594,6 +1594,72 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</x-incluyeme>
 		</template>
 		<template id="step10" v-if="currentStep == 10">
+			<div class="container">
+				<h1>Idiomas</h1>
+			</div>
+			<div class="container" v-for="(formFields3, pos) in formFields3" :key="pos">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col">
+						<label for="idioms">Idioma</label>
+						<select v-model="idioms[pos]" type="text" class="form-control" id="idioms"
+						        placeholder="Idiomas">
+							<option v-for="(idioms, index) of idiom"
+							        :value="idioms.id" class="text-capitalize">
+								{{idioms.name_idioms}}
+							</option>
+						</select>
+					</x-incluyeme>
+				</x-incluyeme>
+				<x-incluyeme class="row mt-2">
+					<x-incluyeme class="col-6">
+						<label for="lecLevel" class="">Nivel de Lectura</label>
+					</x-incluyeme>
+					<x-incluyeme class="col-6">
+						<select id="lecLevel" v-model="lecLevel[pos]" class="form-control mt-2">
+							<option v-for="(levels, index) of levels"
+							        :value="levels.id" class="text-capitalize">
+								{{levels.name_level}}
+							</option>
+						</select>
+					</x-incluyeme>
+				</x-incluyeme>
+				<x-incluyeme class="row mt-2">
+					<x-incluyeme class="col-6">
+						<label for="redLevel" class="">Nivel Escrito</label>
+					</x-incluyeme>
+					<x-incluyeme class="col-6">
+						<select id="redLevel" v-model="redLevel[pos]" class="form-control mt-2">
+							<option v-for="(levels, index) of levels"
+							        :value="levels.id" class="text-capitalize">
+								{{levels.name_level}}
+							</option>
+						</select>
+					</x-incluyeme>
+				</x-incluyeme>
+				<x-incluyeme class="row mt-2">
+					<x-incluyeme class="col-6">
+						<label for="oralLevel" class="">Nivel de Lectura</label>
+					</x-incluyeme>
+					<x-incluyeme class="col-6">
+						<select id="oralLevel" v-model="oralLevel[pos]" class="form-control mt-2">
+							<option v-for="(levels, index) of levels"
+							        :value="levels.id" class="text-capitalize">
+								{{levels.name_level}}
+							</option>
+						</select>
+					</x-incluyeme>
+				</x-incluyeme>
+				<hr class="w-100" v-if="formFields3.length !== 1">
+			</div>
+			<div class="container">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col text-center">
+						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+						        @click.prevent="addIdioms()">
+							+ Agregar Idioma
+						</button>
+					</x-incluyeme>
+			</div>
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
@@ -1610,6 +1676,19 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</x-incluyeme>
 		</template>
 		<template id="step11" v-if="currentStep == 11">
+			<div class="container">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col text-center">
+						<h1>¿De qué te gustaría trabajar?</h1>
+						<select v-model="preferJobs" type="text" class="form-control" id="preferJobs">
+							<option v-for="(preferJobs, index) of preferJob"
+							        :value="preferJobs.id" class="text-capitalize">
+								{{preferJobs.jobs_prefers}}
+							</option>
+						</select>
+					</x-incluyeme>
+				</x-incluyeme>
+			</div>
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
@@ -1626,20 +1705,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</x-incluyeme>
 		</template>
 		<template id="step12" v-if="currentStep == 12">
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(11, '<?php echo plugins_url() ?>')">
-						Atras
-					</button>
+			<div class="container">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col-12 text-center">
+						<h1>¡Gracias por Registrarte!</h1>
+						<p>Pronto seras redirigido a nuestra lista de ofertas laborales.</p>
+					</x-incluyeme>
 				</x-incluyeme>
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100"
-					        @click.prevent="goToStep(13, '<?php echo plugins_url() ?>')">
-						Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
+			</div>
 		</template>
 	</div>
 </div>

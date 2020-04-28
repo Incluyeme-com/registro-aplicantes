@@ -108,9 +108,9 @@ let app = new Vue({
         password: null,
         street: null,
         lastName: null,
+        formFields3: [],
         dateBirthDay: null,
         disCap: null,
-        formFields3: [],
         idioms: null,
         levels: null,
         university_otro: [],
@@ -120,6 +120,8 @@ let app = new Vue({
         dateStudiesD: [],
         dateStudieB: [],
         titleEdu: [],
+        preferJob: [],
+        preferJobs: null,
         eduLevel: [],
         formFields: [],
         phone: null,
@@ -189,20 +191,29 @@ let app = new Vue({
         cudSHOW: null,
         cudReader: null,
         state: null,
-        currentStep: 1,
+        currentStep: 12,
         country_edu: [],
         university_edu: [],
         studies: [],
-        study: []
+        study: [],
+        idioms: [],
+        idiom: [],
+        lecLevel: [],
+        redLevel: [],
+        oralLevel: []
     },
     ready: function () {
         console.log('ready');
     },
     mounted() {
         this.formFields2.push(1);
+        this.formFields3.push(1);
     },
     methods: {
         goToStep: async function (step, url = false) {
+            if (this.currentStep === 12) {
+                return;
+            }
             this.url = url;
             switch (step) {
                 case 2:
@@ -210,6 +221,7 @@ let app = new Vue({
                     this.getCountries();
                     this.getStudies();
                     this.getExperiences();
+                    this.getPrefersJobs();
                     break;
                 case 3:
                     await this.confirmStep3(step);
@@ -665,8 +677,17 @@ let app = new Vue({
             });
             this.experiences = experiences.message
         },
+        getPrefersJobs: async function (url) {
+            let preferJob = await jQuery.ajax({
+                url: this.url + '/incluyeme-login-extension/include/search/prefersJobs.php?experiences=all',
+                type: 'GET',
+                dataType: 'json'
+            }).done(success => {
+                return success;
+            });
+            this.preferJob = preferJob.message
+        },
         getLevelsIdioms: async function (url) {
-            this.formFields3.push(1)
             let levels = await jQuery.ajax({
                 url: this.url + '/incluyeme-login-extension/include/search/idioms.php?levels=all',
                 type: 'GET',
@@ -684,13 +705,16 @@ let app = new Vue({
             }).done(success => {
                 return success;
             });
-            this.idioms = idioms.message
+            this.idiom = idioms.message
         },
         addStudies: async function () {
             this.formFields.push(1);
         },
         addExp: async function () {
             this.formFields2.push(1);
+        },
+        addIdioms: async function () {
+            this.formFields3.push(1);
         }
     }
 });

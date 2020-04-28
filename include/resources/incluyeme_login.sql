@@ -10098,6 +10098,7 @@ VALUES ("Abogacía/Derecho/Leyes"),
        ("Turismo"),
        ("Ventas Internacionales/Exportación"),
        ("Veterinaria"); --
+
 create table `{$wpdb->prefix}incluyeme_level_experience`
 (
 	id                 int auto_increment,
@@ -10113,6 +10114,7 @@ VALUES ('Training'),
        ('Junior'),
        ('SemiSenior'),
        ('Senior'); --
+
 create table `{$wpdb->prefix}incluyeme_idioms`
 (
 	id          int auto_increment,
@@ -10144,3 +10146,18 @@ VALUES ('Básico'),
        ('Intermedio'),
        ('Avanzado'),
        ('Nativo'); --
+create table `{$wpdb->prefix}incluyeme_prefersJobs`
+(
+	id           int auto_increment,
+	jobs_prefers varchar(50)          not null,
+	active       boolean default true null,
+	constraint incluyeme_level_experience_pk
+		primary key (id)
+); --
+
+
+INSERT INTO `{$wpdb->prefix}incluyeme_prefersJobs` (`jobs_prefers`)
+VALUES ('Informatica'),
+       ('Oficina'),
+       ('Negocios'),
+       ('RRHH'); --
