@@ -5,7 +5,7 @@ $css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
 wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
 wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
-wp_register_script('vueD', $js . 'vueH.js', ['vueJS'], '2.0.0');
+wp_register_script('vueD', $js . 'vueFirs.js', ['vueJS'], '2.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
 wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');
@@ -378,20 +378,6 @@ $baseurl = $baseurl['baseurl'];
 						<label for="Phone" style="display: none"></label>
 						<input type="number" v-model="fiPhone" class="form-control" id="Phone"
 						       placeholder="Teléfono Fijo">
-					</x-incluyeme>
-				</x-incluyeme>
-			</div>
-			<div class="container">
-				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="col">
-						<label for="country"><?php _e("Pais *", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="form-group col-6">
-						<select id="country" v-model="country" class="form-control">
-							<option v-for="(countries, index) of countries" value="countries.country_code">
-								{{countries.country_name}}
-							</option>
-						</select>
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
@@ -1435,15 +1421,17 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 								<x-incluyeme class="form-group">
 									<input type="date" v-model="dateStudiesH[pos]" name="dateStudiesH"
 									       class="form-control"
-									       id="dateStudiesH" :disabled="dateStudieB[pos]===true">
+									       id="dateStudiesH" :disabled="dateStudieB[pos]===true"
+									       v-on:change='dateStudieB[pos] = false'>
 								</x-incluyeme>
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
 								<div class="container">
-									<input class="form-check-input" type="checkbox" id="dateStudieB"
-									       v-model="dateStudieB[pos]">
+									<input class="form-check-input" type="checkbox" :id="dateStudieB[pos]"
+									       :name="dateStudieB[pos]"
+									       v-model="dateStudieB[pos]" v-on:change='dateStudiesH[pos] = false'>
 									<label class="form-check-label"
-									       for="dateStudieB"
+									       :for="dateStudieB[pos]"
 									       style="color: black"><?php _e("¿En curso?", "incluyeme-login-extension"); ?></label>
 								</div>
 							</x-incluyeme>
@@ -1519,7 +1507,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 					<x-incluyeme class="col-6" style="margin: auto; float: left;">
 						<div style="position: relative;  top: 3px;">
-							<input class="form-check-input" type="checkbox" :id="actuWork[pos]" v-model="actuWork[pos]">
+							<input class="form-check-input" type="checkbox" :id="actuWork[pos]" :name="actuWork[pos]"
+							       v-model="actuWork[pos]">
 							<label class="form-check-label"
 							       :for="actuWork[pos]"
 							       style="color: black"><?php _e("¿Actualmente trabajas aquí?", "incluyeme-login-extension"); ?></label>

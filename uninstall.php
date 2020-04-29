@@ -8,9 +8,9 @@
 if (!defined('WP_UNINSTALL_PLUGIN')) {
 	die;
 }
+global $wpdb;
 $template = plugin_dir_path(__FILE__) . '/templates/resumes/register.php';
 $route = get_template_directory();
-
 $route = $route . '/wpjobboard';
 deleteDirectory($route);
 function deleteDirectory($dir)
@@ -36,3 +36,9 @@ function deleteDirectory($dir)
 	
 	return rmdir($dir);
 }
+
+$wpdb->query('
+drop table if exists wp_incluyeme_idioms;
+drop table if exists wp_incluyeme_idioms_level;
+drop table if exists  wp_incluyeme_level_experience;
+drop table if exists wp_incluyeme_prefersjobs;');

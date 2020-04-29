@@ -27,7 +27,6 @@ function incluyeme_requirements_Login_Extension()
 	if (is_admin() && current_user_can('activate_plugins') && !is_plugin_active('wpjobboard/index.php')) {
 		add_action('admin_notices', 'incluyemeLogin_notice');
 		deactivate_plugins(plugin_basename(__FILE__));
-		
 		if (isset($_GET['activate'])) {
 			unset($_GET['activate']);
 		}

@@ -96,6 +96,7 @@ Vue.component('step12', {
 let app = new Vue({
     el: '#incluyeme-login-wpjb',
     data: {
+        userID: null,
         dateStudiesDLaboral: [],
         dateStudiesHLaboral: [],
         url: null,
@@ -191,7 +192,7 @@ let app = new Vue({
         cudSHOW: null,
         cudReader: null,
         state: null,
-        currentStep: 12,
+        currentStep: 1,
         country_edu: [],
         university_edu: [],
         studies: [],
@@ -200,7 +201,8 @@ let app = new Vue({
         idiom: [],
         lecLevel: [],
         redLevel: [],
-        oralLevel: []
+        oralLevel: [],
+        awaitChange: false
     },
     ready: function () {
         console.log('ready');
@@ -215,30 +217,54 @@ let app = new Vue({
                 return;
             }
             this.url = url;
+            if (this.awaitChange === true) {
+                return;
+            }
             switch (step) {
                 case 2:
-                    await this.confirmStep2(step);
+                    this.awaitChange = true;
+                    if (await this.confirmStep2(step) && this.currentStep <= 2) {
+                        this.getCountries();
+                        this.getStudies();
+                        this.getExperiences();
+                        this.getPrefersJobs();
+                    } else {
+                        this.currentStep = step;
+                    }
+                    break;
+                case 3:
+                    this.awaitChange = true;
                     this.getCountries();
                     this.getStudies();
                     this.getExperiences();
                     this.getPrefersJobs();
-                    break;
-                case 3:
                     await this.confirmStep3(step);
                     break;
                 case 4:
+                    this.awaitChange = true;
                     await this.confirmStep4(step);
                     this.getLevelsIdioms();
                     this.getIdioms();
                     break;
                 case 5:
+                    this.awaitChange = true;
                     await this.confirmStep5(step);
                     break;
                 case 7:
+                    this.awaitChange = true;
                     await this.confirmStep7(step);
                     break;
                 case 8:
+                    this.awaitChange = true;
                     await this.confirmStep8(step);
+                    break;
+                case 9:
+                    this.awaitChange = true;
+                    await this.confirmStep9(step)
+                    break;
+                case 10:
+                    this.awaitChange = true;
+                    await this.confirmStep10(step)
                     break;
                 default:
                     this.currentStep = step;
@@ -469,6 +495,22 @@ let app = new Vue({
                         }]
                     ],
                 });
+                if (this.password.length < 5) {
+                    iziToast.warning({
+                        title: 'Verifique',
+                        message: 'Su contraseña debe contener cinco(5) caracteres o mas',
+                        progressBarColor: 'rgb(0, 255, 184)',
+                        buttons: [
+                            ['<button>Cerrar</button>', function (instance, toast) {
+                                instance.hide({
+                                    transitionOut: 'fadeOutUp',
+                                    onClosing: function (instance, toast, closedBy) {
+                                    }
+                                }, toast, 'buttonName');
+                            }]
+                        ],
+                    });
+                }
                 return;
             } else if (this.password !== this.passwordConfirm) {
                 iziToast.warning({
@@ -487,7 +529,40 @@ let app = new Vue({
                 });
                 return;
             }
-            this.currentStep = step;
+            this.pleaseAwait();
+            let verifications = await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                email: this.email,
+                password: this.password
+            })
+                .then(function (response) {
+                    return response
+                })
+                .catch(function (error) {
+                    return true;
+                });
+            if (verifications.data.message === true) {
+                iziToast.warning({
+                    title: 'Verifique',
+                    message: 'Este email ya se encuentra segistrado',
+                    progressBarColor: 'rgb(0, 255, 184)',
+                    buttons: [
+                        ['<button>Cerrar</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp',
+                                onClosing: function (instance, toast, closedBy) {
+                                }
+                            }, toast, 'buttonName');
+                        }]
+                    ],
+                });
+                this.awaitChange = false;
+                return;
+            } else if (verifications.data.message === false) {
+                this.awaitChange = false;
+                this.currentStep = step;
+            }
+            this.awaitChange = false;
+            return false;
         },
         confirmStep3: async function (step) {
             if (!this.name || !this.lastName) {
@@ -505,8 +580,24 @@ let app = new Vue({
                         }]
                     ],
                 });
+                this.awaitChange = false;
                 return;
             }
+            this.pleaseAwait();
+            let verifications = await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                email: this.email,
+                password: this.password,
+                name: this.name,
+                lastName: this.lastName
+            })
+                .then(function (response) {
+                    return response
+                })
+                .catch(function (error) {
+                    return true;
+                });
+            this.userID = verifications.data.message;
+            this.awaitChange = false;
             this.currentStep = step;
         },
         confirmStep4: async function (step) {
@@ -525,8 +616,11 @@ let app = new Vue({
                         }]
                     ],
                 });
+                this.awaitChange = false;
                 return;
             }
+            this.pleaseAwait();
+            this.awaitChange = false;
             this.currentStep = step;
         },
         confirmStep5: async function (step) {
@@ -545,6 +639,7 @@ let app = new Vue({
                         }]
                     ],
                 });
+                this.awaitChange = false;
                 return;
             }
             if (!this.country) {
@@ -562,6 +657,7 @@ let app = new Vue({
                         }]
                     ],
                 });
+                this.awaitChange = false;
                 return;
             }
             if (!this.state) {
@@ -579,6 +675,7 @@ let app = new Vue({
                         }]
                     ],
                 });
+                this.awaitChange = false;
                 return;
             }
             if (!this.city) {
@@ -596,8 +693,11 @@ let app = new Vue({
                         }]
                     ],
                 });
+                this.awaitChange = false;
                 return;
             }
+            this.pleaseAwait();
+            this.awaitChange = false;
             this.currentStep = step;
         },
         confirmStep7: async function (step) {
@@ -616,12 +716,62 @@ let app = new Vue({
                         }]
                     ],
                 });
+                this.awaitChange = false;
                 return;
             }
             await this.drop();
             this.dropzone();
+            this.awaitChange = false;
+            this.pleaseAwait();
         },
         confirmStep8: async function (step) {
+            this.pleaseAwait();
+            this.awaitChange = false;
+            this.currentStep = step;
+        },
+        confirmStep9: async function (step) {
+            this.pleaseAwait();
+            await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                userID: this.userID,
+                country_edu: this.country_edu,
+                university_edu: this.university_edu,
+                university_otro: this.university_otro,
+                studies: this.studies,
+                titleEdu: this.titleEdu,
+                eduLevel: this.eduLevel,
+                dateStudiesD: this.dateStudiesD,
+                dateStudiesH: this.dateStudiesH,
+                dateStudieB: this.dateStudieB
+            })
+                .then(function (response) {
+                    return response
+                })
+                .catch(function (error) {
+                    return true;
+                });
+            this.awaitChange = false;
+            this.currentStep = step;
+        },
+        confirmStep10: async function (step) {
+            this.pleaseAwait();
+            await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                userID: this.userID,
+                employed: this.employed,
+                areaEmployed: this.areaEmployed,
+                jobs: this.jobs,
+                levelExperience: this.levelExperience,
+                actuWork: this.actuWork,
+                dateStudiesDLaboral: this.dateStudiesDLaboral,
+                dateStudiesHLaboral: this.dateStudiesHLaboral,
+                jobsDescript: this.jobsDescript
+            })
+                .then(function (response) {
+                    return response
+                })
+                .catch(function (error) {
+                    return true;
+                });
+            this.awaitChange = false;
             this.currentStep = step;
         },
         getUniversities: async function (id) {
@@ -635,7 +785,11 @@ let app = new Vue({
             }
         },
         changeUniversity: function (id, changes) {
-            changes ? Vue.set(app.university_otro, id, null) : Vue.set(app.university_edu, id, null);
+            if (changes === true) {
+                Vue.set(app.university_otro, id, false)
+            } else {
+                Vue.set(app.university_edu, id, false);
+            }
         },
         getUniver: async function (id) {
             return axios.get(this.url + '/incluyeme-login-extension/include/search/countries.php?countries=' + this.country_edu[id], {})
@@ -715,6 +869,22 @@ let app = new Vue({
         },
         addIdioms: async function () {
             this.formFields3.push(1);
+        },
+        pleaseAwait: function () {
+            iziToast.info({
+                title: 'Confirmando',
+                message: 'Estamos verificando su informacion, por favor espere.',
+                progressBarColor: 'rgb(0,0,0)',
+                buttons: [
+                    ['<button>Cerrar</button>', function (instance, toast) {
+                        instance.hide({
+                            transitionOut: 'fadeOutUp',
+                            onClosing: function (instance, toast, closedBy) {
+                            }
+                        }, toast, 'buttonName');
+                    }]
+                ],
+            });
         }
     }
 });
