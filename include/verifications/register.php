@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 	if (isset($_POST['userID']) && isset($_POST['areaEmployed'])) {
 		$verifications = new WP_Incluyeme_Login_Countries();
-		
 		echo $verifications->json_response(200, $verifications::updateUsersWorks($_POST['actuWork'],
 			$_POST['areaEmployed'],
 			$_POST['dateStudiesDLaboral'],
@@ -43,6 +42,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$_POST['jobs'],
 			$_POST['jobsDescript'],
 			$_POST['levelExperience'],
+			$_POST['userID']));
+		return;
+	}
+	if (isset($_POST['userID']) && isset($_POST['genre'])) {
+		$verifications = new WP_Incluyeme_Login_Countries();
+		echo $verifications->json_response(200, $verifications::updateUsersInformation($_POST['city'],
+			$_POST['dateBirthDay'],
+			$_POST['fPhone'],
+			$_POST['fiPhone,'],
+			$_POST['genre'],
+			$_POST['mPhone'],
+			$_POST['state'],
+			$_POST['street'],
+			$_POST['phone'],
 			$_POST['userID']));
 		return;
 	}

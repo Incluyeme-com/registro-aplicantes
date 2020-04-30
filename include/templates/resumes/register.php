@@ -26,6 +26,7 @@ wp_enqueue_style('bootstrap-notify-css');
 wp_enqueue_script('fAwesome');
 $baseurl = wp_upload_dir();
 $baseurl = $baseurl['baseurl'];
+$incluyemeNames = 'incluyemeNamesCV';
 ?>
 <script>
 
@@ -304,7 +305,7 @@ $baseurl = $baseurl['baseurl'];
 					<p>Género *</p>
 					<x-incluyeme class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" id="inlineCheckbox1"
-						       value="Male" v-model="genre">
+						       value="Masculino" v-model="genre">
 						<label class="form-check-label"
 						       for="inlineCheckbox1"
 						       style="color: black"><?php _e("Masculino", "incluyeme-login-extension"); ?></label>
@@ -312,7 +313,7 @@ $baseurl = $baseurl['baseurl'];
 					<x-incluyeme class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" id="inlineCheckbox2"
 						       name="inlineCheckbox1"
-						       value="Female" v-model="genre">
+						       value="Femenino" v-model="genre">
 						<label class="form-check-label"
 						       for="inlineCheckbox2"
 						       style="color: black"><?php _e("Femenino", "incluyeme-login-extension"); ?></label>
@@ -320,7 +321,7 @@ $baseurl = $baseurl['baseurl'];
 					<x-incluyeme class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" id="inlineCheckbox3"
 						       name="inlineCheckbox1"
-						       value="Bin" v-model="genre">
+						       value="No Binario" v-model="genre">
 						<label class="form-check-label"
 						       for="inlineCheckbox3"
 						       style="color: black"><?php _e("No Binario", "incluyeme-login-extension"); ?></label>
@@ -329,7 +330,7 @@ $baseurl = $baseurl['baseurl'];
 				<x-incluyeme class="form-group">
 					<label for="dateBirthDay"><?php _e("Fecha de Nacimiento *", "incluyeme-login-extension"); ?></label>
 					<input type="date" v-model="dateBirthDay" name="dateBirthDay" class="form-control" id="dateBirthDay"
-					       placeholder="Ingresa tus apellidos">
+					       placeholder="Ingresa tus fecha de nacimiento">
 				</x-incluyeme>
 			</x-incluyeme>
 			<x-incluyeme class="row mt-2">
@@ -533,14 +534,14 @@ $baseurl = $baseurl['baseurl'];
 										<span>¿Puedes permanecer de pie?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mPieS"
-											       value="true" v-model="mPie" name="mPie">
+											       value="Si" v-model="mPie" name="mPie">
 											<label class="form-check-label"
 											       for="mPieS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mPie"
-											       value="false" v-model="mPie" name="mPie">
+											       value="No" v-model="mPie" name="mPie">
 											<label class="form-check-label"
 											       for="mPie"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -550,14 +551,14 @@ $baseurl = $baseurl['baseurl'];
 										<span>¿Puedes mantenerte sentado/a? </span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mSenS"
-											       value="true" v-model="mSen" name="mSen">
+											       value="Si" v-model="mSen" name="mSen">
 											<label class="form-check-label"
 											       for="mSenS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mSen"
-											       value="false" v-model="mSen" name="mSen">
+											       value="No" v-model="mSen" name="mSen">
 											<label class="form-check-label"
 											       for="mSen"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -568,14 +569,14 @@ $baseurl = $baseurl['baseurl'];
 										<span>¿Puedes subir y bajar escaleras?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mEscaS"
-											       value="true" v-model="mEsca" name="mEsca">
+											       value="Si" v-model="mEsca" name="mEsca">
 											<label class="form-check-label"
 											       for="mEscaS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mEsca"
-											       value="false" v-model="mEsca" name="mEsca">
+											       value="No" v-model="mEsca" name="mEsca">
 											<label class="form-check-label"
 											       for="mEsca"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -586,14 +587,14 @@ $baseurl = $baseurl['baseurl'];
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mBrazoS"
-											       value="true" v-model="mBrazo" name="mBrazo">
+											       value="Si" v-model="mBrazo" name="mBrazo">
 											<label class="form-check-label"
 											       for="mBrazoS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mBrazo"
-											       value="false" v-model="mBrazo" name="mBrazo">
+											       value="No" v-model="mBrazo" name="mBrazo">
 											<label class="form-check-label"
 											       for="mBrazo"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -604,28 +605,28 @@ $baseurl = $baseurl['baseurl'];
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="peso"
-											       value="0" v-model="peso" name="peso">
+											       value="No" v-model="peso" name="peso">
 											<label class="form-check-label"
 											       for="peso"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="pesoKg"
-											       value="1" v-model="peso" name="peso">
+											       value="Hasta 5 Kg" v-model="peso" name="peso">
 											<label class="form-check-label"
 											       for="pesoKg"
 											       style="color: black"><?php _e("Hasta 5 Kg", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="peso10"
-											       value="2" v-model="peso" name="peso">
+											       value="Hasta 10 Kg" v-model="peso" name="peso">
 											<label class="form-check-label"
 											       for="peso10"
 											       style="color: black"><?php _e("Hasta 10 Kg", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="peso20"
-											       value="3" v-model="peso" name="peso">
+											       value="Hasta 20 Kg" v-model="peso" name="peso">
 											<label class="form-check-label"
 											       for="peso20"
 											       style="color: black"><?php _e("Hasta 20 Kg", "incluyeme-login-extension"); ?></label>
@@ -636,14 +637,14 @@ $baseurl = $baseurl['baseurl'];
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mRuedaS"
-											       value="true" v-model="mRueda" name="mRueda">
+											       value="Si" v-model="mRueda" name="mRueda">
 											<label class="form-check-label"
 											       for="mRuedaS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mRueda"
-											       value="false" v-model="mBrazo" name="mRueda">
+											       value="No" v-model="mBrazo" name="mRueda">
 											<label class="form-check-label"
 											       for="mRueda"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -653,21 +654,21 @@ $baseurl = $baseurl['baseurl'];
 										<span>¿Utilizas ayudas técnicas para desplazarte?
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="desplazarte"
-											       value="0" v-model="desplazarte" name="desplazarte">
+											       value="Bastón" v-model="desplazarte" name="desplazarte">
 											<label class="form-check-label"
 											       for="desplazarte"
 											       style="color: black"><?php _e("Bastón", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="Muletas"
-											       value="1" v-model="desplazarte" name="desplazarte">
+											       value="Muletas" v-model="desplazarte" name="desplazarte">
 											<label class="form-check-label"
 											       for="Muletas"
 											       style="color: black"><?php _e("Muletas", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="Otros"
-											       value="2" v-model="desplazarte" name="desplazarte">
+											       value="Otros" v-model="desplazarte" name="desplazarte">
 											<label class="form-check-label"
 											       for="Otros"
 											       style="color: black"><?php _e("Otros", "incluyeme-login-extension"); ?></label>
@@ -678,14 +679,14 @@ $baseurl = $baseurl['baseurl'];
 										      digitación? </span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mDigiS"
-											       value="true" v-model="mDigi" name="mDigi">
+											       value="Si" v-model="mDigi" name="mDigi">
 											<label class="form-check-label"
 											       for="mDigiS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="mDigi"
-											       value="false" v-model="mDigi" name="mDigi">
+											       value="No" v-model="mDigi" name="mDigi">
 											<label class="form-check-label"
 											       for="mDigi"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -714,14 +715,14 @@ $baseurl = $baseurl['baseurl'];
 										<span> ¿Tienes alguna dificultad en trabajar en ambientes húmedos?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vHumedos"
-											       value="true" v-model="vHumedos" name="vHumedos">
+											       value="Si" v-model="vHumedos" name="vHumedos">
 											<label class="form-check-label"
 											       for="vHumedos"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vHumedosS"
-											       value="false" v-model="vHumedos" name="vHumedos">
+											       value="No" v-model="vHumedos" name="vHumedos">
 											<label class="form-check-label"
 											       for="vHumedosS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -732,14 +733,14 @@ $baseurl = $baseurl['baseurl'];
 temperatura? </span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vTemp"
-											       value="true" v-model="vTemp" name="vTemp">
+											       value="Si" v-model="vTemp" name="vTemp">
 											<label class="form-check-label"
 											       for="vTemp"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vTempN"
-											       value="false" v-model="vTemp" name="vTemp">
+											       value="No" v-model="vTemp" name="vTemp">
 											<label class="form-check-label"
 											       for="vTempN"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -750,14 +751,14 @@ temperatura? </span>
 										<span>¿Tienes dificultades para trabajar en ambientes con polvo?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vPolvo"
-											       value="true" v-model="vPolvo" name="vPolvo">
+											       value="Si" v-model="vPolvo" name="vPolvo">
 											<label class="form-check-label"
 											       for="vPolvo"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vPolvov"
-											       value="false" v-model="vPolvo" name="vPolvo">
+											       value="No" v-model="vPolvo" name="vPolvo">
 											<label class="form-check-label"
 											       for="vPolvov"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -769,14 +770,14 @@ dificultad?
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vCompleta"
-											       value="true" v-model="vCompleta" name="vCompleta">
+											       value="Si" v-model="vCompleta" name="vCompleta">
 											<label class="form-check-label"
 											       for="vCompleta"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vCompletaS"
-											       value="false" v-model="vCompleta" name="vCompleta">
+											       value="No" v-model="vCompleta" name="vCompleta">
 											<label class="form-check-label"
 											       for="vCompletaS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -811,7 +812,7 @@ dificultad?
 											       style="color: black; font-weight: 400"
 											       for='vSalidas'><?php _e("Otro", "incluyeme-login-extension"); ?></label>
 											<input class="form-check-input" type="text" id="vSalidas"
-											       v-model="vAdap" name="aImplante" placeholder="Escribe aqui">
+											       v-model="vAdap" name="vAdap" placeholder="Escribe aqui">
 										</x-incluyeme>
 									</x-incluyeme>
 								</x-incluyeme>
@@ -837,14 +838,14 @@ dificultad?
 										<span>¿Puedes discriminar sonidos del ambiente?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aAmbient"
-											       value="true" v-model="aAmbient" name="aAmbient">
+											       value="Si" v-model="aAmbient" name="aAmbient">
 											<label class="form-check-label"
 											       for="aAmbient"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aAmbientS"
-											       value="false" v-model="aAmbient" name="aAmbient">
+											       value="No"" v-model="aAmbient" name="aAmbient">
 											<label class="form-check-label"
 											       for="aAmbientS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -854,14 +855,14 @@ dificultad?
 										<span>¿Utilizas lenguaje oral?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aOral"
-											       value="true" v-model="aOral" name="aOral">
+											       value="Si" v-model="aOral" name="aOral">
 											<label class="form-check-label"
 											       for="aOral"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aOralN"
-											       value="false" v-model="aOral" name="aOral">
+											       value="No" v-model="aOral" name="aOral">
 											<label class="form-check-label"
 											       for="aOralN"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -872,14 +873,14 @@ dificultad?
 										<span>¿Utilizas lengua de señas para comunicarse?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aSennas"
-											       value="true" v-model="aSennas" name="aSennas">
+											       value="Si" v-model="aSennas" name="aSennas">
 											<label class="form-check-label"
 											       for="aSennas"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aSennasS"
-											       value="false" v-model="aSennas" name="aSennas">
+											       value="No" v-model="aSennas" name="aSennas">
 											<label class="form-check-label"
 											       for="aSennasS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -890,14 +891,14 @@ dificultad?
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aLabial"
-											       value="true" v-model="aLabial" name="aLabial">
+											       value="Si" v-model="aLabial" name="aLabial">
 											<label class="form-check-label"
 											       for="aLabial"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aLabialS"
-											       value="false" v-model="aLabial" name="aLabial">
+											       value="No" v-model="aLabial" name="aLabial">
 											<label class="form-check-label"
 											       for="aLabialS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -909,14 +910,14 @@ establecer una comunicación oral fluida con otra persona?
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aBajo"
-											       value="true" v-model="aBajo" name="aBajo">
+											       value="Si" v-model="aBajo" name="aBajo">
 											<label class="form-check-label"
 											       for="aBajo"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aBajoS"
-											       value="false" v-model="aBajo" name="aBajo">
+											       value="No" v-model="aBajo" name="aBajo">
 											<label class="form-check-label"
 											       for="aBajoS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -970,14 +971,14 @@ establecer una comunicación oral fluida con otra persona?
 										<span> ¿Tienes dificultades para distinguir objetos que estén lejos?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vLejos"
-											       value="true" v-model="vLejos" name="vLejos">
+											       value="Si" v-model="vLejos" name="vLejos">
 											<label class="form-check-label"
 											       for="vLejos"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vLejosS"
-											       value="false" v-model="vLejos" name="vLejos">
+											       value="No" v-model="vLejos" name="vLejos">
 											<label class="form-check-label"
 											       for="vLejosS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -988,14 +989,14 @@ establecer una comunicación oral fluida con otra persona?
 distancia próxima?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vObservar"
-											       value="true" v-model="vObservar" name="vObservar">
+											       value="Si" v-model="vObservar" name="vObservar">
 											<label class="form-check-label"
 											       for="vObservar"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vObservarS"
-											       value="false" v-model="vTemp" name="vObservar">
+											       value="No" v-model="vTemp" name="vObservar">
 											<label class="form-check-label"
 											       for="vObservarS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1006,14 +1007,14 @@ distancia próxima?</span>
 										<span>¿Discriminas colores?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vColores"
-											       value="true" v-model="vColores" name="vColores">
+											       value="Si" v-model="vColores" name="vColores">
 											<label class="form-check-label"
 											       for="vColores"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vColoresS"
-											       value="false" v-model="vColores" name="vColores">
+											       value="No" v-model="vColores" name="vColores">
 											<label class="form-check-label"
 											       for="vColoresS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1025,14 +1026,14 @@ distintos planos, por ejemplo: adelante o atrás (perspectiva)?
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vDPlanos"
-											       value="true" v-model="vDPlanos" name="vDPlanos">
+											       value="Si" v-model="vDPlanos" name="vDPlanos">
 											<label class="form-check-label"
 											       for="vDPlanos"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="vDPlanos"
-											       value="false" v-model="vDPlanos" name="vDPlanos">
+											       value="No" v-model="vDPlanos" name="vDPlanos">
 											<label class="form-check-label"
 											       for="vDPlanosS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1067,9 +1068,9 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										<x-incluyeme class="form-check form-check-inline">
 											<label class="form-check-label mr-2"
 											       style="color: black; font-weight: 400"
-											       for="aImplantes"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
-											<input class="form-check-input" type="text" id="aImplantes"
-											       v-model="vTecniA" name="aImplante" placeholder="Escribe aqui">
+											       for="vTecniAvAS"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
+											<input class="form-check-input" type="text" id="vTecniAvAS"
+											       v-model="vTecniA" name="vTecniAvAS" placeholder="Escribe aqui">
 										</x-incluyeme>
 									</x-incluyeme>
 								</x-incluyeme>
@@ -1095,14 +1096,14 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										<span>¿Sabes leer y escribir?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteEscri"
-											       value="true" v-model="inteEscri" name="inteEscri">
+											       value="Si" v-model="inteEscri" name="inteEscri">
 											<label class="form-check-label"
 											       for="inteEscri"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteEscriS"
-											       value="false" v-model="inteEscri" name="inteEscri">
+											       value="No" v-model="inteEscri" name="inteEscri">
 											<label class="form-check-label"
 											       for="inteEscriS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1112,14 +1113,14 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										<span>¿Te trasladas solo/a en transporte público? </span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteTransla"
-											       value="true" v-model="inteTransla" name="inteTransla">
+											       value="Si" v-model="inteTransla" name="inteTransla">
 											<label class="form-check-label"
 											       for="inteTransla"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteTranslaS"
-											       value="false" v-model="inteTransla" name="inteTransla">
+											       value="No" v-model="inteTransla" name="inteTransla">
 											<label class="form-check-label"
 											       for="inteTranslaS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1130,14 +1131,14 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										<span>¿Necesitas ayuda para empezar y terminar una tarea?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteTarea"
-											       value="true" v-model="inteTarea" name="inteTarea">
+											       value="Si" v-model="inteTarea" name="inteTarea">
 											<label class="form-check-label"
 											       for="inteTarea"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteTareaS"
-											       value="false" v-model="inteTarea" name="inteTarea">
+											       value="No" v-model="inteTarea" name="inteTarea">
 											<label class="form-check-label"
 											       for="inteTareaS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1147,14 +1148,14 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										<span>¿Te molesta que te corrijan cuando realizas una actividad?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteActividad"
-											       value="true" v-model="inteActividad" name="inteActividad">
+											       value="Si" v-model="inteActividad" name="inteActividad">
 											<label class="form-check-label"
 											       for="inteActividad"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteActividadS"
-											       value="false" v-model="inteActividad" name="inteActividad">
+											       value="No" v-model="inteActividad" name="inteActividad">
 											<label class="form-check-label"
 											       for="inteActividadS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1165,14 +1166,14 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 laboral?</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteMolesto"
-											       value="true" v-model="inteMolesto" name="inteMolesto">
+											       value="Si" v-model="inteMolesto" name="inteMolesto">
 											<label class="form-check-label"
 											       for="inteMolesto"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteMolestoS"
-											       value="false" v-model="inteMolesto" name="inteMolesto">
+											       value="No" v-model="inteMolesto" name="inteMolesto">
 											<label class="form-check-label"
 											       for="inteMolestoS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1183,14 +1184,14 @@ laboral?</span>
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteTrabajar"
-											       value="true" v-model="inteTrabajar" name="inteTrabajar">
+											       value="Solo" v-model="inteTrabajar" name="inteTrabajar">
 											<label class="form-check-label"
 											       for="inteTrabajar"
 											       style="color: black"><?php _e("Solo", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteTrabajarS"
-											       value="false" v-model="inteTrabajar" name="inteTrabajar">
+											       value="Con otras personas" v-model="inteTrabajar" name="inteTrabajar">
 											<label class="form-check-label"
 											       for="inteTrabajarS"
 											       style="color: black"><?php _e("Con otras personas", "incluyeme-login-extension"); ?></label>
@@ -1246,7 +1247,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 		</template>
 		<template id="step7" v-if="currentStep == 7">
 			<div class="container">
-				<h1>Adjunta tu Foto, CV y Certificado Único de Discapacidad</h1>
+				<h1>Adjunta tu Foto, CV
+				    y<?php echo ' '.get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?> </h1>
 				<div class="container">
 					<h3>Foto de Perfil</h3>
 					<x-incluyeme class="row m-auto">
@@ -1283,7 +1285,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</div>
 				<div class="container">
-					<h3>Certificado Único de Discapacidad</h3>
+					<h3><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></h3>
 					<x-incluyeme class="row m-auto">
 						<x-incluyeme class="col-8">
 							<div id="drop-zoneCUD">

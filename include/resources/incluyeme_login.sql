@@ -10108,7 +10108,6 @@ create table `{$wpdb->prefix}incluyeme_level_experience`
 		primary key (id)
 ); --
 
-
 INSERT INTO `{$wpdb->prefix}incluyeme_level_experience` (`name_incluyeme_exp`)
 VALUES ('Training'),
        ('Junior'),
@@ -10124,13 +10123,12 @@ create table `{$wpdb->prefix}incluyeme_idioms`
 		primary key (id)
 ); --
 
+INSERT INTO `{$wpdb->prefix}incluyeme_idioms` (`id`, `name_idioms`)
+VALUES (1, 'Inglés'),
+       (2, 'Frances'),
+       (3, 'Portugues'),
+       (4, 'Aleman'); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_idioms` (`name_idioms`)
-VALUES ('Inglés'),
-       ('Frances'),
-       ('Portugues'),
-       ('Aleman'); --
-       
 create table `{$wpdb->prefix}incluyeme_idioms_level`
 (
 	id         int auto_increment,
@@ -10140,15 +10138,15 @@ create table `{$wpdb->prefix}incluyeme_idioms_level`
 		primary key (id)
 ); --
 
+INSERT INTO `{$wpdb->prefix}incluyeme_idioms_level` (`id`, `name_level`)
+VALUES (1, 'Básico'),
+       (2, 'Intermedio'),
+       (3, 'Avanzado'),
+       (4, 'Nativo'); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_idioms_level` (`name_level`)
-VALUES ('Básico'),
-       ('Intermedio'),
-       ('Avanzado'),
-       ('Nativo'); --
 create table `{$wpdb->prefix}incluyeme_prefersJobs`
 (
-	id           int auto_increment,
+	id           int auto_increment not null,
 	jobs_prefers varchar(50)          not null,
 	active       boolean default true null,
 	constraint incluyeme_level_experience_pk
@@ -10161,3 +10159,128 @@ VALUES ('Informatica'),
        ('Oficina'),
        ('Negocios'),
        ('RRHH'); --
+
+create table `{$wpdb->prefix}incluyeme_discapacities`
+(
+	id          int auto_increment not null,
+	discap_name varchar(45)          not null,
+	active      boolean default true null,
+	constraint incluyeme_discapacities_pk
+		primary key (id)
+); --
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities` (`id`, `discap_name`)
+VALUES (1, 'Motriz'),
+       (2, 'Auditiva'),
+       (3, 'Visual'),
+       (4, 'Visceral'),
+       (5, 'Intelectual'),
+       (6, 'Psíquica'),
+       (7, 'Habla'); --
+
+create table `{$wpdb->prefix}incluyeme_discapacities_questions`
+(
+	id                         int auto_increment not null,
+	discapacities_questions    text                 not null,
+	incluyeme_discapacities_id int                  not null,
+	active                     boolean default true null,
+	constraint incluyeme_discapacities_questions_pk
+		primary key (id)
+); --
+
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (1, '¿Puedes permanecer de pie?'),
+       (1, '¿Puedes mantenerte sentado/a?'),
+       (1, '¿Puedes subir y bajar escaleras?'),
+       (1, '¿Tienes movilidad en tus brazos?'),
+       (1, '¿Puedes tomar peso?'),
+       (1, '¿Utilizas silla de ruedas?'),
+       (1, '¿Puedes realizar tareas de precisión con tus manos, por ejemplo,
+digitación?'),
+       (1, '¿Utilizas ayudas técnicas para desplazarte?'); --
+
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (2, '¿Puedes discriminar sonidos del ambiente?'),
+       (2, '¿Utilizas lenguaje oral?'),
+       (2, '¿Utilizas lengua de señas para comunicarse?'),
+       (2, '¿Puedes utilizar lectura labial?'),
+       (2, '¿En un ambiente con bajo ruido (por ejemplo: oficina) puedes
+establecer una comunicación oral fluida con otra persona?'),
+       (2, '¿Utilizas alguna ayuda técnica? '); --
+
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (3, '¿Tienes dificultades para distinguir objetos que estén lejos?'),
+       (3, '¿Tienes dificultades en distinguir u observar objetos o textos a una
+distancia próxima?'),
+       (3, '¿Utilizas alguna ayuda técnica?'),
+       (3, '¿Discriminas colores?'),
+       (3, '¿Puede identificar elementos visuales que se encuentren en
+distintos planos, por ejemplo: adelante o atrás (perspectiva)?'); --
+
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (4, '¿Tienes alguna dificultad en trabajar en ambientes húmedos?'),
+       (4, '¿Presentas alguna dificultad al trabajar en ambientes con alta o baja
+temperatura?'),
+       (4, '¿Tienes dificultades para trabajar en ambientes con polvo?'),
+       (4, '¿Tienes la posibilidad de trabajar durante una jornada completa sin
+dificultad?'),
+       (4, '¿Requieres alguna adaptación para realizar tu trabajo?'); --
+
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (5, '¿Sabes leer y escribir?'),
+       (5, '¿Te trasladas solo/a en transporte público?'),
+       (5, '¿Necesitas ayuda para empezar y terminar una tarea?'),
+       (5, '¿Te gustra trabajar?'),
+       (5, '¿Prefieres trabajar en?'),
+       (5, '¿Te molesta si te cambian las actividades durante la jornada
+laboral?'),
+       (5, '¿Te molesta que te corrijan cuando realizas una actividad?'); --
+
+create table `{$wpdb->prefix}incluyeme_users_questions`
+(
+	id          int auto_increment not null,
+	resume_id   int  not null,
+	question_id int  not null,
+	answer      text not null default 1,
+	active      boolean       default true null,
+	constraint incluyeme_users_questions_pk
+		primary key (id)
+); --
+
+create table `{$wpdb->prefix}incluyeme_users_information`
+(
+	id        int auto_increment not null,
+	genre     varchar(45)  not null,
+	birthday  varchar(50)  not null,
+	phonem    varchar(30)  not null,
+	codphonem varchar(10)  not null,
+	phonef    varchar(30)  null,
+	codphonef varchar(10)  null,
+	province  varchar(50)  not null,
+	city      varchar(20)  not null,
+	street    varchar(100) null,
+	resume_id int          not null,
+	preferjob_id int null,
+	constraint incluyeme_users_contacInformation_pk
+		primary key (id)
+); --
+
+create table `{$wpdb->prefix}incluyeme_users_dicapselect`
+(
+	id int auto_increment,
+	discap_id int not null,
+	resume_id int not null,
+	constraint incluyeme_users_dicapselect_pk
+		primary key (id)
+); --
+
+create table `{$wpdb->prefix}incluyeme_users_idioms`
+(
+	id int auto_increment,
+	idioms_id int not null,
+	slevel int not null,
+	olevel int not null,
+	wlevel int not null,
+	resume_id int not null,
+	constraint incluyeme_users_dicapselect_pk
+		primary key (id)
+); --

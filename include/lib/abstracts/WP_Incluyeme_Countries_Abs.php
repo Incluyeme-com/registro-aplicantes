@@ -136,14 +136,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		return self::userRegisterWPBJ();
 	}
 	
-	public static function updateUsersEducation($dateStudieB,
-	                                            $dateStudiesD,
-	                                            $dateStudiesH,
-	                                            $eduLevel,
-	                                            $studies,
-	                                            $titleEdu,
-	                                            $university_edu,
-	                                            $university_otro, $country_edu, $userID)
+	public static function updateUsersEducation($dateStudieB, $dateStudiesD, $dateStudiesH, $eduLevel, $studies, $titleEdu, $university_edu, $university_otro, $country_edu, $userID)
 	{
 		for ($i = 0; $i < count($titleEdu); $i++) {
 			self::$wp->insert(self::$wp->prefix . 'wpjb_resume_detail', [
@@ -160,15 +153,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		return $userID;
 	}
 	
-	public static function updateUsersWorks($actuWork,
-	                                        $areaEmployed,
-	                                        $dateStudiesDLaboral,
-	                                        $dateStudiesHLabor,
-	                                        $employed,
-	                                        $jobs,
-	                                        $jobsDescript,
-	                                        $levelExperience,
-	                                        $userID)
+	public static function updateUsersWorks($actuWork, $areaEmployed, $dateStudiesDLaboral, $dateStudiesHLabor, $employed, $jobs, $jobsDescript, $levelExperience, $userID)
 	{
 		for ($i = 0; $i < count($jobs); $i++) {
 			self::$wp->insert(self::$wp->prefix . 'wpjb_resume_detail', [
@@ -185,4 +170,38 @@ abstract class WP_Incluyeme_Countries_Abs
 		
 		return $userID;
 	}
+	
+	public static function updateUsersInformation($city, $dateBirthDay, $fPhone, $fiPhone, $genre, $mPhone, $state, $street, $phone, $userID)
+	{
+		$verification = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'incluyeme_users_information where resume_id = ' . $userID);
+		
+		if (count($verification) > 0) {
+			self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+				'genre' => $genre ?? '',
+				'birthday' => $dateBirthDay ?? '',
+				'phonem' => $phone ?? '',
+				'codphonem' => $mPhone ?? '',
+				'phonef' => $fPhone ?? '',
+				'codphonef' => $fiPhone ?? '',
+				'province' => $state ?? '',
+				'city' => $city ?? '',
+				'street' => $street ?? ''
+			], ['resume_id' => $userID]);
+		} else {
+			self::$wp->insert(self::$wp->prefix . 'incluyeme_users_information', [
+				'genre' => $genre ?? '',
+				'birthday' => $dateBirthDay ?? '',
+				'phonem' => $phone ?? '',
+				'codphonem' => $mPhone ?? '',
+				'phonef' => $fPhone ?? '',
+				'codphonef' => $fiPhone ?? '',
+				'province' => $state ?? '',
+				'city' => $city ?? '',
+				'street' => $street ?? '',
+				'resume_id' => $userID,
+			]);
+		}
+		return true;
+	}
+	
 }
