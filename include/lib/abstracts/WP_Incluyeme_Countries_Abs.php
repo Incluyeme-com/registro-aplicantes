@@ -16,6 +16,8 @@ abstract class WP_Incluyeme_Countries_Abs
 	protected static $userSlug;
 	protected static $userID;
 	protected static $wp;
+	protected static $usersDiscapTable;
+	protected static $usersDisQuestions;
 	
 	public function __construct()
 	{
@@ -28,6 +30,8 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$levelsIdioms = $wpdb->prefix . 'incluyeme_idioms_level';
 		self::$idioms = $wpdb->prefix . 'incluyeme_idioms';
 		self::$prefersJobs = $wpdb->prefix . 'incluyeme_prefersJobs';
+		self::$usersDiscapTable = $wpdb->prefix . 'incluyeme_users_dicapselect';
+		self::$usersDisQuestions = $wpdb->prefix . 'incluyeme_users_questions';
 		self::$country = false;
 	}
 	
@@ -204,4 +208,477 @@ abstract class WP_Incluyeme_Countries_Abs
 		return true;
 	}
 	
+	public static function updateMotriz($userID, $mPie, $mSen, $mEsca, $mBrazo, $peso, $mRueda, $desplazarte, $mDigi)
+	{
+		if (isset($mPie)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 1');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $mPie,
+				], ['resume_id' => $userID, 'question_id' => 1]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 1,
+					'answer' => $mPie,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($mSen)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 2');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $mSen,
+				], ['resume_id' => $userID, 'question_id' => 2]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 2,
+					'answer' => $mSen,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($mEsca)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 3');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $mEsca,
+				], ['resume_id' => $userID, 'question_id' => 3]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 3,
+					'answer' => $mEsca,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($mBrazo)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 4');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $mBrazo,
+				], ['resume_id' => $userID, 'question_id' => 4]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 4,
+					'answer' => $mBrazo,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($peso)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 5');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $peso,
+				], ['resume_id' => $userID, 'question_id' => 5]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 5,
+					'answer' => $peso,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($mRueda)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 6');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $mRueda,
+				], ['resume_id' => $userID, 'question_id' => 6]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 6,
+					'answer' => $mRueda,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($desplazarte)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 8');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $desplazarte,
+				], ['resume_id' => $userID, 'question_id' => 8]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 8,
+					'answer' => $desplazarte,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($mRueda)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 7');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $mDigi,
+				], ['resume_id' => $userID, 'question_id' => 7]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 7,
+					'answer' => $mDigi,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		return true;
+	}
+	
+	public static function updateAuditiva($aAmbient, $aSennas, $aLabial, $aBajo, $aImplante, $aOral, $userID)
+	{
+		if (isset($aAmbient)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 9');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $aAmbient,
+				], ['resume_id' => $userID, 'question_id' => 9]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 9,
+					'answer' => $aAmbient,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($aSennas)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 11');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $aSennas,
+				], ['resume_id' => $userID, 'question_id' => 11]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 11,
+					'answer' => $aSennas,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($aLabial)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 12');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $aLabial,
+				], ['resume_id' => $userID, 'question_id' => 12]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 12,
+					'answer' => $aLabial,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($aBajo)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 13');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $aBajo,
+				], ['resume_id' => $userID, 'question_id' => 13]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 13,
+					'answer' => $aBajo,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($aImplante)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 14');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $aImplante,
+				], ['resume_id' => $userID, 'question_id' => 14]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 14,
+					'answer' => $aImplante,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($aOral)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 10');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $aOral,
+				], ['resume_id' => $userID, 'question_id' => 10]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 10,
+					'answer' => $aOral,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		return true;
+	}
+	
+	public static function updateVisual($userID, $vLejos, $vObservar, $vColores, $vDPlanos, $vTecniA)
+	{
+		if (isset($vLejos)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 15');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vLejos,
+				], ['resume_id' => $userID, 'question_id' => 15]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 15,
+					'answer' => $vLejos,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($vObservar)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 16');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vObservar,
+				], ['resume_id' => $userID, 'question_id' => 16]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 16,
+					'answer' => $vObservar,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($vColores)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 18');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vColores,
+				], ['resume_id' => $userID, 'question_id' => 18]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 18,
+					'answer' => $vColores,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($vDPlanos)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 19');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vDPlanos,
+				], ['resume_id' => $userID, 'question_id' => 19]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 19,
+					'answer' => $vDPlanos,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($vTecniA)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 17');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vTecniA,
+				], ['resume_id' => $userID, 'question_id' => 17]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 17,
+					'answer' => $vTecniA,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		return true;
+	}
+	
+	public static function updateVisceral($userID, $vHumedos, $vTemp, $vPolvo, $vCompleta, $vAdap)
+	{
+		if (isset($vHumedos)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 20');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vHumedos,
+				], ['resume_id' => $userID, 'question_id' => 20]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 20,
+					'answer' => $vHumedos,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($vTemp)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 21');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vTemp,
+				], ['resume_id' => $userID, 'question_id' => 21]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 21,
+					'answer' => $vTemp,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($vPolvo)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 22');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vPolvo,
+				], ['resume_id' => $userID, 'question_id' => 22]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 22,
+					'answer' => $vPolvo,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($vCompleta)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 23');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vCompleta,
+				], ['resume_id' => $userID, 'question_id' => 23]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 23,
+					'answer' => $vCompleta,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($vAdap)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 24');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $vAdap,
+				], ['resume_id' => $userID, 'question_id' => 24]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 24,
+					'answer' => $vAdap,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		return true;
+	}
+	
+	public static function updateIntelectual($userID, $inteEscri, $inteTransla, $inteTarea, $inteActividad, $inteMolesto, $inteTrabajar, $inteTrabajarSolo)
+	{
+		if (isset($inteEscri)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 25');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $inteEscri,
+				], ['resume_id' => $userID, 'question_id' => 25]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 25,
+					'answer' => $inteEscri,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($inteTransla)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 26');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $inteTransla,
+				], ['resume_id' => $userID, 'question_id' => 26]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 26,
+					'answer' => $inteTransla,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($inteTarea)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 27');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $inteTarea,
+				], ['resume_id' => $userID, 'question_id' => 27]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 27,
+					'answer' => $inteTarea,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($inteActividad)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 31');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $inteActividad,
+				], ['resume_id' => $userID, 'question_id' => 31]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 31,
+					'answer' => $inteActividad,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($inteMolesto)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 30');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $inteMolesto,
+				], ['resume_id' => $userID, 'question_id' => 30]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 30,
+					'answer' => $inteMolesto,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($inteTrabajar)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 28');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $inteTrabajar,
+				], ['resume_id' => $userID, 'question_id' => 28]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 28,
+					'answer' => $inteTrabajar,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($inteTrabajarSolo)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 29');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$wp->prefix . 'incluyeme_users_information', [
+					'answer' => $inteTrabajarSolo,
+				], ['resume_id' => $userID, 'question_id' => 29]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 29,
+					'answer' => $inteTrabajarSolo,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		return true;
+	}
+	
+	public static function updateDiscapacidades($userID, $discaps)
+	{
+		for ($i = 0; $i < count($discaps); $i++) {
+			$result = self::$wp->get_results('SELECT * from ' . self::$usersDiscapTable . ' where resume_id = ' . $userID . 'AND discap_id = ' . $discaps[$i]);
+			if (count($result) > 0) {
+				self::$wp->insert(self::$usersDiscapTable, [
+					'discap_id' => $discaps[$i],
+					'resume_id' => $userID
+				]);
+			}
+		}
+		self::$wp->get_results('DELETE from' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . ' AND discap_id NOT IN ' . $discaps);
+		return true;
+	}
 }

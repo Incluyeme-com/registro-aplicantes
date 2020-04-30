@@ -10187,61 +10187,61 @@ create table `{$wpdb->prefix}incluyeme_discapacities_questions`
 		primary key (id)
 ); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
-VALUES (1, '¿Puedes permanecer de pie?'),
-       (1, '¿Puedes mantenerte sentado/a?'),
-       (1, '¿Puedes subir y bajar escaleras?'),
-       (1, '¿Tienes movilidad en tus brazos?'),
-       (1, '¿Puedes tomar peso?'),
-       (1, '¿Utilizas silla de ruedas?'),
-       (1, '¿Puedes realizar tareas de precisión con tus manos, por ejemplo,
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`id`, `incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (1, 1, '¿Puedes permanecer de pie?'),
+       (2, 1, '¿Puedes mantenerte sentado/a?'),
+       (3, 1, '¿Puedes subir y bajar escaleras?'),
+       (4, 1, '¿Tienes movilidad en tus brazos?'),
+       (5, 1, '¿Puedes tomar peso?'),
+       (6, 1, '¿Utilizas silla de ruedas?'),
+       (7, 1, '¿Puedes realizar tareas de precisión con tus manos, por ejemplo,
 digitación?'),
-       (1, '¿Utilizas ayudas técnicas para desplazarte?'); --
+       (8, 1, '¿Utilizas ayudas técnicas para desplazarte?'); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
-VALUES (2, '¿Puedes discriminar sonidos del ambiente?'),
-       (2, '¿Utilizas lenguaje oral?'),
-       (2, '¿Utilizas lengua de señas para comunicarse?'),
-       (2, '¿Puedes utilizar lectura labial?'),
-       (2, '¿En un ambiente con bajo ruido (por ejemplo: oficina) puedes
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`id`, `incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (9, 2, '¿Puedes discriminar sonidos del ambiente?'),
+       (10, 2, '¿Utilizas lenguaje oral?'),
+       (11, 2, '¿Utilizas lengua de señas para comunicarse?'),
+       (12, 2, '¿Puedes utilizar lectura labial?'),
+       (13, 2, '¿En un ambiente con bajo ruido (por ejemplo: oficina) puedes
 establecer una comunicación oral fluida con otra persona?'),
-       (2, '¿Utilizas alguna ayuda técnica? '); --
+       (14, 2, '¿Utilizas alguna ayuda técnica? '); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
-VALUES (3, '¿Tienes dificultades para distinguir objetos que estén lejos?'),
-       (3, '¿Tienes dificultades en distinguir u observar objetos o textos a una
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`id`, `incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (15, 3, '¿Tienes dificultades para distinguir objetos que estén lejos?'),
+       (16, 3, '¿Tienes dificultades en distinguir u observar objetos o textos a una
 distancia próxima?'),
-       (3, '¿Utilizas alguna ayuda técnica?'),
-       (3, '¿Discriminas colores?'),
-       (3, '¿Puede identificar elementos visuales que se encuentren en
+       (17, 3, '¿Utilizas alguna ayuda técnica?'),
+       (18, 3, '¿Discriminas colores?'),
+       (19, 3, '¿Puede identificar elementos visuales que se encuentren en
 distintos planos, por ejemplo: adelante o atrás (perspectiva)?'); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
-VALUES (4, '¿Tienes alguna dificultad en trabajar en ambientes húmedos?'),
-       (4, '¿Presentas alguna dificultad al trabajar en ambientes con alta o baja
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`id`, `incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (20, 4, '¿Tienes alguna dificultad en trabajar en ambientes húmedos?'),
+       (21, 4, '¿Presentas alguna dificultad al trabajar en ambientes con alta o baja
 temperatura?'),
-       (4, '¿Tienes dificultades para trabajar en ambientes con polvo?'),
-       (4, '¿Tienes la posibilidad de trabajar durante una jornada completa sin
+       (22, 4, '¿Tienes dificultades para trabajar en ambientes con polvo?'),
+       (23, 4, '¿Tienes la posibilidad de trabajar durante una jornada completa sin
 dificultad?'),
-       (4, '¿Requieres alguna adaptación para realizar tu trabajo?'); --
+       (24, 4, '¿Requieres alguna adaptación para realizar tu trabajo?'); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`incluyeme_discapacities_id`, `discapacities_questions`)
-VALUES (5, '¿Sabes leer y escribir?'),
-       (5, '¿Te trasladas solo/a en transporte público?'),
-       (5, '¿Necesitas ayuda para empezar y terminar una tarea?'),
-       (5, '¿Te gustra trabajar?'),
-       (5, '¿Prefieres trabajar en?'),
-       (5, '¿Te molesta si te cambian las actividades durante la jornada
+INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`id`, `incluyeme_discapacities_id`, `discapacities_questions`)
+VALUES (25, 5, '¿Sabes leer y escribir?'),
+       (26, 5, '¿Te trasladas solo/a en transporte público?'),
+       (27, 5, '¿Necesitas ayuda para empezar y terminar una tarea?'),
+       (28, 5, '¿Te gustra trabajar?'),
+       (29, 5, '¿Prefieres trabajar en?'),
+       (30, 5, '¿Te molesta si te cambian las actividades durante la jornada
 laboral?'),
-       (5, '¿Te molesta que te corrijan cuando realizas una actividad?'); --
+       (31, 5, '¿Te molesta que te corrijan cuando realizas una actividad?'); --
 
 create table `{$wpdb->prefix}incluyeme_users_questions`
 (
 	id          int auto_increment not null,
-	resume_id   int  not null,
-	question_id int  not null,
-	answer      text not null default 1,
-	active      boolean       default true null,
+	resume_id   int                not null,
+	question_id int                not null,
+	answer      text               not null default 1,
+	active      boolean                     default true null,
 	constraint incluyeme_users_questions_pk
 		primary key (id)
 ); --

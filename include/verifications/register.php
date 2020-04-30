@@ -59,5 +59,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$_POST['userID']));
 		return;
 	}
+	if (isset($_POST['userID']) && isset($_POST['discaps'])) {
+		$verifications = new WP_Incluyeme_Login_Countries();
+		$verifications::updateDiscapacidades($_POST['userID'], $_POST['discaps']);
+		if (isset($_POST['userID']) && isset($_POST['motriz'])) {
+			$verifications::updateMotriz($_POST['userID'], $_POST['motriz'], $_POST['mPie'],
+				$_POST['mSen'],
+				$_POST['mEsca'],
+				$_POST['mBrazo'],
+				$_POST['peso'],
+				$_POST['mRueda'],
+				$_POST['desplazarte'],
+				$_POST['mDigi']);
+		}
+		if (isset($_POST['userID']) && isset($_POST['auditiva'])) {
+			$verifications::updateAuditiva($_POST['aAmbient'],
+				$_POST['aSennas'],
+				$_POST['aLabial'],
+				$_POST['aBajo'],
+				$_POST['aImplante'], $_POST['aOral'], $_POST['userID']);
+		}
+		if (isset($_POST['userID']) && isset($_POST['visual'])) {
+			$verifications::updateVisual($_POST['userID'],
+				$_POST['vLejos'],
+				$_POST['vObservar'],
+				$_POST['vColores'],
+				$_POST['vDPlanos'],
+				$_POST['vTecniA']
+			);
+			
+		}
+		if (isset($_POST['userID']) && isset($_POST['visceral'])) {
+			$verifications::updateVisceral($_POST['userID'],
+				$_POST['vHumedos'],
+				$_POST['vTemp'],
+				$_POST['vPolvo'],
+				$_POST['vCompleta'],
+				$_POST['vAdap']);
+			
+		}
+		if (isset($_POST['userID']) && isset($_POST['intelectual'])) {
+			$verifications::updateIntelectual($_POST['userID'],
+				$_POST['inteEscri'],
+				$_POST['inteTransla'],
+				$_POST['inteTarea'],
+				$_POST['inteActividad'],
+				$_POST['inteMolesto'],
+				$_POST['inteTrabajar'],
+				$_POST['inteTrabajarSolo']);
+		}
+		return;
+	}
+	
 }
 return;

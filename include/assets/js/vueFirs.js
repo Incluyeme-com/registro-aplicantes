@@ -264,12 +264,14 @@ let app = new Vue({
                     }
                     break;
                 case 7:
+                    console.log(this.currentStep)
                     if (this.currentStep <= 7) {
                         this.awaitChange = true;
                         await this.confirmStep7(step);
                     } else {
                         this.currentStep = step
                     }
+                    console.log(this.currentStep)
                     break;
                 case 8:
                     if (this.currentStep <= 8) {
@@ -744,89 +746,85 @@ let app = new Vue({
                         }]
                     ],
                 });
-                this.pleaseAwait();
-                const data = {
-                    moreDis: this.moreDis,
-                    userID: this.userID,
-                    phone: this.phone,
-                    discaps: []
-                }
-                if (this.motriz) {
-                    data.discaps.push(1);
-                    data.motriz = 1;
-                    data.mPie = this.mPie;
-                    data.mSen = this.mSen;
-                    data.mEsca = this.mEsca;
-                    data.mBrazo = this.mBrazo;
-                    data.peso = this.peso;
-                    data.mRueda = this.mRueda;
-                    data.desplazarte = this.desplazarte;
-                    data.mDigi = this.mDigi;
-                }
-                if (this.auditiva) {
-                    data.discaps.push(2);
-                    data.auditiva = 2;
-                    data.aAmbient = this.aAmbient;
-                    data.aSennas = this.aSennas;
-                    data.aLabial = this.aLabial;
-                    data.aBajo = this.aBajo;
-                    data.aImplante = this.aImplante;
-                }
-                if (this.visual) {
-                    data.discaps.push(3);
-                    data.visual = 3;
-                    data.vLejos = this.vLejos;
-                    data.vObservar = this.vObservar;
-                    data.vColores = this.vColores;
-                    data.vDPlanos = this.vDPlanos;
-                    data.vTecniA = this.vTecniA;
-                }
-                if (this.visceral) {
-                    data.discaps.push(4);
-                    data.visceral = 4;
-                    data.vHumedos = this.vHumedos;
-                    data.vTemp = this.vTemp;
-                    data.vPolvo = this.vPolvo;
-                    data.vCompleta = this.vCompleta;
-                    data.vAdap = this.vAdap;
-
-                }
-                if (this.intelectual) {
-                    data.discaps.push(5);
-                    data.intelectual = 5;
-                    data.inteEscri = this.inteEscri;
-                    data.inteTransla = this.inteTransla;
-                    data.inteTarea = this.inteTarea;
-                    data.inteActividad = this.inteActividad;
-                    data.inteMolesto = this.inteMolesto;
-                    data.inteTrabajar = this.inteTrabajar;
-                    data.inteTrabajarSolo = this.inteTrabajarSolo;
-                }
-                if (this.psiquica) {
-                    data.discaps.push(6);
-                    data.psiquica = 6;
-                }
-                if (this.habla) {
-                    data.discaps.push(7);
-                    data.habla = 7;
-                }
-
-
-                await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', data)
-                    .then(function (response) {
-                        return response
-                    })
-                    .catch(function (error) {
-                        return true;
-                    });
-                this.awaitChange = false;
-                this.currentStep = step;
                 return;
             }
+            this.pleaseAwait();
+            const data = {
+                moreDis: this.moreDis,
+                userID: this.userID,
+                discaps: []
+            }
+            if (this.motriz) {
+                data.discaps.push(1);
+                data.motriz = 1;
+                data.mPie = this.mPie;
+                data.mSen = this.mSen;
+                data.mEsca = this.mEsca;
+                data.mBrazo = this.mBrazo;
+                data.peso = this.peso;
+                data.mRueda = this.mRueda;
+                data.desplazarte = this.desplazarte;
+                data.mDigi = this.mDigi;
+            }
+            if (this.auditiva) {
+                data.discaps.push(2);
+                data.auditiva = 2;
+                data.aAmbient = this.aAmbient;
+                data.aSennas = this.aSennas;
+                data.aLabial = this.aLabial;
+                data.aBajo = this.aBajo;
+                data.aImplante = this.aImplante;
+                data.aOral = this.aOral;
+            }
+            if (this.visual) {
+                data.discaps.push(3);
+                data.visual = 3;
+                data.vLejos = this.vLejos;
+                data.vObservar = this.vObservar;
+                data.vColores = this.vColores;
+                data.vDPlanos = this.vDPlanos;
+                data.vTecniA = this.vTecniA;
+            }
+            if (this.visceral) {
+                data.discaps.push(4);
+                data.visceral = 4;
+                data.vHumedos = this.vHumedos;
+                data.vTemp = this.vTemp;
+                data.vPolvo = this.vPolvo;
+                data.vCompleta = this.vCompleta;
+                data.vAdap = this.vAdap;
+
+            }
+            if (this.intelectual) {
+                data.discaps.push(5);
+                data.intelectual = 5;
+                data.inteEscri = this.inteEscri;
+                data.inteTransla = this.inteTransla;
+                data.inteTarea = this.inteTarea;
+                data.inteActividad = this.inteActividad;
+                data.inteMolesto = this.inteMolesto;
+                data.inteTrabajar = this.inteTrabajar;
+                data.inteTrabajarSolo = this.inteTrabajarSolo;
+            }
+            if (this.psiquica) {
+                data.discaps.push(6);
+                data.psiquica = 6;
+            }
+            if (this.habla) {
+                data.discaps.push(7);
+                data.habla = 7;
+            }
+            await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', data)
+                .then(function (response) {
+                    return response
+                })
+                .catch(function (error) {
+                    return true;
+                });
+            this.currentStep = step;
             await this.drop();
             this.dropzone();
             this.awaitChange = false;
-            this.pleaseAwait();
         },
         confirmStep8: async function (step) {
             this.pleaseAwait();

@@ -845,10 +845,10 @@ dificultad?
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="aAmbientS"
-											       value="No"" v-model="aAmbient" name="aAmbient">
+											       value="No" v-model="aAmbient" name="aAmbient">
 											<label class="form-check-label"
 											       for="aAmbientS"
-											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+											       style="color: black"> <?php _e("No", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
@@ -1248,7 +1248,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 		<template id="step7" v-if="currentStep == 7">
 			<div class="container">
 				<h1>Adjunta tu Foto, CV
-				    y<?php echo ' '.get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?> </h1>
+				    y <?php echo get_option($incluyemeNames) ? ' '.get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h1>
 				<div class="container">
 					<h3>Foto de Perfil</h3>
 					<x-incluyeme class="row m-auto">
