@@ -827,7 +827,28 @@ let app = new Vue({
             this.awaitChange = false;
         },
         confirmStep8: async function (step) {
-            this.pleaseAwait();
+            const data = new FormData();
+            if (this.image !== null || this.cud !== null || this.cv !== null) {
+                if (this.image !== null) {
+                    data.append('img_path', this.image);
+                }
+                if (this.cud !== null) {
+                    data.append('cud', this.cud);
+                }
+                if (this.cv !== null) {
+                    data.append('cv', this.cv);
+                }
+                data.append('files', '1');
+                data.append('userID', this.userID);
+                this.pleaseAwait();
+                await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', data)
+                    .then(function (response) {
+                        return response
+                    })
+                    .catch(function (error) {
+                        return true;
+                    });
+            }
             this.awaitChange = false;
             this.currentStep = step;
         },

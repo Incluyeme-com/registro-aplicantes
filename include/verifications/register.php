@@ -2,16 +2,28 @@
 include_once dirname(__DIR__, 1) . '/lib/WP_Incluyeme_Login_Countries.php';
 header('Content-type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$verifications = new WP_Incluyeme_Login_Countries();
+	if (isset($_POST['userID']) && isset($_POST['files'])) {
+		
+		if (isset($_POST['userID']) && isset($_FILES['img_path']) && !$_FILES['img_path']['error']) {
+			$verifications::updateIMG($_POST['userID'], $_FILES['img_path']);
+		}
+		if (isset($_POST['userID']) && isset($_FILES['cud']) && !$_FILES['cud']['error']) {
+			$verifications::updateCUD($_POST['userID'], $_FILES['cud']);
+		}
+		if (isset($_POST['userID']) && isset($_FILES['cv']) && !$_FILES['cv']['error']) {
+			$verifications::updateCV($_POST['userID'], $_FILES['cv']);
+		}
+		return;
+	}
 	$_POST = json_decode(file_get_contents("php://input"), true);
 	if (isset($_POST['email']) && isset($_POST['password']) && !isset($_POST['name']) && !isset($_POST['lastName'])) {
-		$verifications = new WP_Incluyeme_Login_Countries();
 		$email = sanitize_email($_POST['email']);
 		$password = sanitize_email($_POST['password']);
 		echo $verifications->json_response(200, $verifications::searchUserExist($email, $password));
 		return;
 	}
 	if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['lastName'])) {
-		$verifications = new WP_Incluyeme_Login_Countries();
 		$email = sanitize_email($_POST['email']);
 		$password = sanitize_email($_POST['password']);
 		$name = sanitize_text_field($_POST['name']);
@@ -20,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		return;
 	}
 	if (isset($_POST['userID']) && isset($_POST['country_edu'])) {
-		$verifications = new WP_Incluyeme_Login_Countries();
 		
 		echo $verifications->json_response(200, $verifications::updateUsersEducation($_POST['dateStudieB'],
 			$_POST['dateStudiesD'],
@@ -33,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		return;
 	}
 	if (isset($_POST['userID']) && isset($_POST['areaEmployed'])) {
-		$verifications = new WP_Incluyeme_Login_Countries();
 		echo $verifications->json_response(200, $verifications::updateUsersWorks($_POST['actuWork'],
 			$_POST['areaEmployed'],
 			$_POST['dateStudiesDLaboral'],
@@ -46,7 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		return;
 	}
 	if (isset($_POST['userID']) && isset($_POST['genre'])) {
-		$verifications = new WP_Incluyeme_Login_Countries();
 		echo $verifications->json_response(200, $verifications::updateUsersInformation($_POST['city'],
 			$_POST['dateBirthDay'],
 			$_POST['fPhone'],
@@ -60,10 +69,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		return;
 	}
 	if (isset($_POST['userID']) && isset($_POST['discaps'])) {
-		$verifications = new WP_Incluyeme_Login_Countries();
 		$verifications::updateDiscapacidades($_POST['userID'], $_POST['discaps']);
 		if (isset($_POST['userID']) && isset($_POST['motriz'])) {
-			$verifications::updateMotriz($_POST['userID'], $_POST['motriz'], $_POST['mPie'],
+			$verifications::updateMotriz($_POST['userID'], $_POST['mPie'],
 				$_POST['mSen'],
 				$_POST['mEsca'],
 				$_POST['mBrazo'],

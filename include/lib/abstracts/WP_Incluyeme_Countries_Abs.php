@@ -18,6 +18,8 @@ abstract class WP_Incluyeme_Countries_Abs
 	protected static $wp;
 	protected static $usersDiscapTable;
 	protected static $usersDisQuestions;
+	protected static $incluyemeFilters;
+	protected static $upload_dir;
 	
 	public function __construct()
 	{
@@ -33,6 +35,8 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$usersDiscapTable = $wpdb->prefix . 'incluyeme_users_dicapselect';
 		self::$usersDisQuestions = $wpdb->prefix . 'incluyeme_users_questions';
 		self::$country = false;
+		self::$incluyemeFilters = 'incluyemeFiltersCV';
+		self::$upload_dir = wp_upload_dir() ['basedir'] . '/wpjobboard/resume/';
 	}
 	
 	/**
@@ -680,5 +684,76 @@ abstract class WP_Incluyeme_Countries_Abs
 		}
 		self::$wp->get_results('DELETE from' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . ' AND discap_id NOT IN ' . $discaps);
 		return true;
+	}
+	
+	public static function updateCV($userID, $CV)
+	{
+		$dir1 = self::$upload_dir . $userID;
+		$dir = self::$upload_dir . $userID . '/cv';
+		if (self::searchDIR($dir1)) {
+			if (!self::searchDIR($dir)) {
+				mkdir($dir1 . '/cv');
+			}
+			self::deleteDIRS($dir);
+			@move_uploaded_file($CV['tmp_name'], $dir . '/' . basename($CV["name"]));
+		} else {
+			mkdir($dir1);
+			self::updateCV($userID, $CV);
+		}
+	}
+	
+	public static function updateCUD($userID, $CUD)
+	{
+		$dir1 = self::$upload_dir . $userID;
+		$dir = self::$upload_dir . $userID . '/' . (get_option(self::$incluyemeFilters) ? get_option(self::$incluyemeFilters) : 'certificado_discapacidad');
+		if (self::searchDIR($dir1)) {
+			if (!self::searchDIR($dir)) {
+				mkdir($dir1 . '/' . (get_option(self::$incluyemeFilters) ? get_option(self::$incluyemeFilters) : 'certificado_discapacidad'));
+			}
+			self::deleteDIRS($dir);
+			@move_uploaded_file($CUD['tmp_name'], $dir . '/' . basename($CUD["name"]));
+		} else {
+			mkdir($dir1);
+			self::updateCUD($userID, $CUD);
+		}
+	}
+	
+	public static function updateIMG($userID, $IMG)
+	{
+		$dir1 = self::$upload_dir . $userID;
+		$dir = self::$upload_dir . $userID . '/image';
+		if (self::searchDIR($dir1)) {
+			if (!self::searchDIR($dir)) {
+				mkdir($dir1 . '/image');
+			}
+			self::deleteDIRS($dir);
+		} else {
+			mkdir($dir1);
+			self::updateIMG($userID, $IMG);
+		}
+		$as = @move_uploaded_file($IMG['tmp_name'], $dir . '/' . basename($IMG["name"]));
+		error_log(print_r($as, true));
+	}
+	
+	private static function searchDIR($dir)
+	{
+		if (file_exists($dir)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private static function deleteDIRS($dir)
+	{
+		$folder = @scandir($dir);
+		if (count($folder) > 2) {
+			$search = opendir($dir);
+			while ($file = readdir($search)) {
+				if ($file != "." and $file != ".." and $file != "index.php") {
+					rmdir($dir . '/' . $file);
+				}
+			}
+		}
 	}
 }
