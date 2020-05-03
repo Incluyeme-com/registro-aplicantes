@@ -116,8 +116,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$_POST['inteTrabajar'],
 				$_POST['inteTrabajarSolo']);
 		}
+		echo $verifications->json_response(200, 'COMPLETADO');
 		return;
 	}
 	
+	if (isset($_POST['userID']) && isset($_POST['idioms'])) {
+		$verifications::updateIdioms($_POST['userID'], $_POST['idioms'], $_POST['oLevel'], $_POST['wLevel'], $_POST['sLevel']);
+		echo $verifications->json_response(200, 'COMPLETADO');
+		return;
+	}
+	if (isset($_POST['userID']) && isset($_POST['preferJobs'])) {
+		$verifications::updatePrefersJobs($_POST['userID'], $_POST['preferJobs']);
+		echo $verifications->json_response(200, 'COMPLETADO');
+		return;
+	}
+	echo $verifications->json_response(200, 'COMPLETADO');
 }
 return;

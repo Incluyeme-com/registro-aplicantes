@@ -224,10 +224,12 @@ let app = new Vue({
                 case 2:
                     this.awaitChange = true;
                     if (await this.confirmStep2(step) && this.currentStep <= 2) {
-                        this.getCountries();
-                        this.getStudies();
-                        this.getExperiences();
-                        this.getPrefersJobs();
+                        this.getLevelsIdioms().finally();
+                        this.getIdioms().finally();
+                        this.getCountries().finally();
+                        this.getStudies().finally();
+                        this.getExperiences().finally();
+                        this.getPrefersJobs().finally();
                     } else {
                         this.currentStep = step;
                     }
@@ -235,10 +237,6 @@ let app = new Vue({
                 case 3:
                     if (this.currentStep <= 3) {
                         this.awaitChange = true;
-                        this.getCountries();
-                        this.getStudies();
-                        this.getExperiences();
-                        this.getPrefersJobs();
                         await this.confirmStep3(step);
                     } else {
                         this.currentStep = step;
@@ -248,8 +246,7 @@ let app = new Vue({
                     if (this.currentStep <= 4) {
                         this.awaitChange = true;
                         await this.confirmStep4(step);
-                        this.getLevelsIdioms();
-                        this.getIdioms();
+
                     } else {
                         this.currentStep = step;
                     }
@@ -264,14 +261,12 @@ let app = new Vue({
                     }
                     break;
                 case 7:
-                    console.log(this.currentStep)
                     if (this.currentStep <= 7) {
                         this.awaitChange = true;
                         await this.confirmStep7(step);
                     } else {
                         this.currentStep = step
                     }
-                    console.log(this.currentStep)
                     break;
                 case 8:
                     if (this.currentStep <= 8) {
@@ -293,6 +288,22 @@ let app = new Vue({
                     if (this.currentStep <= 10) {
                         this.awaitChange = true;
                         await this.confirmStep10(step)
+                    } else {
+                        this.currentStep = step
+                    }
+                    break;
+                case 11:
+                    if (this.currentStep <= 11) {
+                        this.awaitChange = true;
+                        await this.confirmStep11(step)
+                    } else {
+                        this.currentStep = step
+                    }
+                    break;
+                case 12:
+                    if (this.currentStep <= 12) {
+                        this.awaitChange = true;
+                        await this.confirmStep12(step)
                     } else {
                         this.currentStep = step
                     }
@@ -464,7 +475,7 @@ let app = new Vue({
             this.reader = null;
             if (event.target.files[0]['type'] !== 'image/jpeg' && event.target.files[0]['type'] !== 'image/png' && event.target.files[0]['type'] !== 'image/jpg') {
                 alert('El tipo de archivo que ha subido no es valido, aceptamos imagenes en formato .jpg, .png, .jpeg');
-                document.getElementById("cargaImg").value = "";
+                document.getElementById("userIMG").value = "";
                 return;
             }
             this.image = event.target.files[0];
@@ -542,7 +553,7 @@ let app = new Vue({
                         ],
                     });
                 }
-                return;
+                return false;
             } else if (this.password !== this.passwordConfirm) {
                 iziToast.warning({
                     title: 'Verifique',
@@ -558,7 +569,7 @@ let app = new Vue({
                         }]
                     ],
                 });
-                return;
+                return false;
             }
             this.pleaseAwait();
             let verifications = await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
@@ -587,13 +598,13 @@ let app = new Vue({
                     ],
                 });
                 this.awaitChange = false;
-                return;
+                return false;
             } else if (verifications.data.message === false) {
                 this.awaitChange = false;
                 this.currentStep = step;
             }
             this.awaitChange = false;
-            return false;
+            return true;
         },
         confirmStep3: async function (step) {
             if (!this.name || !this.lastName) {
@@ -897,6 +908,39 @@ let app = new Vue({
             this.awaitChange = false;
             this.currentStep = step;
         },
+        confirmStep11: async function (step) {
+            this.pleaseAwait();
+            await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                userID: this.userID,
+                idioms: this.idioms,
+                oLevel: this.oralLevel,
+                wLevel: this.redLevel,
+                sLevel: this.lecLevel
+            })
+                .then(function (response) {
+                    return response
+                })
+                .catch(function (error) {
+                    return true;
+                });
+            this.awaitChange = false;
+            this.currentStep = step;
+        },
+        confirmStep12: async function (step) {
+            this.pleaseAwait();
+            await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                userID: this.userID,
+                preferJobs: this.preferJobs
+            })
+                .then(function (response) {
+                    return response
+                })
+                .catch(function (error) {
+                    return true;
+                });
+            this.awaitChange = false;
+            this.currentStep = step;
+        },
         getUniversities: async function (id) {
             let universities = await this.getUniver(id);
             this.universities[id] = universities.data.message;
@@ -1008,6 +1052,20 @@ let app = new Vue({
                     }]
                 ],
             });
+        },
+        onSignIn: function (googleUser) {
+            // Useful data for your client-side scripts:
+            const profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+
+            // The ID token you need to pass to your backend:
+            const id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
         }
     }
 });

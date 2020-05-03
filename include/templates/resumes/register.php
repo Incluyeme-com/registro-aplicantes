@@ -27,7 +27,10 @@ wp_enqueue_script('fAwesome');
 $baseurl = wp_upload_dir();
 $baseurl = $baseurl['baseurl'];
 $incluyemeNames = 'incluyemeNamesCV';
+$incluyemeGoogleAPI = '595567496240-klulbi1n6ma5ctq3kuue1t4u3vb220bs.apps.googleusercontent.com'
 ?>
+<meta name="google-signin-client_id" content="<?php echo $incluyemeGoogleAPI ?>.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
 
 </script>
@@ -334,11 +337,6 @@ $incluyemeNames = 'incluyemeNamesCV';
 				</x-incluyeme>
 			</x-incluyeme>
 			<x-incluyeme class="row mt-2">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100"
-					        @click.prevent="goToStep(2, '<?php echo plugins_url() ?>')">Atras
-					</button>
-				</x-incluyeme>
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100"
 					        @click.prevent="goToStep(4, '<?php echo plugins_url() ?>')">Siguiente
@@ -1572,12 +1570,6 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			<x-incluyeme class="row">
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(8, '<?php echo plugins_url() ?>')">
-						Atras
-					</button>
-				</x-incluyeme>
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
 					        @click.prevent="goToStep(10, '<?php echo plugins_url() ?>')">
 						Siguiente
 					</button>
@@ -1629,7 +1621,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
 					<x-incluyeme class="col-6">
-						<label for="oralLevel" class="">Nivel de Lectura</label>
+						<label for="oralLevel" class="">Nivel Oral</label>
 					</x-incluyeme>
 					<x-incluyeme class="col-6">
 						<select id="oralLevel" v-model="oralLevel[pos]" class="form-control mt-2">
@@ -1652,12 +1644,6 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 			</div>
 			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(9, '<?php echo plugins_url() ?>')">
-						Atras
-					</button>
-				</x-incluyeme>
 				<x-incluyeme class="col">
 					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
 					        @click.prevent="goToStep(11, '<?php echo plugins_url() ?>')">
@@ -1707,3 +1693,20 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 		</template>
 	</div>
 </div>
+<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+<script>
+    function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+    }
+</script>
