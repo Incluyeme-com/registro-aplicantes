@@ -16,13 +16,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		}
 		return;
 	}
+	if ((isset($_POST['google']) || isset($_POST['facebook'])) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['lastName'])) {
+		$email = sanitize_email($_POST['email']);
+		$password = sanitize_email($_POST['password']);
+		$name = sanitize_text_field($_POST['name']);
+		$lastName = sanitize_text_field($_POST['lastName']);
+		$response = $verifications::searchUserExistSocial($email, $password, $name, $lastName);
+		if ($response === true) {
+			$verifications->redirect();
+		} else {
+			echo $verifications->json_response(200, false);
+		}
+		return;
+	}
 	$_POST = json_decode(file_get_contents("php://input"), true);
 	if (isset($_POST['email']) && isset($_POST['password']) && !isset($_POST['name']) && !isset($_POST['lastName'])) {
 		$email = sanitize_email($_POST['email']);
-		$password = sanitize_email($_POST['password']);
+		$password = $_POST['password'];
 		echo $verifications->json_response(200, $verifications::searchUserExist($email, $password));
 		return;
 	}
+	
 	if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['lastName'])) {
 		$email = sanitize_email($_POST['email']);
 		$password = sanitize_email($_POST['password']);

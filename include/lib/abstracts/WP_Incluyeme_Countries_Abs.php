@@ -110,6 +110,32 @@ abstract class WP_Incluyeme_Countries_Abs
 		return false;
 	}
 	
+	public static function searchUserExistSocial($email, $password, $name, $lastName)
+	{
+		$user = email_exists($email);
+		if ($user) {
+			$userBy = get_user_by('id', $user);
+			wp_clear_auth_cookie();
+			wp_set_current_user($user, $userBy->user_login);
+			wp_set_auth_cookie($user, true);
+			do_action('wp_login', $userBy->user_login);
+			if (is_user_logged_in()) {
+				return true;
+			}
+		}
+		return self::registerUser($email, $password, $name, $lastName);
+	}
+	
+	public static function redirect()
+	{
+		@ob_flush();
+		@ob_end_flush();
+		@ob_end_clean();
+		$redirect_to = site_url() . '/candidate-panel';
+		wp_safe_redirect($redirect_to);
+		exit();
+	}
+	
 	private static function userRegisterWPBJ()
 	{
 		global $wpdb;

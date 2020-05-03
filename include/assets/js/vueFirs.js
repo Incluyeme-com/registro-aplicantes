@@ -202,7 +202,9 @@ let app = new Vue({
         lecLevel: [],
         redLevel: [],
         oralLevel: [],
-        awaitChange: false
+        awaitChange: false,
+        google: false,
+        facebook: false,
     },
     ready: function () {
         console.log('ready');
@@ -604,6 +606,29 @@ let app = new Vue({
                 this.currentStep = step;
             }
             this.awaitChange = false;
+            return true;
+        },
+        googleChange: async function (url) {
+            this.url = url;
+            let verifications = await jQuery.ajax({
+                url: this.url + '/incluyeme-login-extension/include/verifications/register.php',
+                type: 'POST',
+                data: {
+                    email: this.email,
+                    password: this.password,
+                    google: this.google,
+                    name: this.name,
+                    lastName: this.lastName
+                }
+            }).done(function (response) {
+                return response
+            })
+
+            if (verifications.message === false) {
+                this.userID = verifications.message;
+            } else {
+                window.location.href = window.location + '/candidate-panel';
+            }
             return true;
         },
         confirmStep3: async function (step) {
@@ -1053,19 +1078,5 @@ let app = new Vue({
                 ],
             });
         },
-        onSignIn: function (googleUser) {
-            // Useful data for your client-side scripts:
-            const profile = googleUser.getBasicProfile();
-            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-            console.log('Full Name: ' + profile.getName());
-            console.log('Given Name: ' + profile.getGivenName());
-            console.log('Family Name: ' + profile.getFamilyName());
-            console.log("Image URL: " + profile.getImageUrl());
-            console.log("Email: " + profile.getEmail());
-
-            // The ID token you need to pass to your backend:
-            const id_token = googleUser.getAuthResponse().id_token;
-            console.log("ID Token: " + id_token);
-        }
     }
 });

@@ -27,12 +27,39 @@ wp_enqueue_script('fAwesome');
 $baseurl = wp_upload_dir();
 $baseurl = $baseurl['baseurl'];
 $incluyemeNames = 'incluyemeNamesCV';
-$incluyemeGoogleAPI = '595567496240-klulbi1n6ma5ctq3kuue1t4u3vb220bs.apps.googleusercontent.com'
+$incluyemeGoogleAPI = '286944567108-2kk2jvegbea0g4inesr0kcb6hf44b7u1.apps.googleusercontent.com'
 ?>
-<meta name="google-signin-client_id" content="<?php echo $incluyemeGoogleAPI ?>.apps.googleusercontent.com">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://apis.google.com/js/api:client.js"></script>
 <script>
+    var googleUser = {};
+    var startApp = function () {
+        gapi.load('auth2', function () {
+            // Retrieve the singleton for the GoogleAuth library and set up the client.
+            auth2 = gapi.auth2.init({
+                client_id: '<?php echo $incluyemeGoogleAPI ?>',
+                cookiepolicy: 'single_host_origin',
+                // Request scopes in addition to 'profile' and 'email'
+                //scope: 'additional_scope'
+            });
+            attachSignin(document.getElementById('customBtn'));
+        });
+    };
 
+    function attachSignin(element) {
+        console.log(element.id);
+        auth2.attachClickHandler(element, {},
+            function (googleUser) {
+                const profile = googleUser.getBasicProfile();
+                app.$data.email = profile.getEmail();
+                app.$data.password = profile.getEmail();
+                app.$data.passwordConfirm = profile.getEmail();
+                app.$data.name = profile.getGivenName();
+                app.$data.lastName = profile.getFamilyName();
+                app.googleChange('<?php echo plugins_url() ?>');
+            }, function (error) {
+                alert(JSON.stringify(error, undefined, 2));
+            });
+    }
 </script>
 <style>
 	#drop-zone {
@@ -238,8 +265,8 @@ $incluyemeGoogleAPI = '595567496240-klulbi1n6ma5ctq3kuue1t4u3vb220bs.apps.google
 				<p>Accede a oportunindades laborales para personas con disCAPACIDAD</p>
 			</x-incluyeme>
 			<x-incluyeme class="row text-center justify-content-center">
-				<x-incluyeme class="col-lg-6 col-sm-12">
-					<button type="button" class="btn myButton w-100">
+				<x-incluyeme id='gSignInWrapper' class="col-lg-6 col-sm-12">
+					<button id="customBtn" type="button" class="btn myButton w-100">
 						<i class="fa fa-google mr-2"></i>
 						<span class="text-gray">Sign with Google</span>
 					</button>
@@ -1189,7 +1216,8 @@ laboral?</span>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="inteTrabajarS"
-											       value="Con otras personas" v-model="inteTrabajar" name="inteTrabajar">
+											       value="Con otras personas" v-model="inteTrabajar"
+											       name="inteTrabajar">
 											<label class="form-check-label"
 											       for="inteTrabajarS"
 											       style="color: black"><?php _e("Con otras personas", "incluyeme-login-extension"); ?></label>
@@ -1246,7 +1274,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 		<template id="step7" v-if="currentStep == 7">
 			<div class="container">
 				<h1>Adjunta tu Foto, CV
-				    y <?php echo get_option($incluyemeNames) ? ' '.get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h1>
+				    y <?php echo get_option($incluyemeNames) ? ' ' . get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h1>
 				<div class="container">
 					<h3>Foto de Perfil</h3>
 					<x-incluyeme class="row m-auto">
@@ -1693,20 +1721,15 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 		</template>
 	</div>
 </div>
-<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
 <script>
     function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
+        const profile = googleUser.getBasicProfile();
+        app.$data.email = profile.getEmail();
+        app.$data.password = profile.getEmail();
+        app.$data.passwordConfirm = profile.getEmail();
+        app.$data.name = profile.getGivenName();
+        app.$data.lastName = profile.getFamilyName();
+        app.googleChange('<?php echo plugins_url() ?>');
     }
 </script>
+<script>startApp();</script>
