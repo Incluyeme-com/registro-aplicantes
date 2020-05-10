@@ -1,4 +1,4 @@
-Vue.config.ignoredElements = ['x-incluyeme']
+Vue.config.ignoredElements = ['x-incluyeme', 'fb:login-button']
 Vue.component('step1', {
     template: '#step1',
     props: [
@@ -623,11 +623,24 @@ let app = new Vue({
             }).done(function (response) {
                 return response
             })
-
             if (verifications.message === false) {
-                this.userID = verifications.message;
+                iziToast.warning({
+                    title: 'Verifique',
+                    message: 'Este email ya se encuentra segistrado',
+                    progressBarColor: 'rgb(0, 255, 184)',
+                    buttons: [
+                        ['<button>Cerrar</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp',
+                                onClosing: function (instance, toast, closedBy) {
+                                }
+                            }, toast, 'buttonName');
+                        }]
+                    ],
+                });
+                this.awaitChange = false;
             } else {
-                window.location.href = window.location + '/candidate-panel';
+                this.userID = verifications.message;
             }
             return true;
         },
@@ -965,6 +978,7 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
+            await this.googleChange(this.url);
         },
         getUniversities: async function (id) {
             let universities = await this.getUniver(id);

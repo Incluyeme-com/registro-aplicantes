@@ -9,6 +9,8 @@ function incluyeme_login_load()
 {
 	incluyeme_login_files();
 	incluyeme_login_sql_Start();
+	incluyeme_login_files1();
+	incluyeme_login_files2();
 }
 
 
@@ -26,6 +28,42 @@ function incluyeme_login_files()
 		if ($templateExist !== $templateSize) {
 			rmdir($route . '/wpjobboard/resumes/register.php');
 			copy($template, $route . '/wpjobboard/resumes/register.php');
+		}
+	}
+}
+
+function incluyeme_login_files1()
+{
+	$template = plugin_dir_path(__FILE__) . '/templates/resumes/resume.php';
+	$route = get_template_directory();
+	if (!file_exists($route . '/wpjobboard/resumes/resume.php')) {
+		mkdir($route . '/wpjobboard');
+		mkdir($route . '/wpjobboard/resumes');
+		copy($template, $route . '/wpjobboard/resumes/resume.php');
+	} else {
+		$templateSize = filesize(plugin_dir_path(__FILE__) . '/templates/resumes/resume.php');
+		$templateExist = filesize($route . '/wpjobboard/resumes/resume.php');
+		if ($templateExist !== $templateSize) {
+			rmdir($route . '/wpjobboard/resumes/resume.php');
+			copy($template, $route . '/wpjobboard/resumes/resume.php');
+		}
+	}
+}
+
+function incluyeme_login_files2()
+{
+	$template = plugin_dir_path(__FILE__) . '/templates/resumes/my-resume.php';
+	$route = get_template_directory();
+	if (!file_exists($route . '/wpjobboard/resumes/my-resume.php')) {
+		mkdir($route . '/wpjobboard');
+		mkdir($route . '/wpjobboard/resumes');
+		copy($template, $route . '/wpjobboard/resumes/my-resume.php');
+	} else {
+		$templateSize = filesize(plugin_dir_path(__FILE__) . '/templates/resumes/my-resume.php');
+		$templateExist = filesize($route . '/wpjobboard/resumes/my-resume.php');
+		if ($templateExist !== $templateSize) {
+			rmdir($route . '/wpjobboard/resumes/my-resume.php');
+			copy($template, $route . '/wpjobboard/resumes/my-resume.php');
 		}
 	}
 }

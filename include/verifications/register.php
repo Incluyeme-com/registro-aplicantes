@@ -82,8 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$_POST['userID']));
 		return;
 	}
-	if (isset($_POST['userID']) && isset($_POST['discaps'])) {
-		$verifications::updateDiscapacidades($_POST['userID'], $_POST['discaps']);
+	if (isset($_POST['userID']) && isset($_POST['discaps']) && isset($_POST['moreDis'])) {
+		$verifications::updateDiscapacidades($_POST['userID'], $_POST['discaps'], $_POST['moreDis']);
 		if (isset($_POST['userID']) && isset($_POST['motriz'])) {
 			$verifications::updateMotriz($_POST['userID'], $_POST['mPie'],
 				$_POST['mSen'],

@@ -10240,7 +10240,7 @@ create table `{$wpdb->prefix}incluyeme_users_questions`
 	id          int auto_increment not null,
 	resume_id   int                not null,
 	question_id int                not null,
-	answer      text               not null default 1,
+	answer      text               not null,
 	active      boolean                     default true null,
 	constraint incluyeme_users_questions_pk
 		primary key (id)
@@ -10260,6 +10260,7 @@ create table `{$wpdb->prefix}incluyeme_users_information`
 	street    varchar(100) null,
 	resume_id int          not null,
 	preferjob_id int null,
+	moreDis text null,
 	constraint incluyeme_users_contacInformation_pk
 		primary key (id)
 ); --

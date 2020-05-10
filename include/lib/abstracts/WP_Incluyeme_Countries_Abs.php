@@ -22,11 +22,13 @@ abstract class WP_Incluyeme_Countries_Abs
 	protected static $incluyemeFilters;
 	protected static $incluyemeUsersInformation;
 	protected static $upload_dir;
+	protected static $dataPrefix;
 	
 	public function __construct()
 	{
 		global $wpdb;
 		self::$wp = $wpdb;
+		self::$dataPrefix = $wpdb->prefix;
 		self::$countriesTable = $wpdb->prefix . 'incluyeme_countries';
 		self::$universitiesTable = $wpdb->prefix . 'incluyeme_academies';
 		self::$studies = $wpdb->prefix . 'incluyeme_areas';
@@ -57,6 +59,22 @@ abstract class WP_Incluyeme_Countries_Abs
 	public static function setCountry($country)
 	{
 		self::$country = $country;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public static function getResumeID()
+	{
+		return self::$userID;
+	}
+	
+	/**
+	 * @param mixed $userID
+	 */
+	public static function setResumeID($userID)
+	{
+		self::$userID = $userID;
 	}
 	
 	public static function allCountries()
@@ -114,14 +132,7 @@ abstract class WP_Incluyeme_Countries_Abs
 	{
 		$user = email_exists($email);
 		if ($user) {
-			$userBy = get_user_by('id', $user);
-			wp_clear_auth_cookie();
-			wp_set_current_user($user, $userBy->user_login);
-			wp_set_auth_cookie($user, true);
-			do_action('wp_login', $userBy->user_login);
-			if (is_user_logged_in()) {
-				return true;
-			}
+			return false;
 		}
 		return self::registerUser($email, $password, $name, $lastName);
 	}
@@ -176,6 +187,7 @@ abstract class WP_Incluyeme_Countries_Abs
 	
 	public static function updateUsersEducation($dateStudieB, $dateStudiesD, $dateStudiesH, $eduLevel, $studies, $titleEdu, $university_edu, $university_otro, $country_edu, $userID)
 	{
+		self::$wp->get_results('DELETE from ' . self::$wp->prefix . 'wpjb_resume_detail' . ' WHERE resume_id = ' . $userID . '  AND type = 2');
 		for ($i = 0; $i < count($titleEdu); $i++) {
 			self::$wp->insert(self::$wp->prefix . 'wpjb_resume_detail', [
 				'resume_id' => $userID,
@@ -193,6 +205,7 @@ abstract class WP_Incluyeme_Countries_Abs
 	
 	public static function updateUsersWorks($actuWork, $areaEmployed, $dateStudiesDLaboral, $dateStudiesHLabor, $employed, $jobs, $jobsDescript, $levelExperience, $userID)
 	{
+		self::$wp->get_results('DELETE from ' . self::$wp->prefix . 'wpjb_resume_detail' . ' WHERE resume_id = ' . $userID . '  AND type = 1');
 		for ($i = 0; $i < count($jobs); $i++) {
 			self::$wp->insert(self::$wp->prefix . 'wpjb_resume_detail', [
 				'resume_id' => $userID,
@@ -200,9 +213,9 @@ abstract class WP_Incluyeme_Countries_Abs
 				'started_at' => $dateStudiesDLaboral[$i] ?? $dateStudiesDLaboral[$i] ?? date("Y-m-d H:i:s"),
 				'completed_at' => $dateStudiesHLabor[$i] ?? $dateStudiesHLabor[$i] ?? '',
 				'is_current' => $actuWork[$i] ?? $actuWork[$i] ?? '',
-				'grantor' => $employed[$i] ?? $employed[$i] ?? ($employed[$i] ?? $employed[$i] ?? ''),
+				'grantor' => $employed[$i] ?? ($employed[$i] ?? ''),
 				'detail_title' => $jobs[$i] ?? $jobs[$i] ?? '',
-				'detail_description' => 'Nivel de Experiencia: ' . ($levelExperience[$i] ?? $levelExperience[$i] ?? ' No Posee. ') . ' Area de Empleo: ' . ($areaEmployed[$i] ?? $areaEmployed[$i] ?? 'No Posee. ') . ' Descripcion: ' . ($jobsDescript[$i] ?? $jobsDescript[$i] ?? 'No Posee. ')
+				'detail_description' => 'Nivel de Experiencia: ' . ($levelExperience[$i] ?? ' No Posee. ') . ' Area de Empleo: ' . ($areaEmployed[$i] ?? 'No Posee. ') . ' Descripcion: ' . ($jobsDescript[$i] ?? 'No Posee. ')
 			]);
 		}
 		
@@ -245,9 +258,9 @@ abstract class WP_Incluyeme_Countries_Abs
 	public static function updateMotriz($userID, $mPie, $mSen, $mEsca, $mBrazo, $peso, $mRueda, $desplazarte, $mDigi)
 	{
 		if (isset($mPie)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 1');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 1');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $mPie,
 				], ['resume_id' => $userID, 'question_id' => 1]);
 			} else {
@@ -259,9 +272,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($mSen)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 2');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 2');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $mSen,
 				], ['resume_id' => $userID, 'question_id' => 2]);
 			} else {
@@ -273,9 +286,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($mEsca)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 3');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 3');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $mEsca,
 				], ['resume_id' => $userID, 'question_id' => 3]);
 			} else {
@@ -287,9 +300,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($mBrazo)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 4');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 4');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $mBrazo,
 				], ['resume_id' => $userID, 'question_id' => 4]);
 			} else {
@@ -301,9 +314,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($peso)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 5');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 5');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $peso,
 				], ['resume_id' => $userID, 'question_id' => 5]);
 			} else {
@@ -315,9 +328,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($mRueda)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 6');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 6');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $mRueda,
 				], ['resume_id' => $userID, 'question_id' => 6]);
 			} else {
@@ -329,9 +342,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($desplazarte)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 8');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 8');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $desplazarte,
 				], ['resume_id' => $userID, 'question_id' => 8]);
 			} else {
@@ -342,10 +355,10 @@ abstract class WP_Incluyeme_Countries_Abs
 				]);
 			}
 		}
-		if (isset($mRueda)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 7');
+		if (isset($mDigi)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 7');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $mDigi,
 				], ['resume_id' => $userID, 'question_id' => 7]);
 			} else {
@@ -362,9 +375,9 @@ abstract class WP_Incluyeme_Countries_Abs
 	public static function updateAuditiva($aAmbient, $aSennas, $aLabial, $aBajo, $aImplante, $aOral, $userID)
 	{
 		if (isset($aAmbient)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 9');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 9');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $aAmbient,
 				], ['resume_id' => $userID, 'question_id' => 9]);
 			} else {
@@ -376,9 +389,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($aSennas)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 11');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 11');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $aSennas,
 				], ['resume_id' => $userID, 'question_id' => 11]);
 			} else {
@@ -390,9 +403,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($aLabial)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 12');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 12');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $aLabial,
 				], ['resume_id' => $userID, 'question_id' => 12]);
 			} else {
@@ -404,9 +417,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($aBajo)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 13');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 13');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $aBajo,
 				], ['resume_id' => $userID, 'question_id' => 13]);
 			} else {
@@ -418,9 +431,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($aImplante)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 14');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 14');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $aImplante,
 				], ['resume_id' => $userID, 'question_id' => 14]);
 			} else {
@@ -432,9 +445,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($aOral)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 10');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 10');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $aOral,
 				], ['resume_id' => $userID, 'question_id' => 10]);
 			} else {
@@ -451,9 +464,9 @@ abstract class WP_Incluyeme_Countries_Abs
 	public static function updateVisual($userID, $vLejos, $vObservar, $vColores, $vDPlanos, $vTecniA)
 	{
 		if (isset($vLejos)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 15');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 15');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vLejos,
 				], ['resume_id' => $userID, 'question_id' => 15]);
 			} else {
@@ -465,9 +478,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($vObservar)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 16');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 16');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vObservar,
 				], ['resume_id' => $userID, 'question_id' => 16]);
 			} else {
@@ -479,9 +492,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($vColores)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 18');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 18');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vColores,
 				], ['resume_id' => $userID, 'question_id' => 18]);
 			} else {
@@ -493,9 +506,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($vDPlanos)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 19');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 19');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vDPlanos,
 				], ['resume_id' => $userID, 'question_id' => 19]);
 			} else {
@@ -507,9 +520,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($vTecniA)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 17');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 17');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vTecniA,
 				], ['resume_id' => $userID, 'question_id' => 17]);
 			} else {
@@ -526,9 +539,9 @@ abstract class WP_Incluyeme_Countries_Abs
 	public static function updateVisceral($userID, $vHumedos, $vTemp, $vPolvo, $vCompleta, $vAdap)
 	{
 		if (isset($vHumedos)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 20');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 20');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vHumedos,
 				], ['resume_id' => $userID, 'question_id' => 20]);
 			} else {
@@ -540,9 +553,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($vTemp)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 21');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 21');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vTemp,
 				], ['resume_id' => $userID, 'question_id' => 21]);
 			} else {
@@ -554,9 +567,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($vPolvo)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 22');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 22');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vPolvo,
 				], ['resume_id' => $userID, 'question_id' => 22]);
 			} else {
@@ -568,9 +581,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($vCompleta)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 23');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 23');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vCompleta,
 				], ['resume_id' => $userID, 'question_id' => 23]);
 			} else {
@@ -582,9 +595,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($vAdap)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 24');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 24');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $vAdap,
 				], ['resume_id' => $userID, 'question_id' => 24]);
 			} else {
@@ -601,9 +614,9 @@ abstract class WP_Incluyeme_Countries_Abs
 	public static function updateIntelectual($userID, $inteEscri, $inteTransla, $inteTarea, $inteActividad, $inteMolesto, $inteTrabajar, $inteTrabajarSolo)
 	{
 		if (isset($inteEscri)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 25');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 25');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $inteEscri,
 				], ['resume_id' => $userID, 'question_id' => 25]);
 			} else {
@@ -615,9 +628,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($inteTransla)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 26');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 26');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $inteTransla,
 				], ['resume_id' => $userID, 'question_id' => 26]);
 			} else {
@@ -629,9 +642,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($inteTarea)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 27');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 27');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $inteTarea,
 				], ['resume_id' => $userID, 'question_id' => 27]);
 			} else {
@@ -643,9 +656,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($inteActividad)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 31');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 31');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $inteActividad,
 				], ['resume_id' => $userID, 'question_id' => 31]);
 			} else {
@@ -657,9 +670,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($inteMolesto)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 30');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 30');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $inteMolesto,
 				], ['resume_id' => $userID, 'question_id' => 30]);
 			} else {
@@ -671,9 +684,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($inteTrabajar)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 28');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 28');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $inteTrabajar,
 				], ['resume_id' => $userID, 'question_id' => 28]);
 			} else {
@@ -685,9 +698,9 @@ abstract class WP_Incluyeme_Countries_Abs
 			}
 		}
 		if (isset($inteTrabajarSolo)) {
-			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . ' AND question_id = 29');
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 29');
 			if (count($verification) > 0) {
-				self::$wp->update(self::$incluyemeUsersInformation, [
+				self::$wp->update(self::$usersDisQuestions, [
 					'answer' => $inteTrabajarSolo,
 				], ['resume_id' => $userID, 'question_id' => 29]);
 			} else {
@@ -701,10 +714,10 @@ abstract class WP_Incluyeme_Countries_Abs
 		return true;
 	}
 	
-	public static function updateDiscapacidades($userID, $discaps)
+	public static function updateDiscapacidades($userID, $discaps, $moreDis)
 	{
 		for ($i = 0; $i < count($discaps); $i++) {
-			$result = self::$wp->get_results('SELECT * from ' . self::$usersDiscapTable . ' where resume_id = ' . $userID . 'AND discap_id = ' . $discaps[$i]);
+			$result = self::$wp->get_results('SELECT * from ' . self::$usersDiscapTable . ' where resume_id = ' . $userID . '  AND discap_id = ' . $discaps[$i]);
 			if (count($result) <= 0) {
 				self::$wp->insert(self::$usersDiscapTable, [
 					'discap_id' => $discaps[$i],
@@ -712,13 +725,14 @@ abstract class WP_Incluyeme_Countries_Abs
 				]);
 			}
 		}
-		self::$wp->get_results('DELETE from' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . ' AND discap_id NOT IN ' . $discaps);
+		self::$wp->get_results('UPDATE ' . self::$incluyemeUsersInformation . ' SET  	moreDis  = ' . $moreDis . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN ' . $discaps);
+		self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN ' . $discaps);
 		return true;
 	}
 	
 	public static function updatePrefersJobs($userID, $preferJobs)
 	{
-		self::$wp->update(self::$usersDiscapTable, [
+		self::$wp->update(self::$incluyemeUsersInformation, [
 			'preferjob_id' => $preferJobs,
 		
 		], ['resume_id' => $userID]);
@@ -776,7 +790,7 @@ abstract class WP_Incluyeme_Countries_Abs
 	public static function updateIdioms($userID, $idioms, $oLevel, $wLevel, $sLevel)
 	{
 		for ($i = 0; $i < count($idioms); $i++) {
-			$result = self::$wp->get_results('SELECT * from ' . self::$usersIdioms . ' where resume_id = ' . $userID . 'AND discap_id = ' . $idioms[$i]);
+			$result = self::$wp->get_results('SELECT * from ' . self::$usersIdioms . ' where resume_id = ' . $userID . '  AND idioms_id = ' . $idioms[$i]);
 			if (count($result) > 0) {
 				self::$wp->update(self::$usersIdioms, [
 					'idioms_id' => $idioms[$i],
@@ -797,7 +811,7 @@ abstract class WP_Incluyeme_Countries_Abs
 				]);
 			}
 		}
-		self::$wp->get_results('DELETE from' . self::$usersIdioms . ' WHERE resume_id = ' . $userID . ' AND idioms_id NOT IN ' . $idioms);
+		self::$wp->get_results('DELETE from ' . self::$usersIdioms . ' WHERE resume_id = ' . $userID . '  AND idioms_id NOT IN ' . $idioms);
 	}
 	
 	private static function searchDIR($dir)
@@ -822,4 +836,168 @@ abstract class WP_Incluyeme_Countries_Abs
 		}
 	}
 	
+	public static function getUserInformation($id)
+	{
+		if (!self::userSessionVerificate($id)) {
+			return 'DONT HAVE ACCESS';
+		}
+		$information = self::$wp->get_results('SELECT
+  	' . self::$dataPrefix . 'incluyeme_prefersjobs.jobs_prefers,
+  	' . self::$dataPrefix . 'incluyeme_users_information.*
+FROM 	' . self::$dataPrefix . 'incluyeme_users_information
+  LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
+    ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id);
+		$works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
+		$education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
+		$discaps = self::$wp->get_results('SELECT
+  	' . self::$dataPrefix . 'incluyeme_users_questions.question_id,
+  	' . self::$dataPrefix . 'incluyeme_users_questions.answer,
+  	' . self::$dataPrefix . 'incluyeme_discapacities_questions.discapacities_questions,
+  	' . self::$dataPrefix . 'incluyeme_discapacities.discap_name,
+  	' . self::$dataPrefix . 'incluyeme_discapacities.id
+FROM 	' . self::$dataPrefix . 'incluyeme_users_questions
+  INNER JOIN 	' . self::$dataPrefix . 'incluyeme_discapacities_questions
+    ON 	' . self::$dataPrefix . 'incluyeme_users_questions.question_id = 	' . self::$dataPrefix . 'incluyeme_discapacities_questions.id
+  RIGHT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_discapacities
+    ON 	' . self::$dataPrefix . 'incluyeme_discapacities_questions.incluyeme_discapacities_id = 	' . self::$dataPrefix . 'incluyeme_discapacities.id
+  LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_users_dicapselect
+    ON 	' . self::$dataPrefix . 'incluyeme_discapacities.id = 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.discap_id
+WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id);
+		$idioms = self::$wp->get_results('SELECT * FROM ' . self::$wp->prefix . 'incluyeme_users_idioms WHERE ' . self::$wp->prefix . 'incluyeme_users_idioms.resume_id = ' . $id);
+		
+		return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta(get_current_user_id(), 'first_name')[0], 'last_name' => get_user_meta(get_current_user_id(), 'last_name')[0]];
+	}
+	
+	public static function getUser($id)
+	{
+		if (!self::sessionVerificated($id)) {
+			return 'DONT HAVE ACCESS';
+		}
+		$information = self::$wp->get_results('SELECT
+  	' . self::$dataPrefix . 'incluyeme_prefersjobs.jobs_prefers,
+  	' . self::$dataPrefix . 'incluyeme_users_information.*
+FROM 	' . self::$dataPrefix . 'incluyeme_users_information
+  LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
+    ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id);
+		$works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
+		$education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
+		$discaps = self::$wp->get_results('SELECT
+  	' . self::$dataPrefix . 'incluyeme_users_questions.question_id,
+  	' . self::$dataPrefix . 'incluyeme_users_questions.answer,
+  	' . self::$dataPrefix . 'incluyeme_discapacities_questions.discapacities_questions,
+  	' . self::$dataPrefix . 'incluyeme_discapacities.discap_name,
+  	' . self::$dataPrefix . 'incluyeme_discapacities.id
+FROM 	' . self::$dataPrefix . 'incluyeme_users_questions
+  INNER JOIN 	' . self::$dataPrefix . 'incluyeme_discapacities_questions
+    ON 	' . self::$dataPrefix . 'incluyeme_users_questions.question_id = 	' . self::$dataPrefix . 'incluyeme_discapacities_questions.id
+  RIGHT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_discapacities
+    ON 	' . self::$dataPrefix . 'incluyeme_discapacities_questions.incluyeme_discapacities_id = 	' . self::$dataPrefix . 'incluyeme_discapacities.id
+  LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_users_dicapselect
+    ON 	' . self::$dataPrefix . 'incluyeme_discapacities.id = 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.discap_id
+WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id);
+		$idioms = self::$wp->get_results('SELECT * FROM ' . self::$wp->prefix . 'incluyeme_users_idioms WHERE ' . self::$wp->prefix . 'incluyeme_users_idioms.resume_id = ' . $id);
+		
+		return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta(get_current_user_id(), 'first_name')[0], 'last_name' => get_user_meta(get_current_user_id(), 'last_name')[0]];
+	}
+	
+	public static function userSessionVerificate($resume)
+	{
+		$userID = get_current_user_id();
+		if ($userID <= 0) {
+			$sessions = WP_Session_Tokens::get_instance($userID);
+			$sessions->destroy_all();
+			return false;
+		}
+		$verifications = self::$wp->get_results('SELECT
+										  *
+										FROM ' . self::$dataPrefix . 'wpjb_resume
+										WHERE ' . self::$dataPrefix . 'wpjb_resume.user_id = ' . $userID . '
+										AND ' . self::$dataPrefix . 'wpjb_resume.id = ' . $resume);
+		error_log(print_r($verifications, true));
+		if (count($verifications) > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static function sessionVerificated($resume)
+	{
+		$userID = get_current_user_id();
+		if ($userID <= 0) {
+			$sessions = WP_Session_Tokens::get_instance($userID);
+			$sessions->destroy_all();
+			return false;
+		}
+		return true;
+	}
+	
+	public static function updateNames($name, $lastName)
+	{
+		$userID = get_current_user_id();
+		update_user_meta($userID, 'first_name', $name);
+		update_user_meta($userID, 'last_name', $lastName);
+	}
+	
+	private static function getCV($id)
+	{
+		
+		$CVS = get_option(self::$incluyemeFilters) ? get_option(self::$incluyemeFilters) : 'certificado-discapacidad';
+		$path = wp_upload_dir();
+		$basePath = $path['basedir'];
+		$baseDir = $path['baseurl'];
+		$route = $basePath . '/wpjobboard/resume/' . $id;
+		$dir = $baseDir . '/wpjobboard/resume/' . $id;
+		if (file_exists($route)) {
+			if (file_exists($route . '/cv/')) {
+				$folder = @scandir($route . '/cv/');
+				if (count($folder) > 2) {
+					$search = opendir($route . '/cv/');
+					while ($file = readdir($search)) {
+						if ($file != "." and $file != ".." and $file != "index.php") {
+							$CV = $dir . '/cv/' . $file;
+						}
+					}
+				} else {
+					$CV = false;
+				}
+			} else {
+				$CV = false;
+			}
+			if (file_exists($route . '/image/')) {
+				$folder = @scandir($route . '/image/');
+				if (count($folder) > 2) {
+					$search = opendir($route . '/image/');
+					while ($file = readdir($search)) {
+						if ($file != "." and $file != ".." and $file != "index.php") {
+							$img = $dir . '/image/' . $file;
+						}
+					}
+				} else {
+					$img = false;
+				}
+			} else {
+				$img = false;
+			}
+			if (file_exists($route . '/' . $CVS . '/')) {
+				$folder = @scandir($route . '/' . $CVS . '/');
+				if (count($folder) > 2) {
+					$search = opendir($route . '/' . $CVS . '/');
+					while ($file = readdir($search)) {
+						if ($file != "." and $file != ".." and $file != "index.php") {
+							$CUD = $dir . '/' . $CVS . '/' . $file;
+						}
+					}
+				} else {
+					$CUD = false;
+				}
+			} else {
+				$CUD = false;
+			}
+		} else {
+			$img = false;
+			$CUD = false;
+			$CV = false;
+		}
+		return [$img, $CUD, $CV];
+	}
 }

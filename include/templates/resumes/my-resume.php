@@ -5,7 +5,7 @@ $css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
 wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
 wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
-wp_register_script('vueD', $js . 'vueTEST1.js', ['vueJS'], '2.0.0');
+wp_register_script('vueD', $js . 'vueRESUME.js', ['vueJS', 'Axios'], '2.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
 wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');
@@ -13,13 +13,9 @@ wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.
 wp_register_style('bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false);
 wp_register_style('bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false);
 wp_register_script('FAwesome', 'https://kit.fontawesome.com/65c018cf75.js', [], '1.0.0', false);
-wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
-wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
 wp_enqueue_script('vueD');
-wp_enqueue_script('Axios');
-//wp_enqueue_script('materializeJS');
 
 wp_enqueue_style('bootstrap-css');
 wp_enqueue_style('bootstrap-notify-css');
@@ -33,120 +29,25 @@ $FBversion = 'v7';
 $incluyemeLoginFB = 'incluyemeLoginFB';
 $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 ?>
-<?php if (get_option($incluyemeLoginGoogle)) { ?>
-	<script src="https://apis.google.com/js/api:client.js"></script>
-	<script>
-        var googleUser = {};
-        var startApp = function () {
-            gapi.load('auth2', function () {
-                // Retrieve the singleton for the GoogleAuth library and set up the client.
-                auth2 = gapi.auth2.init({
-                    client_id: '<?php echo get_option($incluyemeLoginGoogle); ?>',
-                    cookiepolicy: 'single_host_origin',
-                    // Request scopes in addition to 'profile' and 'email'
-                    //scope: 'additional_scope'
-                });
-                attachSignin(document.getElementById('customBtn'));
-            });
-        };
-
-        function attachSignin(element) {
-            console.log(element.id);
-            auth2.attachClickHandler(element, {},
-                function (googleUser) {
-                    const profile = googleUser.getBasicProfile();
-                    app.$data.email = profile.getEmail();
-                    app.$data.password = profile.getEmail();
-                    app.$data.passwordConfirm = profile.getEmail();
-                    app.$data.name = profile.getGivenName();
-                    app.$data.lastName = profile.getFamilyName();
-                    app.googleChange('<?php echo plugins_url() ?>');
-                }, function (error) {
-                    alert(JSON.stringify(error, undefined, 2));
-                });
-        }
-	</script>
-<?php } ?>
-<?php if (get_option($incluyemeLoginFB)) { ?>
-	<script>
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '<?php echo get_option($incluyemeLoginFB); ?>',
-                xfbml: true,
-                cookie: false,
-                version: 'v7.0'
-            });
-            FB.getLoginStatus(function (response) {
-                if (response.status === 'connected') {
-                    logout()
-                }
-            });
-        };
-
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
-        function login() {
-            FB.login(function (response) {
-                if (response.status === 'connected') {
-                    getInfo();
-                }
-
-            }, {
-                scope: 'first_name,last_name, email',
-                return_scopes: true
-            });
-        }
-
-        // get user basic info
-
-        function getInfo() {
-            FB.api('/me', 'GET', {fields: 'first_name,last_name, email'}, function (response) {
-                logout()
-                app.$data.email = response.email();
-                app.$data.password = response.email();
-                app.$data.passwordConfirm = response.getEmail();
-                app.$data.name = response.first_name();
-                app.$data.lastName = response.last_name();
-                app.googleChange('<?php echo plugins_url() ?>');
-            });
-        }
-
-        function logout() {
-            FB.logout(function (response) {
-            });
-        }
+<style>
+	#drop-zone {
+		border: 2px dashed rgba(0, 0, 0, .3);
+		border-radius: 20px;
+		text-align: center;
+		line-height: 180px;
+		font-size: 20px;
+		color: rgba(0, 0, 0, .3);
+	}
 	
-	
-	</script>
-<?php } ?>
-	<style>
-		#drop-zone {
-			border: 2px dashed rgba(0, 0, 0, .3);
-			border-radius: 20px;
-			text-align: center;
-			line-height: 180px;
-			font-size: 20px;
-			color: rgba(0, 0, 0, .3);
-		}
-		
-		#drop-zone input {
-			/*Important*/
-			position: absolute;
-			/*Important*/
-			cursor: pointer;
-			left: 0;
-			top: 0;
-			/*Important This is only comment out for demonstration purposes.
-			opacity:0; */
+	#drop-zone input {
+		/*Important*/
+		position: absolute;
+		/*Important*/
+		cursor: pointer;
+		left: 0;
+		top: 0;
+		/*Important This is only comment out for demonstration purposes.
+		opacity:0; */
 	}
 	
 	/*Important*/
@@ -311,100 +212,49 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 	.btn-info.active {
 		background-color: #0079b8 !important;
 	}
-		
-		.btn-link {
-			color: black !important;
-		}
-		
-		.btn-link:hover,
-		.btn-link:focus,
-		.btn-link:active,
-		.btn-link.active {
-			background: none !important;
-		}
 	
-	</style>
-	<div id="incluyeme-login-wpjb">
-		<div class="container">
-			<template id="step1" v-if="currentStep == 1">
-				<x-incluyeme class="container text-center">
-					<h1>Registrate</h1>
-					<p>Accede a oportunindades laborales para personas con disCAPACIDAD</p>
-				</x-incluyeme>
-				<?php if (get_option($incluyemeLoginGoogle)) { ?>
-					<x-incluyeme class="row text-center justify-content-center">
-						<x-incluyeme id='gSignInWrapper' class="col-lg-6 col-sm-12">
-							<button id="customBtn" type="button" class="btn myButton w-100">
-								<i class="fa fa-google mr-2"></i>
-								<span class="text-gray">Sign with Google</span>
-							</button>
-						</x-incluyeme>
-					</x-incluyeme>
-				<?php } ?>
-				<?php if (get_option($incluyemeLoginFB)) { ?>
-					<x-incluyeme class="row text-center justify-content-center">
-						<x-incluyeme class="col-lg-6 col-sm-12 mt-2">
-							<button onclick="login()"
-							        class="btn btn-primary w-100 myButton2" style="box-shadow: 2px 2px 4px 0px #bfbfbf; border-radius: 4px;
-		border: 1px solid #007bff;height: 2.5rem; background-color: #455892 !important;" onclick="myFunction()">
-								<i class="fa fa-facebook mr-2"></i>
-								<span class="text-gray">Sign with Facebook</span>
-							</button>
-						</x-incluyeme>
-					</x-incluyeme>
-				<?php } ?>
-				<hr class="w-100">
-				<x-incluyeme class="row">
-					<x-incluyeme class="form-group col-12">
-						<label for="emil">Email *</label>
-						<input type="email" v-model="email" class="form-control" id="emil" placeholder="Email">
-					</x-incluyeme>
-					<x-incluyeme class="form-group col-12">
-						<label for="inputPassword4">Contraseña *</label>
-						<input type="password" v-model="password" class="form-control" id="inputPassword4"
-						       placeholder="Contraseña">
-					</x-incluyeme>
-					<x-incluyeme class="form-group col-12">
-						<label for="inputPassword4">Repite contraseña *</label>
-						<input type="password" v-model="passwordConfirm" class="form-control" id="inputPassword4"
-						       placeholder="Repite tu contraseña">
-					</x-incluyeme>
-					<x-incluyeme class="form-group col-12">
-						<button type="submit" class="btn btn-info w-100 w-100"
-						        @click.prevent="goToStep(2, '<?php echo plugins_url() ?>')">Registrarse con
-						                                                                    E-mail
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
-		
-		</template>
-		<template id="step2" v-if="currentStep == 2">
+	.btn-link {
+		color: black !important;
+	}
+	
+	.btn-link:hover,
+	.btn-link:focus,
+	.btn-link:active,
+	.btn-link.active {
+		background: none !important;
+	}
+
+</style>
+<div id="incluyeme-login-wpjb">
+	<div class="container">
+		<template id="step1">
 			<x-incluyeme class="container text-center">
-				<h1>¿Cómo te llamas?</h1>
+				<h2 class='mt-2'>Perfil</h2>
+			</x-incluyeme>
+		</template>
+		<template id="step2">
+			<x-incluyeme class="container text-center">
+				<h2 class='mt-2'>Informacion Personal</h2>
 			</x-incluyeme>
 			<x-incluyeme class="row">
 				<x-incluyeme class="form-group col-12">
-					<label for="names">Nombres *</label>
+					<label for="names">Nombres </label>
 					<input v-model="name" type="text" class="form-control" id="names" placeholder="Ingresa tus nombres">
 				</x-incluyeme>
 				<x-incluyeme class="form-group col-12">
-					<label for="lastNames">Apellidos *</label>
+					<label for="lastNames">Apellidos </label>
 					<input v-model="lastName" type="text" class="form-control" id="lastNames"
 					       placeholder="Ingresa tus apellidos">
 				</x-incluyeme>
 			</x-incluyeme>
-			<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-			        @click.prevent="goToStep(3, '<?php echo plugins_url() ?>')">
-				Siguiente
-			</button>
 		</template>
-		<template id="step3" v-if="currentStep == 3">
+		<template id="step3">
 			<x-incluyeme class="container text-center">
-				<h1>Dinos tu género y fecha de nacimiento</h1>
+				<h2 class='mt-2'>Género y fecha de nacimiento</h2>
 			</x-incluyeme>
 			<x-incluyeme class="row">
 				<x-incluyeme class="form-group col-12">
-					<p>Género *</p>
+					<p>Género </p>
 					<x-incluyeme class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" id="inlineCheckbox1"
 						       value="Masculino" v-model="genre">
@@ -430,25 +280,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="form-group">
-					<label for="dateBirthDay"><?php _e("Fecha de Nacimiento *", "incluyeme-login-extension"); ?></label>
+					<label for="dateBirthDay"><?php _e("Fecha de Nacimiento ", "incluyeme-login-extension"); ?></label>
 					<input type="date" v-model="dateBirthDay" name="dateBirthDay" class="form-control" id="dateBirthDay"
 					       placeholder="Ingresa tus fecha de nacimiento">
 				</x-incluyeme>
 			</x-incluyeme>
-			<x-incluyeme class="row mt-2">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100"
-					        @click.prevent="goToStep(4, '<?php echo plugins_url() ?>')">Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
 		</template>
-		<template id="step4" v-if="currentStep == 4">
+		<template id="step4">
 			<x-incluyeme class="container text-center">
-				<h1>Datos de contacto</h1>
+				<h2 class='mt-2'>Datos de contacto</h2>
 			</x-incluyeme>
 			<div class="container">
-				<label for="mPhone"><?php _e("Teléfono Celular *", "incluyeme-login-extension"); ?></label>
+				<label for="mPhone"><?php _e("Teléfono Celular ", "incluyeme-login-extension"); ?></label>
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="form-group col-4">
 						<input type="number" v-model="mPhone" class="form-control" id="mPhone" placeholder="Cod. Area">
@@ -482,7 +325,7 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="col-6">
-						<label for="state"><?php _e("Provincia/Estado *", "incluyeme-login-extension"); ?></label>
+						<label for="state"><?php _e("Provincia/Estado ", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-6">
 						<input v-model="state" type="text" class="form-control" id="state">
@@ -492,7 +335,7 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="col-6">
-						<label for="city"><?php _e("Ciudad *", "incluyeme-login-extension"); ?></label>
+						<label for="city"><?php _e("Ciudad ", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-6">
 						<input v-model="city" type="text" class="form-control" id="city">
@@ -509,45 +352,15 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 mt-3"
-					        @click.prevent="goToStep(3, '<?php echo plugins_url() ?>')">Atras
-					</button>
-				</x-incluyeme>
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 mt-3"
-					        @click.prevent="goToStep(5, '<?php echo plugins_url() ?>')"> Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
 		</template>
-		<template id="step5" v-if="currentStep == 5">
+		<template id="step5">
 			<x-incluyeme class="container text-center">
-				<h1>¿Tienes algún tipo de disCapacidad? *</h1>
-			</x-incluyeme>
-			<x-incluyeme class="row">
-				<x-incluyeme class="form-group col">
-					<x-incluyeme class="form-check form-check-inline">
-						<input type="radio" name="disCap" id="disCap" v-on:click='disCap = true'
-						       v-on:click='disClass = "w-50"'
-						       class="form-check-input">
-						<label for="disCap" class="form-check-label">Tengo una disCapacidad</label>
-					</x-incluyeme>
-				</x-incluyeme>
-				<x-incluyeme class="form-group col">
-					<x-incluyeme class="form-check form-check-inline">
-						<input type="radio" id="disCapF" name="disCap" v-on:click='disCap = false'
-						       v-on:click='disClass = "w-100"'
-						       class="form-check-input">
-						<label class="form-check-label" for="disCapF">NO tengo una disCapacidad</label>
-					</x-incluyeme>
-				</x-incluyeme>
+				<h2 class='mt-2'>disCapacidad </h2>
 			</x-incluyeme>
 			<div class="container">
-				<h5 v-if="disCap">Indica cuales</h5>
+				<h5>Indica cuales</h5>
 				<div class="container m-auto">
-					<x-incluyeme v-if="disCap" class="row ml-5">
+					<x-incluyeme class="row ml-5">
 						<x-incluyeme class="col">
 							<input class="form-check-input" type="checkbox" v-model="motriz" id="Motriz">
 							<label class="form-check-label" for="Motriz">
@@ -593,24 +406,9 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
-				<span v-if="disCap===false">Nos enfocamos en la inclusión de personas con disCapacidad</span>
 			</div>
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button v-if="disCap===true" type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(4, '<?php echo plugins_url() ?>')">
-						Atras
-					</button>
-				</x-incluyeme>
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 mt-3" v-bind:class="[disClass]"
-					        @click.prevent="goToStep(disCap ? 6 : false)">
-						{{disCap ? 'Siguiente' : 'Finalizar'}}
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
 		</template>
-		<template id="step6" v-if="currentStep == 6">
+		<template id="step6">
 			<x-incluyeme id="accordion">
 				<x-incluyeme v-if="motriz" class="card">
 					<x-incluyeme class="card-header p-0 m-0" id="headingOne">
@@ -1324,104 +1122,53 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</x-incluyeme>
 			<div class="container mt-1">
 				<x-incluyeme class="w-100 ">
-					<label for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad *</label>
+					<label for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad </label>
 					<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis"
 					          rows="3"></textarea>
 				</x-incluyeme>
 			</div>
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(5, '<?php echo plugins_url() ?>')">
-						Atras
-					</button>
-				</x-incluyeme>
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(7, '<?php echo plugins_url() ?>')">Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
 		</template>
-		<template id="step7" v-if="currentStep == 7">
+		<template id="step7">
 			<div class="container">
-				<h1>Adjunta tu Foto, CV
-				    y <?php echo get_option($incluyemeNames) ? ' ' . get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h1>
+				<h2 class='mt-2'>Adjunta tu Foto, CV
+				                 y <?php echo get_option($incluyemeNames) ? ' ' . get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h2>
 				<div class="container">
-					<h3>Foto de Perfil</h3>
-					<x-incluyeme class="row m-auto">
-						<x-incluyeme class="col-8">
-							<div id="drop-zone">
-								Drop files here...
-								<div id="clickHere">
-									or click here..
-									<input v-on:change="cargaImg()" type="file" name="userIMG" id="userIMG"/>
-								</div>
+					<a :href="myIMG">Foto de Perfil</a>
+					<x-incluyeme class="row m-auto  py-4">
+						<x-incluyeme class="col">
+							<div class="m-auto">
+								<input v-on:change="cargaImg()" type="file" name="userIMG" id="userIMG"/>
 							</div>
-						</x-incluyeme>
-						<x-incluyeme class="col-4">
-							<img :src="img" class="rounded-circle" alt="Imagen"
-							     v-if="img!==null">
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
 				<div class="container">
-					<h3>Curriculum Vitae</h3>
-					<x-incluyeme class="row m-auto">
-						<x-incluyeme class="col-8">
-							<div id="drop-zoneCV">
-								Drop files here...
-								<div id="clickHereCV">
-									or click here..
-									<input v-on:change="cargaCV()" type="file" name="userCV" id="userCV"/>
-								</div>
+					<a :href="myCV">Curriculum Vitae</a>
+					<x-incluyeme class="row m-auto  py-4">
+						<x-incluyeme class="col">
+							<div class="m-auto">
+								<input v-on:change="cargaCV()" type="file" name="userCV" id="userCV"/>
 							</div>
-						</x-incluyeme>
-						<x-incluyeme class="col-4">
-							<embed :src="cvSHOW"/>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
 				<div class="container">
-					<h3><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></h3>
-					<x-incluyeme class="row m-auto">
-						<x-incluyeme class="col-8">
-							<div id="drop-zoneCUD">
-								Drop files here...
-								<div id="clickHereCUD">
-									or click here..
-									<input v-on:change="cargaCUD()" type="file" name="userCUD" id="userCUD"/>
-								</div>
+					<a :href="myCUD"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
+					<x-incluyeme class="row m-auto py-4">
+						<x-incluyeme class="col">
+							<div class="m-auto">
+								<input v-on:change="cargaCUD()" type="file" name="userCUD" id="userCUD"/>
 							</div>
-						</x-incluyeme>
-						<x-incluyeme class="col-4">
-							<embed :src="cudSHOW"/>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
-			</div>
-			<div class="container">
-				<x-incluyeme class="row m-auto">
-					<x-incluyeme class="col">
-						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-						        @click.prevent="goToStep(6, '<?php echo plugins_url() ?>')">
-							Atras
-						</button>
-					</x-incluyeme>
-					<x-incluyeme class="col">
-						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-						        @click.prevent="goToStep(8, '<?php echo plugins_url() ?>')">
-							Siguiente
-						</button>
-					</x-incluyeme>
-				</x-incluyeme>
 			</div>
 		</template>
-		<template id="step8" v-if="currentStep == 8">
+		<template id="step8">
 			<div class="container">
-				<h1>Educación</h1>
+				<h2 class='mt-2'>Educación</h2>
 			</div>
-			<div v-for="(fieldName, pos) in formFields" :key="pos" class="container">
+			<div v-for="(fieldName, pos) in formFields" class="container">
 				<div class="row">
 					<x-incluyeme class="col">
 						<label for="country_edu"><?php _e("Pais", "incluyeme-login-extension"); ?></label>
@@ -1550,26 +1297,10 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
-			<div class="container">
-				<x-incluyeme class="row">
-					<x-incluyeme class="col">
-						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-						        @click.prevent="goToStep(7, '<?php echo plugins_url() ?>')">
-							Atras
-						</button>
-					</x-incluyeme>
-					<x-incluyeme class="col">
-						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-						        @click.prevent="goToStep(9, '<?php echo plugins_url() ?>')">
-							Siguiente
-						</button>
-					</x-incluyeme>
-				</x-incluyeme>
-			</div>
 		</template>
-		<template id="step9" v-if="currentStep == 9">
+		<template id="step9">
 			<div class="container">
-				<h1>Experiencia Laboral</h1>
+				<h2 class='mt-2'>Experiencia Laboral</h2>
 			</div>
 			<div class="container" v-for="(formFields2, pos) in formFields2" :key="pos">
 				<x-incluyeme class="row">
@@ -1667,20 +1398,12 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(10, '<?php echo plugins_url() ?>')">
-						Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
 		</template>
-		<template id="step10" v-if="currentStep == 10">
+		<template id="step10">
 			<div class="container">
-				<h1>Idiomas</h1>
+				<h2 class='mt-2'>Idiomas</h2>
 			</div>
-			<div class="container" v-for="(formFields3, pos) in formFields3" :key="pos">
+			<div class="container" v-for="(formFields3, pos) in formFields3">
 				<x-incluyeme class="row">
 					<x-incluyeme class="col">
 						<label for="idioms">Idioma</label>
@@ -1743,20 +1466,12 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(11, '<?php echo plugins_url() ?>')">
-						Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
 		</template>
-		<template id="step11" v-if="currentStep == 11">
+		<template id="step11">
 			<div class="container">
 				<x-incluyeme class="row">
 					<x-incluyeme class="col text-center">
-						<h1>¿De qué te gustaría trabajar?</h1>
+						<h2 class='mt-2'>Area Preferida</h2>
 						<select v-model="preferJobs" type="text" class="form-control" id="preferJobs">
 							<option v-for="(preferJobs, index) of preferJob"
 							        :value="preferJobs.id" class="text-capitalize">
@@ -1766,44 +1481,24 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(10, '<?php echo plugins_url() ?>')">
-						Atras
-					</button>
-				</x-incluyeme>
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(12, '<?php echo plugins_url() ?>')">
-						Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
 		</template>
-			<template id="step12" v-if="currentStep == 12">
-				<div class="container">
-					<x-incluyeme class="row">
-						<x-incluyeme class="col-12 text-center">
-							<h1>¡Gracias por Registrarte!</h1>
-							<p>Pronto seras redirigido a nuestra lista de ofertas laborales.</p>
-						</x-incluyeme>
+		<template id="step11">
+			<div class="container">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col text-center">
+						<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+						        @click.prevent="actualizar()">
+							Actualizar
+						</button>
 					</x-incluyeme>
-				</div>
-			</template>
-		</div>
+			</div>
+		</template>
 	</div>
-<?php if (get_option($incluyemeLoginGoogle)) { ?>
-	<script>
-        function onSignIn(googleUser) {
-            const profile = googleUser.getBasicProfile();
-            app.$data.email = profile.getEmail();
-            app.$data.password = profile.getEmail();
-            app.$data.passwordConfirm = profile.getEmail();
-            app.$data.name = profile.getGivenName();
-            app.$data.lastName = profile.getFamilyName();
-            app.googleChange('<?php echo plugins_url() ?>');
-        }
-	</script>
-	<script>startApp();</script>
-<?php } ?>
+</div>
+
+<script>
+    function startApp() {
+
+        app.setID('<?php echo $resume->id ?>', '<?php echo plugins_url() ?>');
+    }
+</script>

@@ -13,6 +13,7 @@ Domain Path: /languages
 
 defined('ABSPATH') or exit;
 require_once plugin_dir_path(__FILE__) . 'include/active_incluyeme_login.php';
+require_once plugin_dir_path(__FILE__) . 'include/menus/incluyeme_login_menu.php';
 add_action('admin_init', 'incluyeme_requirements_Login_Extension');
 
 function plugin_name_i18n_incluyeme_login()
