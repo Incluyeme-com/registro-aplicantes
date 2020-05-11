@@ -225,14 +225,13 @@ let app = new Vue({
             switch (step) {
                 case 2:
                     this.awaitChange = true;
-                    if (await this.confirmStep2(step) && this.currentStep <= 2) {
+                    if (await this.confirmStep2(step) === true && this.currentStep <= 2) {
                         this.getLevelsIdioms().finally();
                         this.getIdioms().finally();
                         this.getCountries().finally();
                         this.getStudies().finally();
                         this.getExperiences().finally();
                         this.getPrefersJobs().finally();
-                    } else {
                         this.currentStep = step;
                     }
                     break;
@@ -795,6 +794,7 @@ let app = new Vue({
                         }]
                     ],
                 });
+                this.awaitChange = false;
                 return;
             }
             this.pleaseAwait();
