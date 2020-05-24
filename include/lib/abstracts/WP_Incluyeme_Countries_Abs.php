@@ -966,7 +966,6 @@ WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id
 										FROM ' . self::$dataPrefix . 'wpjb_resume
 										WHERE ' . self::$dataPrefix . 'wpjb_resume.user_id = ' . $userID . '
 										AND ' . self::$dataPrefix . 'wpjb_resume.id = ' . $resume);
-		error_log(print_r($verifications, true));
 		if (count($verifications) > 0) {
 			return true;
 		}

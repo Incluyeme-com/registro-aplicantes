@@ -2,7 +2,6 @@
 include_once dirname(__DIR__, 1) . '/lib/WP_Incluyeme_Login_Countries.php';
 header('Content-type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	error_log(print_r($_POST, true));
 	$verifications = new WP_Incluyeme_Login_Countries();
 	if (isset($_POST['userID']) && isset($_POST['removeIMG'])) {
 		$verifications::deleteIMG($_POST['userID'], 1);
