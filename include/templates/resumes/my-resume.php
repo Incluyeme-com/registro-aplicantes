@@ -4,6 +4,7 @@ $img = plugins_url() . '/incluyeme-login-extension/include/assets/img/incluyeme-
 $css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
 wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
 wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
+wp_register_script('dropZ', $js . 'dropzone.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
 wp_register_script('vueD', $js . 'vueRESUME.js', ['vueJS', 'Axios'], '2.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
@@ -13,11 +14,15 @@ wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.
 wp_register_style('bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false);
 wp_register_style('bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false);
 wp_register_script('FAwesome', 'https://kit.fontawesome.com/65c018cf75.js', [], '1.0.0', false);
+wp_register_style('dropzone-css', $css . 'dropzone.min.css', [], '1.0.0', false);
+
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('bootstrap-notify');
 wp_enqueue_script('vueD');
+wp_enqueue_script('dropZ');
 
 wp_enqueue_style('bootstrap-css');
+wp_enqueue_style('dropzone-css');
 wp_enqueue_style('bootstrap-notify-css');
 wp_enqueue_script('fAwesome');
 $baseurl = wp_upload_dir();
@@ -30,156 +35,24 @@ $incluyemeLoginFB = 'incluyemeLoginFB';
 $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 ?>
 <style>
-	#drop-zone {
-		border: 2px dashed rgba(0, 0, 0, .3);
-		border-radius: 20px;
-		text-align: center;
-		line-height: 180px;
-		font-size: 20px;
-		color: rgba(0, 0, 0, .3);
+	.dropzone {
+		border: 2px dashed rgba(0, 0, 0, .3) !important;
+		border-radius: 20px !important;
+		color: rgba(0, 0, 0, .3) !important;
+		margin-top: 2em !important;
+		margin-bottom: 2em !important;
+	}
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
 	}
 	
-	#drop-zone input {
-		/*Important*/
-		position: absolute;
-		/*Important*/
-		cursor: pointer;
-		left: 0;
-		top: 0;
-		/*Important This is only comment out for demonstration purposes.
-		opacity:0; */
+	/* Firefox */
+	input[type=number] {
+		-moz-appearance: textfield;
 	}
-	
-	/*Important*/
-	#drop-zone.mouse-over {
-		border: 2px dashed rgba(0, 0, 0, .5);
-		color: rgba(0, 0, 0, .5);
-	}
-	
-	
-	/*If you dont want the button*/
-	#clickHere {
-		position: absolute;
-		cursor: pointer;
-		left: 50%;
-		top: 50%;
-		margin-left: -50px;
-		margin-top: 20px;
-		line-height: 26px;
-		color: white;
-		font-size: 12px;
-		width: 100px;
-		height: 26px;
-		border-radius: 4px;
-		background-color: #3b85c3;
-		
-	}
-	
-	#clickHere:hover {
-		background-color: #4499DD;
-		
-	}
-	
-	#drop-zoneCV {
-		border: 2px dashed rgba(0, 0, 0, .3);
-		border-radius: 20px;
-		text-align: center;
-		line-height: 180px;
-		font-size: 20px;
-		color: rgba(0, 0, 0, .3);
-	}
-	
-	#drop-zoneCV input {
-		/*Important*/
-		position: absolute;
-		/*Important*/
-		cursor: pointer;
-		left: 0;
-		top: 0;
-		/*Important This is only comment out for demonstration purposes.
-		opacity:0; */
-	}
-	
-	/*Important*/
-	#drop-zoneCV.mouse-over {
-		border: 2px dashed rgba(0, 0, 0, .5);
-		color: rgba(0, 0, 0, .5);
-	}
-	
-	
-	/*If you dont want the button*/
-	#clickHereCV {
-		position: absolute;
-		cursor: pointer;
-		left: 50%;
-		top: 50%;
-		margin-left: -50px;
-		margin-top: 20px;
-		line-height: 26px;
-		color: white;
-		font-size: 12px;
-		width: 100px;
-		height: 26px;
-		border-radius: 4px;
-		background-color: #3b85c3;
-		
-	}
-	
-	#clickHereCV:hover {
-		background-color: #4499DD;
-		
-	}
-	
-	#drop-zoneCUD {
-		border: 2px dashed rgba(0, 0, 0, .3);
-		border-radius: 20px;
-		text-align: center;
-		line-height: 180px;
-		font-size: 20px;
-		color: rgba(0, 0, 0, .3);
-	}
-	
-	#drop-zoneCUD input {
-		/*Important*/
-		position: absolute;
-		/*Important*/
-		cursor: pointer;
-		left: 0;
-		top: 0;
-		/*Important This is only comment out for demonstration purposes.
-		opacity:0; */
-	}
-	
-	/*Important*/
-	#drop-zoneCUD.mouse-over {
-		border: 2px dashed rgba(0, 0, 0, .5);
-		color: rgba(0, 0, 0, .5);
-	}
-	
-	
-	/*If you dont want the button*/
-	#clickHereCUD {
-		position: absolute;
-		cursor: pointer;
-		left: 50%;
-		top: 50%;
-		margin-left: -50px;
-		margin-top: 20px;
-		line-height: 26px;
-		color: white;
-		font-size: 12px;
-		width: 100px;
-		height: 26px;
-		border-radius: 4px;
-		background-color: #3b85c3;
-		
-	}
-	
-	#clickHereCUD:hover {
-		background-color: #4499DD;
-		
-	}
-	
 	.myButton {
 		box-shadow: 2px 2px 4px 0px #bfbfbf;
 		background-color: #ffffff;
@@ -234,15 +107,17 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 		</template>
 		<template id="step2">
 			<x-incluyeme class="container text-center">
-				<h2 class='mt-2'>Informacion Personal</h2>
+				<h1>¿Cómo te llamas?</h1>
 			</x-incluyeme>
 			<x-incluyeme class="row">
 				<x-incluyeme class="form-group col-12">
-					<label for="names">Nombres </label>
-					<input v-model="name" type="text" class="form-control" id="names" placeholder="Ingresa tus nombres">
+					<label id="nameLabel" for="names">Nombres <span style="font-size: 2em;color: black;">*<span></label>
+					<input v-model="name" type="text" class="form-control" id="names"
+					       placeholder="Ingresa tus nombres">
 				</x-incluyeme>
 				<x-incluyeme class="form-group col-12">
-					<label for="lastNames">Apellidos </label>
+					<label id="lastNamesLabel" for="lastNames">Apellidos <span
+								style="font-size: 2em;color: black;">*<span></label>
 					<input v-model="lastName" type="text" class="form-control" id="lastNames"
 					       placeholder="Ingresa tus apellidos">
 				</x-incluyeme>
@@ -250,20 +125,22 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 		</template>
 		<template id="step3">
 			<x-incluyeme class="container text-center">
-				<h2 class='mt-2'>Género y fecha de nacimiento</h2>
+				<h1>Dinos tu género y fecha de nacimiento</h1>
 			</x-incluyeme>
 			<x-incluyeme class="row">
-				<x-incluyeme class="form-group col-12">
-					<p>Género </p>
+				<x-incluyeme class="col-12">
+					<p id="genreP">Género <span style="font-size: 2em;color: black;">*<span></p>
 					<x-incluyeme class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" id="inlineCheckbox1"
+						<input class="form-check-input" type="radio" style="transform: scale(1.4) !important;"
+						       id="inlineCheckbox1"
 						       value="Masculino" v-model="genre">
 						<label class="form-check-label"
 						       for="inlineCheckbox1"
 						       style="color: black"><?php _e("Masculino", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" id="inlineCheckbox2"
+						<input class="form-check-input" type="radio" style="transform: scale(1.4) !important;"
+						       id="inlineCheckbox2"
 						       name="inlineCheckbox1"
 						       value="Femenino" v-model="genre">
 						<label class="form-check-label"
@@ -271,7 +148,8 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 						       style="color: black"><?php _e("Femenino", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" id="inlineCheckbox3"
+						<input class="form-check-input" type="radio" style="transform: scale(1.4) !important;"
+						       id="inlineCheckbox3"
 						       name="inlineCheckbox1"
 						       value="No Binario" v-model="genre">
 						<label class="form-check-label"
@@ -279,29 +157,33 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 						       style="color: black"><?php _e("No Binario", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 				</x-incluyeme>
-				<x-incluyeme class="form-group">
-					<label for="dateBirthDay"><?php _e("Fecha de Nacimiento ", "incluyeme-login-extension"); ?></label>
-					<input type="date" v-model="dateBirthDay" name="dateBirthDay" class="form-control" id="dateBirthDay"
+				<x-incluyeme class="col mt-4 mb-2">
+					<label id="labeldateBirthDay"
+					       for="dateBirthDay"><?php _e("Fecha de Nacimiento <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+					<input type="date" v-model="dateBirthDay" name="dateBirthDay" class="form-control"
+					       id="dateBirthDay"
 					       placeholder="Ingresa tus fecha de nacimiento">
 				</x-incluyeme>
 			</x-incluyeme>
 		</template>
 		<template id="step4">
 			<x-incluyeme class="container text-center">
-				<h2 class='mt-2'>Datos de contacto</h2>
+				<h1>Datos de contacto</h1>
 			</x-incluyeme>
 			<div class="container">
-				<label for="mPhone"><?php _e("Teléfono Celular ", "incluyeme-login-extension"); ?></label>
+				<label id="labelPhone"
+				       for="mPhone"><?php _e("Teléfono Celular <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
 				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="form-group col-4">
-						<input type="number" v-model="mPhone" class="form-control" id="mPhone" placeholder="Cod. Area">
+					<x-incluyeme class="form-group col-lg-4 col">
+						<input type="number" min='0' v-model="mPhone" class="form-control" id="mPhone"
+						       placeholder="Cod. Area">
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-1 text-center">
 						<span><b>-</b></span>
 					</x-incluyeme>
-					<x-incluyeme class="form-group col">
+					<x-incluyeme class="form-group col-lg col-md-12">
 						<label for="Phone" style="display: none"></label>
-						<input type="number" v-model="phone" class="form-control" id="Phone"
+						<input type="number" min='0' v-model="phone" class="form-control" id="Phone"
 						       placeholder="Teléfono Celular">
 					</x-incluyeme>
 				</x-incluyeme>
@@ -309,111 +191,121 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 			<div class="container">
 				<label for="fPhone"><?php _e("Teléfono Fijo", "incluyeme-login-extension"); ?></label>
 				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="form-group col-4">
-						<input type="number" v-model="fPhone" class="form-control" id="fPhone" placeholder="Cod. Area">
+					<x-incluyeme class="form-group col-lg-4 col">
+						<input type="number" min='0' v-model="fPhone" class="form-control" id="fPhone"
+						       placeholder="Cod. Area">
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-1 text-center">
 						<span><b>-</b></span>
 					</x-incluyeme>
-					<x-incluyeme class="form-group col">
+					<x-incluyeme class="form-group col-lg col-md-12">
 						<label for="Phone" style="display: none"></label>
-						<input type="number" v-model="fiPhone" class="form-control" id="Phone"
+						<input type="number" min='0' v-model="fiPhone" class="form-control" id="Phone"
 						       placeholder="Teléfono Fijo">
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
 			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="col-6">
-						<label for="state"><?php _e("Provincia/Estado ", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="form-group col-6">
+					<x-incluyeme class="form-group col">
+						<label id="labelState"
+						       for="state"><?php _e("Provincia/Estado <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
 						<input v-model="state" type="text" class="form-control" id="state">
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
 			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="col-6">
-						<label for="city"><?php _e("Ciudad ", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="form-group col-6">
+					<x-incluyeme class="form-group col">
+						<label id="labelCity"
+						       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
 						<input v-model="city" type="text" class="form-control" id="city">
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
 			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="col-12">
+					<x-incluyeme class="form-group col">
 						<label for="street"><?php _e("Calle", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="form-group col-12">
-						<input v-model="street" type="text" class="form-control" id="street">
+						<textarea rows="3" v-model="street" type="text" class="form-control"
+						          id="street"> </textarea>
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
+		
 		</template>
 		<template id="step5">
 			<x-incluyeme class="container text-center">
-				<h2 class='mt-2'>disCapacidad </h2>
+				<h1>¿Tienes algún tipo de disCapacidad? <span style="font-size: 2em;color: black;">*<span></h1>
 			</x-incluyeme>
 			<div class="container">
-				<h5>Indica cuales</h5>
+				<h5 v-if="disCap">Indica cuales</h5>
 				<div class="container m-auto">
 					<x-incluyeme class="row ml-5">
 						<x-incluyeme class="col">
-							<input class="form-check-input" type="checkbox" v-model="motriz" id="Motriz">
+							<input class="form-check-input" type="checkbox"
+							       style="transform: scale(1.4) !important;" v-model="motriz" id="Motriz">
 							<label class="form-check-label" for="Motriz">
 								Motriz
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" v-model="visceral" id="Visceral"
+						<x-incluyeme class="col-lg-6 col-md-12">
+							<input class="form-check-input" type="checkbox"
+							       style="transform: scale(1.4) !important;" v-model="visceral" id="Visceral"
 							       name="Visceral">
 							<label class="form-check-label" for="Visceral">
 								Visceral
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" v-model="auditiva" id="Auditiva">
+						<x-incluyeme class="col-lg-6 col-md-12">
+							<input class="form-check-input" type="checkbox"
+							       style="transform: scale(1.4) !important;" v-model="auditiva" id="Auditiva">
 							<label class="form-check-label" for="Auditiva">
 								Auditiva
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" v-model="psiquica" id="Psíquica">
+						<x-incluyeme class="col-lg-6 col-md-12">
+							<input class="form-check-input" type="checkbox"
+							       style="transform: scale(1.4) !important;" v-model="psiquica" id="Psíquica">
 							<label class="form-check-label" for="Psíquica">
 								Psíquica
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" v-model="visual" id="Visual">
+						<x-incluyeme class="col-lg-6 col-md-12">
+							<input class="form-check-input" type="checkbox"
+							       style="transform: scale(1.4) !important;" v-model="visual" id="Visual">
 							<label class="form-check-label" for="Visual">
 								Visual
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" v-model="habla" id="Habla">
+						<x-incluyeme class="col-lg-6 col-md-12">
+							<input class="form-check-input" type="checkbox"
+							       style="transform: scale(1.4) !important;" v-model="habla" id="Habla">
 							<label class="form-check-label" for="Habla">
 								Habla
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input class="form-check-input" type="checkbox" v-model="intelectual" id="Intelectual">
+						<x-incluyeme class="col-lg-6 col-md-12">
+							<input class="form-check-input" type="checkbox"
+							       style="transform: scale(1.4) !important;" v-model="intelectual"
+							       id="Intelectual">
 							<label class="form-check-label" for="Intelectual">
 								Intelectual
 							</label>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
+				<span v-if="disCap===false">Nos enfocamos en la inclusión de personas con disCapacidad</span>
 			</div>
+		
 		</template>
 		<template id="step6">
 			<x-incluyeme id="accordion">
 				<x-incluyeme v-if="motriz" class="card">
 					<x-incluyeme class="card-header p-0 m-0" id="headingOne">
 						<h5 class="mb-0">
-							<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+							<button class="btn btn-link fas fa-arrow-down" data-toggle="collapse"
+							        data-target="#collapseOne"
 							        aria-expanded="true" aria-controls="collapseOne">
 								Motriz
 							</button>
@@ -426,16 +318,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 							<div class="container">
 								<x-incluyeme class="row">
 									<x-incluyeme class="col-12">
-										<span>¿Puedes permanecer de pie?</span>
+										<span>¿Puedes permanecer de pie?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mPieS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mPieS"
 											       value="Si" v-model="mPie" name="mPie">
 											<label class="form-check-label"
 											       for="mPieS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mPie"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mPie"
 											       value="No" v-model="mPie" name="mPie">
 											<label class="form-check-label"
 											       for="mPie"
@@ -443,16 +337,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Puedes mantenerte sentado/a? </span>
+										<span>¿Puedes mantenerte sentado/a? </span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mSenS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mSenS"
 											       value="Si" v-model="mSen" name="mSen">
 											<label class="form-check-label"
 											       for="mSenS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mSen"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mSen"
 											       value="No" v-model="mSen" name="mSen">
 											<label class="form-check-label"
 											       for="mSen"
@@ -461,16 +357,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 									
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Puedes subir y bajar escaleras?</span>
+										<span>¿Puedes subir y bajar escaleras?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mEscaS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mEscaS"
 											       value="Si" v-model="mEsca" name="mEsca">
 											<label class="form-check-label"
 											       for="mEscaS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mEsca"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mEsca"
 											       value="No" v-model="mEsca" name="mEsca">
 											<label class="form-check-label"
 											       for="mEsca"
@@ -479,16 +377,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Tienes movilidad en tus brazos?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mBrazoS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mBrazoS"
 											       value="Si" v-model="mBrazo" name="mBrazo">
 											<label class="form-check-label"
 											       for="mBrazoS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mBrazo"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mBrazo"
 											       value="No" v-model="mBrazo" name="mBrazo">
 											<label class="form-check-label"
 											       for="mBrazo"
@@ -497,30 +397,34 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Puedes tomar peso?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="peso"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="peso"
 											       value="No" v-model="peso" name="peso">
 											<label class="form-check-label"
 											       for="peso"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="pesoKg"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="pesoKg"
 											       value="Hasta 5 Kg" v-model="peso" name="peso">
 											<label class="form-check-label"
 											       for="pesoKg"
 											       style="color: black"><?php _e("Hasta 5 Kg", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="peso10"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="peso10"
 											       value="Hasta 10 Kg" v-model="peso" name="peso">
 											<label class="form-check-label"
 											       for="peso10"
 											       style="color: black"><?php _e("Hasta 10 Kg", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="peso20"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="peso20"
 											       value="Hasta 20 Kg" v-model="peso" name="peso">
 											<label class="form-check-label"
 											       for="peso20"
@@ -529,16 +433,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Utilizas silla de ruedas?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mRuedaS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mRuedaS"
 											       value="Si" v-model="mRueda" name="mRueda">
 											<label class="form-check-label"
 											       for="mRuedaS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mRueda"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mRueda"
 											       value="No" v-model="mBrazo" name="mRueda">
 											<label class="form-check-label"
 											       for="mRueda"
@@ -548,21 +454,24 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 									<x-incluyeme class="col-12">
 										<span>¿Utilizas ayudas técnicas para desplazarte?
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="desplazarte"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="desplazarte"
 											       value="Bastón" v-model="desplazarte" name="desplazarte">
 											<label class="form-check-label"
 											       for="desplazarte"
 											       style="color: black"><?php _e("Bastón", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="Muletas"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="Muletas"
 											       value="Muletas" v-model="desplazarte" name="desplazarte">
 											<label class="form-check-label"
 											       for="Muletas"
 											       style="color: black"><?php _e("Muletas", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="Otros"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="Otros"
 											       value="Otros" v-model="desplazarte" name="desplazarte">
 											<label class="form-check-label"
 											       for="Otros"
@@ -571,16 +480,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Puedes realizar tareas de precisión con tus manos, por ejemplo,
-										      digitación? </span>
+										      digitación? </span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mDigiS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mDigiS"
 											       value="Si" v-model="mDigi" name="mDigi">
 											<label class="form-check-label"
 											       for="mDigiS"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="mDigi"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="mDigi"
 											       value="No" v-model="mDigi" name="mDigi">
 											<label class="form-check-label"
 											       for="mDigi"
@@ -595,8 +506,10 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 				<x-incluyeme v-if="visceral" class="card">
 					<x-incluyeme class="card-header m-0 p-0" id="headingTwo">
 						<h5 class="mb-0">
-							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+							<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
+							        data-target="#collapseTwo"
 							        aria-expanded="false" aria-controls="collapseTwo">
+								
 								Visceral
 							</button>
 						</h5>
@@ -607,16 +520,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 							<div class="container">
 								<x-incluyeme class="row">
 									<x-incluyeme class="col-12">
-										<span> ¿Tienes alguna dificultad en trabajar en ambientes húmedos?</span>
+										<span> ¿Tienes alguna dificultad en trabajar en ambientes húmedos?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vHumedos"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vHumedos"
 											       value="Si" v-model="vHumedos" name="vHumedos">
 											<label class="form-check-label"
 											       for="vHumedos"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vHumedosS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vHumedosS"
 											       value="No" v-model="vHumedos" name="vHumedos">
 											<label class="form-check-label"
 											       for="vHumedosS"
@@ -625,16 +540,18 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 								<span>¿Presentas alguna dificultad al trabajar en ambientes con alta o baja
-temperatura? </span>
+temperatura? </span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vTemp"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vTemp"
 											       value="Si" v-model="vTemp" name="vTemp">
 											<label class="form-check-label"
 											       for="vTemp"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vTempN"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vTempN"
 											       value="No" v-model="vTemp" name="vTemp">
 											<label class="form-check-label"
 											       for="vTempN"
@@ -643,16 +560,18 @@ temperatura? </span>
 									
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Tienes dificultades para trabajar en ambientes con polvo?</span>
+										<span>¿Tienes dificultades para trabajar en ambientes con polvo?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vPolvo"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vPolvo"
 											       value="Si" v-model="vPolvo" name="vPolvo">
 											<label class="form-check-label"
 											       for="vPolvo"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vPolvov"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vPolvov"
 											       value="No" v-model="vPolvo" name="vPolvo">
 											<label class="form-check-label"
 											       for="vPolvov"
@@ -662,16 +581,18 @@ temperatura? </span>
 									<x-incluyeme class="col-12">
 										<span>¿Tienes la posibilidad de trabajar durante una jornada completa sin
 dificultad?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vCompleta"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vCompleta"
 											       value="Si" v-model="vCompleta" name="vCompleta">
 											<label class="form-check-label"
 											       for="vCompleta"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vCompletaS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vCompletaS"
 											       value="No" v-model="vCompleta" name="vCompleta">
 											<label class="form-check-label"
 											       for="vCompletaS"
@@ -680,34 +601,45 @@ dificultad?
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Requieres alguna adaptación para realizar tu trabajo?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vAdap"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vAdap"
 											       value="Jornada Parcial" v-model="vAdap" name="vAdap">
 											<label class="form-check-label"
 											       for="vAdap"
 											       style="color: black"><?php _e("Jornada parcial", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vAdapS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vAdapS"
 											       value="Turnos Fijos" v-model="vAdap" name="vAdap">
 											<label class="form-check-label"
 											       for="vAdapS"
 											       style="color: black"><?php _e("Turnos fijos", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vAdapAS"
-											       value="Permisos para salidas medicas" v-model="vAdap" name="vAdap">
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vAdapAS"
+											       value="Permisos para salidas medicas" v-model="vAdap"
+											       name="vAdap">
 											<label class="form-check-label"
 											       for="vAdapAS"
 											       style="color: black"><?php _e("Permiso para salidas médicas", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<label class="form-check-label mr-2"
-											       style="color: black; font-weight: 400"
-											       for='vSalidas'><?php _e("Otro", "incluyeme-login-extension"); ?></label>
-											<input class="form-check-input" type="text" id="vSalidas"
-											       v-model="vAdap" name="vAdap" placeholder="Escribe aqui">
+											<div class="row">
+												<div class="col-lg col-md-12">
+													<label class="form-check-label mr-2"
+													       style="color: black; font-weight: 400"
+													       for='vSalidas'><?php _e("Otro", "incluyeme-login-extension"); ?></label>
+												</div>
+												<div class="col-lg-12 col-md-12">
+													<input class="form-check-input" type="text" id="vSalidas"
+													       v-model="vAdap" name="vAdap"
+													       placeholder="Escribe aqui">
+												</div>
+											</div>
 										</x-incluyeme>
 									</x-incluyeme>
 								</x-incluyeme>
@@ -718,8 +650,10 @@ dificultad?
 				<x-incluyeme v-if="auditiva" class="card">
 					<x-incluyeme class="card-header m-0 p-0" id="headingThree">
 						<h5 class="mb-0">
-							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+							<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
+							        data-target="#collapseThree"
 							        aria-expanded="false" aria-controls="collapseThree">
+								
 								Auditiva
 							</button>
 						</h5>
@@ -730,16 +664,18 @@ dificultad?
 							<div class="container">
 								<x-incluyeme class="row">
 									<x-incluyeme class="col-12">
-										<span>¿Puedes discriminar sonidos del ambiente?</span>
+										<span>¿Puedes discriminar sonidos del ambiente?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aAmbient"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aAmbient"
 											       value="Si" v-model="aAmbient" name="aAmbient">
 											<label class="form-check-label"
 											       for="aAmbient"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aAmbientS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aAmbientS"
 											       value="No" v-model="aAmbient" name="aAmbient">
 											<label class="form-check-label"
 											       for="aAmbientS"
@@ -747,16 +683,18 @@ dificultad?
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Utilizas lenguaje oral?</span>
+										<span>¿Utilizas lenguaje oral?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aOral"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aOral"
 											       value="Si" v-model="aOral" name="aOral">
 											<label class="form-check-label"
 											       for="aOral"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aOralN"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aOralN"
 											       value="No" v-model="aOral" name="aOral">
 											<label class="form-check-label"
 											       for="aOralN"
@@ -765,16 +703,18 @@ dificultad?
 									
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Utilizas lengua de señas para comunicarse?</span>
+										<span>¿Utilizas lengua de señas para comunicarse?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aSennas"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aSennas"
 											       value="Si" v-model="aSennas" name="aSennas">
 											<label class="form-check-label"
 											       for="aSennas"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aSennasS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aSennasS"
 											       value="No" v-model="aSennas" name="aSennas">
 											<label class="form-check-label"
 											       for="aSennasS"
@@ -783,16 +723,18 @@ dificultad?
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Puedes utilizar lectura labial?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aLabial"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aLabial"
 											       value="Si" v-model="aLabial" name="aLabial">
 											<label class="form-check-label"
 											       for="aLabial"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aLabialS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aLabialS"
 											       value="No" v-model="aLabial" name="aLabial">
 											<label class="form-check-label"
 											       for="aLabialS"
@@ -802,16 +744,18 @@ dificultad?
 									<x-incluyeme class="col-12">
 										<span>¿En un ambiente con bajo ruido (por ejemplo: oficina) puedes
 establecer una comunicación oral fluida con otra persona?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aBajo"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aBajo"
 											       value="Si" v-model="aBajo" name="aBajo">
 											<label class="form-check-label"
 											       for="aBajo"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aBajoS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aBajoS"
 											       value="No" v-model="aBajo" name="aBajo">
 											<label class="form-check-label"
 											       for="aBajoS"
@@ -820,16 +764,18 @@ establecer una comunicación oral fluida con otra persona?
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Utilizas alguna ayuda técnica?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aImplante"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aImplante"
 											       value="Implante" v-model="aImplante" name="aImplante">
 											<label class="form-check-label"
 											       for="aImplante"
 											       style="color: black"><?php _e("Implante", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="aImplantes"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aImplantes"
 											       value="Audífonos" v-model="aImplante" name="aImplante">
 											<label class="form-check-label"
 											       for="aImplantes"
@@ -851,8 +797,10 @@ establecer una comunicación oral fluida con otra persona?
 				<x-incluyeme v-if='visual' class="card">
 					<x-incluyeme class="card-header m-0 p-0" id="headingFive">
 						<h5 class="mb-0">
-							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+							<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
+							        data-target="#collapseFive"
 							        aria-expanded="false" aria-controls="collapseFive">
+								
 								Visual
 							</button>
 						</h5>
@@ -863,16 +811,18 @@ establecer una comunicación oral fluida con otra persona?
 							<div class="container">
 								<x-incluyeme class="row">
 									<x-incluyeme class="col-12">
-										<span> ¿Tienes dificultades para distinguir objetos que estén lejos?</span>
+										<span> ¿Tienes dificultades para distinguir objetos que estén lejos?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vLejos"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vLejos"
 											       value="Si" v-model="vLejos" name="vLejos">
 											<label class="form-check-label"
 											       for="vLejos"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vLejosS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vLejosS"
 											       value="No" v-model="vLejos" name="vLejos">
 											<label class="form-check-label"
 											       for="vLejosS"
@@ -881,16 +831,18 @@ establecer una comunicación oral fluida con otra persona?
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 								<span>¿Tienes dificultades en distinguir u observar objetos o textos a una
-distancia próxima?</span>
+distancia próxima?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vObservar"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vObservar"
 											       value="Si" v-model="vObservar" name="vObservar">
 											<label class="form-check-label"
 											       for="vObservar"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vObservarS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vObservarS"
 											       value="No" v-model="vTemp" name="vObservar">
 											<label class="form-check-label"
 											       for="vObservarS"
@@ -899,16 +851,18 @@ distancia próxima?</span>
 									
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Discriminas colores?</span>
+										<span>¿Discriminas colores?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vColores"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vColores"
 											       value="Si" v-model="vColores" name="vColores">
 											<label class="form-check-label"
 											       for="vColores"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vColoresS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vColoresS"
 											       value="No" v-model="vColores" name="vColores">
 											<label class="form-check-label"
 											       for="vColoresS"
@@ -918,16 +872,18 @@ distancia próxima?</span>
 									<x-incluyeme class="col-12">
 										<span>¿Puede identificar elementos visuales que se encuentren en
 distintos planos, por ejemplo: adelante o atrás (perspectiva)?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vDPlanos"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vDPlanos"
 											       value="Si" v-model="vDPlanos" name="vDPlanos">
 											<label class="form-check-label"
 											       for="vDPlanos"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vDPlanos"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vDPlanos"
 											       value="No" v-model="vDPlanos" name="vDPlanos">
 											<label class="form-check-label"
 											       for="vDPlanosS"
@@ -936,9 +892,10 @@ distintos planos, por ejemplo: adelante o atrás (perspectiva)?
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Utilizas alguna ayuda técnica?
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vTecniA"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vTecniA"
 											       value="Lectores de pantalla
 como Jaws o Lupa" v-model="vTecniA" name="vTecniA">
 											<label class="form-check-label"
@@ -947,25 +904,36 @@ como Jaws o Lupa" v-model="vTecniA" name="vTecniA">
 como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vTecniAS"
-											       value="Aumentadores de letras" v-model="vTecniA" name="vTecniA">
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vTecniAS"
+											       value="Aumentadores de letras" v-model="vTecniA"
+											       name="vTecniA">
 											<label class="form-check-label"
 											       for="vTecniAS"
 											       style="color: black"><?php _e("Aumentadores de letras", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="vTecniASS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="vTecniASS"
 											       value="Anteojos" v-model="vTecniA" name="vTecniAS">
 											<label class="form-check-label"
 											       for="vTecniASS"
 											       style="color: black"><?php _e("Anteojos", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<label class="form-check-label mr-2"
-											       style="color: black; font-weight: 400"
-											       for="vTecniAvAS"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
-											<input class="form-check-input" type="text" id="vTecniAvAS"
-											       v-model="vTecniA" name="vTecniAvAS" placeholder="Escribe aqui">
+											<div class="row">
+												<div class="col-lg col-md-12">
+													<label class="form-check-label mr-2"
+													       style="color: black; font-weight: 400"
+													       for="vTecniAvAS"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
+												</div>
+												<div class="col-lg-12 col-md-12">
+													<input class="form-check-input" type="text" id="vTecniAvAS"
+													       v-model="vTecniA" name="vTecniAvAS"
+													       placeholder="Escribe aqui">
+												</div>
+											</div>
+										
 										</x-incluyeme>
 									</x-incluyeme>
 								</x-incluyeme>
@@ -976,8 +944,10 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 				<x-incluyeme v-if="intelectual" class="card">
 					<x-incluyeme class="card-header m-0 p-0" id="headingFourt">
 						<h5 class="mb-0">
-							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collatseFourt"
+							<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
+							        data-target="#collatseFourt"
 							        aria-expanded="false" aria-controls="collatseFourt">
+								
 								Intelectual
 							</button>
 						</h5>
@@ -988,16 +958,18 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 							<div class="container">
 								<x-incluyeme class="row">
 									<x-incluyeme class="col-12">
-										<span>¿Sabes leer y escribir?</span>
+										<span>¿Sabes leer y escribir?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteEscri"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteEscri"
 											       value="Si" v-model="inteEscri" name="inteEscri">
 											<label class="form-check-label"
 											       for="inteEscri"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteEscriS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteEscriS"
 											       value="No" v-model="inteEscri" name="inteEscri">
 											<label class="form-check-label"
 											       for="inteEscriS"
@@ -1005,16 +977,18 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Te trasladas solo/a en transporte público? </span>
+										<span>¿Te trasladas solo/a en transporte público? </span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteTransla"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteTransla"
 											       value="Si" v-model="inteTransla" name="inteTransla">
 											<label class="form-check-label"
 											       for="inteTransla"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteTranslaS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteTranslaS"
 											       value="No" v-model="inteTransla" name="inteTransla">
 											<label class="form-check-label"
 											       for="inteTranslaS"
@@ -1023,16 +997,18 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 									
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Necesitas ayuda para empezar y terminar una tarea?</span>
+										<span>¿Necesitas ayuda para empezar y terminar una tarea?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteTarea"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteTarea"
 											       value="Si" v-model="inteTarea" name="inteTarea">
 											<label class="form-check-label"
 											       for="inteTarea"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteTareaS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteTareaS"
 											       value="No" v-model="inteTarea" name="inteTarea">
 											<label class="form-check-label"
 											       for="inteTareaS"
@@ -1040,16 +1016,18 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Te molesta que te corrijan cuando realizas una actividad?</span>
+										<span>¿Te molesta que te corrijan cuando realizas una actividad?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteActividad"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteActividad"
 											       value="Si" v-model="inteActividad" name="inteActividad">
 											<label class="form-check-label"
 											       for="inteActividad"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteActividadS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteActividadS"
 											       value="No" v-model="inteActividad" name="inteActividad">
 											<label class="form-check-label"
 											       for="inteActividadS"
@@ -1058,16 +1036,18 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>¿Te molesta si te cambian las actividades durante la jornada
-laboral?</span>
+laboral?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteMolesto"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteMolesto"
 											       value="Si" v-model="inteMolesto" name="inteMolesto">
 											<label class="form-check-label"
 											       for="inteMolesto"
 											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteMolestoS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteMolestoS"
 											       value="No" v-model="inteMolesto" name="inteMolesto">
 											<label class="form-check-label"
 											       for="inteMolestoS"
@@ -1078,14 +1058,16 @@ laboral?</span>
 										<span>Te gustra trabajar:
 										</span>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteTrabajar"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteTrabajar"
 											       value="Solo" v-model="inteTrabajar" name="inteTrabajar">
 											<label class="form-check-label"
 											       for="inteTrabajar"
 											       style="color: black"><?php _e("Solo", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteTrabajarS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="inteTrabajarS"
 											       value="Con otras personas" v-model="inteTrabajar"
 											       name="inteTrabajar">
 											<label class="form-check-label"
@@ -1095,17 +1077,22 @@ laboral?</span>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
 										<span>Prefieres trabajar en:
-										</span>
+										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteTrabajarSolo"
-											       value="Lugares cerrados (oficinas)" v-model="inteTrabajarSolo"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;"
+											       id="inteTrabajarSolo"
+											       value="Lugares cerrados (oficinas)"
+											       v-model="inteTrabajarSolo"
 											       name="inteTrabajarSolo">
 											<label class="form-check-label"
 											       for="inteTrabajarSolo"
 											       style="color: black"><?php _e("Lugares cerrados (oficinas)", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" id="inteTrabajarSoloS"
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;"
+											       id="inteTrabajarSoloS"
 											       value="Ambientes
 exteriores (jardines, parques, centros deportivos, otros)" v-model="inteTrabajarSolo" name="inteTrabajarSolo">
 											<label class="form-check-label"
@@ -1122,58 +1109,72 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</x-incluyeme>
 			<div class="container mt-1">
 				<x-incluyeme class="w-100 ">
-					<label for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad </label>
+					<label id="disCText" for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad
+						<span
+								style="font-size: 2em;color: black;">*<span></label>
 					<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis"
 					          rows="3"></textarea>
 				</x-incluyeme>
 			</div>
+		
 		</template>
 		<template id="step7">
 			<div class="container">
-				<h2 class='mt-2'>Adjunta tu Foto, CV
-				                 y <?php echo get_option($incluyemeNames) ? ' ' . get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h2>
+				<h1>Adjunta tu Foto, CV
+				    y <?php echo get_option($incluyemeNames) ? ' ' . get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h1>
 				<div class="container">
 					<a :href="myIMG">Foto de Perfil</a>
-					<x-incluyeme class="row m-auto  py-4">
-						<x-incluyeme class="col">
-							<div class="m-auto">
-								<input v-on:change="cargaImg()" type="file" name="userIMG" id="userIMG"/>
-							</div>
+					<x-incluyeme class="row m-auto">
+						<x-incluyeme class="col-12">
+							<form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
+								<div class="dz-message needsclick">
+									<button type="button" class="dz-button">Suelta tus archivos aquí O haz click
+									</button>
+									<br>
+								</div>
+							</form>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
 				<div class="container">
 					<a :href="myCV">Curriculum Vitae</a>
-					<x-incluyeme class="row m-auto  py-4">
-						<x-incluyeme class="col">
-							<div class="m-auto">
-								<input v-on:change="cargaCV()" type="file" name="userCV" id="userCV"/>
-							</div>
+					<x-incluyeme class="row m-auto">
+						<x-incluyeme class="col-12">
+							<form action="/upload" class="dropzone needsclick dz-clickable" id="CVDROP">
+								<div class="dz-message needsclick">
+									<button type="button" class="dz-button">Suelta tus archivos aquí O haz click
+									</button>
+									<br>
+								</div>
+							</form>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
 				<div class="container">
 					<a :href="myCUD"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
-					<x-incluyeme class="row m-auto py-4">
-						<x-incluyeme class="col">
-							<div class="m-auto">
-								<input v-on:change="cargaCUD()" type="file" name="userCUD" id="userCUD"/>
-							</div>
+					<x-incluyeme class="row m-auto">
+						<x-incluyeme class="col-12">
+							<form action="/upload" class="dropzone needsclick dz-clickable" id="CUDDROP">
+								<div class="dz-message needsclick">
+									<button type="button" class="dz-button">Suelta tus archivos aquí O haz click
+									</button>
+									<br>
+								</div>
+							</form>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
 			</div>
+		
 		</template>
 		<template id="step8">
 			<div class="container">
-				<h2 class='mt-2'>Educación</h2>
+				<h1>Educación</h1>
 			</div>
-			<div v-for="(fieldName, pos) in formFields" class="container">
+			<div v-for="(fieldName, pos) in formFields" :key="pos" class="container">
 				<div class="row">
 					<x-incluyeme class="col">
 						<label for="country_edu"><?php _e("Pais", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="col-6">
 						<select id="country_edu" v-model="country_edu[pos]" class="form-control"
 						        v-on:change="getUniversities(pos)">
 							<option v-for="(countries, index) of countries" :value="countries.country_code">
@@ -1184,10 +1185,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				</div>
 				<div class="row mt-2">
 					<x-incluyeme class="col">
-						<label
-								for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="col-6">
+						<label for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
 						<select id="university_edu" v-model="university_edu[pos]" class="form-control">
 							<option v-for="(university, index) of universities[pos]"
 							        :value="university.university" v-on:change="changeUniversity(pos, true)">
@@ -1199,21 +1197,20 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<div class="row mt-2">
 					<x-incluyeme class="col">
 						<label for="university_eduText"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="col-6">
-						<input type="text" v-model="university_otro[pos]" class="form-control" id="university_eduText"
+						<input type="text" v-model="university_otro[pos]" class="form-control"
+						       id="university_eduText"
 						       placeholder="Institución"
 						       v-on:change="changeUniversity(pos, false)">
 					</x-incluyeme>
-					<x-incluyeme class="col-12"><small>Escriba el nombre de su Institución Educativa si no aparece en el
+					<x-incluyeme class="col-12"><small>Escriba el nombre de su Institución Educativa si no
+					                                   aparece
+					                                   en el
 					                                   listado</small></x-incluyeme>
 				</div>
 				<div class="row mt-2">
 					<x-incluyeme class="col">
 						<label
 								for="studies"><?php _e("Area de Estudio", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="col-6">
 						<select id="studies" v-model="studies[pos]" class="form-control">
 							<option v-for="(studies, index) of study"
 							        :value="studies.id" class="text-capitalize">
@@ -1225,8 +1222,6 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<div class="row mt-2">
 					<x-incluyeme class="col">
 						<label for="titleEdu"><?php _e("Título", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="col-6">
 						<input type="text" v-model="titleEdu[pos]" class="form-control" id="titleEdu"
 						       placeholder="Título">
 					</x-incluyeme>
@@ -1234,14 +1229,12 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<div class="row mt-2">
 					<x-incluyeme class="col">
 						<label for="eduLevel"><?php _e("Nivel Educativo", "incluyeme-login-extension"); ?></label>
-					</x-incluyeme>
-					<x-incluyeme class="col-6">
 						<input type="text" v-model="eduLevel[pos]" class="form-control" id="eduLevel"
 						       placeholder="Nivel Educativo">
 					</x-incluyeme>
 				</div>
 				<div class="row mt-2">
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
@@ -1257,7 +1250,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</x-incluyeme>
 						</x-incluyeme>
 					</x-incluyeme>
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
@@ -1274,7 +1267,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
 								<div class="container">
-									<input class="form-check-input" type="checkbox" :id="dateStudieB[pos]"
+									<input class="form-check-input" type="checkbox"
+									       style="transform: scale(1.4) !important;" :id="dateStudieB[pos]"
 									       :name="dateStudieB[pos]"
 									       v-model="dateStudieB[pos]" v-on:change='dateStudiesH[pos] = false'>
 									<label class="form-check-label"
@@ -1283,6 +1277,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 								</div>
 							</x-incluyeme>
 						</x-incluyeme>
+					</x-incluyeme>
+				</div>
+				<div class='row mt-2'>
+					<x-incluyeme class="col-12">
+						<button type="submit" class="btn btn-danger w-100 w-100 mt-3"
+						        @click.prevent="deleteStudies(pos)">
+							- Eliminar Estudios
+						</button>
 					</x-incluyeme>
 				</div>
 				<hr class="w-100" v-if="formFields.length !== 1">
@@ -1297,12 +1299,13 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
+		
 		</template>
 		<template id="step9">
 			<div class="container">
-				<h2 class='mt-2'>Experiencia Laboral</h2>
+				<h1>Experiencia Laboral</h1>
 			</div>
-			<div class="container" v-for="(formFields2, pos) in formFields2" :key="pos">
+			<div class="container" v-for="(formFields2, pos) in formFields2" :key="pos2">
 				<x-incluyeme class="row">
 					<x-incluyeme class="col">
 						<label for="companies">Empresa</label>
@@ -1311,7 +1314,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<label for="studies" class="">Area</label>
 						<select id="studies" v-model="areaEmployed[pos]" class="form-control mt-2">
 							<option v-for="(estudies, index) of study"
@@ -1320,14 +1323,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</option>
 						</select>
 					</x-incluyeme>
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<label for="names">Puesto </label>
 						<input v-model="jobs[pos]" type="text" class="form-control" id="names"
 						       placeholder="Puesto">
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<label for="studies" class="">Nivel de Experiencia</label>
 						<select id="studies" v-model="levelExperience[pos]" class="form-control">
 							<option v-for="(experiences, index) of experiences"
@@ -1336,9 +1339,11 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</option>
 						</select>
 					</x-incluyeme>
-					<x-incluyeme class="col-6" style="margin: auto; float: left;">
+					<x-incluyeme class="col-lg-6 col-md-12" style="margin: auto; float: left;">
 						<div style="position: relative;  top: 3px;">
-							<input class="form-check-input" type="checkbox" :id="actuWork[pos]" :name="actuWork[pos]"
+							<input class="form-check-input" type="checkbox"
+							       style="transform: scale(1.4) !important;"
+							       :id="actuWork[pos]" :name="actuWork[pos]"
 							       v-model="actuWork[pos]">
 							<label class="form-check-label"
 							       :for="actuWork[pos]"
@@ -1347,7 +1352,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<div class="row mt-2">
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
@@ -1356,14 +1361,15 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<input type="date" v-model="dateStudiesDLaboral[pos]" name="dateStudiesDLaboral"
+									<input type="date" v-model="dateStudiesDLaboral[pos]"
+									       name="dateStudiesDLaboral"
 									       class="form-control"
 									       id="dateStudiesDLaboral">
 								</x-incluyeme>
 							</x-incluyeme>
 						</x-incluyeme>
 					</x-incluyeme>
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
@@ -1372,7 +1378,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<input type="date" v-model="dateStudiesHLaboral[pos]" name="dateStudiesHLaboral"
+									<input type="date" v-model="dateStudiesHLaboral[pos]"
+									       name="dateStudiesHLaboral"
 									       class="form-control"
 									       id="dateStudiesHLaboral" :disabled="actuWork[pos]===true">
 								</x-incluyeme>
@@ -1387,6 +1394,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						          rows="3"></textarea>
 					</x-incluyeme>
 				</x-incluyeme>
+				<div class="row mt-2">
+					<x-incluyeme class="col text-center">
+						<button type="submit" class="btn btn-danger w-100 w-100 mt-3"
+						        @click.prevent="deleteExp(pos)">
+							- Eliminar Experiencia
+						</button>
+					</x-incluyeme>
+				</div>
 				<hr class="w-100" v-if="formFields2.length !== 1">
 			</div>
 			<div class="container">
@@ -1398,10 +1413,11 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
+		
 		</template>
 		<template id="step10">
 			<div class="container">
-				<h2 class='mt-2'>Idiomas</h2>
+				<h1>Idiomas</h1>
 			</div>
 			<div class="container" v-for="(formFields3, pos) in formFields3">
 				<x-incluyeme class="row">
@@ -1417,10 +1433,10 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<label for="lecLevel" class="">Nivel de Lectura</label>
 					</x-incluyeme>
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<select id="lecLevel" v-model="lecLevel[pos]" class="form-control mt-2">
 							<option v-for="(levels, index) of levels"
 							        :value="levels.id" class="text-capitalize">
@@ -1430,10 +1446,10 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<label for="redLevel" class="">Nivel Escrito</label>
 					</x-incluyeme>
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<select id="redLevel" v-model="redLevel[pos]" class="form-control mt-2">
 							<option v-for="(levels, index) of levels"
 							        :value="levels.id" class="text-capitalize">
@@ -1443,10 +1459,10 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<label for="oralLevel" class="">Nivel Oral</label>
 					</x-incluyeme>
-					<x-incluyeme class="col-6">
+					<x-incluyeme class="col-lg-6 col-md-12">
 						<select id="oralLevel" v-model="oralLevel[pos]" class="form-control mt-2">
 							<option v-for="(levels, index) of levels"
 							        :value="levels.id" class="text-capitalize">
@@ -1455,6 +1471,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</select>
 					</x-incluyeme>
 				</x-incluyeme>
+				<div class='row mt-2'>
+					<x-incluyeme class="col-12">
+						<button type="submit" class="btn btn-danger w-100 w-100 mt-3"
+						        @click.prevent="deleteIdioms(pos)">
+							- Eliminar Idiomas
+						</button>
+					</x-incluyeme>
+				</div>
 				<hr class="w-100" v-if="formFields3.length !== 1">
 			</div>
 			<div class="container">
@@ -1466,6 +1490,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
+		
 		</template>
 		<template id="step11">
 			<div class="container">

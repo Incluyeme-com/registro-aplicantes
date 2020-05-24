@@ -3,6 +3,8 @@ include 'abstracts/WP_Incluyeme_Countries_Abs.php';
 
 class WP_Incluyeme_Login_Countries extends WP_Incluyeme_Countries_Abs
 {
+	
+	
 	public function json_response($code = 200, $message = null)
 	{
 		// clear the old headers

@@ -2,8 +2,18 @@
 include_once dirname(__DIR__, 1) . '/lib/WP_Incluyeme_Login_Countries.php';
 header('Content-type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	error_log(print_r($_POST, true));
 	$verifications = new WP_Incluyeme_Login_Countries();
-	if (isset($_POST['userID']) && isset($_POST['files'])) {
+	if (isset($_POST['userID']) && isset($_POST['removeIMG'])) {
+		$verifications::deleteIMG($_POST['userID'], 1);
+	}
+	if (isset($_POST['userID']) && isset($_POST['removeCUD'])) {
+		$verifications::deleteIMG($_POST['userID'], 3);
+	}
+	if (isset($_POST['userID']) && isset($_POST['RemoveCV'])) {
+		$verifications::deleteIMG($_POST['userID'], 2);
+	}
+	if (isset($_POST['userID']) && !empty($_FILES)) {
 		
 		if (isset($_POST['userID']) && isset($_FILES['img_path']) && !$_FILES['img_path']['error']) {
 			$verifications::updateIMG($_POST['userID'], $_FILES['img_path']);
@@ -69,17 +79,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$_POST['userID']));
 		return;
 	}
-	if (isset($_POST['userID']) && isset($_POST['genre'])) {
+	if ( isset($_POST['genre'])) {
 		echo $verifications->json_response(200, $verifications::updateUsersInformation($_POST['city'],
 			$_POST['dateBirthDay'],
 			$_POST['fPhone'],
-			$_POST['fiPhone,'],
+			$_POST['fiPhone'],
 			$_POST['genre'],
 			$_POST['mPhone'],
 			$_POST['state'],
 			$_POST['street'],
-			$_POST['phone'],
-			$_POST['userID']));
+			$_POST['phone']));
 		return;
 	}
 	if (isset($_POST['userID']) && isset($_POST['discaps']) && isset($_POST['moreDis'])) {

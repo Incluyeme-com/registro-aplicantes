@@ -3,7 +3,7 @@
  *
  * Developer by Jesus Nuñez <jesus.nunez2050@gmail.com> .
  */
-
+Dropzone.autoDiscover = false;
 Vue.config.ignoredElements = ['x-incluyeme', 'fb:login-button']
 let app = new Vue({
     el: '#incluyeme-login-wpjb',
@@ -21,7 +21,7 @@ let app = new Vue({
         password: null,
         street: null,
         lastName: null,
-        formFields3: [],
+        formFields3: null,
         dateBirthDay: null,
         disCap: null,
         idioms: null,
@@ -36,7 +36,7 @@ let app = new Vue({
         preferJob: [],
         preferJobs: null,
         eduLevel: [],
-        formFields: [],
+        formFields: null,
         phone: null,
         jobs: [],
         levelExperience: [],
@@ -71,7 +71,7 @@ let app = new Vue({
         vColores: null,
         vDPlanos: null,
         vTecniA: null,
-        formFields2: [],
+        formFields2: null,
         areaEmployed: [],
         inteEscri: null,
         inteTransla: null,
@@ -123,6 +123,7 @@ let app = new Vue({
         console.log('ready');
     },
     mounted() {
+
     },
     methods: {
         setID: async function (userID, url) {
@@ -164,6 +165,7 @@ let app = new Vue({
             this.dateBirthDay = information.birthday;
             this.phone = information.phonem;
             this.preferJobs = information.preferjob_id;
+            this.formFields2 = Array()
             for (let i = 0; i < works.length; i++) {
                 try {
                     const stringChange = this.breakStringWork(works[i].detail_description)
@@ -181,6 +183,8 @@ let app = new Vue({
 
                 this.formFields2.push(i + 1);
             }
+            this.formFields = Array()
+            this.formFields3 = Array();
             for (let i = 0; i < studies.length; i++) {
                 try {
                     const stringChange = this.breakString(studies[i].detail_description)
@@ -298,160 +302,6 @@ let app = new Vue({
         drop: async function () {
             this.currentStep = 7;
         },
-        dropzone: async function () {
-
-            const $ = jQuery;
-            $(function () {
-                let dropZoneId = "drop-zone";
-                let buttonId = "clickHere";
-                let mouseOverClass = "mouse-over";
-
-                let dropZone = $("#" + dropZoneId);
-                let ooleft = dropZone.offset().left;
-                let ooright = dropZone.outerWidth() + ooleft;
-                let ootop = dropZone.offset().top;
-                let oobottom = dropZone.outerHeight() + ootop;
-                let inputFile = dropZone.find("input");
-                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dropZone.addClass(mouseOverClass);
-                    let x = e.pageX;
-                    let y = e.pageY;
-
-                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
-                        inputFile.offset({top: y - 15, left: x - 100});
-                    } else {
-                        inputFile.offset({top: -400, left: -400});
-                    }
-
-                }, true);
-
-                if (buttonId != "") {
-                    let clickZone = $("#" + buttonId);
-
-                    let oleft = clickZone.offset().left;
-                    let oright = clickZone.outerWidth() + oleft;
-                    let otop = clickZone.offset().top;
-                    let obottom = clickZone.outerHeight() + otop;
-
-                    $("#" + buttonId).mousemove(function (e) {
-                        let x = e.pageX;
-                        let y = e.pageY;
-                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
-                            inputFile.offset({top: y - 15, left: x - 160});
-                        } else {
-                            inputFile.offset({top: -400, left: -400});
-                        }
-                    });
-                }
-
-                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
-                    $("#" + dropZoneId).removeClass(mouseOverClass);
-                }, true);
-
-            })
-            $(function () {
-                let dropZoneId = "drop-zoneCV";
-                let buttonId = "clickHereCV";
-                let mouseOverClass = "mouse-over";
-
-                let dropZone = $("#" + dropZoneId);
-                let ooleft = dropZone.offset().left;
-                let ooright = dropZone.outerWidth() + ooleft;
-                let ootop = dropZone.offset().top;
-                let oobottom = dropZone.outerHeight() + ootop;
-                let inputFile = dropZone.find("input");
-                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dropZone.addClass(mouseOverClass);
-                    let x = e.pageX;
-                    let y = e.pageY;
-
-                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
-                        inputFile.offset({top: y - 15, left: x - 100});
-                    } else {
-                        inputFile.offset({top: -400, left: -400});
-                    }
-
-                }, true);
-
-                if (buttonId != "") {
-                    let clickZone = $("#" + buttonId);
-
-                    let oleft = clickZone.offset().left;
-                    let oright = clickZone.outerWidth() + oleft;
-                    let otop = clickZone.offset().top;
-                    let obottom = clickZone.outerHeight() + otop;
-
-                    $("#" + buttonId).mousemove(function (e) {
-                        let x = e.pageX;
-                        let y = e.pageY;
-                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
-                            inputFile.offset({top: y - 15, left: x - 160});
-                        } else {
-                            inputFile.offset({top: -400, left: -400});
-                        }
-                    });
-                }
-
-                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
-                    $("#" + dropZoneId).removeClass(mouseOverClass);
-                }, true);
-
-            })
-            $(function () {
-                let dropZoneId = "drop-zoneCUD";
-                let buttonId = "clickHereCUD";
-                let mouseOverClass = "mouse-over";
-
-                let dropZone = $("#" + dropZoneId);
-                let ooleft = dropZone.offset().left;
-                let ooright = dropZone.outerWidth() + ooleft;
-                let ootop = dropZone.offset().top;
-                let oobottom = dropZone.outerHeight() + ootop;
-                let inputFile = dropZone.find("input");
-                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dropZone.addClass(mouseOverClass);
-                    let x = e.pageX;
-                    let y = e.pageY;
-
-                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
-                        inputFile.offset({top: y - 15, left: x - 100});
-                    } else {
-                        inputFile.offset({top: -400, left: -400});
-                    }
-
-                }, true);
-
-                if (buttonId != "") {
-                    let clickZone = $("#" + buttonId);
-
-                    let oleft = clickZone.offset().left;
-                    let oright = clickZone.outerWidth() + oleft;
-                    let otop = clickZone.offset().top;
-                    let obottom = clickZone.outerHeight() + otop;
-
-                    $("#" + buttonId).mousemove(function (e) {
-                        let x = e.pageX;
-                        let y = e.pageY;
-                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
-                            inputFile.offset({top: y - 15, left: x - 160});
-                        } else {
-                            inputFile.offset({top: -400, left: -400});
-                        }
-                    });
-                }
-
-                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
-                    $("#" + dropZoneId).removeClass(mouseOverClass);
-                }, true);
-
-            })
-        },
         cargaImg: async function () {
             this.image = null;
             this.img = null;
@@ -543,7 +393,24 @@ let app = new Vue({
                         }]
                     ],
                 });
-
+                if (!this.name) {
+                    jQuery([document.documentElement, document.body]).animate({
+                        scrollTop: jQuery("#nameLabel").offset().top
+                    });
+                    jQuery("#names").css('border-color', "red");
+                    jQuery("#nameLabel").css('color', "red");
+                    jQuery("#lastNames").removeAttr("style");
+                    jQuery("#lastNamesLabel").removeAttr("style");
+                } else if (!this.lastName) {
+                    jQuery([document.documentElement, document.body]).animate({
+                        scrollTop: jQuery("#lastNamesLabel").offset().top
+                    });
+                    jQuery("#lastNames").css('border-color', "red");
+                    jQuery("#lastNamesLabel").css('color', "red");
+                    jQuery("#names").removeAttr("style");
+                    jQuery("#nameLabel").removeAttr("style");
+                }
+                this.awaitChange = false;
                 return false;
             }
             return {
@@ -556,7 +423,7 @@ let app = new Vue({
             if (!this.genre || !this.dateBirthDay) {
                 iziToast.warning({
                     title: 'Verifique',
-                    message: 'Por favor, ingrese su genero y fecha de nacimiento',
+                    message: 'Por favor, llene todos los campos',
                     progressBarColor: 'rgb(0, 255, 184)',
                     buttons: [
                         ['<button>Cerrar</button>', function (instance, toast) {
@@ -568,12 +435,30 @@ let app = new Vue({
                         }]
                     ],
                 });
-
+                if (!this.genre) {
+                    jQuery([document.documentElement, document.body]).animate({
+                        scrollTop: jQuery("#genreP").offset().top
+                    });
+                    jQuery("#inlineCheckbox1").css('color', "red");
+                    jQuery("#genreP").css('color', "red");
+                    jQuery("#inlineCheckbox2").css('color', "red");
+                    jQuery("#inlineCheckbox3").css('color', "red");
+                } else if (!this.dateBirthDay) {
+                    jQuery("#inlineCheckbox1").removeAttr("style");
+                    jQuery("#inlineCheckbox2").removeAttr("style");
+                    jQuery("#inlineCheckbox3").removeAttr("style");
+                    jQuery("#dateBirthDay").css('border-color', "red");
+                    jQuery("#labeldateBirthDay").css('color', "red");
+                }
+                this.awaitChange = false;
                 return false;
             }
             return true;
         },
         confirmStep5: async function () {
+            let labelPhone = jQuery("#labelPhone");
+            let labelState = jQuery("#labelState");
+            let labelCity = jQuery("#labelCity");
             if (!this.mPhone || !this.phone) {
                 iziToast.warning({
                     title: 'Verifique',
@@ -589,6 +474,14 @@ let app = new Vue({
                         }]
                     ],
                 });
+
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: labelPhone.offset().top
+                });
+                labelPhone.css('color', "red");
+                labelState.removeAttr("style");
+                labelCity.removeAttr("style");
+                this.awaitChange = false;
                 return false;
             }
             if (!this.state) {
@@ -606,7 +499,13 @@ let app = new Vue({
                         }]
                     ],
                 });
-
+                labelPhone.removeAttr("style");
+                labelCity.removeAttr("style");
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: labelState.offset().top
+                });
+                labelState.css('color', "red");
+                this.awaitChange = false;
                 return false;
             }
             if (!this.city) {
@@ -624,7 +523,13 @@ let app = new Vue({
                         }]
                     ],
                 });
-
+                labelPhone.removeAttr("style");
+                labelState.removeAttr("style");
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: labelCity.offset().top
+                });
+                labelCity.css('color', "red");
+                this.awaitChange = false;
                 return false;
             }
             return {
@@ -641,6 +546,7 @@ let app = new Vue({
             }
         },
         confirmStep7: async function () {
+            let disCText = jQuery("#disCText");
             if (!this.moreDis) {
                 iziToast.warning({
                     title: 'Verifique',
@@ -656,6 +562,10 @@ let app = new Vue({
                         }]
                     ],
                 });
+                disCText.css('color', "red");
+
+                jQuery('#exampleFormControlTextarea1').css('border-color', "red");
+                this.awaitChange = false;
                 return false;
             }
             const data = {
@@ -800,8 +710,8 @@ let app = new Vue({
             let six = false;
             let seven = false;
             let eight = false;
-
-            if (one) {
+            console.log(one)
+            if (one !== false) {
                 two = await this.confirmStep4()
             }
             if (two) {
@@ -823,7 +733,7 @@ let app = new Vue({
                 eight = await this.confirmStep12()
             }
 
-            if (one && two && three && fourth && five && seven && eight) {
+            if (one !== false && two && three && fourth && five && seven && eight) {
                 const data = {}
                 Object.assign(data, one);
                 Object.assign(data, two);
@@ -856,8 +766,109 @@ let app = new Vue({
                         }]
                     ],
                 });
+
             }
-            await this.setID(this.userID, this.url);
+
+        },
+        dropzone: async function () {
+            const url = this.url + '/incluyeme-login-extension/include/verifications/register.php';
+            const id = this.userID;
+            jQuery("#demo-upload").dropzone({
+                url: url,
+                maxFiles: 1,
+                acceptedFiles: 'image/jpg, image/png, image/jpeg',
+                addRemoveLinks: true,
+                dictInvalidFileType: 'El tipo de archivo que ha subido no es valido, aceptamos imagenes en formato .jpg, .png, .jpeg',
+                dictFileTooBig: 'Su archivo no puede pesar mas de 5MB',
+                sending: function (file, xhr, formData) {
+                    formData.append('userID', id);
+                    formData.append("removeIMG", 'remove');
+                },
+                dictMaxFilesExceeded: 'Solo puede subir un archivo, por favor, elimine su archivo anterior',
+                paramName: 'img_path',
+                maxFilesize: 5,
+                dictCancelUpload: 'Cancelar',
+                dictRemoveFile: 'Eliminar',
+                removedfile: function (file) {
+                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    if (!x) return false;
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: {
+                            "userID": id,
+                            "removeIMG": 'remove'
+                        },
+                        dataType: 'json'
+                    });
+                    let _ref;
+                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                }
+            });
+            jQuery("#CVDROP").dropzone({
+                url: url,
+                maxFiles: 1,
+                acceptedFiles: 'application/pdf,.doc,.docx',
+                addRemoveLinks: true,
+                dictInvalidFileType: 'El tipo de archivo que ha subido no es valido, aceptamos archivos .pdf, .doc o .docx',
+                dictFileTooBig: 'Su archivo no puede pesar mas de 5MB',
+                sending: function (file, xhr, formData) {
+                    formData.append('userID', id);
+                    formData.append("RemoveCV", 'remove');
+                },
+                dictMaxFilesExceeded: 'Solo puede subir un archivo, por favor, elimine su archivo anterior',
+                paramName: 'cv',
+                maxFilesize: 5,
+                dictCancelUpload: 'Cancelar',
+                dictRemoveFile: 'Eliminar',
+                removedfile: function (file) {
+                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    if (!x) return false;
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: {
+                            "userID": id,
+                            "RemoveCV": 'remove'
+                        },
+                        dataType: 'json'
+                    });
+                    let _ref;
+                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                }
+            });
+            jQuery("#CUDDROP").dropzone({
+                url: url,
+                maxFiles: 1,
+                acceptedFiles: 'application/pdf,.doc,.docx',
+                addRemoveLinks: true,
+                dictInvalidFileType: 'El tipo de archivo que ha subido no es valido, aceptamos imagenes en formato .jpg, .png, .jpeg',
+                dictFileTooBig: 'Su archivo no puede pesar mas de 5MB',
+                sending: function (file, xhr, formData) {
+                    formData.append('userID', id);
+                    formData.append("removeCUD", 'remove');
+                },
+                dictMaxFilesExceeded: 'Solo puede subir un archivo, por favor, elimine su archivo anterior',
+                paramName: 'cud',
+                maxFilesize: 5,
+                dictCancelUpload: 'Cancelar',
+                dictRemoveFile: 'Eliminar',
+                removedfile: function (file) {
+                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    if (!x) return false;
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: {
+                            "userID": id,
+                            "removeCUD": 'remove'
+                        },
+                        dataType: 'json'
+                    });
+                    let _ref;
+                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                }
+            });
         },
         getUniversities: async function (id) {
             let universities = await this.getUniver(id);
@@ -896,7 +907,6 @@ let app = new Vue({
             this.countries = countries.message
         },
         getStudies: async function (url) {
-            this.formFields.push(1)
             let studies = await jQuery.ajax({
                 url: this.url + '/incluyeme-login-extension/include/search/studies.php?studies=all',
                 type: 'GET',
@@ -1005,7 +1015,38 @@ let app = new Vue({
             let country = area[1];
             area = area[0];
             return [Number(level), Number(area), country]
-        }
+        },
+        deleteStudies: async function (index) {
+            console.log(this.formFields)
+            this.formFields.splice(index, 1);
+            this.country_edu.splice(index, 1);
+            this.university_edu.splice(index, 1);
+            this.university_otro.splice(index, 1);
+            this.studies.splice(index, 1);
+            this.titleEdu.splice(index, 1);
+            this.eduLevel.splice(index, 1);
+            this.dateStudiesD.splice(index, 1);
+            this.dateStudiesH.splice(index, 1);
+            this.dateStudieB.splice(index, 1);
+        },
+        deleteExp: async function (index) {
+            this.formFields2.splice(index, 1);
+            this.employed.splice(index, 1);
+            this.areaEmployed.splice(index, 1);
+            this.jobs.splice(index, 1);
+            this.levelExperience.splice(index, 1);
+            this.actuWork.splice(index, 1);
+            this.dateStudiesDLaboral.splice(index, 1);
+            this.dateStudiesHLaboral.splice(index, 1);
+            this.jobsDescript.splice(index, 1);
+        },
+        deleteIdioms: async function (index) {
+            this.formFields3.splice(index, 1);
+            this.lecLevel.splice(index, 1);
+            this.redLevel.splice(index, 1);
+            this.idioms.splice(index, 1);
+            this.oralLevel.splice(index, 1);
+        },
     }
 });
 startApp();

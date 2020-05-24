@@ -212,6 +212,7 @@ let app = new Vue({
     mounted() {
         this.formFields2.push(1);
         this.formFields3.push(1);
+
     },
     methods: {
         goToStep: async function (step, url = false) {
@@ -260,6 +261,10 @@ let app = new Vue({
                     } else {
                         this.currentStep = step;
                     }
+                    break;
+                case 6:
+                    this.goToTop();
+                    this.currentStep = step
                     break;
                 case 7:
                     if (this.currentStep <= 7) {
@@ -312,218 +317,115 @@ let app = new Vue({
                 default:
                     this.currentStep = step;
             }
+
         },
         drop: async function () {
             this.currentStep = 7;
         },
         dropzone: async function () {
-
-            const $ = jQuery;
-            $(function () {
-                let dropZoneId = "drop-zone";
-                let buttonId = "clickHere";
-                let mouseOverClass = "mouse-over";
-
-                let dropZone = $("#" + dropZoneId);
-                let ooleft = dropZone.offset().left;
-                let ooright = dropZone.outerWidth() + ooleft;
-                let ootop = dropZone.offset().top;
-                let oobottom = dropZone.outerHeight() + ootop;
-                let inputFile = dropZone.find("input");
-                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dropZone.addClass(mouseOverClass);
-                    let x = e.pageX;
-                    let y = e.pageY;
-
-                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
-                        inputFile.offset({top: y - 15, left: x - 100});
-                    } else {
-                        inputFile.offset({top: -400, left: -400});
-                    }
-
-                }, true);
-
-                if (buttonId != "") {
-                    let clickZone = $("#" + buttonId);
-
-                    let oleft = clickZone.offset().left;
-                    let oright = clickZone.outerWidth() + oleft;
-                    let otop = clickZone.offset().top;
-                    let obottom = clickZone.outerHeight() + otop;
-
-                    $("#" + buttonId).mousemove(function (e) {
-                        let x = e.pageX;
-                        let y = e.pageY;
-                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
-                            inputFile.offset({top: y - 15, left: x - 160});
-                        } else {
-                            inputFile.offset({top: -400, left: -400});
-                        }
+            const url = this.url + '/incluyeme-login-extension/include/verifications/register.php';
+            const id = this.userID;
+            jQuery("#demo-upload").dropzone({
+                url: url,
+                maxFiles: 1,
+                acceptedFiles: 'image/jpg, image/png, image/jpeg',
+                addRemoveLinks: true,
+                dictInvalidFileType: 'El tipo de archivo que ha subido no es valido, aceptamos imagenes en formato .jpg, .png, .jpeg',
+                dictFileTooBig: 'Su archivo no puede pesar mas de 5MB',
+                sending: function (file, xhr, formData) {
+                    formData.append('userID', id);
+                },
+                dictMaxFilesExceeded: 'Solo puede subir un archivo, por favor, elimine su archivo anterior',
+                paramName: 'img_path',
+                maxFilesize: 5,
+                dictCancelUpload: 'Cancelar',
+                dictRemoveFile: 'Eliminar',
+                removedfile: function (file) {
+                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    if (!x) return false;
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: {
+                            "userID": id,
+                            "removeIMG": 'remove'
+                        },
+                        dataType: 'json'
                     });
+                    let _ref;
+                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                 }
-
-                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
-                    $("#" + dropZoneId).removeClass(mouseOverClass);
-                }, true);
-
-            })
-            $(function () {
-                let dropZoneId = "drop-zoneCV";
-                let buttonId = "clickHereCV";
-                let mouseOverClass = "mouse-over";
-
-                let dropZone = $("#" + dropZoneId);
-                let ooleft = dropZone.offset().left;
-                let ooright = dropZone.outerWidth() + ooleft;
-                let ootop = dropZone.offset().top;
-                let oobottom = dropZone.outerHeight() + ootop;
-                let inputFile = dropZone.find("input");
-                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dropZone.addClass(mouseOverClass);
-                    let x = e.pageX;
-                    let y = e.pageY;
-
-                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
-                        inputFile.offset({top: y - 15, left: x - 100});
-                    } else {
-                        inputFile.offset({top: -400, left: -400});
-                    }
-
-                }, true);
-
-                if (buttonId != "") {
-                    let clickZone = $("#" + buttonId);
-
-                    let oleft = clickZone.offset().left;
-                    let oright = clickZone.outerWidth() + oleft;
-                    let otop = clickZone.offset().top;
-                    let obottom = clickZone.outerHeight() + otop;
-
-                    $("#" + buttonId).mousemove(function (e) {
-                        let x = e.pageX;
-                        let y = e.pageY;
-                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
-                            inputFile.offset({top: y - 15, left: x - 160});
-                        } else {
-                            inputFile.offset({top: -400, left: -400});
-                        }
+            });
+            jQuery("#CVDROP").dropzone({
+                url: url,
+                maxFiles: 1,
+                acceptedFiles: 'application/pdf,.doc,.docx',
+                addRemoveLinks: true,
+                dictInvalidFileType: 'El tipo de archivo que ha subido no es valido, aceptamos archivos .pdf, .doc o .docx',
+                dictFileTooBig: 'Su archivo no puede pesar mas de 5MB',
+                sending: function (file, xhr, formData) {
+                    formData.append('userID', id);
+                },
+                dictMaxFilesExceeded: 'Solo puede subir un archivo, por favor, elimine su archivo anterior',
+                paramName: 'cv',
+                maxFilesize: 5,
+                dictCancelUpload: 'Cancelar',
+                dictRemoveFile: 'Eliminar',
+                removedfile: function (file) {
+                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    if (!x) return false;
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: {
+                            "userID": id,
+                            "RemoveCV": 'remove'
+                        },
+                        dataType: 'json'
                     });
+                    let _ref;
+                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                 }
-
-                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
-                    $("#" + dropZoneId).removeClass(mouseOverClass);
-                }, true);
-
-            })
-            $(function () {
-                let dropZoneId = "drop-zoneCUD";
-                let buttonId = "clickHereCUD";
-                let mouseOverClass = "mouse-over";
-
-                let dropZone = $("#" + dropZoneId);
-                let ooleft = dropZone.offset().left;
-                let ooright = dropZone.outerWidth() + ooleft;
-                let ootop = dropZone.offset().top;
-                let oobottom = dropZone.outerHeight() + ootop;
-                let inputFile = dropZone.find("input");
-                document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dropZone.addClass(mouseOverClass);
-                    let x = e.pageX;
-                    let y = e.pageY;
-
-                    if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
-                        inputFile.offset({top: y - 15, left: x - 100});
-                    } else {
-                        inputFile.offset({top: -400, left: -400});
-                    }
-
-                }, true);
-
-                if (buttonId != "") {
-                    let clickZone = $("#" + buttonId);
-
-                    let oleft = clickZone.offset().left;
-                    let oright = clickZone.outerWidth() + oleft;
-                    let otop = clickZone.offset().top;
-                    let obottom = clickZone.outerHeight() + otop;
-
-                    $("#" + buttonId).mousemove(function (e) {
-                        let x = e.pageX;
-                        let y = e.pageY;
-                        if (!(x < oleft || x > oright || y < otop || y > obottom)) {
-                            inputFile.offset({top: y - 15, left: x - 160});
-                        } else {
-                            inputFile.offset({top: -400, left: -400});
-                        }
+            });
+            jQuery("#CUDDROP").dropzone({
+                url: url,
+                maxFiles: 1,
+                acceptedFiles: 'application/pdf,.doc,.docx',
+                addRemoveLinks: true,
+                dictInvalidFileType: 'El tipo de archivo que ha subido no es valido, aceptamos imagenes en formato .jpg, .png, .jpeg',
+                dictFileTooBig: 'Su archivo no puede pesar mas de 5MB',
+                sending: function (file, xhr, formData) {
+                    formData.append('userID', id);
+                },
+                dictMaxFilesExceeded: 'Solo puede subir un archivo, por favor, elimine su archivo anterior',
+                paramName: 'cud',
+                maxFilesize: 5,
+                dictCancelUpload: 'Cancelar',
+                dictRemoveFile: 'Eliminar',
+                removedfile: function (file) {
+                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    if (!x) return false;
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: {
+                            "userID": id,
+                            "removeCUD": 'remove'
+                        },
+                        dataType: 'json'
                     });
+                    let _ref;
+                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                 }
-
-                document.getElementById(dropZoneId).addEventListener("drop", function (e) {
-                    $("#" + dropZoneId).removeClass(mouseOverClass);
-                }, true);
-
-            })
-        },
-        cargaImg: async function () {
-            this.image = null;
-            this.img = null;
-            this.reader = null;
-            if (event.target.files[0]['type'] !== 'image/jpeg' && event.target.files[0]['type'] !== 'image/png' && event.target.files[0]['type'] !== 'image/jpg') {
-                alert('El tipo de archivo que ha subido no es valido, aceptamos imagenes en formato .jpg, .png, .jpeg');
-                document.getElementById("userIMG").value = "";
-                return;
-            }
-            this.image = event.target.files[0];
-            let reader = new FileReader();
-            reader.onload = (event) => {
-                this.img = event.target.result;
-            };
-            this.reader = reader.readAsDataURL(this.image);
-        },
-        cargaCV: async function () {
-            this.cv = null;
-            this.cvSHOW = null;
-            this.cvReader = null;
-            if (event.target.files[0]['type'] !== 'application/pdf' && !(/\.(doc?x|pdf)$/i.test(event.target.files[0].name))) {
-                alert('El tipo de archivo que ha subido no es valido, aceptamos documentos en formato .doc, .docx, .pdf');
-                document.getElementById("userCV").value = "";
-                return;
-            }
-            this.cv = event.target.files[0];
-            let reader = new FileReader();
-            reader.onload = (event) => {
-                this.cvSHOW = event.target.result;
-            };
-            this.cvReader = reader.readAsDataURL(this.cv);
-        },
-        cargaCUD: async function () {
-            this.cud = null;
-            this.cudSHOW = null;
-            this.cudReader = null;
-            if (event.target.files[0]['type'] !== 'application/pdf' && !(/\.(doc?x|pdf)$/i.test(event.target.files[0].name))) {
-                alert('El tipo de archivo que ha subido no es valido, aceptamos documentos en formato .doc, .docx, .pdf');
-                document.getElementById("userCUD").value = "";
-                return;
-            }
-            this.cud = event.target.files[0];
-            let reader = new FileReader();
-            reader.onload = (event) => {
-                this.cudSHOW = event.target.result;
-            };
-            this.cudReader = reader.readAsDataURL(this.cud);
+            });
         },
         isValidEmail: async function (email) {
             const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
         },
         confirmStep2: async function (step) {
-            if (!await this.isValidEmail(this.email) || this.password === null || !this.password) {
+            let confirmEmail = await this.isValidEmail(this.email);
+            if (!confirmEmail || this.password === null || !this.password) {
                 iziToast.warning({
                     title: 'Verifique',
                     message: 'Por favor, llene todos los campos',
@@ -538,22 +440,49 @@ let app = new Vue({
                         }]
                     ],
                 });
-                if (this.password.length < 5) {
-                    iziToast.warning({
-                        title: 'Verifique',
-                        message: 'Su contraseña debe contener cinco(5) caracteres o mas',
-                        progressBarColor: 'rgb(0, 255, 184)',
-                        buttons: [
-                            ['<button>Cerrar</button>', function (instance, toast) {
-                                instance.hide({
-                                    transitionOut: 'fadeOutUp',
-                                    onClosing: function (instance, toast, closedBy) {
-                                    }
-                                }, toast, 'buttonName');
-                            }]
-                        ],
+                this.awaitChange = false;
+                if (!confirmEmail) {
+                    jQuery([document.documentElement, document.body]).animate({
+                        scrollTop: jQuery("#emilLabel").offset().top
                     });
+                    jQuery("#emil").css('border-color', "red");
+                    jQuery("#emilLabel").css('color', "red");
+                    jQuery("#inputPassword4").removeAttr("style");
+                    jQuery("#labelPassword4").removeAttr("style");
+                    jQuery("#repostP").removeAttr("style");
+                    jQuery("#repostPLabel").removeAttr("style");
+
+                } else if (this.password === null || !this.password) {
+                    jQuery([document.documentElement, document.body]).animate({
+                        scrollTop: jQuery("#labelPassword4").offset().top
+                    });
+                    jQuery("#inputPassword4").css('border-color', "red");
+                    jQuery("#labelPassword4").css('color', "red");
+                    jQuery("#emil").removeAttr("style");
+                    jQuery("#emilLabel").removeAttr("style");
                 }
+                return false;
+            } else if (this.password.length < 5) {
+                iziToast.warning({
+                    title: 'Verifique',
+                    message: 'Su contraseña debe contener cinco(5) caracteres o mas',
+                    progressBarColor: 'rgb(0, 255, 184)',
+                    buttons: [
+                        ['<button>Cerrar</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp',
+                                onClosing: function (instance, toast, closedBy) {
+                                }
+                            }, toast, 'buttonName');
+                        }]
+                    ],
+                });
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: jQuery("#labelPassword4").offset().top
+                });
+                jQuery("#inputPassword4").css('border-color', "red");
+                jQuery("#labelPassword4").css('color', "red");
+                this.awaitChange = false;
                 return false;
             } else if (this.password !== this.passwordConfirm) {
                 iziToast.warning({
@@ -570,6 +499,16 @@ let app = new Vue({
                         }]
                     ],
                 });
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: jQuery("#repostPLabel").offset().top
+                });
+                jQuery("#repostP").css('border-color', "red");
+                jQuery("#repostPLabel").css('color', "red");
+                jQuery("#inputPassword4").removeAttr("style");
+                jQuery("#labelPassword4").removeAttr("style");
+                jQuery("#emil").removeAttr("style");
+                jQuery("#emilLabel").removeAttr("style");
+                this.awaitChange = false;
                 return false;
             }
             this.pleaseAwait();
@@ -586,7 +525,7 @@ let app = new Vue({
             if (verifications.data.message === true) {
                 iziToast.warning({
                     title: 'Verifique',
-                    message: 'Este email ya se encuentra segistrado',
+                    message: 'Este email ya se encuentra registrado',
                     progressBarColor: 'rgb(0, 255, 184)',
                     buttons: [
                         ['<button>Cerrar</button>', function (instance, toast) {
@@ -598,6 +537,15 @@ let app = new Vue({
                         }]
                     ],
                 });
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: jQuery("#emilLabel").offset().top
+                });
+                jQuery("#repostP").removeAttr("style");
+                jQuery("#repostPLabel").removeAttr("style");
+                jQuery("#inputPassword4").removeAttr("style");
+                jQuery("#labelPassword4").removeAttr("style");
+                jQuery("#emil").css('border-color', "red");
+                jQuery("#emilLabel").css('color', "red");
                 this.awaitChange = false;
                 return false;
             } else if (verifications.data.message === false) {
@@ -605,6 +553,7 @@ let app = new Vue({
                 this.currentStep = step;
             }
             this.awaitChange = false;
+            this.goToTop();
             return true;
         },
         googleChange: async function (url) {
@@ -659,6 +608,23 @@ let app = new Vue({
                         }]
                     ],
                 });
+                if (!this.name) {
+                    jQuery([document.documentElement, document.body]).animate({
+                        scrollTop: jQuery("#nameLabel").offset().top
+                    });
+                    jQuery("#names").css('border-color', "red");
+                    jQuery("#nameLabel").css('color', "red");
+                    jQuery("#lastNames").removeAttr("style");
+                    jQuery("#lastNamesLabel").removeAttr("style");
+                } else if (!this.lastName) {
+                    jQuery([document.documentElement, document.body]).animate({
+                        scrollTop: jQuery("#lastNamesLabel").offset().top
+                    });
+                    jQuery("#lastNames").css('border-color', "red");
+                    jQuery("#lastNamesLabel").css('color', "red");
+                    jQuery("#names").removeAttr("style");
+                    jQuery("#nameLabel").removeAttr("style");
+                }
                 this.awaitChange = false;
                 return;
             }
@@ -678,6 +644,7 @@ let app = new Vue({
             this.userID = verifications.data.message;
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep4: async function (step) {
             if (!this.genre || !this.dateBirthDay) {
@@ -695,13 +662,32 @@ let app = new Vue({
                         }]
                     ],
                 });
+                if (!this.genre) {
+                    jQuery([document.documentElement, document.body]).animate({
+                        scrollTop: jQuery("#genreP").offset().top
+                    });
+                    jQuery("#inlineCheckbox1").css('color', "red");
+                    jQuery("#genreP").css('color', "red");
+                    jQuery("#inlineCheckbox2").css('color', "red");
+                    jQuery("#inlineCheckbox3").css('color', "red");
+                } else if (!this.dateBirthDay) {
+                    jQuery("#inlineCheckbox1").removeAttr("style");
+                    jQuery("#inlineCheckbox2").removeAttr("style");
+                    jQuery("#inlineCheckbox3").removeAttr("style");
+                    jQuery("#dateBirthDay").css('border-color', "red");
+                    jQuery("#labeldateBirthDay").css('color', "red");
+                }
                 this.awaitChange = false;
                 return;
             }
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep5: async function (step) {
+            let labelPhone = jQuery("#labelPhone");
+            let labelState = jQuery("#labelState");
+            let labelCity = jQuery("#labelCity");
             if (!this.mPhone || !this.phone) {
                 iziToast.warning({
                     title: 'Verifique',
@@ -717,6 +703,13 @@ let app = new Vue({
                         }]
                     ],
                 });
+
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: labelPhone.offset().top
+                });
+                labelPhone.css('color', "red");
+                labelState.removeAttr("style");
+                labelCity.removeAttr("style");
                 this.awaitChange = false;
                 return;
             }
@@ -735,6 +728,12 @@ let app = new Vue({
                         }]
                     ],
                 });
+                labelPhone.removeAttr("style");
+                labelCity.removeAttr("style");
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: labelState.offset().top
+                });
+                labelState.css('color', "red");
                 this.awaitChange = false;
                 return;
             }
@@ -753,11 +752,17 @@ let app = new Vue({
                         }]
                     ],
                 });
+                labelPhone.removeAttr("style");
+                labelState.removeAttr("style");
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: labelCity.offset().top
+                });
+                labelCity.css('color', "red");
                 this.awaitChange = false;
                 return;
             }
             this.pleaseAwait();
-            await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+            let verification = await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 mPhone: this.mPhone,
                 state: this.state,
                 city: this.city,
@@ -775,10 +780,16 @@ let app = new Vue({
                 .catch(function (error) {
                     return true;
                 });
+            this.userID = verification.data.message;
+            if (this.userID === true) {
+                window.location('/');
+            }
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep7: async function (step) {
+            let disCText = jQuery("#disCText");
             if (!this.moreDis) {
                 iziToast.warning({
                     title: 'Verifique',
@@ -794,6 +805,9 @@ let app = new Vue({
                         }]
                     ],
                 });
+                disCText.css('color', "red");
+
+                jQuery('#exampleFormControlTextarea1').css('border-color', "red");
                 this.awaitChange = false;
                 return;
             }
@@ -874,32 +888,12 @@ let app = new Vue({
             await this.drop();
             this.dropzone();
             this.awaitChange = false;
+            this.goToTop();
         },
         confirmStep8: async function (step) {
-            const data = new FormData();
-            if (this.image !== null || this.cud !== null || this.cv !== null) {
-                if (this.image !== null) {
-                    data.append('img_path', this.image);
-                }
-                if (this.cud !== null) {
-                    data.append('cud', this.cud);
-                }
-                if (this.cv !== null) {
-                    data.append('cv', this.cv);
-                }
-                data.append('files', '1');
-                data.append('userID', this.userID);
-                this.pleaseAwait();
-                await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', data)
-                    .then(function (response) {
-                        return response
-                    })
-                    .catch(function (error) {
-                        return true;
-                    });
-            }
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep9: async function (step) {
             this.pleaseAwait();
@@ -923,6 +917,7 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep10: async function (step) {
             this.pleaseAwait();
@@ -945,6 +940,7 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep11: async function (step) {
             this.pleaseAwait();
@@ -963,6 +959,7 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep12: async function (step) {
             this.pleaseAwait();
@@ -979,6 +976,7 @@ let app = new Vue({
             this.awaitChange = false;
             this.currentStep = step;
             await this.googleChange(this.url);
+            this.goToTop();
         },
         getUniversities: async function (id) {
             let universities = await this.getUniver(id);
@@ -1075,6 +1073,41 @@ let app = new Vue({
         },
         addIdioms: async function () {
             this.formFields3.push(1);
+        },
+        goToTop: function () {
+            jQuery([document.documentElement, document.body]).animate({
+                scrollTop: jQuery("#incluyeme-login-wpjb").offset().top
+            });
+        },
+        deleteStudies: async function (index) {
+            this.formFields.splice(index, 1);
+            this.country_edu.splice(index, 1);
+            this.university_edu.splice(index, 1);
+            this.university_otro.splice(index, 1);
+            this.studies.splice(index, 1);
+            this.titleEdu.splice(index, 1);
+            this.eduLevel.splice(index, 1);
+            this.dateStudiesD.splice(index, 1);
+            this.dateStudiesH.splice(index, 1);
+            this.dateStudieB.splice(index, 1);
+        },
+        deleteExp: async function (index) {
+            this.formFields2.splice(index, 1);
+            this.employed.splice(index, 1);
+            this.areaEmployed.splice(index, 1);
+            this.jobs.splice(index, 1);
+            this.levelExperience.splice(index, 1);
+            this.actuWork.splice(index, 1);
+            this.dateStudiesDLaboral.splice(index, 1);
+            this.dateStudiesHLaboral.splice(index, 1);
+            this.jobsDescript.splice(index, 1);
+        },
+        deleteIdioms: async function (index) {
+            this.formFields3.splice(index, 1);
+            this.lecLevel.splice(index, 1);
+            this.redLevel.splice(index, 1);
+            this.idioms.splice(index, 1);
+            this.oralLevel.splice(index, 1);
         },
         pleaseAwait: function () {
             iziToast.info({

@@ -10146,7 +10146,7 @@ VALUES (1, 'Básico'),
 
 create table `{$wpdb->prefix}incluyeme_prefersJobs`
 (
-	id           int auto_increment not null,
+	id           int auto_increment   not null,
 	jobs_prefers varchar(50)          not null,
 	active       boolean default true null,
 	constraint incluyeme_level_experience_pk
@@ -10155,14 +10155,28 @@ create table `{$wpdb->prefix}incluyeme_prefersJobs`
 
 
 INSERT INTO `{$wpdb->prefix}incluyeme_prefersJobs` (`jobs_prefers`)
-VALUES ('Informatica'),
-       ('Oficina'),
-       ('Negocios'),
-       ('RRHH'); --
+VALUES ('Informática'),
+       ('Ventas'),
+       ('Tecnología'),
+       ('Atención al cliente'),
+       ('Contabilidad/finanzas'),
+       ('Call Center'),
+       ('Marketing'),
+       ('Administracion'),
+       ('Recursos humanos'),
+       ('Comunicación'),
+       ('Logistica'),
+       ('Comercio exterior'),
+       ('Legales'),
+       ('Seguridad'),
+       ('Ingeniería'),
+       ('Gastronomía'),
+       ('Diseño'),
+       ('Otros'); --
 
 create table `{$wpdb->prefix}incluyeme_discapacities`
 (
-	id          int auto_increment not null,
+	id          int auto_increment   not null,
 	discap_name varchar(45)          not null,
 	active      boolean default true null,
 	constraint incluyeme_discapacities_pk

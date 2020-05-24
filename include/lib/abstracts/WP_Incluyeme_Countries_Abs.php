@@ -181,8 +181,16 @@ abstract class WP_Incluyeme_Countries_Abs
 		$temp = wpjb_upload_dir("resume", "", null, "basedir");
 		$finl = dirname($temp) . "/" . self::$userID;
 		wpjb_rename_dir($temp, $finl);
-		
-		return self::userRegisterWPBJ();
+		self::userRegisterWPBJ();
+		self::auto_login_new_user();
+		return;
+	}
+	
+	private static function auto_login_new_user()
+	{
+		wp_set_current_user(self::$userID);
+		wp_set_auth_cookie(self::$userID);
+		exit;
 	}
 	
 	public static function updateUsersEducation($dateStudieB, $dateStudiesD, $dateStudiesH, $eduLevel, $studies, $titleEdu, $university_edu, $university_otro, $country_edu, $userID)
@@ -222,8 +230,15 @@ abstract class WP_Incluyeme_Countries_Abs
 		return $userID;
 	}
 	
-	public static function updateUsersInformation($city, $dateBirthDay, $fPhone, $fiPhone, $genre, $mPhone, $state, $street, $phone, $userID)
+	public static function updateUsersInformation($city, $dateBirthDay, $fPhone, $fiPhone, $genre, $mPhone, $state, $street, $phone)
 	{
+		$userID = get_current_user_id();
+		$verifications = self::$wp->get_results('SELECT * FROM ' . self::$dataPrefix . 'wpjb_resume
+										WHERE ' . self::$dataPrefix . 'wpjb_resume.user_id = ' . $userID . ' LIMIT 1 ');
+		if (count($verifications) <= 0) {
+			return true;
+		}
+		$userID = $verifications[0]->id;
 		$verification = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'incluyeme_users_information where resume_id = ' . $userID);
 		
 		if (count($verification) > 0) {
@@ -252,7 +267,7 @@ abstract class WP_Incluyeme_Countries_Abs
 				'resume_id' => $userID,
 			]);
 		}
-		return true;
+		return $userID;
 	}
 	
 	public static function updateMotriz($userID, $mPie, $mSen, $mEsca, $mBrazo, $peso, $mRueda, $desplazarte, $mDigi)
@@ -738,6 +753,26 @@ abstract class WP_Incluyeme_Countries_Abs
 		], ['resume_id' => $userID]);
 	}
 	
+	public static function deleteIMG($userID, $value = false)
+	{
+		if ($value !== false && self::userSessionVerificate($userID)) {
+			$dir1 = self::$upload_dir . $userID;
+			$dir = self::$upload_dir . $userID;
+			if ($value === 1) {
+				$dir .= '/image';
+			} else if ($value === 2) {
+				$dir .= '/cv';
+			} else if ($value === 3) {
+				$dir .= '/' . (get_option(self::$incluyemeFilters) ? get_option(self::$incluyemeFilters) : 'certificado_discapacidad');
+			}
+			if (self::searchDIR($dir1) && self::searchDIR($dir)) {
+				self::deleteDirForIMGS($dir);
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	public static function updateCV($userID, $CV)
 	{
 		$dir1 = self::$upload_dir . $userID;
@@ -783,8 +818,7 @@ abstract class WP_Incluyeme_Countries_Abs
 			mkdir($dir1);
 			self::updateIMG($userID, $IMG);
 		}
-		$as = @move_uploaded_file($IMG['tmp_name'], $dir . '/' . basename($IMG["name"]));
-		error_log(print_r($as, true));
+		@move_uploaded_file($IMG['tmp_name'], $dir . '/' . basename($IMG["name"]));
 	}
 	
 	public static function updateIdioms($userID, $idioms, $oLevel, $wLevel, $sLevel)
@@ -834,6 +868,25 @@ abstract class WP_Incluyeme_Countries_Abs
 				}
 			}
 		}
+	}
+	
+	public static function deleteDirForIMGS($dirPath)
+	{
+		if (!is_dir($dirPath)) {
+			throw new InvalidArgumentException("$dirPath must be a directory");
+		}
+		if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+			$dirPath .= '/';
+		}
+		$files = glob($dirPath . '*', GLOB_MARK);
+		foreach ($files as $file) {
+			if (is_dir($file)) {
+				self::deleteDir($file);
+			} else {
+				unlink($file);
+			}
+		}
+		rmdir($dirPath);
 	}
 	
 	public static function getUserInformation($id)
@@ -919,6 +972,7 @@ WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id
 		}
 		return false;
 	}
+	
 	
 	public static function sessionVerificated($resume)
 	{
