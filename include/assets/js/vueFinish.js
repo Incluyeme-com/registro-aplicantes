@@ -537,10 +537,13 @@ let app = new Vue({
                         }]
                     ],
                 });
-
-
-                jQuery("#emilLabel").scrollTop(0);
-                jQuery("#emilLabel").animate({scrollTop: 500});
+                let winHeight = jQuery(window).height(),
+                    topOffset = jQuery("#emilLabel").offset().top,
+                    elementHeight = jQuery('#emilLabel').height()
+                let top = topOffset - winHeight + elementHeight;
+                jQuery([document.documentElement, document.body]).animate({
+                    scrollTop: top
+                });
 
                 jQuery("#repostP").removeAttr("style");
                 jQuery("#repostPLabel").removeAttr("style");
