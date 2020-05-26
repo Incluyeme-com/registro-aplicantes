@@ -7,7 +7,7 @@ wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper']
 wp_register_script('dropZ', $js . 'dropzone.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('FAwesome', $js . 'fAwesome.js', [], '1.0.0', false);
 wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs'], '1.0.0');
-wp_register_script('vueD', $js . 'vueLog.js', ['vueJS', 'FAwesome'], '2.0.0');
+wp_register_script('vueD', $js . 'vueFinish.js', ['vueJS', 'FAwesome'], '2.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
 wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');
@@ -1820,7 +1820,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</div>
 			<div class="container mt-5">
 				<h5> Los campos con un: <span
-							style="font-size: 2em;color: black;">* <span>son obligatorios
+							style="font-size: 2em;color: black;">* </span>
+				     son obligatorios
 				</h5>
 			</div>
 		</div>

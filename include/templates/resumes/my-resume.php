@@ -6,7 +6,7 @@ wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1
 wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('dropZ', $js . 'dropzone.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
-wp_register_script('vueD', $js . 'vueRESUME.js', ['vueJS', 'Axios'], '2.0.0');
+wp_register_script('vueD', $js . 'vueRFinish.js', ['vueJS', 'Axios'], '2.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
 wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');

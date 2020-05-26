@@ -537,9 +537,11 @@ let app = new Vue({
                         }]
                     ],
                 });
-                jQuery([document.documentElement, document.body]).animate({
-                    scrollTop: jQuery("#emilLabel").offset().top
-                });
+
+
+                jQuery("#emilLabel").scrollTop(0);
+                jQuery("#emilLabel").animate({scrollTop: 500});
+
                 jQuery("#repostP").removeAttr("style");
                 jQuery("#repostPLabel").removeAttr("style");
                 jQuery("#inputPassword4").removeAttr("style");
