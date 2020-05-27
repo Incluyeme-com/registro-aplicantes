@@ -170,7 +170,6 @@ let app = new Vue({
         inteTrabajar: null,
         inteTrabajarSolo: null,
         moreDis: null,
-        dateBirthDay: null,
         psiquica: false,
         habla: false,
         intelectual: false,
@@ -186,13 +185,14 @@ let app = new Vue({
         dateStudiesH: [],
         reader: null,
         cv: null,
+        validation: false,
         cvSHOW: null,
         cvReader: null,
         cud: null,
         cudSHOW: null,
         cudReader: null,
         state: null,
-        currentStep: 1,
+        currentStep: 11,
         country_edu: [],
         university_edu: [],
         studies: [],
@@ -341,7 +341,7 @@ let app = new Vue({
                 dictCancelUpload: 'Cancelar',
                 dictRemoveFile: 'Eliminar',
                 removedfile: function (file) {
-                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    let x = true;
                     if (!x) return false;
                     jQuery.ajax({
                         type: 'POST',
@@ -354,7 +354,7 @@ let app = new Vue({
                     });
                     let _ref;
                     return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-                }
+                },
             });
             jQuery("#CVDROP").dropzone({
                 url: url,
@@ -372,7 +372,7 @@ let app = new Vue({
                 dictCancelUpload: 'Cancelar',
                 dictRemoveFile: 'Eliminar',
                 removedfile: function (file) {
-                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    let x = true;
                     if (!x) return false;
                     jQuery.ajax({
                         type: 'POST',
@@ -403,7 +403,7 @@ let app = new Vue({
                 dictCancelUpload: 'Cancelar',
                 dictRemoveFile: 'Eliminar',
                 removedfile: function (file) {
-                    let x = confirm('El archivo eliminado no podra ser recuperado. ¿Esta de acuerdo?');
+                    let x = true;
                     if (!x) return false;
                     jQuery.ajax({
                         type: 'POST',
@@ -426,82 +426,31 @@ let app = new Vue({
         confirmStep2: async function (step) {
             let confirmEmail = await this.isValidEmail(this.email);
             if (!confirmEmail || this.password === null || !this.password) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Por favor, llene todos los campos',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
+                this.validation = 2;
                 this.awaitChange = false;
-                if (!confirmEmail) {
-                    jQuery([document.documentElement, document.body]).animate({
-                        scrollTop: jQuery("#emilLabel").offset().top
-                    });
                     jQuery("#emil").css('border-color', "red");
                     jQuery("#emilLabel").css('color', "red");
                     jQuery("#inputPassword4").removeAttr("style");
                     jQuery("#labelPassword4").removeAttr("style");
                     jQuery("#repostP").removeAttr("style");
                     jQuery("#repostPLabel").removeAttr("style");
-
+                return false;
                 } else if (this.password === null || !this.password) {
-                    jQuery([document.documentElement, document.body]).animate({
-                        scrollTop: jQuery("#labelPassword4").offset().top
-                    });
-                    jQuery("#inputPassword4").css('border-color', "red");
-                    jQuery("#labelPassword4").css('color', "red");
-                    jQuery("#emil").removeAttr("style");
-                    jQuery("#emilLabel").removeAttr("style");
-                }
+                this.validation = 3;
+                jQuery("#inputPassword4").css('border-color', "red");
+                jQuery("#labelPassword4").css('color', "red");
+                jQuery("#emil").removeAttr("style");
+                jQuery("#emilLabel").removeAttr("style");
+
                 return false;
             } else if (this.password.length < 5) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Su contraseña debe contener cinco(5) caracteres o mas',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
-                jQuery([document.documentElement, document.body]).animate({
-                    scrollTop: jQuery("#labelPassword4").offset().top
-                });
+                this.validation = 3;
                 jQuery("#inputPassword4").css('border-color', "red");
                 jQuery("#labelPassword4").css('color', "red");
                 this.awaitChange = false;
                 return false;
             } else if (this.password !== this.passwordConfirm) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Su contraseña no coincide',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
-                jQuery([document.documentElement, document.body]).animate({
-                    scrollTop: jQuery("#repostPLabel").offset().top
-                });
+                this.validation = 4;
                 jQuery("#repostP").css('border-color', "red");
                 jQuery("#repostPLabel").css('color', "red");
                 jQuery("#inputPassword4").removeAttr("style");
@@ -523,28 +472,7 @@ let app = new Vue({
                     return true;
                 });
             if (verifications.data.message === true) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Este email ya se encuentra registrado',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
-                let winHeight = jQuery(window).height(),
-                    topOffset = jQuery("#emilLabel").offset().top,
-                    elementHeight = jQuery('#emilLabel').height()
-                let top = topOffset - winHeight + elementHeight;
-                jQuery([document.documentElement, document.body]).animate({
-                    scrollTop: top
-                });
-
+                this.validation = 1;
                 jQuery("#repostP").removeAttr("style");
                 jQuery("#repostPLabel").removeAttr("style");
                 jQuery("#inputPassword4").removeAttr("style");
@@ -561,7 +489,7 @@ let app = new Vue({
             this.goToTop();
             return true;
         },
-        googleChange: async function (url) {
+        googleChange: async function (url, verification = true) {
             this.url = url;
             let verifications = await jQuery.ajax({
                 url: this.url + '/incluyeme-login-extension/include/verifications/register.php',
@@ -576,10 +504,10 @@ let app = new Vue({
             }).done(function (response) {
                 return response
             })
-            if (verifications.message === false) {
+            if (verifications.message === false && verification !== false) {
                 iziToast.warning({
                     title: 'Verifique',
-                    message: 'Este email ya se encuentra segistrado',
+                    message: 'Este email ya se encuentra registrado',
                     progressBarColor: 'rgb(0, 255, 184)',
                     buttons: [
                         ['<button>Cerrar</button>', function (instance, toast) {
@@ -598,40 +526,23 @@ let app = new Vue({
             return true;
         },
         confirmStep3: async function (step) {
-            if (!this.name || !this.lastName) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Por favor, llene todos los campos',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
-                if (!this.name) {
-                    jQuery([document.documentElement, document.body]).animate({
-                        scrollTop: jQuery("#nameLabel").offset().top
-                    });
-                    jQuery("#names").css('border-color', "red");
-                    jQuery("#nameLabel").css('color', "red");
-                    jQuery("#lastNames").removeAttr("style");
-                    jQuery("#lastNamesLabel").removeAttr("style");
-                } else if (!this.lastName) {
-                    jQuery([document.documentElement, document.body]).animate({
-                        scrollTop: jQuery("#lastNamesLabel").offset().top
-                    });
-                    jQuery("#lastNames").css('border-color', "red");
-                    jQuery("#lastNamesLabel").css('color', "red");
-                    jQuery("#names").removeAttr("style");
-                    jQuery("#nameLabel").removeAttr("style");
-                }
+
+            if (!this.name) {
+                this.validation = 5;
+                jQuery("#names").css('border-color', "red");
+                jQuery("#nameLabel").css('color', "red");
+                jQuery("#lastNames").removeAttr("style");
+                jQuery("#lastNamesLabel").removeAttr("style");
                 this.awaitChange = false;
-                return;
+                return false;
+            } else if (!this.lastName) {
+                this.validation = 6;
+                jQuery("#lastNames").css('border-color', "red");
+                jQuery("#lastNamesLabel").css('color', "red");
+                jQuery("#names").removeAttr("style");
+                jQuery("#nameLabel").removeAttr("style");
+                this.awaitChange = false;
+                return false;
             }
             this.pleaseAwait();
             let verifications = await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
@@ -652,39 +563,27 @@ let app = new Vue({
             this.goToTop();
         },
         confirmStep4: async function (step) {
-            if (!this.genre || !this.dateBirthDay) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Por favor, llene todos los campos',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
                 if (!this.genre) {
-                    jQuery([document.documentElement, document.body]).animate({
-                        scrollTop: jQuery("#genreP").offset().top
-                    });
+                    this.validation = 7;
                     jQuery("#inlineCheckbox1").css('color', "red");
                     jQuery("#genreP").css('color', "red");
                     jQuery("#inlineCheckbox2").css('color', "red");
                     jQuery("#inlineCheckbox3").css('color', "red");
+                    jQuery("#dateBirthDay").removeAttr('style');
+                    jQuery("#labeldateBirthDay").removeAttr('style');
+                    this.awaitChange = false;
+                    return;
                 } else if (!this.dateBirthDay) {
+                    this.validation = 8;
                     jQuery("#inlineCheckbox1").removeAttr("style");
                     jQuery("#inlineCheckbox2").removeAttr("style");
                     jQuery("#inlineCheckbox3").removeAttr("style");
+                    jQuery("#genreP").removeAttr("style");
                     jQuery("#dateBirthDay").css('border-color', "red");
                     jQuery("#labeldateBirthDay").css('color', "red");
+                    this.awaitChange = false;
+                    return;
                 }
-                this.awaitChange = false;
-                return;
-            }
             this.awaitChange = false;
             this.currentStep = step;
             this.goToTop();
@@ -694,24 +593,7 @@ let app = new Vue({
             let labelState = jQuery("#labelState");
             let labelCity = jQuery("#labelCity");
             if (!this.mPhone || !this.phone) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Por favor, ingrese su numero de teléfono',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
-
-                jQuery([document.documentElement, document.body]).animate({
-                    scrollTop: labelPhone.offset().top
-                });
+                this.validation = 9;
                 labelPhone.css('color', "red");
                 labelState.removeAttr("style");
                 labelCity.removeAttr("style");
@@ -719,49 +601,19 @@ let app = new Vue({
                 return;
             }
             if (!this.state) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Por favor, ingrese su Provincia/Estado',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
+                this.validation = 10;
                 labelPhone.removeAttr("style");
                 labelCity.removeAttr("style");
-                jQuery([document.documentElement, document.body]).animate({
-                    scrollTop: labelState.offset().top
-                });
+
                 labelState.css('color', "red");
                 this.awaitChange = false;
                 return;
             }
             if (!this.city) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Por favor, ingrese su Ciudad',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
+                this.validation = 11;
                 labelPhone.removeAttr("style");
                 labelState.removeAttr("style");
-                jQuery([document.documentElement, document.body]).animate({
-                    scrollTop: labelCity.offset().top
-                });
+
                 labelCity.css('color', "red");
                 this.awaitChange = false;
                 return;
@@ -796,20 +648,7 @@ let app = new Vue({
         confirmStep7: async function (step) {
             let disCText = jQuery("#disCText");
             if (!this.moreDis) {
-                iziToast.warning({
-                    title: 'Verifique',
-                    message: 'Por favor, cuentenos sobre su disCapacidad',
-                    progressBarColor: 'rgb(0, 255, 184)',
-                    buttons: [
-                        ['<button>Cerrar</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                }
-                            }, toast, 'buttonName');
-                        }]
-                    ],
-                });
+                this.validation = 12;
                 disCText.css('color', "red");
 
                 jQuery('#exampleFormControlTextarea1').css('border-color', "red");
@@ -980,8 +819,7 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
-            await this.googleChange(this.url);
-            this.goToTop();
+            window.location.href = '/trabajos';
         },
         getUniversities: async function (id) {
             let universities = await this.getUniver(id);
@@ -1115,6 +953,7 @@ let app = new Vue({
             this.oralLevel.splice(index, 1);
         },
         pleaseAwait: function () {
+            this.validation = false;
             iziToast.info({
                 title: 'Confirmando',
                 message: 'Estamos verificando su informacion, por favor espere.',
