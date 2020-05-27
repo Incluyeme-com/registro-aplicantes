@@ -192,7 +192,7 @@ let app = new Vue({
         cudSHOW: null,
         cudReader: null,
         state: null,
-        currentStep: 11,
+        currentStep: 1,
         country_edu: [],
         university_edu: [],
         studies: [],
