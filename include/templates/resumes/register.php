@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueD', $js . 'vueFVIII.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueD', $js . 'vueFIX.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');
@@ -302,14 +302,14 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 						<label id="nameLabel" for="names">Nombres <span
 									style="font-size: 2em;color: black;">*<span></label>
 						<input v-model="name" type="text" class="form-control" id="names"
-						       placeholder="Ingresa tus nombres">
+						       placeholder="Ingresa tus nombres" onkeydown="return /[a-z, ]/i.test(event.key)">
 						<p v-if="validation === 5" style="color: red">Por favor, ingrese su nombre</p>
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-12">
 						<label id="lastNamesLabel" for="lastNames">Apellidos <span
 									style="font-size: 2em;color: black;">*<span></label>
 						<input v-model="lastName" type="text" class="form-control" id="lastNames"
-						       placeholder="Ingresa tus apellidos">
+						       placeholder="Ingresa tus apellidos" onkeydown="return /[a-z, ]/i.test(event.key)">
 						<p v-if="validation === 6" style="color: red">Por favor, ingrese su apellido</p>
 					</x-incluyeme>
 				</x-incluyeme>
@@ -1469,7 +1469,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						<x-incluyeme class="col">
 							<label for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
 							<select id="university_edu" v-model="university_edu[pos]" class="form-control">
-								<option v-for="(university, index) of universities[pos]"
+								<option v-for="university in universities[pos]"
 								        :value="university.university" v-on:change="changeUniversity(pos, true)">
 									{{university.university}}
 								</option>
