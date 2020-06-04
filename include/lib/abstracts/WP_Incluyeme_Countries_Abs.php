@@ -150,6 +150,7 @@ abstract class WP_Incluyeme_Countries_Abs
 	private static function userRegisterWPBJ()
 	{
 		global $wpdb;
+		$registerTime = current_time('mysql');
 		$post_id = wp_insert_post([
 			"post_title" => trim(self::$userName . " " . self::$userLastName),
 			"post_name" => self::$userSlug,
@@ -160,7 +161,9 @@ abstract class WP_Incluyeme_Countries_Abs
 		$wpdb->insert($wpdb->prefix . 'wpjb_resume', [
 			'post_id' => $post_id,
 			'user_id' => self::$userID,
-			'candidate_slug' => self::$userSlug
+			'candidate_slug' => self::$userSlug,
+			'created_at' => $registerTime,
+			'modified_at' => $registerTime
 		]);
 		return $wpdb->insert_id;
 	}

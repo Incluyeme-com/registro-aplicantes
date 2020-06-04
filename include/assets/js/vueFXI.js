@@ -326,6 +326,12 @@ let app = new Vue({
             const url = this.url + '/incluyeme-login-extension/include/verifications/register.php';
             const id = this.userID;
             jQuery("#demo-upload").dropzone({
+                init: function () {
+                    const dropzone = this;
+                    clearDropzone = function(){
+                        dropzone.removeAllFiles(true);
+                    };
+                },
                 url: url,
                 maxFiles: 1,
                 acceptedFiles: 'image/jpg, image/png, image/jpeg',
@@ -353,7 +359,9 @@ let app = new Vue({
                         dataType: 'json'
                     });
                     let _ref;
+                    this.removeAllFiles(true);
                     return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+
                 },
             });
             jQuery("#CVDROP").dropzone({
@@ -384,6 +392,7 @@ let app = new Vue({
                         dataType: 'json'
                     });
                     let _ref;
+                    this.removeAllFiles(true);
                     return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                 }
             });
@@ -415,6 +424,7 @@ let app = new Vue({
                         dataType: 'json'
                     });
                     let _ref;
+                    this.removeAllFiles(true);
                     return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                 }
             });
@@ -819,7 +829,7 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
-            window.location.href = '/trabajos';
+            window.location.href = '/thank-you';
         },
         getUniversities: async function (id) {
             let universities = await this.getUniver(id);
