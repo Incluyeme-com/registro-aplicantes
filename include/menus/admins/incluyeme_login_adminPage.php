@@ -34,6 +34,38 @@ function incluyeme_login_adminPage()
 		update_option($incluyemeLoginCountry, sanitize_text_field($value));
 		error_log(print_r(get_option($incluyemeLoginCountry) ,true));
 	}
+	if (isset($_POST['deleteIncluyeme'])) {
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+		$query = "DELETE
+  FROM " . $prefix . "incluyeme_users_dicapselect
+WHERE resume_id NOT IN (SELECT
+      " . $prefix . "wpjb_resume.id
+    FROM " . $prefix . "wpjb_resume);";
+		$query = $wpdb->prepare($query);
+		$wpdb->query($query);
+		$query = "	DELETE
+  FROM " . $prefix . "incluyeme_users_idioms
+WHERE resume_id NOT IN (SELECT
+      " . $prefix . "wpjb_resume.id
+    FROM " . $prefix . "wpjb_resume); ";
+		$query = $wpdb->prepare($query);
+		$wpdb->query($query);
+		$query = "  DELETE
+  FROM " . $prefix . "incluyeme_users_information
+WHERE resume_id NOT IN (SELECT
+      " . $prefix . "wpjb_resume.id
+    FROM " . $prefix . "wpjb_resume); ";
+		$query = $wpdb->prepare($query);
+		$wpdb->query($query);
+		$query = " DELETE
+  FROM " . $prefix . "incluyeme_users_questions
+WHERE resume_id NOT IN (SELECT
+      " . $prefix . "wpjb_resume.id
+    FROM " . $prefix . "wpjb_resume);";
+		$query = $wpdb->prepare($query);
+		$wpdb->query($query);
+	}
 	?>
 	<div class="container">
 		<div class="card">
@@ -87,6 +119,24 @@ function incluyeme_login_adminPage()
 					</div>
 				</div>
 			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col">
+						<form method="POST">
+							<input style="display: none" type="text"
+							       class="form-control"
+							       id="deleteIncluyeme"
+							       name="deleteIncluyeme"
+							       value="<?php echo get_option($incluyemeFilters) ? get_option($incluyemeFilters) : ''; ?>"
+							       placeholder="<?php _e("Field Name.", "wpjobboard"); ?>">
+							<div class="text-right mt-2">
+								<button type="submit"
+								        class="btn btn-danger"><?php _e("Eliminar Datos Inconsistentes", "wpjobboard"); ?></button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<?php
@@ -125,6 +175,38 @@ function incluyemeSave_Login_Options()
 		update_option($incluyemeLoginCountry, sanitize_text_field($value));
 		update_option($incluyemeLoginCountry, sanitize_text_field($value));
 		error_log(print_r(get_option($incluyemeLoginCountry) ,true));
+	}
+	if (isset($_POST['deleteIncluyeme'])) {
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+		$query = "DELETE
+  FROM " . $prefix . "incluyeme_users_dicapselect
+WHERE resume_id NOT IN (SELECT
+      " . $prefix . "wpjb_resume.id
+    FROM " . $prefix . "wpjb_resume);";
+		$query = $wpdb->prepare($query);
+		$wpdb->query($query);
+		$query = "	DELETE
+  FROM " . $prefix . "incluyeme_users_idioms
+WHERE resume_id NOT IN (SELECT
+      " . $prefix . "wpjb_resume.id
+    FROM " . $prefix . "wpjb_resume); ";
+		$query = $wpdb->prepare($query);
+		$wpdb->query($query);
+		$query = "  DELETE
+  FROM " . $prefix . "incluyeme_users_information
+WHERE resume_id NOT IN (SELECT
+      " . $prefix . "wpjb_resume.id
+    FROM " . $prefix . "wpjb_resume); ";
+		$query = $wpdb->prepare($query);
+		$wpdb->query($query);
+		$query = " DELETE
+  FROM " . $prefix . "incluyeme_users_questions
+WHERE resume_id NOT IN (SELECT
+      " . $prefix . "wpjb_resume.id
+    FROM " . $prefix . "wpjb_resume);";
+		$query = $wpdb->prepare($query);
+		$wpdb->query($query);
 	}
 	wp_redirect(get_current_screen());
 	exit;
