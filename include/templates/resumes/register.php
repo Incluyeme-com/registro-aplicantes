@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueD', $js . 'vueFXI.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vueXIXI.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');
@@ -35,6 +35,7 @@ $FBappId = get_option($incluyemeLoginFB);
 $FBversion = 'v7';
 $incluyemeLoginFB = 'incluyemeLoginFB';
 $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+$incluyemeLoginCountry = 'incluyemeLoginCountry'
 ?>
 <?php if (get_option($incluyemeLoginGoogle)) { ?>
 	<script src="https://apis.google.com/js/api:client.js"></script>
@@ -133,8 +134,8 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 <?php } ?>
 <style>
 	.deleteIncluyeme {
-		background-color: #ee7566;
-		border-color: #ee7566;
+		background-color: #ee7566 !important;
+		border-color: #ee7566 !important;
 	}
 	.dropzone .dz-preview .dz-error-message {
 		top: 150px!important;
@@ -233,6 +234,7 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 </style>
 <div class="container m-auto">
 	<div id="incluyeme-login-wpjb">
+		<div id="searchTOP"></div>
 		<div class="container">
 			<template id="step1" v-if="currentStep == 1">
 				<x-incluyeme class="container text-center">
@@ -391,7 +393,17 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 							       placeholder="Teléfono Celular">
 						</x-incluyeme>
 					</x-incluyeme>
-					<p v-if="validation === 9" style="color: red">Por favor, ingrese su Teléfono Celular</p>
+					<x-incluyeme class="row align-items-center">
+						<x-incluyeme v-if="validation === 9 || validation === 20" class="col-lg-4 col col-md-12 mb-3 mb-sm-0">
+							<p  v-if="validation === 9" style="color: red">Por favor, ingrese su Teléfono Celular</p>
+						</x-incluyeme>
+						<x-incluyeme class="col-1 text-center d-none d-lg-block">
+							<span><b></b></span>
+						</x-incluyeme>
+						<x-incluyeme class="col-lg-7 col-md-12">
+							<p  v-if="validation === 20" style="color: red">Por favor, ingrese su Teléfono Celular</p>
+						</x-incluyeme>
+					</x-incluyeme>
 				</div>
 				<div class="container mt-3 mb-sm-0">
 					<label for="fPhone"><?php _e("Teléfono Fijo", "incluyeme-login-extension"); ?></label>
@@ -411,6 +423,7 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 					</x-incluyeme>
 				
 				</div>
+				<?php if(!get_option($incluyemeLoginCountry)){?>
 				<div class="container mt-3 mb-sm-0">
 					<x-incluyeme class="row align-items-center">
 						<x-incluyeme class="form-group col">
@@ -431,6 +444,40 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
+				<?php }else {?>
+					<div class="container mt-3 mb-sm-0">
+						<x-incluyeme class="row align-items-center">
+							<x-incluyeme class="form-group col">
+								<label id="labelState"
+								       for="state"><?php _e("Provincia/Estado <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+								<select v-model="state" type="text" class="form-control" id="state" v-on:change="getCities()">
+									<option v-for="provincias in provincias"
+									        :value="provincias.cities_provin" class="text-capitalize">
+										{{provincias.cities_provin}}
+									</option>
+									<option value="Otra">Otro</option>
+								</select>
+								<p v-if="validation === 10" style="color: red">Por favor, ingrese su Provincia/Estado</p>
+							</x-incluyeme>
+						</x-incluyeme>
+					</div>
+					<div class="container mt-3 mb-sm-0">
+						<x-incluyeme class="row align-items-center">
+							<x-incluyeme class="form-group col">
+								<label id="labelCity"
+								       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+								<select v-model="city" type="text" class="form-control" id="city">
+									<option v-for="citiy in cities"
+									        v-bind:value="citiy.cities_name" class="text-capitalize">
+										{{citiy.cities_name}}
+									</option>
+									<option value="Otra">Otro</option>
+								</select>
+								<p v-if="validation === 11" style="color: red">Por favor, ingrese su Ciudad</p>
+							</x-incluyeme>
+						</x-incluyeme>
+					</div>
+				<?php } ?>
 				<div class="container mt-3 mb-sm-0">
 					<x-incluyeme class="row align-items-center">
 						<x-incluyeme class="form-group col">
@@ -478,7 +525,7 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 					</x-incluyeme>
 				</x-incluyeme>
 				<div class="container">
-					<h5 v-if="disCap">Indica cuales</h5>
+					<h5 v-if="disCap" id="disSelects">Indica cuales</h5>
 					<div class="container m-auto">
 						<x-incluyeme v-if="disCap" class="row ml-5">
 							<x-incluyeme class="col mb-2 mb-sm-0">
@@ -533,6 +580,8 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 								</label>
 							</x-incluyeme>
 						</x-incluyeme>
+						<p v-if="validation === 12" style="color: red">Por favor, dinos tu tipo de
+						                                               disCapacidad</p>
 					</div>
 					<span v-if="disCap===false">Nos enfocamos en la inclusión de personas con disCapacidad</span>
 				</div>
@@ -1567,7 +1616,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</x-incluyeme>
 					</div>
 					<div class='row mt-2'>
-						<x-incluyeme class="col-12">
+						<x-incluyeme class="col-12 text-right mr-0 pr-0">
 							<button type="submit"  class="btn btn-danger w-100 w-100 mt-3 deleteIncluyeme"
 							        @click.prevent="deleteStudies(pos)">
 								- Eliminar Estudios
@@ -1698,7 +1747,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 					<div class="row mt-2">
 						<x-incluyeme class="col text-center">
-							<button type="submit" class="btn btn-danger w-100 w-100 mt-3"
+							<button type="submit" class="btn btn-danger w-100 w-100 mt-3 deleteIncluyeme"
 							        @click.prevent="deleteExp(pos)">
 								- Eliminar Experiencia
 							</button>
@@ -1742,10 +1791,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</x-incluyeme>
 					</x-incluyeme>
 					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col">
 							<label for="lecLevel" class="">Nivel de Lectura</label>
-						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
 							<select id="lecLevel" v-model="lecLevel[pos]" class="form-control mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
@@ -1755,10 +1802,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</x-incluyeme>
 					</x-incluyeme>
 					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col">
 							<label for="redLevel" class="">Nivel Escrito</label>
-						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
 							<select id="redLevel" v-model="redLevel[pos]" class="form-control mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
@@ -1768,10 +1813,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</x-incluyeme>
 					</x-incluyeme>
 					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col">
 							<label for="oralLevel" class="">Nivel Oral</label>
-						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
 							<select id="oralLevel" v-model="oralLevel[pos]" class="form-control mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
@@ -1781,8 +1824,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</x-incluyeme>
 					</x-incluyeme>
 					<div class='row mt-2'>
-						<x-incluyeme class="col-12">
-							<button type="submit" class="btn btn-danger w-100 w-100 mt-3"
+						<x-incluyeme class="col-12 text-right mr-0 pr-0">
+							<button type="submit" class="btn btn-danger w-100 w-100 mt-3 deleteIncluyeme"
 							        @click.prevent="deleteIdioms(pos)">
 								- Eliminar Idiomas
 							</button>

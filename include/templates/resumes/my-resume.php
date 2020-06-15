@@ -5,26 +5,28 @@ $css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
 wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
 wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('dropZ', $js . 'dropzone.min.js', ['jquery', 'popper'], '1.0.0');
-wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
-wp_register_script('vueD', $js . 'vueRFinish.js', ['vueJS', 'Axios'], '2.0.0');
+wp_register_script('FAwesome', $js . 'fAwesome.js', [], '1.0.0', false);
+wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs'], '1.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
 wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');
 
 wp_register_style('bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false);
 wp_register_style('bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false);
-wp_register_script('FAwesome', 'https://kit.fontawesome.com/65c018cf75.js', [], '1.0.0', false);
 wp_register_style('dropzone-css', $css . 'dropzone.min.css', [], '1.0.0', false);
 
+wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
+wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueD');
+wp_enqueue_script('vueH', $js . 'vueRFinish.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
+wp_enqueue_script('Axios');
+//wp_enqueue_script('materializeJS');
 
 wp_enqueue_style('bootstrap-css');
 wp_enqueue_style('dropzone-css');
 wp_enqueue_style('bootstrap-notify-css');
-wp_enqueue_script('fAwesome');
 $baseurl = wp_upload_dir();
 $baseurl = $baseurl['baseurl'];
 $incluyemeNames = 'incluyemeNamesCV';
@@ -33,6 +35,7 @@ $FBappId = get_option($incluyemeLoginFB);
 $FBversion = 'v7';
 $incluyemeLoginFB = 'incluyemeLoginFB';
 $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+$incluyemeLoginCountry = 'incluyemeLoginCountry'
 ?>
 <style>
 	.dropzone {

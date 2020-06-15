@@ -3,11 +3,21 @@
  * Copyright (c) 2020.
  * Jesus Nuñez <Jesus.nunez2050@gmail.com>
  */
+function getCountrys()
+{
+	global $wpdb;
+	return $wpdb->get_results("
+    SELECT *
+    FROM  ".$wpdb->prefix."incluyeme_countries");
+	
+}
 
 function incluyeme_login_adminPage()
 {
 	$incluyemeLoginFB = 'incluyemeLoginFB';
 	$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+	$incluyemeLoginCountry = 'incluyemeLoginCountry';
+	
 	if (isset($_POST['incluyemeLoginFB'])) {
 		$value = $_POST['incluyemeLoginFB'];
 		update_option($incluyemeLoginFB, sanitize_text_field($value));
@@ -17,6 +27,12 @@ function incluyeme_login_adminPage()
 		$value = $_POST['incluyemeLoginGoogle'];
 		update_option($incluyemeLoginGoogle, sanitize_text_field($value));
 		update_option($incluyemeLoginGoogle, sanitize_text_field($value));
+	}
+	if (isset($_POST['incluyemeLoginCountry'])) {
+		$value = $_POST['incluyemeLoginCountry'];
+		update_option($incluyemeLoginCountry, sanitize_text_field($value));
+		update_option($incluyemeLoginCountry, sanitize_text_field($value));
+		error_log(print_r(get_option($incluyemeLoginCountry) ,true));
 	}
 	?>
 	<div class="container">
@@ -49,6 +65,19 @@ function incluyeme_login_adminPage()
 									       value="<?php echo get_option($incluyemeLoginFB) ? get_option($incluyemeLoginFB) : ''; ?>"
 									       placeholder="<?php _e("Facebook ID", "wpjobboard"); ?>">
 								</div>
+								<div class="col-12 mt-2">
+									<label for="incluyemeLoginCountry"><b><?php _e("Pais", "wpjobboard"); ?></b></label>
+									<select type="text"
+									        class="form-control"
+									        id="incluyemeLoginCountry"
+									        name="incluyemeLoginCountry">
+										<?php $country = getCountrys();
+										foreach ($country as $country) {
+											?>
+											<option <?php  echo get_option($incluyemeLoginCountry) === $country->country_code ?  'selected' : '';  ?> value="<?php echo $country->country_code ?>"><?php echo $country->country_name ?></option>
+										<?php } ?>
+									</select>
+								</div>
 							</div>
 							<div class="text-right mt-2">
 								<button type="submit"
@@ -77,8 +106,10 @@ function incluyeme_login_styles($hook)
 
 function incluyemeSave_Login_Options()
 {
+
 	$incluyemeLoginFB = 'incluyemeLoginFB';
 	$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+	$incluyemeLoginCountry = 'incluyemeLoginCountry';
 	if (isset($_POST['incluyemeLoginFB'])) {
 		$value = $_POST['incluyemeLoginFB'];
 		update_option($incluyemeLoginFB, sanitize_text_field($value));
@@ -88,6 +119,12 @@ function incluyemeSave_Login_Options()
 		$value = $_POST['incluyemeLoginGoogle'];
 		update_option($incluyemeLoginGoogle, sanitize_text_field($value));
 		update_option($incluyemeLoginGoogle, sanitize_text_field($value));
+	}
+	if (isset($_POST['incluyemeLoginCountry'])) {
+		$value = $_POST['incluyemeLoginCountry'];
+		update_option($incluyemeLoginCountry, sanitize_text_field($value));
+		update_option($incluyemeLoginCountry, sanitize_text_field($value));
+		error_log(print_r(get_option($incluyemeLoginCountry) ,true));
 	}
 	wp_redirect(get_current_screen());
 	exit;

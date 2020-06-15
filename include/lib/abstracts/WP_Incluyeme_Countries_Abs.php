@@ -23,6 +23,9 @@ abstract class WP_Incluyeme_Countries_Abs
 	protected static $incluyemeUsersInformation;
 	protected static $upload_dir;
 	protected static $dataPrefix;
+	protected static $provinciasTable;
+	protected static $citiesTable;
+	protected static $incluyemeLoginCountry;
 	
 	public function __construct()
 	{
@@ -43,6 +46,9 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$country = false;
 		self::$incluyemeFilters = 'incluyemeFiltersCV';
 		self::$upload_dir = wp_upload_dir() ['basedir'] . '/wpjobboard/resume/';
+		self::$provinciasTable = $wpdb->prefix . 'incluyeme_provincias';
+		self:: $citiesTable = $wpdb->prefix . 'incluyeme_cities';
+		self::$incluyemeLoginCountry = 'incluyemeLoginCountry';
 	}
 	
 	/**
@@ -165,6 +171,14 @@ abstract class WP_Incluyeme_Countries_Abs
 			'created_at' => $registerTime,
 			'modified_at' => $registerTime
 		]);
+		$id = $wpdb->insert_id;
+		self::$wp->insert(self::$wp->prefix . 'wpjb_resume_search', [
+			'fullname' => self::$userName . ' ' . self::$userLastName,
+			'location' => '',
+			'details' => '',
+			'details_all' => '',
+			'resume_id' => $id,
+		]);
 		return $wpdb->insert_id;
 	}
 	
@@ -178,6 +192,7 @@ abstract class WP_Incluyeme_Countries_Abs
 			"user_pass" => $password,
 			"role" => "subscriber"
 		]);
+		
 		update_user_meta(self::$userID, 'first_name', $first_name);
 		update_user_meta(self::$userID, 'last_name', $last_name);
 		self::$userSlug = Wpjb_Utility_Slug::generate(Wpjb_Utility_Slug::MODEL_RESUME, $first_name . ' ' . $last_name);
@@ -243,7 +258,15 @@ abstract class WP_Incluyeme_Countries_Abs
 		}
 		$userID = $verifications[0]->id;
 		$verification = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'incluyeme_users_information where resume_id = ' . $userID);
-		
+		self::$wp->update(self::$wp->prefix . 'wpjb_resume_search', [
+			'location' => get_option(self::$incluyemeLoginCountry) . ' ' . $state . ' ' . $city,
+		], ['resume_id' => $userID]);
+		self::$wp->update(self::$wp->prefix . 'wpjb_resume', [
+			'phone' => $mPhone . ' ' . $phone,
+			'candidate_country' => get_option(self::$incluyemeLoginCountry),
+			'candidate_state' => $state,
+			'candidate_location' => $street
+		], ['user_id' =>  get_current_user_id()]);
 		if (count($verification) > 0) {
 			self::$wp->update(self::$incluyemeUsersInformation, [
 				'genre' => $genre ?? '',
@@ -975,7 +998,6 @@ WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id
 		return false;
 	}
 	
-	
 	public static function sessionVerificated($resume)
 	{
 		$userID = get_current_user_id();
@@ -1055,5 +1077,17 @@ WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id
 			$CV = false;
 		}
 		return [$img, $CUD, $CV];
+	}
+	
+	public static function getProvincias()
+	{
+		global $wpdb;
+		return $wpdb->get_results("SELECT * from " . self::$provinciasTable . ' where country_code = "' . get_option(self::$incluyemeLoginCountry) . '"');
+	}
+	
+	public static function getCities($cityCode)
+	{
+		global $wpdb;
+		return $wpdb->get_results("SELECT * from " . self::$citiesTable . ' where cities_location = "' . $cityCode . '"');
 	}
 }

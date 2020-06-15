@@ -60,8 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$_POST['mPhone'],
 				$_POST['state'],
 				$_POST['street'],
-				$_POST['phone'],
-				$_POST['userID']);
+				$_POST['phone']);
 			
 		}
 		if (isset($_POST['userID']) && isset($_POST['discaps']) && isset($_POST['moreDis'])) {

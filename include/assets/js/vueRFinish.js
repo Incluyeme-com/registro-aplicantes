@@ -3,7 +3,6 @@
  *
  * Developer by Jesus Nuñez <jesus.nunez2050@gmail.com> .
  */
-Dropzone.autoDiscover = false;
 Vue.config.ignoredElements = ['x-incluyeme', 'fb:login-button']
 let app = new Vue({
     el: '#incluyeme-login-wpjb',

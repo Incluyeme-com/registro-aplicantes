@@ -105,6 +105,7 @@ let app = new Vue({
         passwordConfirm: null,
         genre: null,
         name: null,
+        cities: [],
         email: null,
         password: null,
         street: null,
@@ -205,6 +206,7 @@ let app = new Vue({
         awaitChange: false,
         google: false,
         facebook: false,
+        provincias: []
     },
     ready: function () {
         console.log('ready');
@@ -233,6 +235,7 @@ let app = new Vue({
                         this.getStudies().finally();
                         this.getExperiences().finally();
                         this.getPrefersJobs().finally();
+                        this.getProvincias().finally();
                         this.currentStep = step;
                     }
                     break;
@@ -263,8 +266,7 @@ let app = new Vue({
                     }
                     break;
                 case 6:
-                    this.goToTop();
-                    this.currentStep = step
+                    await this.confirmStep6(step);
                     break;
                 case 7:
                     if (this.currentStep <= 7) {
@@ -434,6 +436,7 @@ let app = new Vue({
             return re.test(email);
         },
         confirmStep2: async function (step) {
+            this.goToTop();
             let confirmEmail = await this.isValidEmail(this.email);
             if (!confirmEmail || this.password === null || !this.password) {
                 this.validation = 2;
@@ -496,7 +499,6 @@ let app = new Vue({
                 this.currentStep = step;
             }
             this.awaitChange = false;
-            this.goToTop();
             return true;
         },
         googleChange: async function (url, verification = true) {
@@ -536,7 +538,7 @@ let app = new Vue({
             return true;
         },
         confirmStep3: async function (step) {
-
+            this.goToTop();
             if (!this.name) {
                 this.validation = 5;
                 jQuery("#names").css('border-color', "red");
@@ -570,40 +572,48 @@ let app = new Vue({
             this.userID = verifications.data.message;
             this.awaitChange = false;
             this.currentStep = step;
-            this.goToTop();
         },
         confirmStep4: async function (step) {
-                if (!this.genre) {
-                    this.validation = 7;
-                    jQuery("#inlineCheckbox1").css('color', "red");
-                    jQuery("#genreP").css('color', "red");
-                    jQuery("#inlineCheckbox2").css('color', "red");
-                    jQuery("#inlineCheckbox3").css('color', "red");
-                    jQuery("#dateBirthDay").removeAttr('style');
-                    jQuery("#labeldateBirthDay").removeAttr('style');
-                    this.awaitChange = false;
-                    return;
-                } else if (!this.dateBirthDay) {
-                    this.validation = 8;
-                    jQuery("#inlineCheckbox1").removeAttr("style");
-                    jQuery("#inlineCheckbox2").removeAttr("style");
-                    jQuery("#inlineCheckbox3").removeAttr("style");
-                    jQuery("#genreP").removeAttr("style");
-                    jQuery("#dateBirthDay").css('border-color', "red");
-                    jQuery("#labeldateBirthDay").css('color', "red");
-                    this.awaitChange = false;
-                    return;
-                }
+            this.goToTop();
+            if (!this.genre) {
+                this.validation = 7;
+                jQuery("#inlineCheckbox1").css('color', "red");
+                jQuery("#genreP").css('color', "red");
+                jQuery("#inlineCheckbox2").css('color', "red");
+                jQuery("#inlineCheckbox3").css('color', "red");
+                jQuery("#dateBirthDay").removeAttr('style');
+                jQuery("#labeldateBirthDay").removeAttr('style');
+                this.awaitChange = false;
+                return;
+            } else if (!this.dateBirthDay) {
+                this.validation = 8;
+                jQuery("#inlineCheckbox1").removeAttr("style");
+                jQuery("#inlineCheckbox2").removeAttr("style");
+                jQuery("#inlineCheckbox3").removeAttr("style");
+                jQuery("#genreP").removeAttr("style");
+                jQuery("#dateBirthDay").css('border-color', "red");
+                jQuery("#labeldateBirthDay").css('color', "red");
+                this.awaitChange = false;
+                return;
+            }
             this.awaitChange = false;
             this.currentStep = step;
-            this.goToTop();
         },
         confirmStep5: async function (step) {
+            this.goToTop();
             let labelPhone = jQuery("#labelPhone");
             let labelState = jQuery("#labelState");
             let labelCity = jQuery("#labelCity");
-            if (!this.mPhone || !this.phone) {
+            if (!this.mPhone) {
                 this.validation = 9;
+                labelPhone.css('color', "red");
+                labelState.removeAttr("style");
+                labelCity.removeAttr("style");
+                this.awaitChange = false;
+                return;
+            }
+            if (!this.phone) {
+                this.validation = 20;
                 labelPhone.css('color', "red");
                 labelState.removeAttr("style");
                 labelCity.removeAttr("style");
@@ -653,12 +663,13 @@ let app = new Vue({
             }
             this.awaitChange = false;
             this.currentStep = step;
-            this.goToTop();
+
         },
         confirmStep7: async function (step) {
+            this.goToTop();
             let disCText = jQuery("#disCText");
             if (!this.moreDis) {
-                this.validation = 12;
+                this.validation = 11;
                 disCText.css('color', "red");
 
                 jQuery('#exampleFormControlTextarea1').css('border-color', "red");
@@ -742,14 +753,15 @@ let app = new Vue({
             await this.drop();
             this.dropzone();
             this.awaitChange = false;
-            this.goToTop();
+
         },
         confirmStep8: async function (step) {
+            this.goToTop();
             this.awaitChange = false;
             this.currentStep = step;
-            this.goToTop();
         },
         confirmStep9: async function (step) {
+            this.goToTop();
             this.pleaseAwait();
             await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 userID: this.userID,
@@ -771,9 +783,9 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
-            this.goToTop();
         },
         confirmStep10: async function (step) {
+            this.goToTop();
             this.pleaseAwait();
             await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 userID: this.userID,
@@ -794,9 +806,9 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
-            this.goToTop();
         },
         confirmStep11: async function (step) {
+            this.goToTop();
             this.pleaseAwait();
             await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 userID: this.userID,
@@ -813,7 +825,6 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
-            this.goToTop();
         },
         confirmStep12: async function (step) {
             this.pleaseAwait();
@@ -857,6 +868,17 @@ let app = new Vue({
                     console.log(error);
                 });
         },
+        getCities: async function (id) {
+            let cities = await jQuery.ajax({
+                url: this.url + '/incluyeme-login-extension/include/search/countries.php?city=' + this.state,
+                type: 'GET',
+                dataType: 'json'
+            }).done(success => {
+                return success;
+            });
+            this.cities = cities.message;
+            console.log(this.cities);
+        },
         getCountries: async function (url) {
             let countries = await jQuery.ajax({
                 url: this.url + '/incluyeme-login-extension/include/search/countries.php?countries=all',
@@ -898,6 +920,16 @@ let app = new Vue({
             });
             this.preferJob = preferJob.message
         },
+        getProvincias: async function (url) {
+            let provincias = await jQuery.ajax({
+                url: this.url + '/incluyeme-login-extension/include/search/countries.php?provincias=CVC',
+                type: 'GET',
+                dataType: 'json'
+            }).done(success => {
+                return success;
+            });
+            this.provincias = provincias.message
+        },
         getLevelsIdioms: async function (url) {
             let levels = await jQuery.ajax({
                 url: this.url + '/incluyeme-login-extension/include/search/idioms.php?levels=all',
@@ -928,9 +960,7 @@ let app = new Vue({
             this.formFields3.push(1);
         },
         goToTop: function () {
-            jQuery([document.documentElement, document.body]).animate({
-                scrollTop: jQuery("#incluyeme-login-wpjb").offset().top
-            });
+            document.getElementById('content').scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
         },
         deleteStudies: async function (index) {
             this.formFields.splice(index, 1);
@@ -979,5 +1009,16 @@ let app = new Vue({
                 ],
             });
         },
+        confirmStep6: async function (step) {
+            this.goToTop();
+            if (!this.motriz && !this.visceral && !this.auditiva && !this.visual && !this.intelectual) {
+                jQuery("#disSelects").css('color', "red");
+                this.validation = 12
+            } else {
+                jQuery("#disSelects").removeAttr("style");
+                this.currentStep = step;
+                this.validation = null;
+            }
+        }
     }
 });
