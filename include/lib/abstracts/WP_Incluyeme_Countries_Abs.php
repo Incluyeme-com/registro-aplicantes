@@ -28,6 +28,7 @@ abstract class WP_Incluyeme_Countries_Abs
 	protected static $incluyemeLoginCountry;
 	private static $incluyemeLoginGoogle;
 	private static $incluyemeLoginFB;
+	private static $incluyemeLoginFBSECRET;
 	
 	public function __construct()
 	{
@@ -53,6 +54,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$incluyemeLoginCountry = 'incluyemeLoginCountry';
 		self::$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 		self::$incluyemeLoginFB = 'incluyemeLoginFB';
+		self::$incluyemeLoginFBSECRET = 'incluyemeLoginFBSECRET';
 	}
 	
 	/**
@@ -221,7 +223,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		if ($facebook !== false && $facebook !== null) {
 			$fb = new \Facebook\Facebook([
 				'app_id' => get_option(self::$incluyemeLoginFB),
-				'app_secret' => '46ed8df24e9f25d435e2a9002949b610',
+				'app_secret' => get_option(self::$incluyemeLoginFBSECRET),
 				'default_graph_version' => 'v2.10',
 			]);
 			try {

@@ -36,7 +36,7 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry';
 $incluyemeLoginEstado = 'incluyemeLoginEstado';
 $incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
 $FBappId = get_option($incluyemeLoginFB);
-$FBversion = 'v7';
+$FBversion = 'v7.0';
 ?>
 <?php if (get_option($incluyemeLoginGoogle)) { ?>
 	<script src="https://apis.google.com/js/api:client.js"></script>
@@ -88,11 +88,7 @@ $FBversion = 'v7';
                 xfbml      : false,
                 version    : 'v7.0'
             });
-
-
-            FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });
+	        
         };
 
         (function(d, s, id) {

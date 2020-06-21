@@ -18,7 +18,7 @@ function incluyeme_login_adminPage()
 	$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 	$incluyemeLoginCountry = 'incluyemeLoginCountry';
 	$incluyemeLoginEstado = 'incluyemeLoginEstado';
-	
+	$incluyemeLoginFBSECRET = 'incluyemeLoginFBSECRET';
 	if (isset($_POST['incluyemeLoginFB'])) {
 		$value = $_POST['incluyemeLoginFB'];
 		update_option($incluyemeLoginFB, sanitize_text_field($value));
@@ -38,6 +38,11 @@ function incluyeme_login_adminPage()
 		$value = $_POST['incluyemeLoginEstado'];
 		update_option($incluyemeLoginEstado, sanitize_text_field($value));
 		update_option($incluyemeLoginEstado, sanitize_text_field($value));
+	}
+	if (isset($_POST['incluyemeLoginFBSECRET'])) {
+		$value = $_POST['incluyemeLoginFBSECRET'];
+		update_option($incluyemeLoginFBSECRET, sanitize_text_field($value));
+		update_option($incluyemeLoginFBSECRET, sanitize_text_field($value));
 	}
 	if (isset($_POST['deleteIncluyeme'])) {
 		global $wpdb;
@@ -101,6 +106,15 @@ WHERE resume_id NOT IN (SELECT
 									       name="incluyemeLoginFB"
 									       value="<?php echo get_option($incluyemeLoginFB) ? get_option($incluyemeLoginFB) : ''; ?>"
 									       placeholder="<?php _e("Facebook ID", "wpjobboard"); ?>">
+								</div>
+								<div class="col-12 mt-2">
+									<label for="incluyemeLoginFB"><b><?php _e("Ingrese la clave secreta de su aplicacion Facebook", "wpjobboard"); ?></b></label>
+									<input type="text"
+									       class="form-control"
+									       id="incluyemeLoginFBSECRET"
+									       name="incluyemeLoginFBSECRET"
+									       value="<?php echo get_option($incluyemeLoginFBSECRET) ? get_option($incluyemeLoginFBSECRET) : ''; ?>"
+									       placeholder="<?php _e("Facebook Secret Key", "wpjobboard"); ?>">
 								</div>
 								<div class="col-12 mt-2">
 									<label for="incluyemeLoginCountry"><b><?php _e("Pais", "wpjobboard"); ?></b></label>
