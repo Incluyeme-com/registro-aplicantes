@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . '/wp-load.php';
-
+require_once 'vendor/autoload.php';
 abstract class WP_Incluyeme_Countries_Abs
 {
 	protected static $country;
@@ -26,6 +26,8 @@ abstract class WP_Incluyeme_Countries_Abs
 	protected static $provinciasTable;
 	protected static $citiesTable;
 	protected static $incluyemeLoginCountry;
+	private static $incluyemeLoginGoogle;
+	private static $incluyemeLoginFB;
 	
 	public function __construct()
 	{
@@ -49,6 +51,8 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$provinciasTable = $wpdb->prefix . 'incluyeme_provincias';
 		self:: $citiesTable = $wpdb->prefix . 'incluyeme_cities';
 		self::$incluyemeLoginCountry = 'incluyemeLoginCountry';
+		self::$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+		self::$incluyemeLoginFB = 'incluyemeLoginFB';
 	}
 	
 	/**
@@ -134,13 +138,122 @@ abstract class WP_Incluyeme_Countries_Abs
 		return false;
 	}
 	
-	public static function searchUserExistSocial($email, $password, $name, $lastName)
+	public static function searchUserExistSocial($email, $password, $name, $lastName, $google = null, $facebook = null)
 	{
-		$user = email_exists($email);
-		if ($user) {
+		if ($google !== false && $google !== null && $password !== $name) {
+			$client = new Google_Client(['client_id' => get_option(self::$incluyemeLoginGoogle)]);
+			$payload = $client->verifyIdToken($google);
+			if ($payload) {
+				$user = email_exists($payload['email']);
+				if ($payload['email'] == $email && $user) {
+					$user = get_user_by('email', $payload['email']);
+					self::$userID = $user->ID;
+					self::auto_login_new_userSocial();
+					$redirect_to = site_url() . '/candidate-panel';
+					wp_redirect($redirect_to);
+					exit();
+				}
+				self::registerUser($email, $password, $name, $lastName, true);
+				$user = get_user_by('email', $payload['email']);
+				self::$userID = $user->ID;
+				return self::$userID;
+			}
+		}
+		if ($facebook !== false && $facebook !== null) {
+			$fb = new \Facebook\Facebook([
+				'app_id' => get_option(self::$incluyemeLoginFB),
+				'app_secret' => '46ed8df24e9f25d435e2a9002949b610',
+				'default_graph_version' => 'v2.10',
+			]);
+			try {
+				$response = $fb->get(
+					'/me?fields=first_name, last_name,email',
+					$facebook
+				);
+			} catch (\Facebook\Exceptions\FacebookResponseException $e) {
+				return false;
+			} catch (\Facebook\Exceptions\FacebookSDKException $e) {
+				return false;
+			}
+			
+			$me = $response->getGraphUser();
+			$email = $me->getProperty('email');
+			$password = $me->getProperty('email') . $me->getProperty('first_name');
+			$name = $me->getProperty('first_name');
+			$lastName = $me->getProperty('last_name');
+			$user = email_exists($email);
+			if ($user) {
+				$user = get_user_by('email', $email);
+				self::$userID = $user->ID;
+				self::auto_login_new_userSocial();
+				$redirect_to = site_url() . '/candidate-panel';
+				wp_redirect($redirect_to);
+				exit();
+			}
+			self::registerUser($email, $password, $name, $lastName, true);
+			return 78523;
+		} else {
 			return false;
 		}
-		return self::registerUser($email, $password, $name, $lastName);
+	}
+	
+	public static function searchUserExistSocialINIT($email, $password, $name, $lastName, $google = null, $facebook = null)
+	{
+		if ($google !== false && $google !== null && $password !== $name) {
+			$client = new Google_Client(['client_id' => get_option(self::$incluyemeLoginGoogle)]);
+			$payload = $client->verifyIdToken($google);
+			if ($payload) {
+				$user = email_exists($payload['email']);
+				if ($payload['email'] == $email && $user) {
+					$user = get_user_by('email', $payload['email']);
+					self::$userID = $user->ID;
+					self::auto_login_new_userSocial();
+					$redirect_to = site_url() . '/candidate-panel';
+					wp_redirect($redirect_to);
+					exit();
+				}
+				self::registerUser($email, $password, $name, $lastName, true);
+				$user = get_user_by('email', $payload['email']);
+				self::$userID = $user->ID;
+				return self::$userID;
+			}
+		}
+		if ($facebook !== false && $facebook !== null) {
+			$fb = new \Facebook\Facebook([
+				'app_id' => get_option(self::$incluyemeLoginFB),
+				'app_secret' => '46ed8df24e9f25d435e2a9002949b610',
+				'default_graph_version' => 'v2.10',
+			]);
+			try {
+				$response = $fb->get(
+					'/me?fields=first_name, last_name,email',
+					$facebook
+				);
+			} catch (\Facebook\Exceptions\FacebookResponseException $e) {
+				return false;
+			} catch (\Facebook\Exceptions\FacebookSDKException $e) {
+				return false;
+			}
+			
+			$me = $response->getGraphUser();
+			$email = $me->getProperty('email');
+			$password = $me->getProperty('email') . $me->getProperty('first_name');
+			$name = $me->getProperty('first_name');
+			$lastName = $me->getProperty('last_name');
+			$user = email_exists($email);
+			if ($user) {
+				$user = get_user_by('email', $email);
+				self::$userID = $user->ID;
+				self::auto_login_new_userSocial();
+				$redirect_to = site_url() . '/candidate-panel';
+				wp_redirect($redirect_to);
+				exit();
+			}
+			self::registerUser($email, $password, $name, $lastName, true);
+			return 78523;
+		} else {
+			return false;
+		}
 	}
 	
 	public static function redirect()
@@ -150,7 +263,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		@ob_end_clean();
 		$redirect_to = site_url() . '/candidate-panel';
 		wp_safe_redirect($redirect_to);
-		exit();
+		exit;
 	}
 	
 	private static function userRegisterWPBJ()
@@ -182,7 +295,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		return $wpdb->insert_id;
 	}
 	
-	public static function registerUser($email, $password, $first_name, $last_name)
+	public static function registerUser($email, $password, $first_name, $last_name, $social = false)
 	{
 		self::$userName = $first_name;
 		self::$userLastName = $last_name;
@@ -200,7 +313,12 @@ abstract class WP_Incluyeme_Countries_Abs
 		$finl = dirname($temp) . "/" . self::$userID;
 		wpjb_rename_dir($temp, $finl);
 		self::userRegisterWPBJ();
-		self::auto_login_new_user();
+		if($social){
+			self::auto_login_new_userSocial();
+		}else {
+			self::auto_login_new_user();
+		}
+	
 		return;
 	}
 	
@@ -209,6 +327,12 @@ abstract class WP_Incluyeme_Countries_Abs
 		wp_set_current_user(self::$userID);
 		wp_set_auth_cookie(self::$userID);
 		exit;
+	}
+	
+	private static function auto_login_new_userSocial()
+	{
+		wp_set_current_user(self::$userID);
+		wp_set_auth_cookie(self::$userID);
 	}
 	
 	public static function updateUsersEducation($dateStudieB, $dateStudiesD, $dateStudiesH, $eduLevel, $studies, $titleEdu, $university_edu, $university_otro, $country_edu, $userID)
@@ -766,8 +890,8 @@ abstract class WP_Incluyeme_Countries_Abs
 				]);
 			}
 		}
-		self::$wp->get_results('UPDATE ' . self::$incluyemeUsersInformation . ' SET  	moreDis  = ' . $moreDis . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN ' . $discaps);
-		self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN ' . $discaps);
+		self::$wp->get_results('UPDATE ' . self::$incluyemeUsersInformation . ' SET  	moreDis  = "' . $moreDis . '" WHERE resume_id = ' . $userID);
+		self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN (' . implode(',', $discaps) . ')');
 		return true;
 	}
 	
@@ -871,7 +995,7 @@ abstract class WP_Incluyeme_Countries_Abs
 				]);
 			}
 		}
-		self::$wp->get_results('DELETE from ' . self::$usersIdioms . ' WHERE resume_id = ' . $userID . '  AND idioms_id NOT IN ' . $idioms);
+		self::$wp->get_results('DELETE from ' . self::$usersIdioms . ' WHERE resume_id = ' . $userID . '  AND idioms_id NOT IN (' . implode("', '", $idioms) . ')');
 	}
 	
 	private static function searchDIR($dir)
@@ -926,6 +1050,12 @@ abstract class WP_Incluyeme_Countries_Abs
 FROM 	' . self::$dataPrefix . 'incluyeme_users_information
   LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
     ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id);
+		error_log(print_r('SELECT
+  	' . self::$dataPrefix . 'incluyeme_prefersjobs.jobs_prefers,
+  	' . self::$dataPrefix . 'incluyeme_users_information.*
+FROM 	' . self::$dataPrefix . 'incluyeme_users_information
+  LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
+    ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id, true));
 		$works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
 		$education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
 		$discaps = self::$wp->get_results('SELECT

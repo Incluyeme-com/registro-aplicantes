@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vueRFinish.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vueRFinishOI.js', ['vueJS', 'FAwesome', 'dropZ'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');
@@ -35,7 +35,8 @@ $FBappId = get_option($incluyemeLoginFB);
 $FBversion = 'v7';
 $incluyemeLoginFB = 'incluyemeLoginFB';
 $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
-$incluyemeLoginCountry = 'incluyemeLoginCountry'
+$incluyemeLoginCountry = 'incluyemeLoginCountry';
+$incluyemeLoginEstado = 'incluyemeLoginEstado';
 ?>
 <style>
 	.dropzone {
@@ -103,26 +104,24 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 </style>
 <div id="incluyeme-login-wpjb">
 	<div class="container">
-		<template id="step1">
-			<x-incluyeme class="container text-center">
-				<h2 class='mt-2'>Perfil</h2>
-			</x-incluyeme>
-		</template>
 		<template id="step2">
 			<x-incluyeme class="container text-center">
 				<h1>¿Cómo te llamas?</h1>
 			</x-incluyeme>
 			<x-incluyeme class="row">
 				<x-incluyeme class="form-group col-12">
-					<label id="nameLabel" for="names">Nombres <span style="font-size: 2em;color: black;">*<span></label>
+					<label id="nameLabel" for="names">Nombres <span
+								style="font-size: 2em;color: black;">*<span></label>
 					<input v-model="name" type="text" class="form-control" id="names"
-					       placeholder="Ingresa tus nombres">
+					       placeholder="Ingresa tus nombres" onkeydown="return /[a-z, ]/i.test(event.key)">
+					<p v-if="validation === 5" style="color: red">Por favor, ingrese su nombre</p>
 				</x-incluyeme>
 				<x-incluyeme class="form-group col-12">
 					<label id="lastNamesLabel" for="lastNames">Apellidos <span
 								style="font-size: 2em;color: black;">*<span></label>
 					<input v-model="lastName" type="text" class="form-control" id="lastNames"
-					       placeholder="Ingresa tus apellidos">
+					       placeholder="Ingresa tus apellidos" onkeydown="return /[a-z, ]/i.test(event.key)">
+					<p v-if="validation === 6" style="color: red">Por favor, ingrese su apellido</p>
 				</x-incluyeme>
 			</x-incluyeme>
 		</template>
@@ -159,6 +158,7 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 						       for="inlineCheckbox3"
 						       style="color: black"><?php _e("No Binario", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
+					<p v-if="validation === 7" style="color: red">Por favor, ingrese su genero</p>
 				</x-incluyeme>
 				<x-incluyeme class="col mt-4 mb-2">
 					<label id="labeldateBirthDay"
@@ -166,6 +166,7 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 					<input type="date" v-model="dateBirthDay" name="dateBirthDay" class="form-control"
 					       id="dateBirthDay"
 					       placeholder="Ingresa tus fecha de nacimiento">
+					<p v-if="validation === 8" style="color: red">Por favor, ingrese su fecha de nacimiento</p>
 				</x-incluyeme>
 			</x-incluyeme>
 		</template>
@@ -177,82 +178,130 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 				<label id="labelPhone"
 				       for="mPhone"><?php _e("Teléfono Celular <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
 				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="form-group col-lg-4 col">
+					<x-incluyeme class="col-lg-4 col col-md-12 mb-3 mb-sm-0">
 						<input type="number" min='0' v-model="mPhone" class="form-control" id="mPhone"
 						       placeholder="Cod. Area">
 					</x-incluyeme>
-					<x-incluyeme class="form-group col-1 text-center">
+					<x-incluyeme class="col-1 text-center d-none d-lg-block">
 						<span><b>-</b></span>
 					</x-incluyeme>
-					<x-incluyeme class="form-group col-lg col-md-12">
+					<x-incluyeme class="col-lg-7 col-md-12">
 						<label for="Phone" style="display: none"></label>
 						<input type="number" min='0' v-model="phone" class="form-control" id="Phone"
 						       placeholder="Teléfono Celular">
 					</x-incluyeme>
 				</x-incluyeme>
+				<x-incluyeme class="row align-items-center">
+					<x-incluyeme v-if="validation === 9 || validation === 20" class="col-lg-4 col col-md-12 mb-3 mb-sm-0">
+						<p  v-if="validation === 9" style="color: red">Por favor, ingrese su Teléfono Celular</p>
+					</x-incluyeme>
+					<x-incluyeme class="col-1 text-center d-none d-lg-block">
+						<span><b></b></span>
+					</x-incluyeme>
+					<x-incluyeme class="col-lg-7 col-md-12">
+						<p  v-if="validation === 20" style="color: red">Por favor, ingrese su Teléfono Celular</p>
+					</x-incluyeme>
+				</x-incluyeme>
 			</div>
-			<div class="container">
+			<div class="container mt-3 mb-sm-0">
 				<label for="fPhone"><?php _e("Teléfono Fijo", "incluyeme-login-extension"); ?></label>
 				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="form-group col-lg-4 col">
+					<x-incluyeme class="col-lg-4 col col-md-12 mb-3 mb-sm-0">
 						<input type="number" min='0' v-model="fPhone" class="form-control" id="fPhone"
 						       placeholder="Cod. Area">
 					</x-incluyeme>
-					<x-incluyeme class="form-group col-1 text-center">
+					<x-incluyeme class="col-1 text-center d-none d-lg-block">
 						<span><b>-</b></span>
 					</x-incluyeme>
-					<x-incluyeme class="form-group col-lg col-md-12">
+					<x-incluyeme class="col-lg-7 col-md-12">
 						<label for="Phone" style="display: none"></label>
 						<input type="number" min='0' v-model="fiPhone" class="form-control" id="Phone"
 						       placeholder="Teléfono Fijo">
 					</x-incluyeme>
 				</x-incluyeme>
+			
 			</div>
-			<div class="container mt-2">
-				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="form-group col">
-						<label id="labelState"
-						       for="state"><?php _e("Provincia/Estado <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-						<input v-model="state" type="text" class="form-control" id="state">
+			<?php if(!get_option($incluyemeLoginCountry)){?>
+				<div class="container mt-3 mb-sm-0">
+					<x-incluyeme class="row align-items-center">
+						<x-incluyeme class="form-group col">
+							<label id="labelState"
+							       for="state"><?php _e( ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+							<input v-model="state" type="text" class="form-control" id="state">
+							<p v-if="validation === 10" style="color: red">Por favor, ingrese su <?php ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
+						</x-incluyeme>
 					</x-incluyeme>
-				</x-incluyeme>
-			</div>
-			<div class="container mt-2">
-				<x-incluyeme class="row align-items-center">
-					<x-incluyeme class="form-group col">
-						<label id="labelCity"
-						       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-						<input v-model="city" type="text" class="form-control" id="city">
+				</div>
+				<div class="container mt-3 mb-sm-0">
+					<x-incluyeme class="row align-items-center">
+						<x-incluyeme class="form-group col">
+							<label id="labelCity"
+							       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+							<input v-model="city" type="text" class="form-control" id="city">
+							<p v-if="validation === 11" style="color: red">Por favor, ingrese su Ciudad</p>
+						</x-incluyeme>
 					</x-incluyeme>
-				</x-incluyeme>
-			</div>
-			<div class="container mt-2">
+				</div>
+			<?php }else {?>
+				<div class="container mt-3 mb-sm-0">
+					<x-incluyeme class="row align-items-center">
+						<x-incluyeme class="form-group col">
+							<label id="labelState"
+							       for="state"><?php _e(( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+							<select v-model="state" type="text" class="form-control" id="state" v-on:change="getCities()">
+								<option v-for="provincias in provincias"
+								        :value="provincias.cities_provin" class="text-capitalize">
+									{{provincias.cities_provin}}
+								</option>
+								<option value="Otra">Otro</option>
+							</select>
+							<p v-if="validation === 10" style="color: red">Por favor, ingrese su <?php ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
+						</x-incluyeme>
+					</x-incluyeme>
+				</div>
+				<div class="container mt-3 mb-sm-0">
+					<x-incluyeme class="row align-items-center">
+						<x-incluyeme class="form-group col">
+							<label id="labelCity"
+							       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+							<select v-model="city" type="text" class="form-control" id="city">
+								<option v-for="citiy in cities"
+								        v-bind:value="citiy.cities_name" class="text-capitalize">
+									{{citiy.cities_name}}
+								</option>
+								<option value="Otra">Otro</option>
+							</select>
+							<p v-if="validation === 11" style="color: red">Por favor, ingrese su Ciudad</p>
+						</x-incluyeme>
+					</x-incluyeme>
+				</div>
+			<?php } ?>
+			<div class="container mt-3 mb-sm-0">
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="form-group col">
 						<label for="street"><?php _e("Calle", "incluyeme-login-extension"); ?></label>
-						<textarea rows="3" v-model="street" type="text" class="form-control"
-						          id="street"> </textarea>
+						<input  v-model="street" type="text" class="form-control"
+						        id="street">
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>
-		
 		</template>
 		<template id="step5">
 			<x-incluyeme class="container text-center">
 				<h1>¿Tienes algún tipo de disCapacidad? <span style="font-size: 2em;color: black;">*<span></h1>
 			</x-incluyeme>
 			<div class="container">
-				<h5 v-if="disCap">Indica cuales</h5>
+				<h5  id="disSelects">Indica cuales</h5>
 				<div class="container m-auto">
 					<x-incluyeme class="row ml-5">
-						<x-incluyeme class="col">
+						<x-incluyeme class="col mb-2 mb-sm-0">
 							<input class="form-check-input" type="checkbox"
 							       style="transform: scale(1.4) !important;" v-model="motriz" id="Motriz">
 							<label class="form-check-label" for="Motriz">
 								Motriz
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col-lg-6 col-md-12 mb-2 mb-sm-0">
 							<input class="form-check-input" type="checkbox"
 							       style="transform: scale(1.4) !important;" v-model="visceral" id="Visceral"
 							       name="Visceral">
@@ -260,35 +309,35 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 								Visceral
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col-lg-6 col-md-12 mb-2 mb-sm-0">
 							<input class="form-check-input" type="checkbox"
 							       style="transform: scale(1.4) !important;" v-model="auditiva" id="Auditiva">
 							<label class="form-check-label" for="Auditiva">
 								Auditiva
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col-lg-6 col-md-12 mb-2 mb-sm-0">
 							<input class="form-check-input" type="checkbox"
 							       style="transform: scale(1.4) !important;" v-model="psiquica" id="Psíquica">
 							<label class="form-check-label" for="Psíquica">
 								Psíquica
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col-lg-6 col-md-12 mb-2 mb-sm-0">
 							<input class="form-check-input" type="checkbox"
 							       style="transform: scale(1.4) !important;" v-model="visual" id="Visual">
 							<label class="form-check-label" for="Visual">
 								Visual
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col-lg-6 col-md-12 mb-2 mb-sm-0">
 							<input class="form-check-input" type="checkbox"
 							       style="transform: scale(1.4) !important;" v-model="habla" id="Habla">
 							<label class="form-check-label" for="Habla">
 								Habla
 							</label>
 						</x-incluyeme>
-						<x-incluyeme class="col-lg-6 col-md-12">
+						<x-incluyeme class="col-lg-6 col-md-12 mb-2 mb-sm-0">
 							<input class="form-check-input" type="checkbox"
 							       style="transform: scale(1.4) !important;" v-model="intelectual"
 							       id="Intelectual">
@@ -297,10 +346,10 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 							</label>
 						</x-incluyeme>
 					</x-incluyeme>
+					<p v-if="validation === 12" style="color: red">Por favor, dinos tu tipo de
+					                                               disCapacidad</p>
 				</div>
-				<span v-if="disCap===false">Nos enfocamos en la inclusión de personas con disCapacidad</span>
 			</div>
-		
 		</template>
 		<template id="step6">
 			<x-incluyeme id="accordion">
@@ -1110,6 +1159,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 			</x-incluyeme>
+			<p v-if="motriz || visceral || auditiva || visual || intelectual">No es necesario responder todas las preguntas listadas arriba</p>
 			<div class="container mt-1">
 				<x-incluyeme class="w-100 ">
 					<label id="disCText" for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad
@@ -1117,16 +1167,17 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 								style="font-size: 2em;color: black;">*<span></label>
 					<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis"
 					          rows="3"></textarea>
+					<p v-if="validation === 11" style="color: red">Por favor, cuentanos mas sobre tu
+					                                               disCapacidad</p>
 				</x-incluyeme>
 			</div>
-		
 		</template>
 		<template id="step7">
 			<div class="container">
 				<h1>Adjunta tu Foto, CV
 				    y <?php echo get_option($incluyemeNames) ? ' ' . get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h1>
-				<div class="container">
-					<a :href="myIMG">Foto de Perfil</a>
+				<div class="">
+					<a :href="myIMG" id="userIMGlabel">Foto de Perfil</a>
 					<x-incluyeme class="row m-auto">
 						<x-incluyeme class="col-12">
 							<form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
@@ -1135,12 +1186,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 									</button>
 									<br>
 								</div>
+								<div>
+								</div>
 							</form>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
-				<div class="container">
-					<a :href="myCV">Curriculum Vitae</a>
+				<div class="">
+					<a :href="myCV" id="dropZoneCVLabel">Curriculum Vitae</a>
 					<x-incluyeme class="row m-auto">
 						<x-incluyeme class="col-12">
 							<form action="/upload" class="dropzone needsclick dz-clickable" id="CVDROP">
@@ -1153,8 +1206,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
-				<div class="container">
-					<a :href="myCUD"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
+				<div class="">
+					<a :href="myCUD"  id="drop-zoneCUDLabel"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
 					<x-incluyeme class="row m-auto">
 						<x-incluyeme class="col-12">
 							<form action="/upload" class="dropzone needsclick dz-clickable" id="CUDDROP">
@@ -1168,7 +1221,6 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</div>
 			</div>
-		
 		</template>
 		<template id="step8">
 			<div class="container">
@@ -1190,14 +1242,17 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					<x-incluyeme class="col">
 						<label for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
 						<select id="university_edu" v-model="university_edu[pos]" class="form-control">
-							<option v-for="(university, index) of universities[pos]"
+							<option v-for="university in universities[pos]"
 							        :value="university.university" v-on:change="changeUniversity(pos, true)">
 								{{university.university}}
+							</option>
+							<option value="Otro">
+								Otro
 							</option>
 						</select>
 					</x-incluyeme>
 				</div>
-				<div class="row mt-2">
+				<div class="row mt-2" v-if="university_edu[pos] =='Otro'">
 					<x-incluyeme class="col">
 						<label for="university_eduText"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
 						<input type="text" v-model="university_otro[pos]" class="form-control"
@@ -1226,14 +1281,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					<x-incluyeme class="col">
 						<label for="titleEdu"><?php _e("Título", "incluyeme-login-extension"); ?></label>
 						<input type="text" v-model="titleEdu[pos]" class="form-control" id="titleEdu"
-						       placeholder="Título">
+						       placeholder="Ejemplo: Licenciado en Adminsitración">
 					</x-incluyeme>
 				</div>
 				<div class="row mt-2">
 					<x-incluyeme class="col">
 						<label for="eduLevel"><?php _e("Nivel Educativo", "incluyeme-login-extension"); ?></label>
 						<input type="text" v-model="eduLevel[pos]" class="form-control" id="eduLevel"
-						       placeholder="Nivel Educativo">
+						       placeholder="Ejemplo: Licenciatura">
 					</x-incluyeme>
 				</div>
 				<div class="row mt-2">
@@ -1262,13 +1317,13 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</x-incluyeme>
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
-									<input type="date" v-model="dateStudiesH[pos]" name="dateStudiesH"
+									<input v-if="!dateStudieB[pos]" type="date" v-model="dateStudiesH[pos]" name="dateStudiesH"
 									       class="form-control"
 									       id="dateStudiesH" :disabled="dateStudieB[pos]===true"
 									       v-on:change='dateStudieB[pos] = false'>
 								</x-incluyeme>
 							</x-incluyeme>
-							<x-incluyeme class="col-12">
+							<x-incluyeme class="col-12 ml-3 ml-sm-3 pt-1 ml-lg-1">
 								<div class="container">
 									<input class="form-check-input" type="checkbox"
 									       style="transform: scale(1.4) !important;" :id="dateStudieB[pos]"
@@ -1283,8 +1338,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</div>
 				<div class='row mt-2'>
-					<x-incluyeme class="col-12">
-						<button type="submit" class="btn btn-danger w-100 w-100 mt-3"
+					<x-incluyeme class="col-12 text-right mr-0 pr-0">
+						<button type="submit"  class="btn btn-danger w-100 w-100 mt-3 deleteIncluyeme"
 						        @click.prevent="deleteStudies(pos)">
 							- Eliminar Estudios
 						</button>
@@ -1302,13 +1357,12 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
-		
 		</template>
 		<template id="step9">
 			<div class="container">
 				<h1>Experiencia Laboral</h1>
 			</div>
-			<div class="container" v-for="(formFields2, pos) in formFields2" :key="pos2">
+			<div class="container" v-for="(formFields2, pos) in formFields2" :key="pos">
 				<x-incluyeme class="row">
 					<x-incluyeme class="col">
 						<label for="companies">Empresa</label>
@@ -1319,14 +1373,14 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<x-incluyeme class="row mt-2">
 					<x-incluyeme class="col-lg-6 col-md-12">
 						<label for="studies" class="">Area</label>
-						<select id="studies" v-model="areaEmployed[pos]" class="form-control mt-2">
+						<select id="studies" v-model="areaEmployed[pos]" class="form-control">
 							<option v-for="(estudies, index) of study"
 							        :value="estudies.id" class="text-capitalize">
 								{{estudies.name_inc_area}}
 							</option>
 						</select>
 					</x-incluyeme>
-					<x-incluyeme class="col-lg-6 col-md-12">
+					<x-incluyeme class="col-lg-6 col-md-12 mt-2 mt-lg-0">
 						<label for="names">Puesto </label>
 						<input v-model="jobs[pos]" type="text" class="form-control" id="names"
 						       placeholder="Puesto">
@@ -1342,7 +1396,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</option>
 						</select>
 					</x-incluyeme>
-					<x-incluyeme class="col-lg-6 col-md-12" style="margin: auto; float: left;">
+					<x-incluyeme class="col-lg-6 col-md-12 ml-3 ml-sm-3 ml-lg-0" style="margin: auto; float: left;">
 						<div style="position: relative;  top: 3px;">
 							<input class="form-check-input" type="checkbox"
 							       style="transform: scale(1.4) !important;"
@@ -1357,12 +1411,12 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<div class="row mt-2">
 					<x-incluyeme class="col-lg-6 col-md-12">
 						<x-incluyeme class="row">
-							<x-incluyeme class="col-12">
+							<x-incluyeme class="col-12 pr-0">
 								<x-incluyeme class="form-group">
 									<label for="dateStudiesDLaboral"><?php _e("Desde", "incluyeme-login-extension"); ?></label>
 								</x-incluyeme>
 							</x-incluyeme>
-							<x-incluyeme class="col-12">
+							<x-incluyeme class="col-12 pr-0">
 								<x-incluyeme class="form-group">
 									<input type="date" v-model="dateStudiesDLaboral[pos]"
 									       name="dateStudiesDLaboral"
@@ -1372,7 +1426,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							</x-incluyeme>
 						</x-incluyeme>
 					</x-incluyeme>
-					<x-incluyeme class="col-lg-6 col-md-12">
+					<x-incluyeme class="col-lg-6 col-md-12" v-if="!actuWork[pos]">
 						<x-incluyeme class="row">
 							<x-incluyeme class="col-12">
 								<x-incluyeme class="form-group">
@@ -1399,7 +1453,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				</x-incluyeme>
 				<div class="row mt-2">
 					<x-incluyeme class="col text-center">
-						<button type="submit" class="btn btn-danger w-100 w-100 mt-3"
+						<button type="submit" class="btn btn-danger w-100 w-100 mt-3 deleteIncluyeme"
 						        @click.prevent="deleteExp(pos)">
 							- Eliminar Experiencia
 						</button>
@@ -1416,13 +1470,12 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
-		
 		</template>
 		<template id="step10">
 			<div class="container">
 				<h1>Idiomas</h1>
 			</div>
-			<div class="container" v-for="(formFields3, pos) in formFields3">
+			<div class="container" v-for="(formFields3, pos) in formFields3" :key="pos">
 				<x-incluyeme class="row">
 					<x-incluyeme class="col">
 						<label for="idioms">Idioma</label>
@@ -1436,10 +1489,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
-					<x-incluyeme class="col-lg-6 col-md-12">
+					<x-incluyeme class="col">
 						<label for="lecLevel" class="">Nivel de Lectura</label>
-					</x-incluyeme>
-					<x-incluyeme class="col-lg-6 col-md-12">
 						<select id="lecLevel" v-model="lecLevel[pos]" class="form-control mt-2">
 							<option v-for="(levels, index) of levels"
 							        :value="levels.id" class="text-capitalize">
@@ -1449,10 +1500,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
-					<x-incluyeme class="col-lg-6 col-md-12">
+					<x-incluyeme class="col">
 						<label for="redLevel" class="">Nivel Escrito</label>
-					</x-incluyeme>
-					<x-incluyeme class="col-lg-6 col-md-12">
 						<select id="redLevel" v-model="redLevel[pos]" class="form-control mt-2">
 							<option v-for="(levels, index) of levels"
 							        :value="levels.id" class="text-capitalize">
@@ -1462,10 +1511,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
-					<x-incluyeme class="col-lg-6 col-md-12">
+					<x-incluyeme class="col">
 						<label for="oralLevel" class="">Nivel Oral</label>
-					</x-incluyeme>
-					<x-incluyeme class="col-lg-6 col-md-12">
 						<select id="oralLevel" v-model="oralLevel[pos]" class="form-control mt-2">
 							<option v-for="(levels, index) of levels"
 							        :value="levels.id" class="text-capitalize">
@@ -1475,8 +1522,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 				<div class='row mt-2'>
-					<x-incluyeme class="col-12">
-						<button type="submit" class="btn btn-danger w-100 w-100 mt-3"
+					<x-incluyeme class="col-12 text-right mr-0 pr-0">
+						<button type="submit" class="btn btn-danger w-100 w-100 mt-3 deleteIncluyeme"
 						        @click.prevent="deleteIdioms(pos)">
 							- Eliminar Idiomas
 						</button>
@@ -1493,13 +1540,12 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 						</button>
 					</x-incluyeme>
 			</div>
-		
 		</template>
 		<template id="step11">
 			<div class="container">
 				<x-incluyeme class="row">
 					<x-incluyeme class="col text-center">
-						<h2 class='mt-2'>Area Preferida</h2>
+						<h1>¿De qué te gustaría trabajar?</h1>
 						<select v-model="preferJobs" type="text" class="form-control" id="preferJobs">
 							<option v-for="(preferJobs, index) of preferJob"
 							        :value="preferJobs.id" class="text-capitalize">
@@ -1528,5 +1574,6 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
     function startApp() {
 
         app.setID('<?php echo $resume->id ?>', '<?php echo plugins_url() ?>');
+        app.dropzone('<?php echo plugins_url() ?>');
     }
 </script>

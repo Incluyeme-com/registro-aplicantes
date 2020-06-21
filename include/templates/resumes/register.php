@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vueXIXI.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vueXIXII.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');
@@ -30,12 +30,13 @@ wp_enqueue_style('bootstrap-notify-css');
 $baseurl = wp_upload_dir();
 $baseurl = $baseurl['baseurl'];
 $incluyemeNames = 'incluyemeNamesCV';
+$incluyemeLoginFB = 'incluyemeLoginFB';
+$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+$incluyemeLoginCountry = 'incluyemeLoginCountry';
+$incluyemeLoginEstado = 'incluyemeLoginEstado';
 $incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
 $FBappId = get_option($incluyemeLoginFB);
 $FBversion = 'v7';
-$incluyemeLoginFB = 'incluyemeLoginFB';
-$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
-$incluyemeLoginCountry = 'incluyemeLoginCountry'
 ?>
 <?php if (get_option($incluyemeLoginGoogle)) { ?>
 	<script src="https://apis.google.com/js/api:client.js"></script>
@@ -55,7 +56,6 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
         };
 
         function attachSignin(element) {
-            console.log(element.id);
             auth2.attachClickHandler(element, {},
                 function (googleUser) {
                     const profile = googleUser.getBasicProfile();
@@ -64,6 +64,7 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
                     app.$data.passwordConfirm = profile.getEmail();
                     app.$data.name = profile.getGivenName();
                     app.$data.lastName = profile.getFamilyName();
+                    app.$data.google = googleUser.getAuthResponse().id_token;
                     app.googleChange('<?php echo plugins_url() ?>');
                 }, function (error) {
                     alert(JSON.stringify(error, undefined, 2));
@@ -73,63 +74,49 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 <?php } ?>
 <?php if (get_option($incluyemeLoginFB)) { ?>
 	<script>
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '<?php echo get_option($incluyemeLoginFB); ?>',
-                xfbml: true,
-                cookie: false,
-                version: 'v7.0'
-            });
+        function statusChangeCallback(response) {
+        }
+        function checkLoginState() {
             FB.getLoginStatus(function (response) {
-                if (response.status === 'connected') {
-                    logout()
-                }
+                statusChangeCallback(response);
+            });
+        }
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '<?php echo get_option($incluyemeLoginFB); ?>',
+                cookie     : false,
+                xfbml      : false,
+                version    : 'v7.0'
+            });
+
+
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
             });
         };
 
-        (function (d, s, id) {
+        (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-
-        function login() {
+        
+        function FBLogin() {
             FB.login(function (response) {
                 if (response.status === 'connected') {
-                    getInfo();
+                    const token = response.authResponse.accessToken
+                    app.$data.email = token;
+                    app.$data.password = token;
+                    app.$data.passwordConfirm =token;
+                    app.$data.name = token;
+                    app.$data.lastName = token;
+                    app.$data.facebook = token;
+                    app.googleChange('<?php echo plugins_url() ?>');
                 }
-
-            }, {
-                scope: 'first_name,last_name, email',
-                return_scopes: true
-            });
+            }, {scope: 'public_profile,email'});
         }
-
-        // get user basic info
-
-        function getInfo() {
-            FB.api('/me', 'GET', {fields: 'first_name,last_name, email'}, function (response) {
-                logout()
-                app.$data.email = response.email();
-                app.$data.password = response.email();
-                app.$data.passwordConfirm = response.getEmail();
-                app.$data.name = response.first_name();
-                app.$data.lastName = response.last_name();
-                app.googleChange('<?php echo plugins_url() ?>');
-            });
-        }
-
-        function logout() {
-            FB.logout(function (response) {
-            });
-        }
-	
-	
 	</script>
 <?php } ?>
 <style>
@@ -254,9 +241,9 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 				<?php if (get_option($incluyemeLoginFB)) { ?>
 					<x-incluyeme class="row text-center justify-content-center">
 						<x-incluyeme class="col-lg-6 col-sm-12 mt-2">
-							<button onclick="login()"
+							<button scope="public_profile,email" onclick="FBLogin()"
 							        class="btn btn-primary w-100 myButton2" style="box-shadow: 2px 2px 4px 0px #bfbfbf; border-radius: 4px;
-		border: 1px solid #007bff;height: 2.5rem; background-color: #455892 !important;" onclick="myFunction()">
+		border: 1px solid #007bff;height: 2.5rem; background-color: #455892 !important;">
 								<i class="fa fa-facebook mr-2"></i>
 								<span class="text-gray">Sign with Facebook</span>
 							</button>
@@ -266,17 +253,17 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 				<hr class="w-100">
 				<x-incluyeme class="row">
 					<x-incluyeme class="form-group col-12">
-						<label id="emilLabel" for="emil">Email <span
+						<label id="emilLabel" for="emil">Ingresa tu email <span
 									style="font-size: 2em;color: black;">*<span></label>
-						<input type="email" v-model="email" class="form-control" id="emil" placeholder="Email">
+						<input type="email" v-model="email" class="form-control" id="emil" placeholder="Ingresa tu email">
 						<p v-if="validation === 1" style="color: red">Este email ya se encuentra registrado</p>
 						<p v-if="validation === 2" style="color: red">Por favor, ingrese un Email valido</p>
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-12">
-						<label id="labelPassword4" for="inputPassword4">Contraseña <span
+						<label id="labelPassword4" for="inputPassword4">Elige una contraseña <span
 									style="font-size: 2em;color: black;">*<span></label>
 						<input type="password" v-model="password" class="form-control" id="inputPassword4"
-						       placeholder="Contraseña">
+						       placeholder="Elige una contraseña">
 						<p v-if="validation === 3" style="color: red">Su contraseña debe contener cinco(5) caracteres o mas</p>
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-12">
@@ -428,9 +415,9 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 					<x-incluyeme class="row align-items-center">
 						<x-incluyeme class="form-group col">
 							<label id="labelState"
-							       for="state"><?php _e("Provincia/Estado <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+							       for="state"><?php _e( ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
 							<input v-model="state" type="text" class="form-control" id="state">
-							<p v-if="validation === 10" style="color: red">Por favor, ingrese su Provincia/Estado</p>
+							<p v-if="validation === 10" style="color: red">Por favor, ingrese su <?php ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
@@ -449,7 +436,7 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 						<x-incluyeme class="row align-items-center">
 							<x-incluyeme class="form-group col">
 								<label id="labelState"
-								       for="state"><?php _e("Provincia/Estado <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+								       for="state"><?php _e(( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
 								<select v-model="state" type="text" class="form-control" id="state" v-on:change="getCities()">
 									<option v-for="provincias in provincias"
 									        :value="provincias.cities_provin" class="text-capitalize">
@@ -457,7 +444,7 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry'
 									</option>
 									<option value="Otra">Otro</option>
 								</select>
-								<p v-if="validation === 10" style="color: red">Por favor, ingrese su Provincia/Estado</p>
+								<p v-if="validation === 10" style="color: red">Por favor, ingrese su <?php ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
 							</x-incluyeme>
 						</x-incluyeme>
 					</div>
@@ -1892,7 +1879,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</template>
 		</div>
 		<div class="container mt-5">
-			<h5> Los campos con un: <span
+			<h5>Los campos marcados con un <span
 						style="font-size: 2em;color: black;">* </span>
 			     son obligatorios
 			</h5>
@@ -1910,6 +1897,12 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
             app.$data.lastName = profile.getFamilyName();
             app.googleChange('<?php echo plugins_url() ?>');
         }
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
 	</script>
 	<script>startApp();</script>
+	
 <?php } ?>

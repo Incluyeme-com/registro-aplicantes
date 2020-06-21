@@ -6,6 +6,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if (isset($_POST['userID']) && isset($_POST['removeIMG'])) {
 		$verifications::deleteIMG($_POST['userID'], 1);
 	}
+	if (isset($_POST['googleID'])) {
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$name = $_POST['name'];
+		$lastName = $_POST['lastName'];
+		$response = $verifications::searchUserExistSocial($email, $password, $name, $lastName, $_POST['google'], $_POST['facebook']);
+		return;
+	}
 	if (isset($_POST['userID']) && isset($_POST['removeCUD'])) {
 		$verifications::deleteIMG($_POST['userID'], 3);
 	}
@@ -26,16 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		return;
 	}
 	if ((isset($_POST['google']) || isset($_POST['facebook'])) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['lastName'])) {
-		$email = sanitize_email($_POST['email']);
-		$password = sanitize_email($_POST['password']);
-		$name = sanitize_text_field($_POST['name']);
-		$lastName = sanitize_text_field($_POST['lastName']);
-		$response = $verifications::searchUserExistSocial($email, $password, $name, $lastName);
-		if ($response === true) {
-			$verifications->redirect();
-		} else {
-			echo $verifications->json_response(200, false);
-		}
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$name = $_POST['name'];
+		$lastName = $_POST['lastName'];
+		$response = $verifications::searchUserExistSocial($email, $password, $name, $lastName, $_POST['google'], $_POST['facebook']);
+		echo $verifications->json_response(200, $response);
 		return;
 	}
 	$_POST = json_decode(file_get_contents("php://input"), true);

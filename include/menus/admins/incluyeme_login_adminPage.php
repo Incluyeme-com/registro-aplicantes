@@ -17,6 +17,7 @@ function incluyeme_login_adminPage()
 	$incluyemeLoginFB = 'incluyemeLoginFB';
 	$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 	$incluyemeLoginCountry = 'incluyemeLoginCountry';
+	$incluyemeLoginEstado = 'incluyemeLoginEstado';
 	
 	if (isset($_POST['incluyemeLoginFB'])) {
 		$value = $_POST['incluyemeLoginFB'];
@@ -32,7 +33,11 @@ function incluyeme_login_adminPage()
 		$value = $_POST['incluyemeLoginCountry'];
 		update_option($incluyemeLoginCountry, sanitize_text_field($value));
 		update_option($incluyemeLoginCountry, sanitize_text_field($value));
-		error_log(print_r(get_option($incluyemeLoginCountry) ,true));
+	}
+	if (isset($_POST['incluyemeLoginEstado'])) {
+		$value = $_POST['incluyemeLoginEstado'];
+		update_option($incluyemeLoginEstado, sanitize_text_field($value));
+		update_option($incluyemeLoginEstado, sanitize_text_field($value));
 	}
 	if (isset($_POST['deleteIncluyeme'])) {
 		global $wpdb;
@@ -110,6 +115,18 @@ WHERE resume_id NOT IN (SELECT
 										<?php } ?>
 									</select>
 								</div>
+								<div class="col-12 mt-2">
+									<label for="incluyemeLoginEstado"><b><?php _e("Provincia o Estado", "wpjobboard"); ?></b></label>
+									<select type="text"
+									        class="form-control"
+									        id="incluyemeLoginEstado"
+									        name="incluyemeLoginEstado">
+											<option <?php echo get_option($incluyemeLoginEstado) === 'Estado' ?  'selected' : '' ?> value="Estado"> Estado</option>
+										<option <?php echo get_option($incluyemeLoginEstado) === 'Provincia' ?  'selected' : '' ?> value="Provincia"> Provincia</option>
+									
+									</select>
+								</div>
+								
 							</div>
 							<div class="text-right mt-2">
 								<button type="submit"
@@ -127,7 +144,7 @@ WHERE resume_id NOT IN (SELECT
 							       class="form-control"
 							       id="deleteIncluyeme"
 							       name="deleteIncluyeme"
-							       value="<?php echo get_option($incluyemeFilters) ? get_option($incluyemeFilters) : ''; ?>"
+							       value="<?php echo get_option($incluyemeLoginCountry) ? get_option($incluyemeLoginCountry) : ''; ?>"
 							       placeholder="<?php _e("Field Name.", "wpjobboard"); ?>">
 							<div class="text-right mt-2">
 								<button type="submit"
@@ -174,7 +191,6 @@ function incluyemeSave_Login_Options()
 		$value = $_POST['incluyemeLoginCountry'];
 		update_option($incluyemeLoginCountry, sanitize_text_field($value));
 		update_option($incluyemeLoginCountry, sanitize_text_field($value));
-		error_log(print_r(get_option($incluyemeLoginCountry) ,true));
 	}
 	if (isset($_POST['deleteIncluyeme'])) {
 		global $wpdb;
