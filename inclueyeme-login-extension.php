@@ -5,7 +5,7 @@ Plugin Name: Incluyeme Login Extension
 Plugin URI: https://github.com/Cro22
 Description: Extension de funciones (Registro) para el Plugin WPJob Board
 Author: Jesus Nuñez
-Version: 1.6.0
+Version: 1.6.1
 Author URI: https://github.com/Cro22
 Text Domain: incluyeme-login-extension
 Domain Path: /languages
@@ -34,6 +34,8 @@ function incluyeme_requirements_Login_Extension()
 	}
 	if (is_admin() && current_user_can('activate_plugins') && is_plugin_active('wpjobboard/index.php')) {
 		incluyeme_login_load();
+	} else {
+		incluyeme_login_files_research();
 	}
 }
 

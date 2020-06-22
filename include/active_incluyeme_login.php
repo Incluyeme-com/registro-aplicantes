@@ -13,7 +13,12 @@ function incluyeme_login_load()
 	incluyeme_login_files2();
 }
 
-
+function incluyeme_login_files_research(){
+	incluyeme_login_files();
+	incluyeme_login_sql_Start();
+	incluyeme_login_files1();
+	incluyeme_login_files2();
+}
 function incluyeme_login_files()
 {
 	$template = plugin_dir_path(__FILE__) . '/templates/resumes/register.php';
