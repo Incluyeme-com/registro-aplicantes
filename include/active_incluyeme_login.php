@@ -15,7 +15,6 @@ function incluyeme_login_load()
 
 function incluyeme_login_files_research(){
 	incluyeme_login_files();
-	incluyeme_login_sql_Start();
 	incluyeme_login_files1();
 	incluyeme_login_files2();
 }
