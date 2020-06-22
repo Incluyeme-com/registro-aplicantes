@@ -1894,11 +1894,6 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
             app.$data.lastName = profile.getFamilyName();
             app.googleChange('<?php echo plugins_url() ?>');
         }
-        function checkLoginState() {
-            FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });
-        }
 	</script>
 	<script>startApp();</script>
 	
