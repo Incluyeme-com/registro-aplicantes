@@ -36,6 +36,7 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry';
 $incluyemeLoginEstado = 'incluyemeLoginEstado';
 $incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
 $FBappId = get_option($incluyemeLoginFB);
+$incluyemeLoginFBSECRET = 'incluyemeLoginFBSECRET';
 $FBversion = 'v7.0';
 ?>
 <?php if (get_option($incluyemeLoginGoogle)) { ?>
@@ -72,7 +73,7 @@ $FBversion = 'v7.0';
         }
 	</script>
 <?php } ?>
-<?php if (get_option($incluyemeLoginFB)) { ?>
+<?php if (get_option($incluyemeLoginFB) && get_option($incluyemeLoginFBSECRET)) { ?>
 	<script>
         function statusChangeCallback(response) {
         }
@@ -234,7 +235,7 @@ $FBversion = 'v7.0';
 						</x-incluyeme>
 					</x-incluyeme>
 				<?php } ?>
-				<?php if (get_option($incluyemeLoginFB)) { ?>
+				<?php if (get_option($incluyemeLoginFB)&&get_option($incluyemeLoginFBSECRET)) { ?>
 					<x-incluyeme class="row text-center justify-content-center">
 						<x-incluyeme class="col-lg-6 col-sm-12 mt-2">
 							<button scope="public_profile,email" onclick="FBLogin()"
