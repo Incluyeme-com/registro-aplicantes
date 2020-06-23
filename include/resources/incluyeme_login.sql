@@ -10306,7 +10306,7 @@ CREATE TABLE `{$wpdb->prefix}incluyeme_cities`
 	`cities_location`     varchar(60) NOT NULL DEFAULT '',
 	constraint incluyeme_cities_id_pk
 		primary key (`incluyeme_cities_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;--
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
 VALUES (1, 'Kabul', 'Kabol'),
        (2, 'Qandahar', 'Qandahar'),
