@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vueXIXII.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vueXYT.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');
@@ -1895,6 +1895,5 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
             app.googleChange('<?php echo plugins_url() ?>');
         }
 	</script>
-	<script>startApp();</script>
 	
 <?php } ?>
