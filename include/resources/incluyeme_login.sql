@@ -10307,11 +10307,6 @@ CREATE TABLE `{$wpdb->prefix}incluyeme_cities`
 	constraint incluyeme_cities_id_pk
 		primary key (`incluyeme_cities_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;--
-
---
--- Volcado de datos para la tabla `ciudad`
---
-
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
 VALUES (1, 'Kabul', 'Kabol'),
        (2, 'Qandahar', 'Qandahar'),
@@ -14431,7 +14426,6 @@ VALUES
 ('Nueva Palmira', 'Colonia'),
 ('Rosario', 'Colonia'),
 ('Tarariras', 'Colonia'); --
-
 INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Área Rural','Flores'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Andresito','Flores'  ); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ismael Cortinas','Flores'); --
@@ -14717,13 +14711,7 @@ INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) 
 INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villa del Rosario','San Pedro'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Veinticinco de Diciembre','San Pedro'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yataity del Norte','San Pedro'); --
---
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `provincias`
---
 
 CREATE TABLE `{$wpdb->prefix}incluyeme_provincias`
 (
@@ -14732,12 +14720,7 @@ CREATE TABLE `{$wpdb->prefix}incluyeme_provincias`
 	`incluyeme_provincias_id` int(11)     NOT NULL auto_increment,
 	constraint incluyeme_provincias_id_pk
 		primary key (incluyeme_provincias_id)
-);
---
-
---
--- Volcado de datos para la tabla `provincias`
---
+); --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_provincias` (`cities_provin`, `country_code`, `incluyeme_provincias_id`)
 VALUES ('Kabol', 'AF', 2),
