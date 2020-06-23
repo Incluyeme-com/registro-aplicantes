@@ -214,15 +214,6 @@ let app = new Vue({
     mounted() {
         this.formFields2.push(1);
         this.formFields3.push(1);
-        const incluyemeContent = document.getElementById("content");
-        const incluyemeSidebar = document.getElementById("sidebar");
-        const incluyemeTitle = document.getElementsByClassName("container  right-sidebar  right-sidebar  has-title");
-        if (incluyemeContent && incluyemeSidebar && incluyemeTitle) {
-            incluyemeContent.classList.add("col-9");
-            incluyemeSidebar.classList.add("col");
-            incluyemeSidebar.classList.add("ml-5");
-            incluyemeTitle[0].className += " row";
-        }
     },
     methods: {
         goToStep: async function (step, url = false) {
