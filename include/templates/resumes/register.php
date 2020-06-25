@@ -222,8 +222,8 @@ $FBversion = 'v7.0';
 		<div class="container">
 			<template id="step1" v-if="currentStep == 1">
 				<x-incluyeme class="container text-center">
-					<h1>Registrate</h1>
-					<p>Accede a oportunindades laborales para personas con disCAPACIDAD</p>
+					<h1>Regístrate</h1>
+					<p>Accede a oportunidades laborales para personas con disCAPACIDAD</p>
 				</x-incluyeme>
 				<?php if (get_option($incluyemeLoginGoogle)) { ?>
 					<x-incluyeme class="row text-center justify-content-center">
