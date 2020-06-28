@@ -1126,7 +1126,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 			</x-incluyeme>
 			<div class="container mt-1">
 				<x-incluyeme class="w-100 ">
-					<label for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad </label>
+					<label for="exampleFormControlTextarea1">Por favor cuéntanos más sobre tu discapacidad y todo lo que quieras agregar para conocerte más</label>
 					<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis"
 					          rows="3"></textarea>
 				</x-incluyeme>

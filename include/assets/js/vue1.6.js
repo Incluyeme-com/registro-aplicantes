@@ -1004,7 +1004,7 @@ let app = new Vue({
             this.validation = false;
             iziToast.info({
                 title: 'Confirmando',
-                message: 'Estamos verificando su informacion, por favor espere.',
+                message: 'Estamos verificando tu información, por favor espera.',
                 progressBarColor: 'rgb(0,0,0)',
                 buttons: [
                     ['<button>Cerrar</button>', function (instance, toast) {

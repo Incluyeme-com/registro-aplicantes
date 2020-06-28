@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vueXYZ.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vue1.6.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');
@@ -1395,7 +1395,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<p v-if="motriz || visceral || auditiva || visual || intelectual">No es necesario responder todas las preguntas listadas arriba</p>
 				<div class="container mt-1">
 					<x-incluyeme class="w-100 ">
-						<label id="disCText" for="exampleFormControlTextarea1">Cuentanos mas sobre tu disCapacidad
+						<label id="disCText" for="exampleFormControlTextarea1">Por favor cuéntanos más sobre tu discapacidad y todo lo que quieras agregar para conocerte más
 							<span
 									style="font-size: 2em;color: black;">*<span></label>
 						<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis"
@@ -1509,7 +1509,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 									{{university.university}}
 								</option>
 								<option value="Otro">
-									Otro
+									Otra
 								</option>
 							</select>
 						</x-incluyeme>
@@ -1839,7 +1839,7 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 				<div class="container">
 					<x-incluyeme class="row">
 						<x-incluyeme class="col text-center">
-							<h1>¿De qué te gustaría trabajar?</h1>
+							<h1>¿En que área te gustaría trabajar?</h1>
 							<select v-model="preferJobs" type="text" class="form-control" id="preferJobs">
 								<option v-for="(preferJobs, index) of preferJob"
 								        :value="preferJobs.id" class="text-capitalize">

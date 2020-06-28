@@ -987,8 +987,8 @@ let app = new Vue({
         },
         pleaseAwait: function () {
             iziToast.info({
-                title: 'Por favor, espere',
-                message: 'Estamos buscando su informacion.',
+                title: 'Por favor, espera',
+                message: 'Estamos buscando tu información.',
                 progressBarColor: 'rgb(0,0,0)',
                 buttons: [
                     ['<button>Cerrar</button>', function (instance, toast) {
