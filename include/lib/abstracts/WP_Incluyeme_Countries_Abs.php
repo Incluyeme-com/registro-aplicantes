@@ -41,7 +41,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$experiencesAreas = $wpdb->prefix . 'incluyeme_level_experience';
 		self::$levelsIdioms = $wpdb->prefix . 'incluyeme_idioms_level';
 		self::$idioms = $wpdb->prefix . 'incluyeme_idioms';
-		self::$prefersJobs = $wpdb->prefix . 'incluyeme_prefersJobs';
+		self::$prefersJobs = $wpdb->prefix . 'incluyeme_prefersjobs';
 		self::$usersDiscapTable = $wpdb->prefix . 'incluyeme_users_dicapselect';
 		self::$usersDisQuestions = $wpdb->prefix . 'incluyeme_users_questions';
 		self::$usersIdioms = $wpdb->prefix . 'incluyeme_users_idioms';
@@ -1057,7 +1057,7 @@ FROM 	' . self::$dataPrefix . 'incluyeme_users_information
   	' . self::$dataPrefix . 'incluyeme_users_information.*
 FROM 	' . self::$dataPrefix . 'incluyeme_users_information
   LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
-    ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id, true));
+    ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id,true));
 		$works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
 		$education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
 		$discaps = self::$wp->get_results('SELECT

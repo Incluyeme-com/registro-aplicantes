@@ -10144,7 +10144,7 @@ VALUES (1, 'Básico'),
        (3, 'Avanzado'),
        (4, 'Nativo'); --
 
-create table `{$wpdb->prefix}incluyeme_prefersJobs`
+create table `{$wpdb->prefix}incluyeme_prefersjobs`
 (
 	id           int auto_increment   not null,
 	jobs_prefers varchar(50)          not null,
@@ -10154,7 +10154,7 @@ create table `{$wpdb->prefix}incluyeme_prefersJobs`
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
 
 
-INSERT INTO `{$wpdb->prefix}incluyeme_prefersJobs` (`jobs_prefers`)
+INSERT INTO `{$wpdb->prefix}incluyeme_prefersjobs` (`jobs_prefers`)
 VALUES ('Informática'),
        ('Ventas'),
        ('Tecnología'),
