@@ -716,7 +716,7 @@ dificultad?
 							<div class="container">
 								<x-incluyeme class="row">
 									<x-incluyeme class="col-12">
-										<span>¿Puedes discriminar sonidos del ambiente?</span><br>
+										<span>¿Puedes discriminar distintos sonidos del ambiente?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;" id="aAmbient"
@@ -755,7 +755,7 @@ dificultad?
 									
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Utilizas lengua de señas para comunicarse?</span><br>
+										<span>¿Utilizas lengua de señas para comunicarte?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;" id="aSennas"
@@ -794,9 +794,7 @@ dificultad?
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿En un ambiente con bajo ruido (por ejemplo: oficina) puedes
-establecer una comunicación oral fluida con otra persona?
-										</span><br>
+										<span>¿En un ambiente con distintas fuentes sonoras (por ejemplo: oficina) puedes establecer una comunicación oral fluida con otra persona?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;" id="aBajo"
@@ -811,6 +809,25 @@ establecer una comunicación oral fluida con otra persona?
 											       value="No" v-model="aBajo" name="aBajo">
 											<label class="form-check-label"
 											       for="aBajoS"
+											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+									</x-incluyeme>
+									<x-incluyeme class="col-12">
+										<span>¿Puedes establecer una comunicación fluida vía telefónica?(sin uso de mensajería o chat)</span><br>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aFluida"
+											       value="Si" v-model="aFluida" name="aFluida">
+											<label class="form-check-label"
+											       for="aFluida"
+											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio"
+											       style="transform: scale(1.4) !important;" id="aFluidaS"
+											       value="No" v-model="aFluida" name="aFluida">
+											<label class="form-check-label"
+											       for="aFluidaS"
 											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 									</x-incluyeme>
@@ -882,7 +899,7 @@ establecer una comunicación oral fluida con otra persona?
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-								<span>¿Tienes dificultades en distinguir u observar objetos o textos a una
+								<span>¿Tienes dificultades en distinguir objetos o textos a una
 distancia próxima?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
@@ -1029,7 +1046,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Te trasladas solo/a en transporte público? </span><br>
+										<span>¿Usas el transporte público como bus, micro, metro, combi, subte, tren, etc.?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;" id="inteTransla"
@@ -1049,26 +1066,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 									
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Necesitas ayuda para empezar y terminar una tarea?</span><br>
-										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio"
-											       style="transform: scale(1.4) !important;" id="inteTarea"
-											       value="Si" v-model="inteTarea" name="inteTarea">
-											<label class="form-check-label"
-											       for="inteTarea"
-											       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
-										</x-incluyeme>
-										<x-incluyeme class="form-check form-check-inline">
-											<input class="form-check-input" type="radio"
-											       style="transform: scale(1.4) !important;" id="inteTareaS"
-											       value="No" v-model="inteTarea" name="inteTarea">
-											<label class="form-check-label"
-											       for="inteTareaS"
-											       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
-										</x-incluyeme>
-									</x-incluyeme>
-									<x-incluyeme class="col-12">
-										<span>¿Te molesta que te corrijan cuando realizas una actividad?</span><br>
+										<span>¿Cuando te equivocas te enoja que te lo digan?
+</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;" id="inteActividad"
@@ -1087,8 +1086,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Te molesta si te cambian las actividades durante la jornada
-laboral?</span><br>
+										<span>¿ Te enoja si en tu trabajo te cambian las tareas?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;" id="inteMolesto"
@@ -1128,29 +1126,36 @@ laboral?</span><br>
 										</x-incluyeme>
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>Prefieres trabajar en:
+										<span>Prefieres trabajar en: ¿Dónde te gusta trabajar más?
 										</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;"
 											       id="inteTrabajarSolo"
-											       value="Lugares cerrados (oficinas)"
+											       value="Lugares cerrados (por ejemplo oficinas)"
 											       v-model="inteTrabajarSolo"
 											       name="inteTrabajarSolo">
 											<label class="form-check-label"
 											       for="inteTrabajarSolo"
-											       style="color: black"><?php _e("Lugares cerrados (oficinas)", "incluyeme-login-extension"); ?></label>
+											       style="color: black"><?php _e("Lugares cerrados (por ejemplo oficinas)", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;"
 											       id="inteTrabajarSoloS"
-											       value="Ambientes
-exteriores (jardines, parques, centros deportivos, otros)" v-model="inteTrabajarSolo" name="inteTrabajarSolo">
+											       value="Ambientes exteriores (por ejemplo jardines, parques, centros deportivos, otros)"
+											       v-model="inteTrabajarSolo" name="inteTrabajarSolo">
 											<label class="form-check-label"
 											       for="inteTrabajarSoloS"
-											       style="color: black"><?php _e("Ambientes
-exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-extension"); ?></label>
+											       style="color: black"><?php _e("Ambientes exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluyeme-login-extension"); ?></label>
+										</x-incluyeme>
+										<x-incluyeme class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" id="inteTrabajarSoloS2"
+											       value="Me da lo mismo o no lo sé" v-model="inteTrabajarSolo"
+											       name="inteTrabajarSolo">
+											<label class="form-check-label"
+											       for="inteTrabajarSoloS2"
+											       style="color: black"><?php _e("Me da lo mismo o no lo sé", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 									</x-incluyeme>
 								</x-incluyeme>
@@ -1159,7 +1164,8 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 					</x-incluyeme>
 				</x-incluyeme>
 			</x-incluyeme>
-			<p v-if="motriz || visceral || auditiva || visual || intelectual">No es necesario responder todas las preguntas listadas arriba</p>
+			<p v-if="motriz || visceral || auditiva || visual || intelectual">No es necesario responder todas las
+			                                                                  preguntas listadas arriba</p>
 			<div class="container mt-1">
 				<x-incluyeme class="w-100 ">
 					<label id="disCText" for="exampleFormControlTextarea1">Por favor cuéntanos más sobre tu discapacidad y todo lo que quieras agregar para conocerte más
@@ -1485,7 +1491,13 @@ exteriores (jardines, parques, centros deportivos, otros)", "incluyeme-login-ext
 							        :value="idioms.id" class="text-capitalize">
 								{{idioms.name_idioms}}
 							</option>
+							<option value="Otro" class="text-capitalize">
+								Otro
+							</option>
 						</select>
+						<div class="pt-2">
+						<input placeholder="Por favor, escriba el nombre del idioma" id="idioms" v-model="idiomsOther[pos]" class="form-control" type="text" v-if="idioms[pos] == 'Otro'">
+						</div>
 					</x-incluyeme>
 				</x-incluyeme>
 				<x-incluyeme class="row mt-2">

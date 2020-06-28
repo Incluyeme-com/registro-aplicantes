@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					$_POST['aSennas'],
 					$_POST['aLabial'],
 					$_POST['aBajo'],
-					$_POST['aImplante'], $_POST['aOral'], $_POST['userID']);
+					$_POST['aImplante'], $_POST['aOral'],$_POST['aFluida'],  $_POST['userID']);
 			}
 			if (isset($_POST['userID']) && isset($_POST['visual'])) {
 				$verifications::updateVisual($_POST['userID'],
@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			}
 		}
 		if (isset($_POST['userID']) && count($_POST['idioms'])>0) {
-			$verifications::updateIdioms($_POST['userID'], $_POST['idioms'], $_POST['oLevel'], $_POST['wLevel'], $_POST['sLevel']);
+			$verifications::updateIdioms($_POST['userID'], $_POST['idioms'], $_POST['oLevel'], $_POST['wLevel'], $_POST['sLevel'], $_POST['idiomsOther']);
 		}
 		if (isset($_POST['userID']) && isset($_POST['preferJobs'])) {
 			$verifications::updatePrefersJobs($_POST['userID'], $_POST['preferJobs']);

@@ -20,6 +20,7 @@ let app = new Vue({
         password: null,
         validation: null,
         street: null,
+        idiomsOther: [],
         lastName: null,
         formFields3: [],
         dateBirthDay: null,
@@ -119,7 +120,8 @@ let app = new Vue({
         myCUD: null,
         myIMG: null,
         provincias: [],
-        cities: []
+        cities: [],
+        aFluida: null
     },
     ready: function () {
         console.log('ready');
@@ -304,6 +306,8 @@ let app = new Vue({
                     this.inteMolesto = disabilities.answer;
                 } else if (disabilities.question_id == 31) {
                     this.inteActividad = disabilities.answer;
+                }else if (disabilities.question_id == 32) {
+                    this.aFluida = disabilities.answer;
                 }
 
             })
@@ -705,7 +709,8 @@ let app = new Vue({
                 idioms: this.idioms,
                 oLevel: this.oralLevel,
                 wLevel: this.redLevel,
-                sLevel: this.lecLevel
+                sLevel: this.lecLevel,
+                idiomsOther: this.idiomsOther
             }
         },
         confirmStep12: async function () {
@@ -723,7 +728,6 @@ let app = new Vue({
             let six = false;
             let seven = false;
             let eight = false;
-            console.log(one)
             if (one !== false) {
                 two = await this.confirmStep4()
             }

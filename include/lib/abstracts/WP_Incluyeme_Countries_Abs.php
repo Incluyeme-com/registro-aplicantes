@@ -539,7 +539,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		return true;
 	}
 	
-	public static function updateAuditiva($aAmbient, $aSennas, $aLabial, $aBajo, $aImplante, $aOral, $userID)
+	public static function updateAuditiva($aAmbient, $aSennas, $aLabial, $aBajo, $aImplante, $aOral, $aFluida, $userID)
 	{
 		if (isset($aAmbient)) {
 			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 9');
@@ -551,6 +551,20 @@ abstract class WP_Incluyeme_Countries_Abs
 				self::$wp->insert(self::$usersDisQuestions, [
 					'question_id' => 9,
 					'answer' => $aAmbient,
+					'resume_id' => $userID,
+				]);
+			}
+		}
+		if (isset($aFluida)) {
+			$verification = self::$wp->get_results('SELECT * from ' . self::$usersDisQuestions . ' where resume_id = ' . $userID . '  AND question_id = 32');
+			if (count($verification) > 0) {
+				self::$wp->update(self::$usersDisQuestions, [
+					'answer' => $aFluida,
+				], ['resume_id' => $userID, 'question_id' => 32]);
+			} else {
+				self::$wp->insert(self::$usersDisQuestions, [
+					'question_id' => 32,
+					'answer' => $aFluida,
 					'resume_id' => $userID,
 				]);
 			}
@@ -973,9 +987,19 @@ abstract class WP_Incluyeme_Countries_Abs
 		@move_uploaded_file($IMG['tmp_name'], $dir . '/' . basename($IMG["name"]));
 	}
 	
-	public static function updateIdioms($userID, $idioms, $oLevel, $wLevel, $sLevel)
+	public static function updateIdioms($userID, $idioms, $oLevel, $wLevel, $sLevel, $idiomsOther)
 	{
+		print_r($idiomsOther);
 		for ($i = 0; $i < count($idioms); $i++) {
+			if ($idiomsOther[$i] !== null) {
+				$result = self::$wp->get_results('SELECT * from ' . self::$idioms . ' where name_idioms = ' . '"'.$idiomsOther[$i].'"');
+				if (count($result) <= 0) {
+					self::$wp->insert(self::$idioms, ['name_idioms' => $idiomsOther[$i]]);
+					$idioms[$i] = self::$wp->insert_id;
+				}else {
+					$idioms[$i] = $result[0]->id;
+				}
+			}
 			$result = self::$wp->get_results('SELECT * from ' . self::$usersIdioms . ' where resume_id = ' . $userID . '  AND idioms_id = ' . $idioms[$i]);
 			if (count($result) > 0) {
 				self::$wp->update(self::$usersIdioms, [

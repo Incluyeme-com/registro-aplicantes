@@ -144,6 +144,7 @@ let app = new Vue({
         vHumedos: null,
         vTemp: null,
         vPolvo: null,
+        aFluida: null,
         vCompleta: null,
         vAdap: null,
         aAmbient: null,
@@ -203,6 +204,7 @@ let app = new Vue({
         lecLevel: [],
         redLevel: [],
         oralLevel: [],
+        idiomsOther: [],
         awaitChange: false,
         google: false,
         facebook: false,
@@ -712,6 +714,7 @@ let app = new Vue({
                 data.aBajo = this.aBajo;
                 data.aImplante = this.aImplante;
                 data.aOral = this.aOral;
+                data.aFluida = this.aFluida;
             }
             if (this.visual) {
                 data.discaps.push(3);
@@ -824,7 +827,8 @@ let app = new Vue({
                 idioms: this.idioms,
                 oLevel: this.oralLevel,
                 wLevel: this.redLevel,
-                sLevel: this.lecLevel
+                sLevel: this.lecLevel,
+                idiomsOther: this.idiomsOther
             })
                 .then(function (response) {
                     return response

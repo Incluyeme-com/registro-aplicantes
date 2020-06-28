@@ -10217,8 +10217,8 @@ VALUES (9, 2, '¿Puedes discriminar sonidos del ambiente?'),
        (10, 2, '¿Utilizas lenguaje oral?'),
        (11, 2, '¿Utilizas lengua de señas para comunicarse?'),
        (12, 2, '¿Puedes utilizar lectura labial?'),
-       (13, 2, '¿En un ambiente con bajo ruido (por ejemplo: oficina) puedes
-establecer una comunicación oral fluida con otra persona?'),
+       (13, 2, '¿En un ambiente con distintas fuentes sonoras (por ejemplo: oficina) puedes establecer una comunicación oral fluida con otra persona?'),
+       (32, 2, '¿Puedes establecer una comunicación fluida vía telefónica?(sin uso de mensajería o chat)'),
        (14, 2, '¿Utilizas alguna ayuda técnica? '); --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`id`, `incluyeme_discapacities_id`, `discapacities_questions`)
