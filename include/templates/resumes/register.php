@@ -1337,24 +1337,41 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
-										<span>Te gustra trabajar:
-										</span>
+											<span>¿Te gusta trabajar solo?</span>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
 												       style="transform: scale(1.4) !important;" id="inteTrabajar"
-												       value="Solo" v-model="inteTrabajar" name="inteTrabajar">
+												       value="Si" v-model="inteTrabajar" name="inteTrabajar">
 												<label class="form-check-label"
 												       for="inteTrabajar"
-												       style="color: black"><?php _e("Solo", "incluyeme-login-extension"); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
 												       style="transform: scale(1.4) !important;" id="inteTrabajarS"
-												       value="Con otras personas" v-model="inteTrabajar"
+												       value="No" v-model="inteTrabajar"
 												       name="inteTrabajar">
 												<label class="form-check-label"
 												       for="inteTrabajarS"
-												       style="color: black"><?php _e("Con otras personas", "incluyeme-login-extension"); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
+											</x-incluyeme>
+										</x-incluyeme>
+										<x-incluyeme class="col-12">
+											<span>¿Te gusta trabajar con otras personas?</span>
+											<x-incluyeme class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" id="inteTrabajarOP"
+												       value="Si" v-model="inteTrabajarOP" name="inteTrabajarOP">
+												<label class="form-check-label"
+												       for="inteTrabajarOP"
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
+											</x-incluyeme>
+											<x-incluyeme class="form-check form-check-inline">
+												<input class="form-check-input" type="radio" id="inteTrabajarOPS"
+												       value="No" v-model="inteTrabajarOP"
+												       name="inteTrabajarOP">
+												<label class="form-check-label"
+												       for="inteTrabajarOPS"
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">

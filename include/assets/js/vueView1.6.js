@@ -73,6 +73,7 @@ let app = new Vue({
         vColores: null,
         vDPlanos: null,
         vTecniA: null,
+        inteTrabajarOP: null,
         formFields2: [],
         areaEmployed: [],
         inteEscri: null,
@@ -295,6 +296,8 @@ let app = new Vue({
                     this.inteActividad = disabilities.answer;
                 } else if (disabilities.question_id == 32) {
                     this.aFluida = disabilities.answer;
+                } else if (disabilities.question_id == 33) {
+                    this.inteTrabajarOP = disabilities.answer;
                 }
 
             })

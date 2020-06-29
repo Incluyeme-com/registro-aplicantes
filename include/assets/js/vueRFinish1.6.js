@@ -82,6 +82,7 @@ let app = new Vue({
         employed: [],
         inteTrabajar: null,
         inteTrabajarSolo: null,
+        inteTrabajarOP: null,
         moreDis: null,
         dateBirthDay: null,
         psiquica: false,
@@ -308,6 +309,9 @@ let app = new Vue({
                     this.inteActividad = disabilities.answer;
                 }else if (disabilities.question_id == 32) {
                     this.aFluida = disabilities.answer;
+                }
+                else if (disabilities.question_id == 33) {
+                    this.inteTrabajarOP = disabilities.answer;
                 }
 
             })

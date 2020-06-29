@@ -10247,7 +10247,8 @@ VALUES (25, 5, '¿Sabes leer y escribir?'),
        (29, 5, '¿Prefieres trabajar en?'),
        (30, 5, '¿Te molesta si te cambian las actividades durante la jornada
 laboral?'),
-       (31, 5, '¿Te molesta que te corrijan cuando realizas una actividad?'); --
+       (31, 5, '¿Te molesta que te corrijan cuando realizas una actividad?'),
+        (33, 5, '¿Te gusta trabajar con otras personas?'); --
 
 create table `{$wpdb->prefix}incluyeme_users_questions`
 (

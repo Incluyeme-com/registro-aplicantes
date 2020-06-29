@@ -1132,7 +1132,7 @@ FROM 	' . self::$dataPrefix . 'incluyeme_users_questions
 WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id);
 		$idioms = self::$wp->get_results('SELECT * FROM ' . self::$wp->prefix . 'incluyeme_users_idioms WHERE ' . self::$wp->prefix . 'incluyeme_users_idioms.resume_id = ' . $id);
 		
-		return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta(get_current_user_id(), 'first_name')[0], 'last_name' => get_user_meta(get_current_user_id(), 'last_name')[0]];
+		return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta($id, 'first_name')[0], 'last_name' => get_user_meta($id, 'last_name')[0]];
 	}
 	
 	public static function userSessionVerificate($resume)

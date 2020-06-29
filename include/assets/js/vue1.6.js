@@ -209,6 +209,7 @@ let app = new Vue({
         google: false,
         facebook: false,
         provincias: [],
+        inteTrabajarOP: null
     },
     ready: function () {
         console.log('ready');
@@ -745,6 +746,7 @@ let app = new Vue({
                 data.inteMolesto = this.inteMolesto;
                 data.inteTrabajar = this.inteTrabajar;
                 data.inteTrabajarSolo = this.inteTrabajarSolo;
+                data.inteTrabajarOP = this.inteTrabajarOP
             }
             if (this.psiquica) {
                 data.discaps.push(6);

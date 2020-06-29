@@ -34,9 +34,9 @@ function incluyeme_requirements_Login_Extension()
 	}
 	if (is_admin() && current_user_can('activate_plugins') && is_plugin_active('wpjobboard/index.php')) {
 		incluyeme_login_load();
-	} else {
-		incluyeme_login_files_research();
 	}
+	incluyeme_login_files_research();
+	
 }
 
 function incluyemeLogin_notice()
