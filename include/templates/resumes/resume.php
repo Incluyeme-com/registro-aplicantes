@@ -419,7 +419,8 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 						<h5 class="mb-0">
 							<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
 							        aria-expanded="true" aria-controls="collapseOne">
-								Motriz
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Motriz</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -601,7 +602,9 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 						<h5 class="mb-0">
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
 							        aria-expanded="false" aria-controls="collapseTwo">
-								Visceral
+								
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Visceral</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -724,7 +727,9 @@ dificultad?
 						<h5 class="mb-0">
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
 							        aria-expanded="false" aria-controls="collapseThree">
-								Auditiva
+								
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Auditiva</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -875,7 +880,8 @@ dificultad?
 						<h5 class="mb-0">
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
 							        aria-expanded="false" aria-controls="collapseFive">
-								Visual
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Visual</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -1000,7 +1006,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 						<h5 class="mb-0">
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collatseFourt"
 							        aria-expanded="false" aria-controls="collatseFourt">
-								Intelectual
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Intelectual</h5>
 							</button>
 						</h5>
 					</x-incluyeme>

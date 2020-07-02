@@ -351,15 +351,16 @@ $incluyemeLoginEstado = 'incluyemeLoginEstado';
 				</div>
 			</div>
 		</template>
-		<template id="step6">
+		<template id="step6"">
 			<x-incluyeme id="accordion">
 				<x-incluyeme v-if="motriz" class="card">
 					<x-incluyeme class="card-header p-0 m-0" id="headingOne">
 						<h5 class="mb-0">
-							<button class="btn btn-link fas fa-arrow-down" data-toggle="collapse"
+							<button class="btn btn-link " data-toggle="collapse"
 							        data-target="#collapseOne"
 							        aria-expanded="true" aria-controls="collapseOne">
-								Motriz
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Motriz</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -561,8 +562,9 @@ $incluyemeLoginEstado = 'incluyemeLoginEstado';
 							<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
 							        data-target="#collapseTwo"
 							        aria-expanded="false" aria-controls="collapseTwo">
-								
-								Visceral
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Visceral</h5>
+							
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -705,8 +707,9 @@ dificultad?
 							<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
 							        data-target="#collapseThree"
 							        aria-expanded="false" aria-controls="collapseThree">
-								
-								Auditiva
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Auditiva</h5>
+							
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -869,8 +872,9 @@ dificultad?
 							<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
 							        data-target="#collapseFive"
 							        aria-expanded="false" aria-controls="collapseFive">
-								
-								Visual
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Visual</h5>
+							
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -1016,8 +1020,9 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 							<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
 							        data-target="#collatseFourt"
 							        aria-expanded="false" aria-controls="collatseFourt">
-								
-								Intelectual
+								<i class="fas fa-arrow-down"></i>
+								<h5 class="display:inline;"> Intelectual</h5>
+							
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -1066,8 +1071,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 									
 									</x-incluyeme>
 									<x-incluyeme class="col-12">
-										<span>¿Cuando te equivocas te enoja que te lo digan?
-</span><br>
+										<span>¿Cuando te equivocas te enoja que te lo digan?</span><br>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio"
 											       style="transform: scale(1.4) !important;" id="inteActividad"
@@ -1185,7 +1189,9 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 			                                                                  preguntas listadas arriba</p>
 			<div class="container mt-1">
 				<x-incluyeme class="w-100 ">
-					<label id="disCText" for="exampleFormControlTextarea1">Por favor cuéntanos más sobre tu discapacidad y todo lo que quieras agregar para conocerte más
+					<label id="disCText" for="exampleFormControlTextarea1">Por favor cuéntanos más sobre tu
+					                                                       discapacidad y todo lo que quieras
+					                                                       agregar para conocerte más
 						<span
 								style="font-size: 2em;color: black;">*<span></label>
 					<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis"
@@ -1194,6 +1200,19 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					                                               disCapacidad</p>
 				</x-incluyeme>
 			</div>
+			<x-incluyeme class="row">
+				<x-incluyeme class="col">
+					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+					        @click.prevent="goToStep(5, '<?php echo plugins_url() ?>')">
+						Atras
+					</button>
+				</x-incluyeme>
+				<x-incluyeme class="col">
+					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
+					        @click.prevent="goToStep(7, '<?php echo plugins_url() ?>')">Siguiente
+					</button>
+				</x-incluyeme>
+			</x-incluyeme>
 		</template>
 		<template id="step7">
 			<div class="container">
