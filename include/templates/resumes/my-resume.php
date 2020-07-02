@@ -46,6 +46,10 @@ $incluyemeLoginEstado = 'incluyemeLoginEstado';
 		margin-top: 2em !important;
 		margin-bottom: 2em !important;
 	}
+	.deleteIncluyeme {
+		background-color: #ee7566 !important;
+		border-color: #ee7566 !important;
+	}
 	/* Chrome, Safari, Edge, Opera */
 	input::-webkit-outer-spin-button,
 	input::-webkit-inner-spin-button {
@@ -351,7 +355,7 @@ $incluyemeLoginEstado = 'incluyemeLoginEstado';
 				</div>
 			</div>
 		</template>
-		<template id="step6"">
+		<template id="step6">
 			<x-incluyeme id="accordion">
 				<x-incluyeme v-if="motriz" class="card">
 					<x-incluyeme class="card-header p-0 m-0" id="headingOne">
