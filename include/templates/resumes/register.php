@@ -792,7 +792,7 @@ $FBversion = 'v7.0';
 					<x-incluyeme v-if="visceral" class="card">
 						<x-incluyeme class="card-header m-0 p-0" id="headingTwo">
 							<h5 class="mb-0">
-								<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
+								<button class="btn btn-link collapsed" data-toggle="collapse"
 								        data-target="#collapseTwo"
 								        aria-expanded="false" aria-controls="collapseTwo">
 									<i class="fas fa-arrow-down"></i>
@@ -937,7 +937,7 @@ dificultad?
 					<x-incluyeme v-if="auditiva" class="card">
 						<x-incluyeme class="card-header m-0 p-0" id="headingThree">
 							<h5 class="mb-0">
-								<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
+								<button class="btn btn-link collapsed" data-toggle="collapse"
 								        data-target="#collapseThree"
 								        aria-expanded="false" aria-controls="collapseThree">
 									<i class="fas fa-arrow-down"></i>
@@ -1102,7 +1102,7 @@ dificultad?
 					<x-incluyeme v-if='visual' class="card">
 						<x-incluyeme class="card-header m-0 p-0" id="headingFive">
 							<h5 class="mb-0">
-								<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
+								<button class="btn btn-link collapsed" data-toggle="collapse"
 								        data-target="#collapseFive"
 								        aria-expanded="false" aria-controls="collapseFive">
 									<i class="fas fa-arrow-down"></i>
@@ -1250,7 +1250,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme v-if="intelectual" class="card">
 						<x-incluyeme class="card-header m-0 p-0" id="headingFourt">
 							<h5 class="mb-0">
-								<button class="btn btn-link collapsed fas fa-arrow-down" data-toggle="collapse"
+								<button class="btn btn-link collapsed" data-toggle="collapse"
 								        data-target="#collatseFourt"
 								        aria-expanded="false" aria-controls="collatseFourt">
 									<i class="fas fa-arrow-down"></i>
