@@ -593,7 +593,7 @@ $FBversion = 'v7.0';
 								        data-target="#collapseOne"
 								        aria-expanded="true" aria-controls="collapseOne">
 									<i class="fas fa-arrow-down"></i>
-									<h5 class="display:inline;"> Motriz</h5>
+									<h5 style="display:inline;"> Motriz</h5>
 								</button>
 							</h5>
 						</x-incluyeme>
@@ -796,7 +796,7 @@ $FBversion = 'v7.0';
 								        data-target="#collapseTwo"
 								        aria-expanded="false" aria-controls="collapseTwo">
 									<i class="fas fa-arrow-down"></i>
-									<h5 class="display:inline;"> Visceral</h5>
+									<h5 style="display:inline;"> Visceral</h5>
 									
 								</button>
 							</h5>
@@ -941,7 +941,7 @@ dificultad?
 								        data-target="#collapseThree"
 								        aria-expanded="false" aria-controls="collapseThree">
 									<i class="fas fa-arrow-down"></i>
-									<h5 class="display:inline;"> Auditiva</h5>
+									<h5 style="display:inline;"> Auditiva</h5>
 									
 								</button>
 							</h5>
@@ -1106,7 +1106,7 @@ dificultad?
 								        data-target="#collapseFive"
 								        aria-expanded="false" aria-controls="collapseFive">
 									<i class="fas fa-arrow-down"></i>
-									<h5 class="display:inline;"> Visual</h5>
+									<h5 style="display:inline;"> Visual</h5>
 									
 								</button>
 							</h5>
@@ -1254,7 +1254,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 								        data-target="#collatseFourt"
 								        aria-expanded="false" aria-controls="collatseFourt">
 									<i class="fas fa-arrow-down"></i>
-									<h5 class="display:inline;"> Intelectual</h5>
+									<h5 style="display:inline;"> Intelectual</h5>
 									
 								</button>
 							</h5>

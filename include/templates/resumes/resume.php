@@ -420,7 +420,7 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 							<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
 							        aria-expanded="true" aria-controls="collapseOne">
 								<i class="fas fa-arrow-down"></i>
-								<h5 class="display:inline;"> Motriz</h5>
+								<h5 style="display:inline;"> Motriz</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -604,7 +604,7 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 							        aria-expanded="false" aria-controls="collapseTwo">
 								
 								<i class="fas fa-arrow-down"></i>
-								<h5 class="display:inline;"> Visceral</h5>
+								<h5 style="display:inline;"> Visceral</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -729,7 +729,7 @@ dificultad?
 							        aria-expanded="false" aria-controls="collapseThree">
 								
 								<i class="fas fa-arrow-down"></i>
-								<h5 class="display:inline;"> Auditiva</h5>
+								<h5 style="display:inline;"> Auditiva</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -881,7 +881,7 @@ dificultad?
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
 							        aria-expanded="false" aria-controls="collapseFive">
 								<i class="fas fa-arrow-down"></i>
-								<h5 class="display:inline;"> Visual</h5>
+								<h5 style="display:inline;"> Visual</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
@@ -1007,7 +1007,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collatseFourt"
 							        aria-expanded="false" aria-controls="collatseFourt">
 								<i class="fas fa-arrow-down"></i>
-								<h5 class="display:inline;"> Intelectual</h5>
+								<h5 style="display:inline;"> Intelectual</h5>
 							</button>
 						</h5>
 					</x-incluyeme>
