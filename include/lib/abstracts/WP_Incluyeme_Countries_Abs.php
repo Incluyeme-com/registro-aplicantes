@@ -391,7 +391,7 @@ abstract class WP_Incluyeme_Countries_Abs
 			'phone' => $mPhone . ' ' . $phone,
 			'candidate_country' => get_option(self::$incluyemeLoginCountry),
 			'candidate_state' => $state,
-			'candidate_location' => $street
+			'candidate_location' => $street . '. Ciudad: '.$city
 		], ['user_id' =>  get_current_user_id()]);
 		if (count($verification) > 0) {
 			self::$wp->update(self::$incluyemeUsersInformation, [
@@ -908,6 +908,29 @@ abstract class WP_Incluyeme_Countries_Abs
 		}
 		self::$wp->get_results('UPDATE ' . self::$incluyemeUsersInformation . ' SET  	moreDis  = "' . $moreDis . '" WHERE resume_id = ' . $userID);
 		self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN (' . implode(',', $discaps) . ')');
+		if ($moreDis !== null) {
+			$result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name =  '."'detalle'");
+			error_log(print_r('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = '."'detalle'",true));
+			if (count($result) > 0) {
+				$search = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta_value where meta_id  = ' . $result[0]->id . ' and object_id = ' . $userID);
+				
+				if (count($search) > 0) {
+					self::$wp->update(self::$dataPrefix . 'wpjb_meta_value', [
+						'value' => $moreDis,
+						'meta_id' =>
+							$result[0]->id,
+						'object_id' => $userID], ['meta_id' =>
+						$result[0]->id,
+						'object_id' => $userID]);
+				} else if (count($result) > 0) {
+					self::$wp->insert(self::$dataPrefix . 'wpjb_meta_value', [
+						'value' => $moreDis,
+						'meta_id' =>
+							$result[0]->id,
+						'object_id' => $userID]);
+				}
+			}
+		}
 		return true;
 	}
 	
@@ -989,7 +1012,6 @@ abstract class WP_Incluyeme_Countries_Abs
 	
 	public static function updateIdioms($userID, $idioms, $oLevel, $wLevel, $sLevel, $idiomsOther)
 	{
-		print_r($idiomsOther);
 		for ($i = 0; $i < count($idioms); $i++) {
 			if ($idiomsOther[$i] !== null) {
 				$result = self::$wp->get_results('SELECT * from ' . self::$idioms . ' where name_idioms = ' . '"'.$idiomsOther[$i].'"');
@@ -1020,8 +1042,65 @@ abstract class WP_Incluyeme_Countries_Abs
 				
 				]);
 			}
+			
+			$idiomsName = null;
+			switch ($idioms[$i]) {
+				case 1 :
+					$idiomsName = 'idioma_ingles';
+					break;
+				case 2:
+					$idiomsName = 'idioma_frances';
+					break;
+				case 3:
+					$idiomsName = 'idioma_portugues';
+					break;
+				case 4:
+					$idiomsName = 'idioma_aleman';
+					break;
+				default:
+					;
+			}
+			$level = 'No hablo';
+			switch ($oLevel[$i]) {
+				case 1 :
+					$level = 'Básico';
+					break;
+				case 2:
+					$level = 'Intermedio';
+					break;
+				case 3:
+					$level = 'Avanzado';
+					break;
+				case 4:
+					$level = 'Bilingüe';
+					break;
+				default:
+					;
+			}
+			if ($idiomsName !== null) {
+				$result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = ' . "'" . $idiomsName . "'");
+				if (count($result) > 0) {
+					$search = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta_value where meta_id  = ' . $result[0]->id . ' and object_id = ' . $userID);
+					
+					if (count($search) > 0) {
+						self::$wp->update(self::$dataPrefix . 'wpjb_meta_value', [
+							'value' => $level,
+							'meta_id' =>
+								$result[0]->id,
+							'object_id' => $userID], ['meta_id' =>
+							$result[0]->id,
+							'object_id' => $userID]);
+					} else if (count($result) > 0) {
+						self::$wp->insert(self::$dataPrefix . 'wpjb_meta_value', [
+							'value' => $level,
+							'meta_id' =>
+								$result[0]->id,
+							'object_id' => $userID]);
+					}
+				}
+			}
 		}
-		self::$wp->get_results('DELETE from ' . self::$usersIdioms . ' WHERE resume_id = ' . $userID . '  AND idioms_id NOT IN (' . implode("', '", $idioms) . ')');
+		self::$wp->get_results('DELETE from ' . self::$usersIdioms . ' WHERE resume_id = ' . $userID . '  AND idioms_id NOT IN (' . implode(',', $idioms) . ')');
 	}
 	
 	private static function searchDIR($dir)

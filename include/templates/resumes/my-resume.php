@@ -1204,19 +1204,6 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					                                               disCapacidad</p>
 				</x-incluyeme>
 			</div>
-			<x-incluyeme class="row">
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(5, '<?php echo plugins_url() ?>')">
-						Atras
-					</button>
-				</x-incluyeme>
-				<x-incluyeme class="col">
-					<button type="submit" class="btn btn-info w-100 w-100 mt-3"
-					        @click.prevent="goToStep(7, '<?php echo plugins_url() ?>')">Siguiente
-					</button>
-				</x-incluyeme>
-			</x-incluyeme>
 		</template>
 		<template id="step7">
 			<div class="container">
