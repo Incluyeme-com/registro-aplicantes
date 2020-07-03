@@ -910,7 +910,6 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN (' . implode(',', $discaps) . ')');
 		if ($moreDis !== null) {
 			$result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name =  '."'detalle'");
-			error_log(print_r('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = '."'detalle'",true));
 			if (count($result) > 0) {
 				$search = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta_value where meta_id  = ' . $result[0]->id . ' and object_id = ' . $userID);
 				
@@ -1155,12 +1154,6 @@ abstract class WP_Incluyeme_Countries_Abs
 FROM 	' . self::$dataPrefix . 'incluyeme_users_information
   LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
     ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id);
-		error_log(print_r('SELECT
-  	' . self::$dataPrefix . 'incluyeme_prefersjobs.jobs_prefers,
-  	' . self::$dataPrefix . 'incluyeme_users_information.*
-FROM 	' . self::$dataPrefix . 'incluyeme_users_information
-  LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
-    ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id,true));
 		$works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
 		$education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
 		$discaps = self::$wp->get_results('SELECT
@@ -1196,7 +1189,6 @@ FROM 	' . self::$dataPrefix . 'incluyeme_users_information
 		$works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
 		$education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
 		$userID = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume where id = ' . $id);
-		error_log(print_r($userID, true));
 		$discaps = self::$wp->get_results('SELECT
   	' . self::$dataPrefix . 'incluyeme_users_questions.question_id,
   	' . self::$dataPrefix . 'incluyeme_users_questions.answer,
