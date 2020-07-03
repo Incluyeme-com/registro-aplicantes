@@ -126,6 +126,15 @@ let app = new Vue({
         console.log('ready');
     },
     mounted() {
+        const incluyemeContent = document.getElementById("content");
+        const incluyemeSidebar = document.getElementById("sidebar");
+        const incluyemeTitle = document.getElementsByClassName("container  right-sidebar  right-sidebar  has-title");
+        if (incluyemeContent && incluyemeSidebar && incluyemeTitle) {
+            incluyemeContent.classList.add("col-9");
+            incluyemeSidebar.classList.add("col");
+            incluyemeSidebar.classList.add("ml-5");
+            incluyemeTitle[0].className += " row";
+        }
     },
     methods: {
         setID: async function (userID, url) {
@@ -426,4 +435,3 @@ let app = new Vue({
         }
     }
 });
-startApp();

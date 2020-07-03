@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vue1.6.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vue2.0.0..js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');

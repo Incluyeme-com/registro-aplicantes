@@ -5,7 +5,7 @@ $css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
 wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
 wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
-wp_register_script('vueD', $js . 'vueView1.6.js', ['vueJS', 'Axios'], '2.0.0');
+wp_register_script('vueD', $js . 'vueView2.0.0.js', ['vueJS', 'Axios'], '2.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
 wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');

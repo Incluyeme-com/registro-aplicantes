@@ -1195,6 +1195,8 @@ FROM 	' . self::$dataPrefix . 'incluyeme_users_information
     ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id);
 		$works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
 		$education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
+		$userID = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume where id = ' . $id);
+		error_log(print_r($userID, true));
 		$discaps = self::$wp->get_results('SELECT
   	' . self::$dataPrefix . 'incluyeme_users_questions.question_id,
   	' . self::$dataPrefix . 'incluyeme_users_questions.answer,
@@ -1211,7 +1213,7 @@ FROM 	' . self::$dataPrefix . 'incluyeme_users_questions
 WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id);
 		$idioms = self::$wp->get_results('SELECT * FROM ' . self::$wp->prefix . 'incluyeme_users_idioms WHERE ' . self::$wp->prefix . 'incluyeme_users_idioms.resume_id = ' . $id);
 		
-		return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta($id, 'first_name')[0], 'last_name' => get_user_meta($id, 'last_name')[0]];
+		return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta($userID[0]->user_id, 'first_name'), 'last_name' => get_user_meta($userID[0]->user_id, 'last_name')];
 	}
 	
 	public static function userSessionVerificate($resume)
@@ -1249,6 +1251,15 @@ WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id
 		$userID = get_current_user_id();
 		update_user_meta($userID, 'first_name', $name);
 		update_user_meta($userID, 'last_name', $lastName);
+		$userID = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume where id = ' . self::getResumeID());
+		$my_resume = array(
+			'ID'           => $userID[0]->post_id,
+			'post_title'   =>  $name . ' ' . $lastName,
+		);
+		wp_update_post( $my_resume );
+		self::$wp->update(self::$dataPrefix . 'wpjb_resume_search', [
+			'fullname' => $name . ' ' . $lastName
+		], ['resume_id' => self::getResumeID()]);
 	}
 	
 	private static function getCV($id)
