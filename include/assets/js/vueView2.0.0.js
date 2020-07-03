@@ -435,3 +435,4 @@ let app = new Vue({
         }
     }
 });
+startApp();

@@ -1164,11 +1164,11 @@ exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluye
 				</x-incluyeme>
 			</div>
 		</template>
-		<template id="step7">
+		<template v-if="myIMG||myCV||myCUD" id="step7">
 			<div class="container">
 				<h2 class='mt-2'>Adjunta tu Foto, CV
 				                 y <?php echo get_option($incluyemeNames) ? ' ' . get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h2>
-				<div class="container">
+				<div v-if="myIMG"   class="container">
 					<a :href="myIMG">Foto de Perfil</a>
 					<x-incluyeme class="row m-auto  py-4">
 						<x-incluyeme class="col">
@@ -1177,7 +1177,7 @@ exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluye
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
-				<div class="container">
+				<div v-if="myCV"  class="container">
 					<a :href="myCV">Curriculum Vitae</a>
 					<x-incluyeme class="row m-auto  py-4">
 						<x-incluyeme class="col">
@@ -1187,7 +1187,7 @@ exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluye
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
-				<div class="container">
+				<div v-if="myCUD" class="container">
 					<a :href="myCUD"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
 					<x-incluyeme class="row m-auto py-4">
 						<x-incluyeme class="col">
