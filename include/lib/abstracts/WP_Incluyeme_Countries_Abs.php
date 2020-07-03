@@ -899,6 +899,56 @@ abstract class WP_Incluyeme_Countries_Abs
 	{
 		for ($i = 0; $i < count($discaps); $i++) {
 			$result = self::$wp->get_results('SELECT * from ' . self::$usersDiscapTable . ' where resume_id = ' . $userID . '  AND discap_id = ' . $discaps[$i]);
+			$resultD = self::$wp->get_results('SELECT * from ' . self::$dataPrefix. 'incluyeme_discapacities where  id = ' . $discaps[$i]);
+			$disca = null;
+			switch ($resultD[0]->discap_name) {
+				case 'Motriz':
+					$disca = 'Motriz';
+					break;
+				case 'Auditiva':
+					$disca = 'Auditiva';
+					break;
+				case 'Visual':
+					$disca = 'Visual';
+					break;
+				case 'Visceral':
+					$disca = 'Visceral';
+					break;
+				case 'Intelectual':
+					$disca = 'Intelectual';
+					break;
+				case 'Psíquica':
+					$disca = 'Psíquica';
+					break;
+				case 'Habla':
+					$disca = 'Del lenguaje';
+					break;
+				default:
+					$disca = null;
+					break;
+			}
+			if ($disca !== null) {
+				$result2 = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = ' . "'tipo_discapacidad'");
+				if (count($result2) > 0) {
+					$search = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta_value where meta_id  = ' . $result2[0]->id . ' and object_id = ' . $userID);
+					
+					if (count($search) > 0) {
+						self::$wp->update(self::$dataPrefix . 'wpjb_meta_value', [
+							'value' => $disca,
+							'meta_id' =>
+								$result2[0]->id,
+							'object_id' => $userID], ['meta_id' =>
+							$result2[0]->id,
+							'object_id' => $userID]);
+					} else if (count($result) > 0) {
+						self::$wp->insert(self::$dataPrefix . 'wpjb_meta_value', [
+							'value' => $disca,
+							'meta_id' =>
+								$result2[0]->id,
+							'object_id' => $userID]);
+					}
+				}
+			}
 			if (count($result) <= 0) {
 				self::$wp->insert(self::$usersDiscapTable, [
 					'discap_id' => $discaps[$i],
@@ -1057,7 +1107,8 @@ abstract class WP_Incluyeme_Countries_Abs
 					$idiomsName = 'idioma_aleman';
 					break;
 				default:
-					;
+					$idiomsName = null;
+					break;
 			}
 			$level = 'No hablo';
 			switch ($oLevel[$i]) {
