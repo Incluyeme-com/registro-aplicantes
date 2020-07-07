@@ -179,7 +179,7 @@ function incluyeme_login_styles($hook)
 	if (!strpos($current_screen->base, 'incluyemelogin') && !strpos($current_screen->base, 'inclueyemeLoginConfiguration')) {
 		return;
 	} else {
-		$css = plugins_url() . '/incluyeme/include/assets/css/';
+		$css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
 		wp_register_style('bootstrap-admin', $css . 'bootstrap.min.css', [], '1.0.0', false);
 		wp_enqueue_style('bootstrap-admin');
 	}
