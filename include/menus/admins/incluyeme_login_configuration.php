@@ -33,8 +33,8 @@ function incluyeme_login_configuration()
 	}
 	if (isset($_POST['country'])) {
 		$value = $_POST['country'];
-		update_option($state, sanitize_text_field($value));
-		update_option($state, sanitize_text_field($value));
+		update_option($country, sanitize_text_field($value));
+		update_option($country, sanitize_text_field($value));
 	}
 	if (isset($_POST['city'])) {
 		$value = $_POST['city'];
@@ -93,7 +93,7 @@ function incluyeme_login_configuration()
 							</label>
 							<input name="country" class="form-control" id="country" type="text"
 							       placeholder="Ingrese el ID del campo para el Pais"
-							       value="<?php get_option($country) ?>">
+							       value="<?php echo get_option($country) ?>">
 						</div>
 						<div class="form-group">
 							<label for="state">
@@ -101,7 +101,7 @@ function incluyeme_login_configuration()
 							</label>
 							<input name="state" class="form-control" id="state" type="text"
 							       placeholder="Ingrese el ID del campo para Estado"
-							       value="<?php get_option($state) ?>">
+							       value="<?php echo get_option($state) ?>">
 						</div>
 						<div class="form-group">
 							<label for="city">
@@ -109,7 +109,7 @@ function incluyeme_login_configuration()
 							</label>
 							<input name="city" class="form-control" id="city" type="text"
 							       placeholder="Ingrese el ID del campo para Ciudad"
-							       value="<?php get_option($city) ?>">
+							       value="<?php echo get_option($city) ?>">
 						</div>
 						<h5>Idiomas</h5>
 						<div class="form-group">
