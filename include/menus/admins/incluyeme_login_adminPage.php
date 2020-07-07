@@ -176,7 +176,7 @@ WHERE resume_id NOT IN (SELECT
 function incluyeme_login_styles($hook)
 {
 	$current_screen = get_current_screen();
-	if (!strpos($current_screen->base, 'incluyemelogin')) {
+	if (!strpos($current_screen->base, 'incluyemelogin') && !strpos($current_screen->base, 'inclueyemeLoginConfiguration')) {
 		return;
 	} else {
 		$css = plugins_url() . '/incluyeme/include/assets/css/';

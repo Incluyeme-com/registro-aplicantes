@@ -29,6 +29,15 @@ abstract class WP_Incluyeme_Countries_Abs
 	private static $incluyemeLoginGoogle;
 	private static $incluyemeLoginFB;
 	private static $incluyemeLoginFBSECRET;
+	private static $discap = 'IncluyemeDiscap';
+	private static $discapMore = 'IncluyemeDiscapMore';
+	private static $state = 'IncluyemeStateConf';
+	private static $city = 'IncluyemeCityConf';
+	private static $idioma_ingles = 'Incluyemeidioma_ingles';
+	private static $idioma_frances = 'Incluyemeidioma_frances';
+	private static $idioma_portugues = 'Incluyemeidioma_portugues';
+	private static $idioma_aleman = 'Incluyemeidioma_aleman';
+	private static $countryIncluyeme = 'IncluyemeCountryConf';
 	
 	public function __construct()
 	{
@@ -55,6 +64,15 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 		self::$incluyemeLoginFB = 'incluyemeLoginFB';
 		self::$incluyemeLoginFBSECRET = 'incluyemeLoginFBSECRET';
+		self::$discap = get_option(self::$discap) ? get_option(self::$discap) : 'tipo_discapacidad';
+		self::$discapMore = get_option(self::$discapMore) ? get_option(self::$discapMore) : 'detalle';
+		self::$state = get_option(self::$state) ? get_option(self::$state) : 'IncluyemeStateConf';
+		self::$city = get_option(self::$city) ? get_option(self::$city) : 'IncluyemeCityConf';
+		self::$idioma_ingles = get_option(self::$idioma_ingles) ? get_option(self::$idioma_ingles) : 'idioma_ingles';
+		self::$idioma_frances = get_option(self::$idioma_frances) ? get_option(self::$idioma_frances) : 'idioma_frances';
+		self::$idioma_portugues = get_option(self::$idioma_portugues) ? get_option(self::$idioma_portugues) : 'idioma_portugues';
+		self::$idioma_aleman = get_option(self::$idioma_aleman) ? get_option(self::$idioma_aleman) : 'idioma_aleman';
+		self::$countryIncluyeme = get_option(self::$countryIncluyeme) ? get_option(self::$countryIncluyeme) : 'IncluyemeCountryConf';
 	}
 	
 	/**
@@ -928,7 +946,7 @@ abstract class WP_Incluyeme_Countries_Abs
 					break;
 			}
 			if ($disca !== null) {
-				$result2 = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = ' . "'tipo_discapacidad'");
+				$result2 = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = ' . "'".self::$discap."'");
 				if (count($result2) > 0) {
 					$search = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta_value where meta_id  = ' . $result2[0]->id . ' and object_id = ' . $userID);
 					
@@ -959,7 +977,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$wp->get_results('UPDATE ' . self::$incluyemeUsersInformation . ' SET  	moreDis  = "' . $moreDis . '" WHERE resume_id = ' . $userID);
 		self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN (' . implode(',', $discaps) . ')');
 		if ($moreDis !== null) {
-			$result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name =  '."'detalle'");
+			$result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name =  '. "'".self::$discapMore."'");
 			if (count($result) > 0) {
 				$search = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta_value where meta_id  = ' . $result[0]->id . ' and object_id = ' . $userID);
 				
@@ -1095,16 +1113,16 @@ abstract class WP_Incluyeme_Countries_Abs
 			$idiomsName = null;
 			switch ($idioms[$i]) {
 				case 1 :
-					$idiomsName = 'idioma_ingles';
+					$idiomsName = self::$idioma_ingles;
 					break;
 				case 2:
-					$idiomsName = 'idioma_frances';
+					$idiomsName = self::$idioma_frances;
 					break;
 				case 3:
-					$idiomsName = 'idioma_portugues';
+					$idiomsName = self::$idioma_portugues;
 					break;
 				case 4:
-					$idiomsName = 'idioma_aleman';
+					$idiomsName = self::$idioma_aleman;
 					break;
 				default:
 					$idiomsName = null;
@@ -1124,8 +1142,6 @@ abstract class WP_Incluyeme_Countries_Abs
 				case 4:
 					$level = 'Bilingüe';
 					break;
-				default:
-					;
 			}
 			if ($idiomsName !== null) {
 				$result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = ' . "'" . $idiomsName . "'");
