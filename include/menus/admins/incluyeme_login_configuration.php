@@ -16,10 +16,16 @@ function incluyeme_login_configuration()
 	$idioma_portugues = 'Incluyemeidioma_portugues';
 	$idioma_aleman = 'Incluyemeidioma_aleman';
 	$country = 'IncluyemeCountryConf';
+	$incluyemeFilters = 'incluyemeFiltersCV';
 	if (isset($_POST['discap'])) {
 		$value = $_POST['discap'];
 		update_option($discap, sanitize_text_field($value));
 		update_option($discap, sanitize_text_field($value));
+	}
+	if (isset($_POST['discap_cud'])) {
+		$value = $_POST['discap_cud'];
+		update_option($incluyemeFilters, sanitize_text_field($value));
+		update_option($incluyemeFilters, sanitize_text_field($value));
 	}
 	if (isset($_POST['discap_more'])) {
 		$value = $_POST['discap_more'];
@@ -86,6 +92,14 @@ function incluyeme_login_configuration()
 							<input name="discap_more" class="form-control" id="discap_more" type="text"
 							       placeholder="Ingrese el ID del campo"
 							       value="<?php echo get_option($discapMore) ?>">
+						</div>
+						<div class="form-group">
+							<label for="discap_cud">
+								Certificado de Discapacidad
+							</label>
+							<input name="discap_cud" class="form-control" id="discap_cud" type="text"
+							       placeholder="Ingrese el ID del campo"
+							       value="<?php echo get_option($incluyemeFilters) ?>">
 						</div>
 						<div class="form-group">
 							<label for="country">

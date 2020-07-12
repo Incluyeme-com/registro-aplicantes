@@ -974,7 +974,18 @@ let app = new Vue({
             this.formFields3.push(1);
         },
         goToTop: function () {
-            document.getElementById('content').scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+            const element = document.getElementById('content')
+            const scrollElementIntoView = (element, behavior) => {
+                let scrollTop = window.pageYOffset || element.scrollTop
+                const headerOutsideIframe = window.parent.document.getElementsByClassName('custom-header')[0].clientHeight
+                const finalOffset = element.getBoundingClientRect().top + scrollTop + headerOutsideIframe
+                window.parent.scrollTo({
+                    top: finalOffset,
+                    behavior: behavior || 'auto'
+                })
+            }
+            scrollElementIntoView(element, 'smooth');
+            //   jQuery('#content')[0].scrollIntoView();
         },
         deleteStudies: async function (index) {
             this.formFields.splice(index, 1);
@@ -1037,3 +1048,4 @@ let app = new Vue({
     }
 });
 startApp();
+
