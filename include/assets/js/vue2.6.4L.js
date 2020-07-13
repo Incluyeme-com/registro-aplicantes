@@ -991,7 +991,9 @@ let app = new Vue({
             this.formFields3.push(1);
         },
         goToTop: function () {
-            document.getElementById('content').scrollIntoView({behavior: "smooth"});
+            jQuery('html, body').animate({
+                scrollTop: jQuery('#content').offset().top - 20
+            }, 500);
         },
         deleteStudies: async function (index) {
             this.formFields.splice(index, 1);
