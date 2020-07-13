@@ -974,18 +974,7 @@ let app = new Vue({
             this.formFields3.push(1);
         },
         goToTop: function () {
-            const element = document.getElementById('content')
-            const scrollElementIntoView = (element, behavior) => {
-                let scrollTop = window.pageYOffset || element.scrollTop
-                const headerOutsideIframe = window.parent.document.getElementById('header').clientHeight
-                const finalOffset = element.getBoundingClientRect().top + scrollTop + headerOutsideIframe
-                window.parent.scrollTo({
-                    top: finalOffset,
-                    behavior: behavior || 'auto'
-                })
-            }
-            scrollElementIntoView(element, 'smooth');
-            //   jQuery('#content')[0].scrollIntoView();
+            document.getElementById('content').scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
         },
         deleteStudies: async function (index) {
             this.formFields.splice(index, 1);
