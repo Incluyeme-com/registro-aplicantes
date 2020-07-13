@@ -438,7 +438,7 @@ let app = new Vue({
             return re.test(email);
         },
         confirmStep2: async function (step) {
-            this.goToTop();
+
             let confirmEmail = await this.isValidEmail(this.email);
             if (!confirmEmail || this.password === null || !this.password) {
                 this.validation = 2;
@@ -553,7 +553,6 @@ let app = new Vue({
             return true;
         },
         confirmStep3: async function (step) {
-            this.goToTop();
             if (!this.name) {
                 this.validation = 5;
                 jQuery("#names").css('border-color', "red");
@@ -587,9 +586,9 @@ let app = new Vue({
             this.userID = verifications.data.message;
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep4: async function (step) {
-            this.goToTop();
             if (!this.genre) {
                 this.validation = 7;
                 jQuery("#inlineCheckbox1").css('color', "red");
@@ -613,9 +612,10 @@ let app = new Vue({
             }
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep5: async function (step) {
-            this.goToTop();
+
             let labelPhone = jQuery("#labelPhone");
             let labelState = jQuery("#labelState");
             let labelCity = jQuery("#labelCity");
@@ -675,10 +675,10 @@ let app = new Vue({
             this.userID = verification.data.message;
             this.awaitChange = false;
             this.currentStep = step;
-
+            this.goToTop();
         },
         confirmStep7: async function (step) {
-            this.goToTop();
+
             let disCText = jQuery("#disCText");
             if (!this.moreDis) {
                 this.validation = 11;
@@ -767,15 +767,14 @@ let app = new Vue({
             await this.drop();
             this.dropzone();
             this.awaitChange = false;
-
+            this.goToTop();
         },
         confirmStep8: async function (step) {
-            this.goToTop();
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep9: async function (step) {
-            this.goToTop();
             this.pleaseAwait();
             await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 userID: this.userID,
@@ -797,9 +796,10 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep10: async function (step) {
-            this.goToTop();
+
             this.pleaseAwait();
             await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 userID: this.userID,
@@ -820,9 +820,9 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep11: async function (step) {
-            this.goToTop();
             this.pleaseAwait();
             await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 userID: this.userID,
@@ -840,6 +840,7 @@ let app = new Vue({
                 });
             this.awaitChange = false;
             this.currentStep = step;
+            this.goToTop();
         },
         confirmStep12: async function (step) {
             this.pleaseAwait();
@@ -1024,7 +1025,6 @@ let app = new Vue({
             });
         },
         confirmStep6: async function (step) {
-            this.goToTop();
             if (!this.motriz && !this.visceral && !this.auditiva && !this.visual && !this.intelectual) {
                 jQuery("#disSelects").css('color', "red");
                 this.validation = 12
@@ -1033,6 +1033,7 @@ let app = new Vue({
                 this.currentStep = step;
                 this.validation = null;
             }
+            this.goToTop();
         }
     }
 });
