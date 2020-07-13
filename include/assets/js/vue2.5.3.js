@@ -977,7 +977,7 @@ let app = new Vue({
             const element = document.getElementById('content')
             const scrollElementIntoView = (element, behavior) => {
                 let scrollTop = window.pageYOffset || element.scrollTop
-                const headerOutsideIframe = window.parent.document.getElementsByClassName('custom-header')[0].clientHeight
+                const headerOutsideIframe = window.parent.document.getElementById('header')[0].clientHeight
                 const finalOffset = element.getBoundingClientRect().top + scrollTop + headerOutsideIframe
                 window.parent.scrollTo({
                     top: finalOffset,
