@@ -239,7 +239,9 @@ let app = new Vue({
                         this.getPrefersJobs().finally();
                         this.getProvincias().finally();
                         this.currentStep = step;
+                        this.goToTop();
                     }
+                    this.goToTop();
                     break;
                 case 3:
                     if (this.currentStep <= 3) {
@@ -247,7 +249,9 @@ let app = new Vue({
                         await this.confirmStep3(step);
                     } else {
                         this.currentStep = step;
+                        this.goToTop();
                     }
+                    this.goToTop();
                     break;
                 case 4:
                     if (this.currentStep <= 4) {
@@ -256,7 +260,9 @@ let app = new Vue({
 
                     } else {
                         this.currentStep = step;
+                        this.goToTop();
                     }
+                    this.goToTop();
                     break;
                 case 5:
                     if (this.currentStep <= 5) {
@@ -265,10 +271,13 @@ let app = new Vue({
                         await this.confirmStep5(step);
                     } else {
                         this.currentStep = step;
+                        this.goToTop();
                     }
+                    this.goToTop();
                     break;
                 case 6:
                     await this.confirmStep6(step);
+                    this.goToTop();
                     break;
                 case 7:
                     if (this.currentStep <= 7) {
@@ -277,6 +286,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+                    this.goToTop();
                     break;
                 case 8:
                     if (this.currentStep <= 8) {
@@ -285,6 +295,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+                    this.goToTop();
                     break;
                 case 9:
                     if (this.currentStep <= 9) {
@@ -293,6 +304,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+                    this.goToTop();
                     break;
                 case 10:
                     if (this.currentStep <= 10) {
@@ -301,6 +313,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+                    this.goToTop();
                     break;
                 case 11:
                     if (this.currentStep <= 11) {
@@ -309,6 +322,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+                    this.goToTop();
                     break;
                 case 12:
                     if (this.currentStep <= 12) {
@@ -317,9 +331,11 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+                    this.goToTop();
                     break;
                 default:
                     this.currentStep = step;
+                    this.goToTop();
             }
 
         },
