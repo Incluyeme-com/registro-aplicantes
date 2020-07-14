@@ -918,54 +918,49 @@ abstract class WP_Incluyeme_Countries_Abs
 		for ($i = 0; $i < count($discaps); $i++) {
 			$result = self::$wp->get_results('SELECT * from ' . self::$usersDiscapTable . ' where resume_id = ' . $userID . '  AND discap_id = ' . $discaps[$i]);
 			$resultD = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'incluyeme_discapacities where  id = ' . $discaps[$i]);
-			$disca = [];
+			
+			$disca = null;
 			switch ($resultD[0]->discap_name) {
 				case 'Motriz':
-					array_push($disca, 'Motriz');
+					$disca = 'Motriz';
 					break;
 				case 'Auditiva':
-					array_push($disca, 'Auditiva');
+					$disca = 'Auditiva';
 					break;
 				case 'Visual':
-					array_push($disca, 'Visual');
+					$disca = 'Visual';
 					break;
 				case 'Visceral':
-					array_push($disca, 'Visceral');
+					$disca = 'Visceral';
 					break;
 				case 'Intelectual':
-					array_push($disca, 'Intelectual');
+					$disca = 'Intelectual';
 					break;
 				case 'Psíquica':
-					array_push($disca, 'Psíquica');
+					$disca = 'Psíquica';
 					break;
 				case 'Habla':
-					array_push($disca, 'Lenguaje');
+					$disca = 'Lenguaje';
 					break;
 				default:
 					$disca = null;
 					break;
 			}
-			if (count($disca) == 0) {
-				for ($i = 0; $i < $disca; $i++) {
-					$result2 = self::$wp->get_results("SELECT * from " . self::$dataPrefix . "wpjb_meta where 	meta_type = 3 and name = '" . self::$discap . "'");
-					if (count($result2) > 0) {
-						$search = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta_value where meta_id  = ' . $result2[0]->id . ' and object_id = ' . $userID . ' and value = ' . $disca[$i] );
-						
-						if (count($search) > 0) {
-							self::$wp->update(self::$dataPrefix . 'wpjb_meta_value', [
-								'value' => $disca[$i],
-								'meta_id' =>
-									$result2[0]->id,
-								'object_id' => $userID], ['meta_id' =>
-								$result2[0]->id,
-								'object_id' => $userID]);
-						} else if (count($result) > 0) {
-							self::$wp->insert(self::$dataPrefix . 'wpjb_meta_value', [
-								'value' => $disca[$i],
-								'meta_id' =>
-									$result2[0]->id,
-								'object_id' => $userID]);
-						}
+			$query = 'Hola';
+			if (count($disca) != null) {
+				
+				$result2 = self::$wp->get_results("SELECT * from " . self::$dataPrefix . "wpjb_meta where 	meta_type = 3 and name = '" . self::$discap . "'");
+				
+				if (count($result2) > 0) {
+					$search = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta_value where meta_id  = ' . $result2[0]->id . ' and object_id = ' . $userID . ' and value = "' . $disca.'"');
+					
+					if (count($search) > 0) {
+						$query = "UPDATE " . self::$dataPrefix . 'wpjb_meta_value set value = ' . "'" . $disca . "', meta_id =  " . $result2[0]->id .
+							'object_id = ' . $userID . ' WHERE meta_id = ' . $result2[0]->id . ' AND object_id = ' . $userID;
+						self::$wp->query($query);
+					} else if (count($result) > 0) {
+						$query = "INSERT INTO " . self::$dataPrefix . "wpjb_meta_value (value, meta_id, object_id) VALUES (" . "'" . $disca . "'," . $result2[0]->id . ',' . $userID . ")";
+						self::$wp->query($query);
 					}
 				}
 			}

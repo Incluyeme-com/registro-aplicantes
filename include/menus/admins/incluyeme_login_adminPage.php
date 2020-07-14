@@ -52,28 +52,24 @@ function incluyeme_login_adminPage()
 WHERE resume_id NOT IN (SELECT
       " . $prefix . "wpjb_resume.id
     FROM " . $prefix . "wpjb_resume);";
-		$query = $wpdb->prepare($query);
 		$wpdb->query($query);
 		$query = "	DELETE
   FROM " . $prefix . "incluyeme_users_idioms
 WHERE resume_id NOT IN (SELECT
       " . $prefix . "wpjb_resume.id
     FROM " . $prefix . "wpjb_resume); ";
-		$query = $wpdb->prepare($query);
 		$wpdb->query($query);
 		$query = "  DELETE
   FROM " . $prefix . "incluyeme_users_information
 WHERE resume_id NOT IN (SELECT
       " . $prefix . "wpjb_resume.id
     FROM " . $prefix . "wpjb_resume); ";
-		$query = $wpdb->prepare($query);
 		$wpdb->query($query);
 		$query = " DELETE
   FROM " . $prefix . "incluyeme_users_questions
 WHERE resume_id NOT IN (SELECT
       " . $prefix . "wpjb_resume.id
     FROM " . $prefix . "wpjb_resume);";
-		$query = $wpdb->prepare($query);
 		$wpdb->query($query);
 	}
 	?>
@@ -214,28 +210,28 @@ function incluyemeSave_Login_Options()
 WHERE resume_id NOT IN (SELECT
       " . $prefix . "wpjb_resume.id
     FROM " . $prefix . "wpjb_resume);";
-		$query = $wpdb->prepare($query);
+
 		$wpdb->query($query);
 		$query = "	DELETE
   FROM " . $prefix . "incluyeme_users_idioms
 WHERE resume_id NOT IN (SELECT
       " . $prefix . "wpjb_resume.id
     FROM " . $prefix . "wpjb_resume); ";
-		$query = $wpdb->prepare($query);
+	
 		$wpdb->query($query);
 		$query = "  DELETE
   FROM " . $prefix . "incluyeme_users_information
 WHERE resume_id NOT IN (SELECT
       " . $prefix . "wpjb_resume.id
     FROM " . $prefix . "wpjb_resume); ";
-		$query = $wpdb->prepare($query);
+		
 		$wpdb->query($query);
 		$query = " DELETE
   FROM " . $prefix . "incluyeme_users_questions
 WHERE resume_id NOT IN (SELECT
       " . $prefix . "wpjb_resume.id
     FROM " . $prefix . "wpjb_resume);";
-		$query = $wpdb->prepare($query);
+
 		$wpdb->query($query);
 	}
 	wp_redirect(get_current_screen());
