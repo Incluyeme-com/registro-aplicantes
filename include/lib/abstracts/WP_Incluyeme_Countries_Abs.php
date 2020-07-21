@@ -1123,7 +1123,7 @@ abstract class WP_Incluyeme_Countries_Abs
 					break;
 			}
 			$level = 'No hablo';
-			switch ($oLevel[$i]) {
+			switch ($sLevel[$i]) {
 				case 1 :
 					$level = 'Básico';
 					break;
@@ -1136,6 +1136,38 @@ abstract class WP_Incluyeme_Countries_Abs
 				case 4:
 					$level = 'Bilingüe';
 					break;
+			}
+			if ($idiomsName !== null) {
+				switch ($oLevel[$i]) {
+					case 1 :
+						$level = 'Básico';
+						break;
+					case 2:
+						$level = 'Intermedio';
+						break;
+					case 3:
+						$level = 'Avanzado';
+						break;
+					case 4:
+						$level = 'Bilingüe';
+						break;
+				}
+			}
+			if ($idiomsName !== null) {
+				switch ($wLevel[$i]) {
+					case 1 :
+						$level = 'Básico';
+						break;
+					case 2:
+						$level = 'Intermedio';
+						break;
+					case 3:
+						$level = 'Avanzado';
+						break;
+					case 4:
+						$level = 'Bilingüe';
+						break;
+				}
 			}
 			if ($idiomsName !== null) {
 				$result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = ' . "'" . $idiomsName . "'");

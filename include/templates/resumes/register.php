@@ -1804,11 +1804,13 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 									Otro
 								</option>
 							</select>
+							<div class="pt-2">
+								<input placeholder="Por favor, escriba el nombre del idioma" id="idioms"
+								       v-model="idiomsOther[pos]" class="form-control" type="text"
+								       v-if="idioms[pos] == 'Otro'">
+							</div>
 						</x-incluyeme>
-						<div class="pt-2">
-							<input placeholder="Por favor, escriba el nombre del idioma" id="idioms" v-model="idiomsOther[pos]" class="form-control" type="text"
-							       v-if="idioms[pos] == 'Otro'">
-						</div>
+					
 					</x-incluyeme>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
