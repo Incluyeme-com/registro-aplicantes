@@ -131,12 +131,19 @@ WHERE resume_id NOT IN (SELECT
 									        class="form-control"
 									        id="incluyemeLoginEstado"
 									        name="incluyemeLoginEstado">
-											<option <?php echo get_option($incluyemeLoginEstado) === 'Estado' ?  'selected' : '' ?> value="Estado"> Estado</option>
-										<option <?php echo get_option($incluyemeLoginEstado) === 'Provincia' ?  'selected' : '' ?> value="Provincia"> Provincia</option>
+										<option <?php echo get_option($incluyemeLoginEstado) === 'Estado' ? 'selected' : '' ?>
+												value="Estado"> Estado
+										</option>
+										<option <?php echo get_option($incluyemeLoginEstado) === 'Provincia' ? 'selected' : '' ?>
+												value="Provincia"> Provincia
+										</option>
+										<option <?php echo get_option($incluyemeLoginEstado) === 'Departamento' ? 'selected' : '' ?>
+												value="Departamento"> Departamento
+										</option>
 									
 									</select>
 								</div>
-								
+							
 							</div>
 							<div class="text-right mt-2">
 								<button type="submit"
