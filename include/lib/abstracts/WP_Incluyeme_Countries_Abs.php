@@ -38,6 +38,7 @@ abstract class WP_Incluyeme_Countries_Abs
 	private static $idioma_portugues = 'Incluyemeidioma_portugues';
 	private static $idioma_aleman = 'Incluyemeidioma_aleman';
 	private static $countryIncluyeme = 'IncluyemeCountryConf';
+	private static $usersIdiomsOthers = 'usersIdiomsOthers';
 	
 	public function __construct()
 	{
@@ -73,6 +74,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		self::$idioma_portugues = get_option(self::$idioma_portugues) ? get_option(self::$idioma_portugues) : 'idioma_portugues';
 		self::$idioma_aleman = get_option(self::$idioma_aleman) ? get_option(self::$idioma_aleman) : 'idioma_aleman';
 		self::$countryIncluyeme = get_option(self::$countryIncluyeme) ? get_option(self::$countryIncluyeme) : 'IncluyemeCountryConf';
+		self::$usersIdiomsOthers = get_option(self::$usersIdiomsOthers) ? get_option(self::$usersIdiomsOthers) : 'usersIdiomsOthers';
 	}
 	
 	/**
@@ -135,6 +137,12 @@ abstract class WP_Incluyeme_Countries_Abs
 	{
 		global $wpdb;
 		return $wpdb->get_results("SELECT * from " . self::$idioms . " WHERE active = 1");
+	}
+	
+	public static function allIdiomResume()
+	{
+		global $wpdb;
+		return $wpdb->get_results("SELECT * from " . self::$idioms . " WHERE active = 1 order by id LIMIT 4");
 	}
 	
 	public static function allLevels()
@@ -1073,16 +1081,23 @@ abstract class WP_Incluyeme_Countries_Abs
 	
 	public static function updateIdioms($userID, $idioms, $oLevel, $wLevel, $sLevel, $idiomsOther)
 	{
+		$idiomsOthers = '';
 		for ($i = 0; $i < count($idioms); $i++) {
 			if ($idiomsOther[$i] !== null) {
-				$result = self::$wp->get_results('SELECT * from ' . self::$idioms . ' where name_idioms = ' . '"'.$idiomsOther[$i].'"');
+				if ($i == 0) {
+					$idiomsOthers .= $idiomsOther[$i];
+				} else {
+					$idiomsOthers .= ", " . $idiomsOther[$i] . ' ';
+				}
+				$result = self::$wp->get_results('SELECT * from ' . self::$idioms . ' where name_idioms = ' . '"' . $idiomsOther[$i] . '"');
 				if (count($result) <= 0) {
 					self::$wp->insert(self::$idioms, ['name_idioms' => $idiomsOther[$i]]);
 					$idioms[$i] = self::$wp->insert_id;
-				}else {
+				} else {
 					$idioms[$i] = $result[0]->id;
 				}
 			}
+			
 			$result = self::$wp->get_results('SELECT * from ' . self::$usersIdioms . ' where resume_id = ' . $userID . '  AND idioms_id = ' . $idioms[$i]);
 			if (count($result) > 0) {
 				self::$wp->update(self::$usersIdioms, [
@@ -1190,6 +1205,22 @@ abstract class WP_Incluyeme_Countries_Abs
 							'object_id' => $userID]);
 					}
 				}
+			}
+		}
+		
+		if ($idiomsOthers !== '') {
+			$result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name =  ' . "'" . self::$usersIdiomsOthers . "'");
+			if (count($result) > 0) {
+				self::$wp->delete(self::$dataPrefix . "wpjb_meta_value", [
+					'object_id' => $userID,
+					'meta_id' => $result[0]->id
+				]);
+				self::$wp->insert(self::$dataPrefix . "wpjb_meta_value", [
+					'value' => $idiomsOthers,
+					'object_id' => $userID,
+					'meta_id' => $result[0]->id
+				
+				]);
 			}
 		}
 		self::$wp->get_results('DELETE from ' . self::$usersIdioms . ' WHERE resume_id = ' . $userID . '  AND idioms_id NOT IN (' . implode(',', $idioms) . ')');

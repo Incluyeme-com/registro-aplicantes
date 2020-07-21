@@ -7,6 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 		echo $studies->json_response(200, $studies::allLevels());
 		return;
 	}
+	if (isset($_GET["idiomsAll"])) {
+		echo $studies->json_response(200, $studies::allIdiomResume());
+		return;
+	}
 	echo $studies->json_response(200, $studies::allIdioms());
 	return;
 }

@@ -17,6 +17,7 @@ function incluyeme_login_configuration()
 	$idioma_aleman = 'Incluyemeidioma_aleman';
 	$country = 'IncluyemeCountryConf';
 	$incluyemeFilters = 'incluyemeFiltersCV';
+	$other_idioms = 'usersIdiomsOthers';
 	if (isset($_POST['discap'])) {
 		$value = $_POST['discap'];
 		update_option($discap, sanitize_text_field($value));
@@ -66,6 +67,11 @@ function incluyeme_login_configuration()
 		$value = $_POST['idioma_aleman'];
 		update_option($idioma_aleman, sanitize_text_field($value));
 		update_option($idioma_aleman, sanitize_text_field($value));
+	}
+	if (isset($_POST['other_idioms'])) {
+		$value = $_POST['other_idioms'];
+		update_option($other_idioms, sanitize_text_field($value));
+		update_option($other_idioms, sanitize_text_field($value));
 	}
 	?>
 	<div class="container">
@@ -157,6 +163,14 @@ function incluyeme_login_configuration()
 							<input name="idioma_aleman" class="form-control" id="idioma_aleman" type="text"
 							       placeholder="Ingrese el ID del campo para el idioma Aleman"
 							       value="<?php echo get_option($idioma_aleman) ?>">
+						</div>
+						<div class="form-group">
+							<label for="other_idioms">
+								Otro Idioma
+							</label>
+							<input name="other_idioms" class="form-control" id="other_idioms" type="text"
+							       placeholder="Ingrese el ID del campo para otros idiomas"
+							       value="<?php echo get_option($other_idioms) ?>">
 						</div>
 					 <div class="text-right mt-2">
 								<button type="submit"

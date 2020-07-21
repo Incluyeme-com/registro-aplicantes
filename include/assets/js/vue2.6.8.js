@@ -973,7 +973,7 @@ let app = new Vue({
         },
         getIdioms: async function (url) {
             let idioms = await jQuery.ajax({
-                url: this.url + '/incluyeme-login-extension/include/search/idioms.php?idioms=all',
+                url: this.url + '/incluyeme-login-extension/include/search/idioms.php?idiomsAll=allRegistro',
                 type: 'GET',
                 dataType: 'json'
             }).done(success => {
