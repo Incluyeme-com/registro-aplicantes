@@ -543,7 +543,7 @@ let app = new Vue({
             }).done(function (response, status, xhr) {
                 var ct = xhr.getResponseHeader("content-type") || "";
                 if (ct.indexOf('html') > -1) {
-                    window.location.href = '/candidate-panel';
+                    window.location.href = '/trabajos';
                 }
                 return response
             })
