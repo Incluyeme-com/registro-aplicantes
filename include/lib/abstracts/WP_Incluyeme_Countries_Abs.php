@@ -177,66 +177,7 @@ abstract class WP_Incluyeme_Countries_Abs
 					$user = get_user_by('email', $payload['email']);
 					self::$userID = $user->ID;
 					self::auto_login_new_userSocial();
-					$redirect_to = site_url() . '/candidate-panel';
-					wp_redirect($redirect_to);
-					exit();
-				}
-				self::registerUser($email, $password, $name, $lastName, true);
-				$user = get_user_by('email', $payload['email']);
-				self::$userID = $user->ID;
-				return self::$userID;
-			}
-		}
-		if ($facebook !== false && $facebook !== null) {
-			$fb = new \Facebook\Facebook([
-				'app_id' => get_option(self::$incluyemeLoginFB),
-				'app_secret' => '46ed8df24e9f25d435e2a9002949b610',
-				'default_graph_version' => 'v2.10',
-			]);
-			try {
-				$response = $fb->get(
-					'/me?fields=first_name, last_name,email',
-					$facebook
-				);
-			} catch (\Facebook\Exceptions\FacebookResponseException $e) {
-				return false;
-			} catch (\Facebook\Exceptions\FacebookSDKException $e) {
-				return false;
-			}
-			
-			$me = $response->getGraphUser();
-			$email = $me->getProperty('email');
-			$password = $me->getProperty('email') . $me->getProperty('first_name');
-			$name = $me->getProperty('first_name');
-			$lastName = $me->getProperty('last_name');
-			$user = email_exists($email);
-			if ($user) {
-				$user = get_user_by('email', $email);
-				self::$userID = $user->ID;
-				self::auto_login_new_userSocial();
-				$redirect_to = site_url() . '/candidate-panel';
-				wp_redirect($redirect_to);
-				exit();
-			}
-			self::registerUser($email, $password, $name, $lastName, true);
-			return 78523;
-		} else {
-			return false;
-		}
-	}
-	
-	public static function searchUserExistSocialINIT($email, $password, $name, $lastName, $google = null, $facebook = null)
-	{
-		if ($google !== false && $google !== null && $password !== $name) {
-			$client = new Google_Client(['client_id' => get_option(self::$incluyemeLoginGoogle)]);
-			$payload = $client->verifyIdToken($google);
-			if ($payload) {
-				$user = email_exists($payload['email']);
-				if ($payload['email'] == $email && $user) {
-					$user = get_user_by('email', $payload['email']);
-					self::$userID = $user->ID;
-					self::auto_login_new_userSocial();
-					$redirect_to = site_url() . '/candidate-panel';
+					$redirect_to = site_url() . '/trabajos/';
 					wp_redirect($redirect_to);
 					exit();
 				}
@@ -273,7 +214,66 @@ abstract class WP_Incluyeme_Countries_Abs
 				$user = get_user_by('email', $email);
 				self::$userID = $user->ID;
 				self::auto_login_new_userSocial();
-				$redirect_to = site_url() . '/candidate-panel';
+				$redirect_to = site_url() . '/trabajos/';
+				wp_redirect($redirect_to);
+				exit();
+			}
+			self::registerUser($email, $password, $name, $lastName, true);
+			return 78523;
+		} else {
+			return false;
+		}
+	}
+	
+	public static function searchUserExistSocialINIT($email, $password, $name, $lastName, $google = null, $facebook = null)
+	{
+		if ($google !== false && $google !== null && $password !== $name) {
+			$client = new Google_Client(['client_id' => get_option(self::$incluyemeLoginGoogle)]);
+			$payload = $client->verifyIdToken($google);
+			if ($payload) {
+				$user = email_exists($payload['email']);
+				if ($payload['email'] == $email && $user) {
+					$user = get_user_by('email', $payload['email']);
+					self::$userID = $user->ID;
+					self::auto_login_new_userSocial();
+					$redirect_to = site_url() . '/trabajos';
+					wp_redirect($redirect_to);
+					exit();
+				}
+				self::registerUser($email, $password, $name, $lastName, true);
+				$user = get_user_by('email', $payload['email']);
+				self::$userID = $user->ID;
+				return self::$userID;
+			}
+		}
+		if ($facebook !== false && $facebook !== null) {
+			$fb = new \Facebook\Facebook([
+				'app_id' => get_option(self::$incluyemeLoginFB),
+				'app_secret' => get_option(self::$incluyemeLoginFBSECRET),
+				'default_graph_version' => 'v2.10',
+			]);
+			try {
+				$response = $fb->get(
+					'/me?fields=first_name, last_name,email',
+					$facebook
+				);
+			} catch (\Facebook\Exceptions\FacebookResponseException $e) {
+				return false;
+			} catch (\Facebook\Exceptions\FacebookSDKException $e) {
+				return false;
+			}
+			
+			$me = $response->getGraphUser();
+			$email = $me->getProperty('email');
+			$password = $me->getProperty('email') . $me->getProperty('first_name');
+			$name = $me->getProperty('first_name');
+			$lastName = $me->getProperty('last_name');
+			$user = email_exists($email);
+			if ($user) {
+				$user = get_user_by('email', $email);
+				self::$userID = $user->ID;
+				self::auto_login_new_userSocial();
+				$redirect_to = site_url() . '/trabajos';
 				wp_redirect($redirect_to);
 				exit();
 			}
@@ -289,7 +289,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		@ob_flush();
 		@ob_end_flush();
 		@ob_end_clean();
-		$redirect_to = site_url() . '/candidate-panel';
+		$redirect_to = site_url() . '/trabajos';
 		wp_safe_redirect($redirect_to);
 		exit;
 	}
