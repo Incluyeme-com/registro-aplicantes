@@ -28,6 +28,8 @@ $FBappId = get_option($incluyemeLoginFB);
 $FBversion = 'v7';
 $incluyemeLoginFB = 'incluyemeLoginFB';
 $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+$incluyemeLoginCountry = 'incluyemeLoginCountry';
+$incluyemeLoginEstado = 'incluyemeLoginEstado';
 ?>
 <style>
 	.form-control {
@@ -329,7 +331,7 @@ $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 			<div class="container mt-2">
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="col-6">
-						<label for="state"><?php _e("Provincia/Estado ", "incluyeme-login-extension"); ?></label>
+						<label for="state"><?php _e( ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado'), "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-6">
 						<input v-model="state" type="text" class="form-control" id="state">
