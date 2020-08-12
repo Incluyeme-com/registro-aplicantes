@@ -18842,5 +18842,67 @@ VALUES ('Artigas', 'UY'),
        ('Paraguarí', 'PY'),
        ('Presidente Hayes', 'PY'),
        ('San Pedro', 'PY'); --
-
-
+DELETE
+FROM wp_incluyeme_provincias
+WHERE incluyeme_provincias_id IN (555,
+                                  556,
+                                  557,
+                                  558,
+                                  559,
+                                  560,
+                                  561,
+                                  562,
+                                  563,
+                                  564,
+                                  565,
+                                  566,
+                                  567,
+                                  568,
+                                  569,
+                                  570,
+                                  571,
+                                  572,
+                                  573,
+                                  574,
+                                  575,
+                                  576,
+                                  577,
+                                  578,
+                                  579,
+                                  580,
+                                  581,
+                                  582,
+                                  583); --
+INSERT INTO wp_incluyeme_provincias (`cities_provin`, `country_code`, `incluyeme_provincias_id`)
+VALUES ('Santiago', 'CL', 555),
+       ('Valparaíso', 'CL', 557),
+       ('Biobío', 'CL', 559),
+       ('Antofagasta', 'CL', 560),
+       ('Santiago', 'CL', 561),
+       ('La Araucan', 'CL', 562),
+       ('O`Higgins', 'CL', 564),
+       ('Tarapac', 'CL', 565),
+       ('Maule', 'CL', 566),
+       ('Los Lagos', 'CL', 570),
+       ('Coquimbo', 'CL', 571),
+       ('Los Lagos', 'CL', 572),
+       ('Antofagasta', 'CL', 574),
+       ('Magallanes', 'CL', 576),
+       ('Atacama', 'CL', 577),
+       ('Maule', 'CL', 579),
+       ('Coquimbo', 'CL', 580); --
+UPDATE wp_incluyeme_cities
+SET cities_location = 'Biobío'
+WHERE cities_location = 'B?ob'; --
+UPDATE wp_incluyeme_cities
+SET cities_location = 'O`Higgins'
+WHERE cities_location = 'O?Higgins'; --
+UPDATE wp_incluyeme_cities
+SET cities_location = 'Valparaíso'
+WHERE cities_location = 'Valpara?so'; --
+UPDATE wp_incluyeme_cities
+SET cities_name = 'Viña del Mar'
+WHERE cities_name = 'Vi?a del Mar'; --
+UPDATE wp_incluyeme_cities
+SET cities_name = 'Valparaíso'
+WHERE cities_name = 'Valpara?so'; --
