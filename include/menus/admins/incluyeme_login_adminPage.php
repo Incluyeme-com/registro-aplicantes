@@ -140,8 +140,8 @@ WHERE resume_id NOT IN (SELECT
 										<option <?php echo get_option($incluyemeLoginEstado) === 'Departamento' ? 'selected' : '' ?>
 												value="Departamento"> Departamento
 										</option>
-										<option <?php echo get_option($incluyemeLoginEstado) === 'Regiones' ? 'selected' : '' ?>
-												value="Regiones"> Regiones
+										<option <?php echo get_option($incluyemeLoginEstado) === 'Región' ? 'selected' : '' ?>
+												value="Región"> Regiones
 										</option>
 									
 									</select>
