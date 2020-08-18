@@ -17247,7 +17247,7 @@ VALUES ('Ningxia', 'CH', 2027),
        ('Chihuahua', 'ME', 2521),
        ('Baja California', 'ME', 2522),
        ('Guanajuato', 'ME', 2523),
-       ('Nuevo Le', 'ME', 2524),
+       ('Nuevo León', 'ME', 2524),
        ('Jalisco', 'ME', 2525),
        ('M?xico', 'ME', 2526),
        ('Baja California', 'ME', 2527),
@@ -17257,7 +17257,7 @@ VALUES ('Ningxia', 'CH', 2027),
        ('Yucat', 'ME', 2531),
        ('Chihuahua', 'ME', 2532),
        ('San Luis Potos', 'ME', 2533),
-       ('Nuevo Le', 'ME', 2534),
+       ('Nuevo León', 'ME', 2534),
        ('M?xico', 'ME', 2535),
        ('Aguascalientes', 'ME', 2536),
        ('Quer?taro de Arteaga', 'ME', 2537),
@@ -17266,7 +17266,7 @@ VALUES ('Ningxia', 'CH', 2027),
        ('Coahuila de Zaragoza', 'ME', 2540),
        ('Coahuila de Zaragoza', 'ME', 2541),
        ('Tabasco', 'ME', 2542),
-       ('Nuevo Le', 'ME', 2543),
+       ('Nuevo León', 'ME', 2543),
        ('Durango', 'ME', 2544),
        ('M?xico', 'ME', 2545),
        ('Jalisco', 'ME', 2546),
@@ -17292,7 +17292,7 @@ VALUES ('Ningxia', 'CH', 2027),
        ('Nayarit', 'ME', 2566),
        ('Tamaulipas', 'ME', 2567),
        ('M?xico', 'ME', 2568),
-       ('Nuevo Le', 'ME', 2569),
+       ('Nuevo León', 'ME', 2569),
        ('Sinaloa', 'ME', 2570),
        ('Durango', 'ME', 2571),
        ('Chiapas', 'ME', 2572),
@@ -17303,9 +17303,9 @@ VALUES ('Ningxia', 'CH', 2027),
        ('Oaxaca', 'ME', 2577),
        ('M?xico', 'ME', 2578),
        ('Hidalgo', 'ME', 2579),
-       ('Nuevo Le', 'ME', 2580),
+       ('Nuevo León', 'ME', 2580),
        ('Guanajuato', 'ME', 2581),
-       ('Nuevo Le', 'ME', 2582),
+       ('Nuevo León', 'ME', 2582),
        ('Puebla', 'ME', 2583),
        ('M?xico', 'ME', 2584),
        ('Tabasco', 'ME', 2585),
@@ -17360,7 +17360,7 @@ VALUES ('Ningxia', 'CH', 2027),
        ('Coahuila de Zaragoza', 'ME', 2634),
        ('Tamaulipas', 'ME', 2635),
        ('Veracruz', 'ME', 2636),
-       ('Nuevo Le', 'ME', 2637),
+       ('Nuevo León', 'ME', 2637),
        ('Chihuahua', 'ME', 2638),
        ('Colima', 'ME', 2639),
        ('Guerrero', 'ME', 2640),
@@ -18843,7 +18843,7 @@ VALUES ('Artigas', 'UY'),
        ('Presidente Hayes', 'PY'),
        ('San Pedro', 'PY'); --
 DELETE
-FROM wp_incluyeme_provincias
+FROM `{$wpdb->prefix}incluyeme_provincias`
 WHERE incluyeme_provincias_id IN (555,
                                   556,
                                   557,
@@ -18873,7 +18873,7 @@ WHERE incluyeme_provincias_id IN (555,
                                   581,
                                   582,
                                   583); --
-INSERT INTO wp_incluyeme_provincias (`cities_provin`, `country_code`, `incluyeme_provincias_id`)
+INSERT INTO `{$wpdb->prefix}incluyeme_provincias` (`cities_provin`, `country_code`, `incluyeme_provincias_id`)
 VALUES ('Santiago', 'CL', 555),
        ('Valparaíso', 'CL', 557),
        ('Biobío', 'CL', 559),
@@ -18891,18 +18891,66 @@ VALUES ('Santiago', 'CL', 555),
        ('Atacama', 'CL', 577),
        ('Maule', 'CL', 579),
        ('Coquimbo', 'CL', 580); --
-UPDATE wp_incluyeme_cities
+UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'Biobío'
 WHERE cities_location = 'B?ob'; --
-UPDATE wp_incluyeme_cities
+UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'O`Higgins'
 WHERE cities_location = 'O?Higgins'; --
-UPDATE wp_incluyeme_cities
+UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'Valparaíso'
 WHERE cities_location = 'Valpara?so'; --
-UPDATE wp_incluyeme_cities
+UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_name = 'Viña del Mar'
 WHERE cities_name = 'Vi?a del Mar'; --
-UPDATE wp_incluyeme_cities
+UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_name = 'Valparaíso'
 WHERE cities_name = 'Valpara?so'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'México'
+WHERE cities_location = 'M?xico'; --
+
+DELETE a FROM `{$wpdb->prefix}incluyeme_provincias` a
+	              INNER JOIN `{$wpdb->prefix}incluyeme_provincias` a2
+WHERE a.incluyeme_provincias_id < a2.incluyeme_provincias_id
+  AND   a.	cities_provin = a2.	cities_provin
+  AND   a.	cities_provin  = a2.	cities_provin; --
+
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET country_code = 'MX'
+WHERE country_code = 'ME'; --
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Queretaro'
+WHERE cities_provin = 'Quer?taro'; --
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Queretaro de Arteaga'
+WHERE cities_provin = 'Quer?taro de Arteaga'; --
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Michoacán de Ocampo'
+WHERE cities_provin = 'Michoac?n de Ocampo'; --
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'México'
+WHERE cities_provin = 'M?xico'; --
+
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Nezahualcóyotl'
+WHERE cities_name = 'Nezahualc?yotl'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Naucalpan de Juárez'
+WHERE cities_name = 'Naucalpan de Ju?rez'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Atizapán de Zaragoza'
+WHERE cities_name = 'Atizap?n de Zaragoza'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Cuautitlan Izcalli'
+WHERE cities_name = 'Cuautitl?n Izcalli'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Nicolás Romero'
+WHERE cities_name = 'Nicol?s Romero'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Coacalco de Berriozábal'
+WHERE cities_name = 'Coacalco de Berrioz?bal'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Nicolás Romero'
+WHERE cities_name = 'Coacalco de Berrioz?bal'; --
