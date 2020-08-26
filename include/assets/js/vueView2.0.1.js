@@ -163,19 +163,19 @@ let app = new Vue({
             this.myCV = assets[2];
             this.myCUD = assets[1];
             this.myIMG = assets[0];
-            this.name = data.message.name;
-            this.moreDis = information.moreDis;
-            this.lastName = data.message.last_name;
-            this.mPhone = information.codphonem;
-            this.state = information.province;
-            this.city = information.city;
-            this.fPhone = information.codphonef;
-            this.fiPhone = information.phonef;
-            this.street = information.street;
-            this.genre = information.genre;
-            this.dateBirthDay = information.birthday;
-            this.phone = information.phonem;
-            this.preferJobs = information.preferjob_id;
+            this.name = data.message.name || '';
+            this.moreDis = information.moreDis || '';
+            this.lastName = data.message.last_name || '';
+            this.mPhone = information.codphonem || '';
+            this.state = information.province || '';
+            this.city = information.city || '';
+            this.fPhone = information.codphonef || '';
+            this.fiPhone = information.phonef || '';
+            this.street = information.street || '';
+            this.genre = information.genre || '';
+            this.dateBirthDay = information.birthday || '';
+            this.phone = information.phonem || '';
+            this.preferJobs = information.preferjob_id || '';
             for (let i = 0; i < works.length; i++) {
                 try {
                     const stringChange = this.breakStringWork(works[i].detail_description)
@@ -210,6 +210,7 @@ let app = new Vue({
                 this.dateStudiesH.push(studies[i.completed_at]);
 
                 this.formFields.push(i + 1);
+
             }
             for (let i = 0; i < idioms.length; i++) {
                 this.idioms[i] = idioms[i].idioms_id;
