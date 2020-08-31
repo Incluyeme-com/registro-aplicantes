@@ -376,13 +376,14 @@ if (count($query) < 1) {
 	$baseurl = wp_upload_dir();
 	$baseurl = $baseurl['baseurl'];
 	$incluyemeNames = 'incluyemeNamesCV';
-	$incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
-	$FBappId = get_option($incluyemeLoginFB);
-	$FBversion = 'v7';
 	$incluyemeLoginFB = 'incluyemeLoginFB';
 	$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
 	$incluyemeLoginCountry = 'incluyemeLoginCountry';
 	$incluyemeLoginEstado = 'incluyemeLoginEstado';
+	$incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
+	$FBappId = get_option($incluyemeLoginFB);
+	$FBversion = 'v7';
+
 	?>
 	<style>
         .form-control {

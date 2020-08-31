@@ -18954,3 +18954,89 @@ WHERE cities_name = 'Coacalco de Berrioz?bal'; --
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_name = 'Nicolás Romero'
 WHERE cities_name = 'Coacalco de Berrioz?bal'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'San Miguel de Tucumán'
+WHERE cities_name = 'San Miguel de Tucum'; --
+
+DELETE
+  FROM `{$wpdb->prefix}incluyeme_provincias`
+WHERE country_code = 'AR'; --
+
+
+
+INSERT INTO `{$wpdb->prefix}incluyeme_provincias` (cities_provin, country_code)
+VALUES ('Buenos Aires', 'AR'),
+       ('Catamarca', 'AR'),
+       ('Chubut', 'AR'),
+       ('Córdoba', 'AR'),
+       ('Corrientes', 'AR'),
+       ('Entre Ríos', 'AR'),
+       ('Formosa', 'AR'),
+       ('Jujuy', 'AR'),
+       ('La Pampa', 'AR'),
+       ('La Rioja', 'AR'),
+       ('Mendoza', 'AR'),
+       ('Misiones', 'AR'),
+       ('Neuquén', 'AR'),
+       ('Río Negro', 'AR'),
+       ('Salta', 'AR'),
+       ('San Juan', 'AR'),
+       ('San Luis', 'AR'),
+       ('Santa Cruz', 'AR'),
+       ('Santa Fe', 'AR'),
+       ('Santiago del Estero', 'AR'),
+       ('Tierra del Fuego, Antártida e Islas del Atlántico Sur', 'AR'),
+       ('Tucumán', 'AR'); --
+
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Tucumán'
+WHERE cities_location = 'Tucum'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Santa Fe'
+WHERE cities_location = 'Santa F'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Entre Ríos'
+WHERE cities_location = 'Entre Rios'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'San Miguel de Tucumán'
+WHERE cities_name = 'San Miguel de Tucum'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'José C. Paz'
+WHERE cities_name = 'Jos? C. Paz'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Lanús'
+WHERE cities_name = 'Lan?s'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Bahía Blanca'
+WHERE cities_name = 'Bah?a Blanca'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'San Nicolás de los Arroyos'
+WHERE cities_name = 'San Nicol?s de los Arroyos'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Vicente López'
+WHERE cities_name = 'Vicente L?pez'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Ituzaingó'
+WHERE cities_name = 'Ituzaing'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'General San Martín'
+WHERE cities_name = 'General San Mart'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Santa F'
+WHERE cities_name = 'Santa Fe'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Morón'
+WHERE cities_name = 'Mor'; --
