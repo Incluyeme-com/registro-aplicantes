@@ -50,12 +50,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		return;
 	}
 	
-	if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['lastName'])) {
+	if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['lastName']) && isset($_POST['haveDiscap'])) {
 		$email = sanitize_email($_POST['email']);
 		$password = sanitize_email($_POST['password']);
 		$name = sanitize_text_field($_POST['name']);
 		$lastName = sanitize_text_field($_POST['lastName']);
-		echo $verifications->json_response(200, $verifications::registerUser($email, $password, $name, $lastName));
+		$haveDiscap = $_POST['haveDiscap'];
+		$response = $verifications::registerUser($email, $password, $name, $lastName);
+		
+		echo $verifications->json_response(200, $response);
 		return;
 	}
 	if (isset($_POST['userID']) && isset($_POST['country_edu'])) {
@@ -82,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$_POST['userID']));
 		return;
 	}
-	if ( isset($_POST['genre'])) {
+	if (isset($_POST['genre'])) {
 		echo $verifications->json_response(200, $verifications::updateUsersInformation($_POST['city'],
 			$_POST['dateBirthDay'],
 			$_POST['fPhone'],
@@ -111,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$_POST['aSennas'],
 				$_POST['aLabial'],
 				$_POST['aBajo'],
-				$_POST['aImplante'], $_POST['aOral'],$_POST['aFluida'],  $_POST['userID']);
+				$_POST['aImplante'], $_POST['aOral'], $_POST['aFluida'], $_POST['userID']);
 		}
 		if (isset($_POST['userID']) && isset($_POST['visual'])) {
 			$verifications::updateVisual($_POST['userID'],

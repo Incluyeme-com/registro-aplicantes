@@ -10308,6 +10308,8 @@ CREATE TABLE `{$wpdb->prefix}incluyeme_cities`
 	constraint incluyeme_cities_id_pk
 		primary key (`incluyeme_cities_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Ciudad autónoma de Buenos Aires'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
 VALUES (1, 'Kabul', 'Kabol'),
        (2, 'Qandahar', 'Qandahar'),
@@ -11863,6 +11865,7 @@ VALUES (1, 'Kabul', 'Kabol'),
        (1552, 'Higashiosaka', 'Osaka'),
        (1553, 'Hachioji', 'Tokyo-to'),
        (1554, 'Niigata', 'Niigata'); --
+       
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
 VALUES (1555, 'Amagasaki', 'Hyogo'),
        (1556, 'Himeji', 'Hyogo'),
@@ -18988,10 +18991,6 @@ VALUES ('Buenos Aires', 'AR'),
        ('Tierra del Fuego, Antártida e Islas del Atlántico Sur', 'AR'),
        ('Tucumán', 'AR'),
        ('Ciudad autónoma de Buenos Aires', 'AR'); --
-
-INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Ciudad autónoma de Buenos Aires'); --
-
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'Tucumán'
 WHERE cities_location = 'Tucum'; --

@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vue2.7.1.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vue3.0.0.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');
@@ -77,36 +77,39 @@ $FBversion = 'v7.0';
 	<script>
         function statusChangeCallback(response) {
         }
+
         function checkLoginState() {
             FB.getLoginStatus(function (response) {
                 statusChangeCallback(response);
             });
         }
-        window.fbAsyncInit = function() {
+
+        window.fbAsyncInit = function () {
             FB.init({
-                appId      : '<?php echo get_option($incluyemeLoginFB); ?>',
-                cookie     : false,
-                xfbml      : false,
-                version    : 'v7.0'
+                appId: '<?php echo get_option($incluyemeLoginFB); ?>',
+                cookie: false,
+                xfbml: false,
+                version: 'v7.0'
             });
-	        
+
         };
 
-        (function(d, s, id) {
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
+            js = d.createElement(s);
+            js.id = id;
             js.src = "https://connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-        
+
         function FBLogin() {
             FB.login(function (response) {
                 if (response.status === 'connected') {
                     const token = response.authResponse.accessToken
                     app.$data.email = token;
                     app.$data.password = token;
-                    app.$data.passwordConfirm =token;
+                    app.$data.passwordConfirm = token;
                     app.$data.name = token;
                     app.$data.lastName = token;
                     app.$data.facebook = token;
@@ -117,109 +120,111 @@ $FBversion = 'v7.0';
 	</script>
 <?php } ?>
 <style>
-	.deleteIncluyeme {
-		background-color: #ee7566 !important;
-		border-color: #ee7566 !important;
-	}
-	.dropzone .dz-preview .dz-error-message {
-		top: 150px!important;
-	}
-	/* Chrome, Safari, Edge, Opera */
-	input::-webkit-outer-spin-button,
-	input::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-	
-	/* Firefox */
-	input[type=number] {
-		-moz-appearance: textfield;
-	}
-	
-	.dropzone {
-		border: 2px dashed rgba(0, 0, 0, .3) !important;
-		border-radius: 20px !important;
-		color: rgba(0, 0, 0, .3) !important;
-	}
-	
-	.myButton {
-		box-shadow: 2px 2px 4px 0px #bfbfbf;
-		background-color: #ffffff;
-		border-radius: 4px;
-		border: 1px solid #ffffff;
-		display: inline-block;
-		cursor: pointer;
-		color: #bababa;
-		padding: 16px 31px;
-		height: 2.5rem;
-	}
-	
-	.myButton:hover,
-	.myButton:focus,
-	.myButton:active,
-	.myButton.active {
-		background-color: #bababa !important;
-	}
-	
-	.panel-heading {
-		position: relative;
-	}
-	
-	.panel-heading[data-toggle="collapse"]:after {
-		font-family: '"Font Awesome 5 Free"';
-		content: "\f063";
-		position: absolute;
-		color: #b0c5d8;
-		font-size: 18px;
-		line-height: 22px;
-		right: 20px;
-		top: calc(50% - 10px);
-		
-		-webkit-transform: rotate(-90deg);
-		-moz-transform: rotate(-90deg);
-		-ms-transform: rotate(-90deg);
-		-o-transform: rotate(-90deg);
-		transform: rotate(-90deg);
-	}
-	
-	.panel-heading[data-toggle="collapse"].collapsed:after {
-		-webkit-transform: rotate(90deg);
-		-moz-transform: rotate(90deg);
-		-ms-transform: rotate(90deg);
-		-o-transform: rotate(90deg);
-		transform: rotate(90deg);
-	}
-	
-	.myButton2:hover,
-	.myButton2:focus,
-	.myButton2:active,
-	.myButton2.active {
-		background-color: #000BFF !important;
-	}
-	
-	.btn-info:hover,
-	.btn-info:focus,
-	.btn-info:active,
-	.btn-info.active {
-		background-color: #0079b8 !important;
-	}
-	
-	.btn-link {
-		color: black !important;
-	}
-	
-	.btn-link:hover,
-	.btn-link:focus,
-	.btn-link:active,
-	.btn-link.active {
-		background: none !important;
-	}
+    .deleteIncluyeme {
+        background-color: #ee7566 !important;
+        border-color: #ee7566 !important;
+    }
+
+    .dropzone .dz-preview .dz-error-message {
+        top: 150px !important;
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .dropzone {
+        border: 2px dashed rgba(0, 0, 0, .3) !important;
+        border-radius: 20px !important;
+        color: rgba(0, 0, 0, .3) !important;
+    }
+
+    .myButton {
+        box-shadow: 2px 2px 4px 0px #bfbfbf;
+        background-color: #ffffff;
+        border-radius: 4px;
+        border: 1px solid #ffffff;
+        display: inline-block;
+        cursor: pointer;
+        color: #bababa;
+        padding: 16px 31px;
+        height: 2.5rem;
+    }
+
+    .myButton:hover,
+    .myButton:focus,
+    .myButton:active,
+    .myButton.active {
+        background-color: #bababa !important;
+    }
+
+    .panel-heading {
+        position: relative;
+    }
+
+    .panel-heading[data-toggle="collapse"]:after {
+        font-family: '"Font Awesome 5 Free"';
+        content: "\f063";
+        position: absolute;
+        color: #b0c5d8;
+        font-size: 18px;
+        line-height: 22px;
+        right: 20px;
+        top: calc(50% - 10px);
+
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+
+    .panel-heading[data-toggle="collapse"].collapsed:after {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    .myButton2:hover,
+    .myButton2:focus,
+    .myButton2:active,
+    .myButton2.active {
+        background-color: #000BFF !important;
+    }
+
+    .btn-info:hover,
+    .btn-info:focus,
+    .btn-info:active,
+    .btn-info.active {
+        background-color: #0079b8 !important;
+    }
+
+    .btn-link {
+        color: black !important;
+    }
+
+    .btn-link:hover,
+    .btn-link:focus,
+    .btn-link:active,
+    .btn-link.active {
+        background: none !important;
+    }
 
 </style>
 <div class="container m-auto">
 	<div id="incluyeme-login-wpjb">
 		<div id="searchTOP"></div>
-		<div class="container">
+		<div v-if="noDisPage === false" class="container">
 			<template id="step1" v-if="currentStep == 1">
 				<x-incluyeme class="container text-center">
 					<h1>Regístrate</h1>
@@ -235,7 +240,7 @@ $FBversion = 'v7.0';
 						</x-incluyeme>
 					</x-incluyeme>
 				<?php } ?>
-				<?php if (get_option($incluyemeLoginFB)&&get_option($incluyemeLoginFBSECRET)) { ?>
+				<?php if (get_option($incluyemeLoginFB) && get_option($incluyemeLoginFBSECRET)) { ?>
 					<x-incluyeme class="row text-center justify-content-center">
 						<x-incluyeme class="col-lg-6 col-sm-12 mt-2">
 							<button scope="public_profile,email" onclick="FBLogin()"
@@ -252,7 +257,8 @@ $FBversion = 'v7.0';
 					<x-incluyeme class="form-group col-12">
 						<label id="emilLabel" for="emil">Ingresa tu email <span
 									style="font-size: 2em;color: black;">*<span></label>
-						<input type="email" v-model="email" class="form-control" id="emil" placeholder="Ingresa tu email">
+						<input type="email" v-model="email" class="form-control" id="emil"
+						       placeholder="Ingresa tu email">
 						<p v-if="validation === 1" style="color: red">Este email ya se encuentra registrado</p>
 						<p v-if="validation === 2" style="color: red">Por favor, ingrese un Email valido</p>
 					</x-incluyeme>
@@ -261,7 +267,8 @@ $FBversion = 'v7.0';
 									style="font-size: 2em;color: black;">*<span></label>
 						<input type="password" v-model="password" class="form-control" id="inputPassword4"
 						       placeholder="Elige una contraseña">
-						<p v-if="validation === 3" style="color: red">Su contraseña debe contener cinco(5) caracteres o mas</p>
+						<p v-if="validation === 3" style="color: red">Su contraseña debe contener cinco(5) caracteres o
+						                                              mas</p>
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-12">
 						<label id="repostPLabel" for="repostP">Repite contraseña <span
@@ -298,6 +305,31 @@ $FBversion = 'v7.0';
 						       placeholder="Ingresa tus apellidos" onkeydown="return /[a-z, ]/i.test(event.key)">
 						<p v-if="validation === 6" style="color: red">Por favor, ingrese su apellido</p>
 					</x-incluyeme>
+				</x-incluyeme>
+				<x-incluyeme class="container text-center">
+					<h1 id="haveDiscap">¿Tienes algún tipo de disCapacidad? <span style="font-size: 2em;color: black;">*<span>
+					</h1>
+				</x-incluyeme>
+				<x-incluyeme class="row">
+					<x-incluyeme class="form-group col">
+						<x-incluyeme class="form-check form-check-inline">
+							<input type="radio" style="transform: scale(1.4) !important;" name="disCap" id="disCap"
+							       v-on:click='disCap = true'
+							       v-on:click='disClass = "w-50"'
+							       class="form-check-input">
+							<label for="disCap" class="form-check-label">Tengo una disCapacidad</label>
+						</x-incluyeme>
+					</x-incluyeme>
+					<x-incluyeme class="form-group col">
+						<x-incluyeme class="form-check form-check-inline">
+							<input type="radio" style="transform: scale(1.4) !important;" id="disCapF" name="disCap"
+							       v-on:click='disCap = false'
+							       v-on:click='disClass = "w-100"'
+							       class="form-check-input">
+							<label class="form-check-label" for="disCapF">NO tengo una disCapacidad</label>
+						</x-incluyeme>
+					</x-incluyeme>
+					<p v-if="validation === 20" style="color: red">Por favor, diganos si tiene una disCapacidad</p>
 				</x-incluyeme>
 				<button type="submit" class="btn btn-info w-100 w-100 mt-3"
 				        @click.prevent="goToStep(3, '<?php echo plugins_url() ?>')">
@@ -348,6 +380,31 @@ $FBversion = 'v7.0';
 						<p v-if="validation === 8" style="color: red">Por favor, ingrese su fecha de nacimiento</p>
 					</x-incluyeme>
 				</x-incluyeme>
+				<x-incluyeme v-if="google==true||facebook==true" class="container text-center">
+					<h1 id="haveDiscap">¿Tienes algún tipo de disCapacidad? <span style="font-size: 2em;color: black;">*<span>
+					</h1>
+				</x-incluyeme>
+				<x-incluyeme v-if="google==true||facebook==true" class="row">
+					<x-incluyeme class="form-group col">
+						<x-incluyeme class="form-check form-check-inline">
+							<input type="radio" style="transform: scale(1.4) !important;" name="disCap" id="disCap"
+							       v-on:click='disCap = true'
+							       v-on:click='disClass = "w-50"'
+							       class="form-check-input">
+							<label for="disCap" class="form-check-label">Tengo una disCapacidad</label>
+						</x-incluyeme>
+					</x-incluyeme>
+					<x-incluyeme class="form-group col">
+						<x-incluyeme class="form-check form-check-inline">
+							<input type="radio" style="transform: scale(1.4) !important;" id="disCapF" name="disCap"
+							       v-on:click='disCap = false'
+							       v-on:click='disClass = "w-100"'
+							       class="form-check-input">
+							<label class="form-check-label" for="disCapF">NO tengo una disCapacidad</label>
+						</x-incluyeme>
+					</x-incluyeme>
+					<p v-if="validation === 20" style="color: red">Por favor, diganos si tiene una disCapacidad</p>
+				</x-incluyeme>
 				<x-incluyeme class="row mt-2">
 					<x-incluyeme class="col">
 						<button type="submit" class="btn btn-info w-100"
@@ -378,14 +435,15 @@ $FBversion = 'v7.0';
 						</x-incluyeme>
 					</x-incluyeme>
 					<x-incluyeme class="row align-items-center">
-						<x-incluyeme v-if="validation === 9 || validation === 20" class="col-lg-4 col col-md-12 mb-3 mb-sm-0">
-							<p  v-if="validation === 9" style="color: red">Por favor, ingrese su Teléfono Celular</p>
+						<x-incluyeme v-if="validation === 9 || validation === 20"
+						             class="col-lg-4 col col-md-12 mb-3 mb-sm-0">
+							<p v-if="validation === 9" style="color: red">Por favor, ingrese su Teléfono Celular</p>
 						</x-incluyeme>
 						<x-incluyeme class="col-1 text-center d-none d-lg-block">
 							<span><b></b></span>
 						</x-incluyeme>
 						<x-incluyeme class="col-lg-7 col-md-12">
-							<p  v-if="validation === 20" style="color: red">Por favor, ingrese su Teléfono Celular</p>
+							<p v-if="validation === 20" style="color: red">Por favor, ingrese su Teléfono Celular</p>
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
@@ -407,41 +465,46 @@ $FBversion = 'v7.0';
 					</x-incluyeme>
 				
 				</div>
-				<?php if(!get_option($incluyemeLoginCountry)){?>
-				<div class="container mt-3 mb-sm-0">
-					<x-incluyeme class="row align-items-center">
-						<x-incluyeme class="form-group col">
-							<label id="labelState"
-							       for="state"><?php _e( ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-							<input v-model="state" type="text" class="form-control" id="state">
-							<p v-if="validation === 10" style="color: red">Por favor, ingrese su <?php ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
-						</x-incluyeme>
-					</x-incluyeme>
-				</div>
-				<div class="container mt-3 mb-sm-0">
-					<x-incluyeme class="row align-items-center">
-						<x-incluyeme class="form-group col">
-							<label id="labelCity"
-							       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-							<input v-model="city" type="text" class="form-control" id="city">
-							<p v-if="validation === 11" style="color: red">Por favor, ingrese su Ciudad</p>
-						</x-incluyeme>
-					</x-incluyeme>
-				</div>
-				<?php }else {?>
+				<?php if (!get_option($incluyemeLoginCountry)) { ?>
 					<div class="container mt-3 mb-sm-0">
 						<x-incluyeme class="row align-items-center">
 							<x-incluyeme class="form-group col">
 								<label id="labelState"
-								       for="state"><?php _e(( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-								<select v-model="state" type="text" class="form-control" id="state" v-on:change="getCities()">
+								       for="state"><?php _e((get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+								<input v-model="state" type="text" class="form-control" id="state">
+								<p v-if="validation === 10" style="color: red">Por favor, ingrese
+								                                               su <?php (get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
+							</x-incluyeme>
+						</x-incluyeme>
+					</div>
+					<div class="container mt-3 mb-sm-0">
+						<x-incluyeme class="row align-items-center">
+							<x-incluyeme class="form-group col">
+								<label id="labelCity"
+								       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+								<input v-model="city" type="text" class="form-control" id="city">
+								<p v-if="validation === 11" style="color: red">Por favor, ingrese su Ciudad</p>
+							</x-incluyeme>
+						</x-incluyeme>
+					</div>
+				<?php } else { ?>
+					<div class="container mt-3 mb-sm-0">
+						<x-incluyeme class="row align-items-center">
+							<x-incluyeme class="form-group col">
+								<label id="labelState"
+								       for="state"><?php _e((get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
+								<select v-model="state" type="text" class="form-control" id="state"
+								        v-on:change="getCities()">
 									<option v-for="provincias in provincias"
 									        :value="provincias.cities_provin" class="text-capitalize">
 										{{provincias.cities_provin}}
 									</option>
-									<option value="Otra">Otro</option>
+									<?php if (get_option($incluyemeLoginCountry) !== 'AR') { ?>
+										<option value="Otra">Otro</option>
+									<?php } ?>
 								</select>
-								<p v-if="validation === 10" style="color: red">Por favor, ingrese su <?php ( get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
+								<p v-if="validation === 10" style="color: red">Por favor, ingrese
+								                                               su <?php (get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
 							</x-incluyeme>
 						</x-incluyeme>
 					</div>
@@ -466,8 +529,8 @@ $FBversion = 'v7.0';
 					<x-incluyeme class="row align-items-center">
 						<x-incluyeme class="form-group col">
 							<label for="street"><?php _e("Calle", "incluyeme-login-extension"); ?></label>
-							<input  v-model="street" type="text" class="form-control"
-							        id="street">
+							<input v-model="street" type="text" class="form-control"
+							       id="street">
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
@@ -486,30 +549,9 @@ $FBversion = 'v7.0';
 			</template>
 			<template id="step5" v-if="currentStep == 5">
 				<x-incluyeme class="container text-center">
-					<h1>¿Tienes algún tipo de disCapacidad? <span style="font-size: 2em;color: black;">*<span></h1>
-				</x-incluyeme>
-				<x-incluyeme class="row">
-					<x-incluyeme class="form-group col">
-						<x-incluyeme class="form-check form-check-inline">
-							<input type="radio" style="transform: scale(1.4) !important;" name="disCap" id="disCap"
-							       v-on:click='disCap = true'
-							       v-on:click='disClass = "w-50"'
-							       class="form-check-input">
-							<label for="disCap" class="form-check-label">Tengo una disCapacidad</label>
-						</x-incluyeme>
-					</x-incluyeme>
-					<x-incluyeme class="form-group col">
-						<x-incluyeme class="form-check form-check-inline">
-							<input type="radio" style="transform: scale(1.4) !important;" id="disCapF" name="disCap"
-							       v-on:click='disCap = false'
-							       v-on:click='disClass = "w-100"'
-							       class="form-check-input">
-							<label class="form-check-label" for="disCapF">NO tengo una disCapacidad</label>
-						</x-incluyeme>
-					</x-incluyeme>
+					<h1 v-if="disCap" id="disSelects">Indica cual es tu disCapacidad</h1>
 				</x-incluyeme>
 				<div class="container">
-					<h5 v-if="disCap" id="disSelects">Indica cuales</h5>
 					<div class="container m-auto">
 						<x-incluyeme v-if="disCap" class="row ml-5">
 							<x-incluyeme class="col mb-2 mb-sm-0">
@@ -567,7 +609,6 @@ $FBversion = 'v7.0';
 						<p v-if="validation === 12" style="color: red">Por favor, dinos tu tipo de
 						                                               disCapacidad</p>
 					</div>
-					<span v-if="disCap===false">Nos enfocamos en la inclusión de personas con disCapacidad</span>
 				</div>
 				<x-incluyeme class="row">
 					<x-incluyeme class="col">
@@ -797,7 +838,7 @@ $FBversion = 'v7.0';
 								        aria-expanded="false" aria-controls="collapseTwo">
 									<i class="fas fa-arrow-down"></i>
 									<h5 style="display:inline;"> Visceral</h5>
-									
+								
 								</button>
 							</h5>
 						</x-incluyeme>
@@ -942,7 +983,7 @@ dificultad?
 								        aria-expanded="false" aria-controls="collapseThree">
 									<i class="fas fa-arrow-down"></i>
 									<h5 style="display:inline;"> Auditiva</h5>
-									
+								
 								</button>
 							</h5>
 						</x-incluyeme>
@@ -1107,7 +1148,7 @@ dificultad?
 								        aria-expanded="false" aria-controls="collapseFive">
 									<i class="fas fa-arrow-down"></i>
 									<h5 style="display:inline;"> Visual</h5>
-									
+								
 								</button>
 							</h5>
 						</x-incluyeme>
@@ -1255,7 +1296,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 								        aria-expanded="false" aria-controls="collatseFourt">
 									<i class="fas fa-arrow-down"></i>
 									<h5 style="display:inline;"> Intelectual</h5>
-									
+								
 								</button>
 							</h5>
 						</x-incluyeme>
@@ -1608,7 +1649,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 								</x-incluyeme>
 								<x-incluyeme class="col-12">
 									<x-incluyeme class="form-group">
-										<input v-if="!dateStudieB[pos]" type="date" v-model="dateStudiesH[pos]" name="dateStudiesH"
+										<input v-if="!dateStudieB[pos]" type="date" v-model="dateStudiesH[pos]"
+										       name="dateStudiesH"
 										       class="form-control"
 										       id="dateStudiesH" :disabled="dateStudieB[pos]===true"
 										       v-on:change='dateStudieB[pos] = false'>
@@ -1630,7 +1672,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					</div>
 					<div class='row mt-2'>
 						<x-incluyeme class="col-12 text-right mr-0 pr-0">
-							<button type="submit"  class="btn btn-danger w-100 w-100 mt-3 deleteIncluyeme"
+							<button type="submit" class="btn btn-danger w-100 w-100 mt-3 deleteIncluyeme"
 							        @click.prevent="deleteStudies(pos)">
 								- Eliminar Estudios
 							</button>
@@ -1913,10 +1955,11 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 				</div>
 			</template>
 		</div>
+		<h1 v-if="noDisPage!==false">Nos enfocamos en la inclusión de personas con disCapacidad</h1>
 		<div class="container mt-5">
 			<h5>Los campos marcados con un <span
 						style="font-size: 2em;color: black;">* </span>
-			     son obligatorios
+			    son obligatorios
 			</h5>
 		</div>
 	</div>
@@ -1933,5 +1976,5 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
             app.googleChange('<?php echo plugins_url() ?>');
         }
 	</script>
-	
+
 <?php } ?>

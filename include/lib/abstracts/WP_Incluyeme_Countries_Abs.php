@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . '/wp-load.php';
 require_once 'vendor/autoload.php';
+
 abstract class WP_Incluyeme_Countries_Abs
 {
 	protected static $country;
@@ -341,12 +342,11 @@ abstract class WP_Incluyeme_Countries_Abs
 		$finl = dirname($temp) . "/" . self::$userID;
 		wpjb_rename_dir($temp, $finl);
 		self::userRegisterWPBJ();
-		if($social){
+		if ($social) {
 			self::auto_login_new_userSocial();
-		}else {
+		} else {
 			self::auto_login_new_user();
 		}
-	
 		return;
 	}
 	
@@ -417,8 +417,8 @@ abstract class WP_Incluyeme_Countries_Abs
 			'phone' => $mPhone . ' ' . $phone,
 			'candidate_country' => get_option(self::$incluyemeLoginCountry),
 			'candidate_state' => $state,
-			'candidate_location' => $street . '. Ciudad: '.$city
-		], ['user_id' =>  get_current_user_id()]);
+			'candidate_location' => $street . '. Ciudad: ' . $city
+		], ['user_id' => get_current_user_id()]);
 		if (count($verification) > 0) {
 			self::$wp->update(self::$incluyemeUsersInformation, [
 				'genre' => $genre ?? '',
@@ -1368,11 +1368,11 @@ WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id
 		update_user_meta($userID, 'first_name', $name);
 		update_user_meta($userID, 'last_name', $lastName);
 		$userID = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume where id = ' . self::getResumeID());
-		$my_resume = array(
-			'ID'           => $userID[0]->post_id,
-			'post_title'   =>  $name . ' ' . $lastName,
-		);
-		wp_update_post( $my_resume );
+		$my_resume = [
+			'ID' => $userID[0]->post_id,
+			'post_title' => $name . ' ' . $lastName,
+		];
+		wp_update_post($my_resume);
 		self::$wp->update(self::$dataPrefix . 'wpjb_resume_search', [
 			'fullname' => $name . ' ' . $lastName
 		], ['resume_id' => self::getResumeID()]);
@@ -1444,7 +1444,7 @@ WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id
 	public static function getProvincias()
 	{
 		global $wpdb;
-		return $wpdb->get_results("SELECT * from " . self::$provinciasTable . ' where country_code = "' . get_option(self::$incluyemeLoginCountry) . '"');
+		return $wpdb->get_results("SELECT * from " . self::$provinciasTable . ' where country_code = "' . get_option(self::$incluyemeLoginCountry) . '" ');
 	}
 	
 	public static function getCities($cityCode)

@@ -209,7 +209,8 @@ let app = new Vue({
         google: false,
         facebook: false,
         provincias: [],
-        inteTrabajarOP: null
+        inteTrabajarOP: null,
+        noDisPage: false
     },
     ready: function () {
         console.log('ready');
@@ -217,6 +218,7 @@ let app = new Vue({
     mounted() {
         this.formFields2.push(1);
         this.formFields3.push(1);
+        this.noDisPage = false;
     },
     methods: {
         goToStep: async function (step, url = false) {
@@ -348,7 +350,7 @@ let app = new Vue({
             jQuery("#demo-upload").dropzone({
                 init: function () {
                     const dropzone = this;
-                    clearDropzone = function(){
+                    clearDropzone = function () {
                         dropzone.removeAllFiles(true);
                     };
                 },
@@ -459,14 +461,14 @@ let app = new Vue({
             if (!confirmEmail || this.password === null || !this.password) {
                 this.validation = 2;
                 this.awaitChange = false;
-                    jQuery("#emil").css('border-color', "red");
-                    jQuery("#emilLabel").css('color', "red");
-                    jQuery("#inputPassword4").removeAttr("style");
-                    jQuery("#labelPassword4").removeAttr("style");
-                    jQuery("#repostP").removeAttr("style");
-                    jQuery("#repostPLabel").removeAttr("style");
+                jQuery("#emil").css('border-color', "red");
+                jQuery("#emilLabel").css('color', "red");
+                jQuery("#inputPassword4").removeAttr("style");
+                jQuery("#labelPassword4").removeAttr("style");
+                jQuery("#repostP").removeAttr("style");
+                jQuery("#repostPLabel").removeAttr("style");
                 return false;
-                } else if (this.password === null || !this.password) {
+            } else if (this.password === null || !this.password) {
                 this.validation = 3;
                 jQuery("#inputPassword4").css('border-color', "red");
                 jQuery("#labelPassword4").css('color', "red");
@@ -585,13 +587,23 @@ let app = new Vue({
                 jQuery("#nameLabel").removeAttr("style");
                 this.awaitChange = false;
                 return false;
+            } else if (this.disCap == null) {
+                this.validation = 20;
+                jQuery("#haveDiscap").css('color', "red");
+                jQuery("#names").removeAttr("style");
+                jQuery("#nameLabel").removeAttr("style");
+                jQuery("#lastNames").removeAttr("style");
+                jQuery("#lastNamesLabel").removeAttr("style");
+                this.awaitChange = false;
+                return false;
             }
             this.pleaseAwait();
             let verifications = await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 email: this.email,
                 password: this.password,
                 name: this.name,
-                lastName: this.lastName
+                lastName: this.lastName,
+                haveDiscap: this.disCap === false ? 'noDIS' : 'siDIS'
             })
                 .then(function (response) {
                     return response
@@ -601,6 +613,11 @@ let app = new Vue({
                 });
             this.userID = verifications.data.message;
             this.awaitChange = false;
+            if (this.disCap === false) {
+                this.noDisPage = true;
+                this.goToTop();
+                return false;
+            }
             this.currentStep = step;
             this.goToTop();
         },
@@ -625,6 +642,11 @@ let app = new Vue({
                 jQuery("#labeldateBirthDay").css('color', "red");
                 this.awaitChange = false;
                 return;
+            }
+            if (this.disCap === false && (this.google || this.facebook)) {
+                this.noDisPage = true;
+                this.goToTop();
+                return false;
             }
             this.awaitChange = false;
             this.currentStep = step;

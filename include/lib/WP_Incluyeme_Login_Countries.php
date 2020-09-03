@@ -23,7 +23,6 @@ class WP_Incluyeme_Login_Countries extends WP_Incluyeme_Countries_Abs
 		];
 		// ok, validation error, or failure
 		header('Status: ' . $status[$code]);
-		
 		// return the encoded json
 		return json_encode([
 			'status' => $code < 300, // success or not?
