@@ -18990,7 +18990,7 @@ VALUES ('Buenos Aires', 'AR'),
        ('Ciudad autónoma de Buenos Aires', 'AR'); --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires'); --
+VALUES('Ciudad autónoma de Buenos Aires', 'Ciudad autónoma de Buenos Aires'); --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'Tucumán'
