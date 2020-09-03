@@ -18968,7 +18968,8 @@ WHERE country_code = 'AR'; --
 
 
 INSERT INTO `{$wpdb->prefix}incluyeme_provincias` (cities_provin, country_code)
-VALUES ('Buenos Aires', 'AR'),
+VALUES ('Ciudad autónoma de Buenos Aires', 'AR'),
+       ('Buenos Aires', 'AR'),
        ('Catamarca', 'AR'),
        ('Chubut', 'AR'),
        ('Córdoba', 'AR'),
@@ -18989,8 +18990,7 @@ VALUES ('Buenos Aires', 'AR'),
        ('Santa Fe', 'AR'),
        ('Santiago del Estero', 'AR'),
        ('Tierra del Fuego, Antártida e Islas del Atlántico Sur', 'AR'),
-       ('Tucumán', 'AR'),
-       ('Ciudad autónoma de Buenos Aires', 'AR'); --
+       ('Tucumán', 'AR'); --
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'Tucumán'
 WHERE cities_location = 'Tucum'; --
