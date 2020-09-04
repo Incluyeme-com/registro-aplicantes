@@ -10310,6 +10310,105 @@ CREATE TABLE `{$wpdb->prefix}incluyeme_cities`
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
 VALUES('Ciudad autónoma de Buenos Aires', 'Ciudad autónoma de Buenos Aires'); --
+
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', ''); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Agronomía'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Almagro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Balvanera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Barracas'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Belgrano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Boedo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Caballito'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Chacarita'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Coghlan'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Colegiales'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Constitución'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Flores'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Floresta'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'La Boca'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'La Paternal'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Liniers'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Mataderos'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Monte Castro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Monserrat'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Nueva Pompeya'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Núñez'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Palermo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Parque Avellaneda'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Parque Chacabuco'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Parque Chas'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Parque Patricios'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Puerto Madero'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Recoleta'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Retiro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Saavedra'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'San Cristóbal'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'San Nicolás'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'San Telmo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Vélez Sársfield'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Versalles'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Crespo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa del Parque'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Devoto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa General Mitre'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Lugano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Luro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Ortúzar'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Pueyrredón'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Real'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Riachuelo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Santa Rita'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Soldati'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
+VALUES('Ciudad autónoma de Buenos Aires', 'Villa Urquiza'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
 VALUES (1, 'Kabul', 'Kabol'),
        (2, 'Qandahar', 'Qandahar'),
