@@ -9443,7 +9443,9 @@ CREATE TABLE `{$wpdb->prefix}incluyeme_countries`
 	`country_code` varchar(2)   NOT NULL default '',
 	`country_name` varchar(100) NOT NULL default '',
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_countries`
 VALUES (null, 'AF', 'Afghanistan'); --
@@ -9945,7 +9947,9 @@ create table `{$wpdb->prefix}incluyeme_areas`
 	name_inc_area varchar(50)          null,
 	constraint incluyeme_areas_pk
 		primary key (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_areas` (`name_inc_area`)
 VALUES ("Abogacía/Derecho/Leyes"),
@@ -10106,7 +10110,9 @@ create table `{$wpdb->prefix}incluyeme_level_experience`
 	active             boolean default true null,
 	constraint incluyeme_level_experience_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_level_experience` (`name_incluyeme_exp`)
 VALUES ('Training'),
@@ -10121,7 +10127,9 @@ create table `{$wpdb->prefix}incluyeme_idioms`
 	active      boolean default true null,
 	constraint incluyeme_level_experience_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_idioms` (`id`, `name_idioms`)
 VALUES (1, 'Inglés'),
@@ -10136,7 +10144,9 @@ create table `{$wpdb->prefix}incluyeme_idioms_level`
 	active     boolean default true null,
 	constraint incluyeme_level_experience_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_idioms_level` (`id`, `name_level`)
 VALUES (1, 'Básico'),
@@ -10151,7 +10161,9 @@ create table `{$wpdb->prefix}incluyeme_prefersjobs`
 	active       boolean default true null,
 	constraint incluyeme_level_experience_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 
 INSERT INTO `{$wpdb->prefix}incluyeme_prefersjobs` (`jobs_prefers`)
@@ -10181,7 +10193,9 @@ create table `{$wpdb->prefix}incluyeme_discapacities`
 	active      boolean default true null,
 	constraint incluyeme_discapacities_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 INSERT INTO `{$wpdb->prefix}incluyeme_discapacities` (`id`, `discap_name`)
 VALUES (1, 'Motriz'),
        (2, 'Auditiva'),
@@ -10193,13 +10207,15 @@ VALUES (1, 'Motriz'),
 
 create table `{$wpdb->prefix}incluyeme_discapacities_questions`
 (
-	id                         int auto_increment not null,
+	id                         int auto_increment   not null,
 	discapacities_questions    text                 not null,
 	incluyeme_discapacities_id int                  not null,
 	active                     boolean default true null,
 	constraint incluyeme_discapacities_questions_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_discapacities_questions` (`id`, `incluyeme_discapacities_id`, `discapacities_questions`)
 VALUES (1, 1, '¿Puedes permanecer de pie?'),
@@ -10217,7 +10233,8 @@ VALUES (9, 2, '¿Puedes discriminar sonidos del ambiente?'),
        (10, 2, '¿Utilizas lenguaje oral?'),
        (11, 2, '¿Utilizas lengua de señas para comunicarse?'),
        (12, 2, '¿Puedes utilizar lectura labial?'),
-       (13, 2, '¿En un ambiente con distintas fuentes sonoras (por ejemplo: oficina) puedes establecer una comunicación oral fluida con otra persona?'),
+       (13, 2,
+        '¿En un ambiente con distintas fuentes sonoras (por ejemplo: oficina) puedes establecer una comunicación oral fluida con otra persona?'),
        (32, 2, '¿Puedes establecer una comunicación fluida vía telefónica?(sin uso de mensajería o chat)'),
        (14, 2, '¿Utilizas alguna ayuda técnica? '); --
 
@@ -10248,46 +10265,52 @@ VALUES (25, 5, '¿Sabes leer y escribir?'),
        (30, 5, '¿Te molesta si te cambian las actividades durante la jornada
 laboral?'),
        (31, 5, '¿Te molesta que te corrijan cuando realizas una actividad?'),
-        (33, 5, '¿Te gusta trabajar con otras personas?'); --
+       (33, 5, '¿Te gusta trabajar con otras personas?'); --
 
 create table `{$wpdb->prefix}incluyeme_users_questions`
 (
-	id          int auto_increment not null,
-	resume_id   int                not null,
-	question_id int                not null,
-	answer      text               not null,
-	active      boolean                     default true null,
+	id          int auto_increment   not null,
+	resume_id   int                  not null,
+	question_id int                  not null,
+	answer      text                 not null,
+	active      boolean default true null,
 	constraint incluyeme_users_questions_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 create table `{$wpdb->prefix}incluyeme_users_information`
 (
-	id        int auto_increment not null,
-	genre     varchar(45)  not null,
-	birthday  varchar(50)  not null,
-	phonem    varchar(30)  not null,
-	codphonem varchar(10)  not null,
-	phonef    varchar(30)  null,
-	codphonef varchar(10)  null,
-	province  varchar(50)  not null,
-	city      varchar(20)  not null,
-	street    varchar(100) null,
-	resume_id int          not null,
-	preferjob_id int null,
-	moreDis text null,
+	id           int auto_increment not null,
+	genre        varchar(45)        not null,
+	birthday     varchar(50)        not null,
+	phonem       varchar(30)        not null,
+	codphonem    varchar(10)        not null,
+	phonef       varchar(30)        null,
+	codphonef    varchar(10)        null,
+	province     varchar(50)        not null,
+	city         varchar(20)        not null,
+	street       varchar(100)       null,
+	resume_id    int                not null,
+	preferjob_id int                null,
+	moreDis      text               null,
 	constraint incluyeme_users_contacInformation_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 create table `{$wpdb->prefix}incluyeme_users_dicapselect`
 (
-	id int auto_increment,
+	id        int auto_increment,
 	discap_id int not null,
 	resume_id int not null,
 	constraint incluyeme_users_dicapselect_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 
 create table `{$wpdb->prefix}incluyeme_users_idioms`
 (
@@ -10299,116 +10322,120 @@ create table `{$wpdb->prefix}incluyeme_users_idioms`
 	resume_id int not null,
 	constraint incluyeme_users_dicapselect_pk
 		primary key (id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 CREATE TABLE `{$wpdb->prefix}incluyeme_cities`
 (
-	`incluyeme_cities_id` int(11)  NOT NULL auto_increment,
+	`incluyeme_cities_id` int(11)     NOT NULL auto_increment,
 	`cities_name`         varchar(60) NOT NULL DEFAULT '',
 	`cities_location`     varchar(60) NOT NULL DEFAULT '',
 	constraint incluyeme_cities_id_pk
 		primary key (`incluyeme_cities_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci; --
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_520_ci; --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Ciudad autónoma de Buenos Aires'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Ciudad autónoma de Buenos Aires'); --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', ''); --
+VALUES ('Ciudad autónoma de Buenos Aires', ''); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Agronomía'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Agronomía'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Almagro'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Almagro'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Balvanera'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Balvanera'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Barracas'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Barracas'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Belgrano'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Belgrano'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Boedo'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Boedo'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Caballito'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Caballito'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Chacarita'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Chacarita'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Coghlan'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Coghlan'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Colegiales'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Colegiales'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Constitución'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Constitución'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Flores'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Flores'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Floresta'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Floresta'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'La Boca'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'La Boca'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'La Paternal'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'La Paternal'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Liniers'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Liniers'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Mataderos'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Mataderos'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Monte Castro'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Monte Castro'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Monserrat'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Monserrat'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Nueva Pompeya'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Nueva Pompeya'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Núñez'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Núñez'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Palermo'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Palermo'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Parque Avellaneda'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Parque Avellaneda'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Parque Chacabuco'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Parque Chacabuco'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Parque Chas'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Parque Chas'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Parque Patricios'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Parque Patricios'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Puerto Madero'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Puerto Madero'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Recoleta'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Recoleta'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Retiro'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Retiro'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Saavedra'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Saavedra'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'San Cristóbal'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'San Cristóbal'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'San Nicolás'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'San Nicolás'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'San Telmo'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'San Telmo'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Vélez Sársfield'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Vélez Sársfield'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Versalles'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Versalles'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Crespo'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Crespo'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa del Parque'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa del Parque'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Devoto'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Devoto'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa General Mitre'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa General Mitre'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Lugano'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Lugano'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Luro'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Luro'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Ortúzar'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Ortúzar'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Pueyrredón'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Pueyrredón'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Real'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Real'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Riachuelo'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Riachuelo'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Santa Rita'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Santa Rita'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Soldati'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Soldati'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (cities_location, cities_name)
-VALUES('Ciudad autónoma de Buenos Aires', 'Villa Urquiza'); --
+VALUES ('Ciudad autónoma de Buenos Aires', 'Villa Urquiza'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
 VALUES (1, 'Kabul', 'Kabol'),
        (2, 'Qandahar', 'Qandahar'),
@@ -11964,7 +11991,7 @@ VALUES (1, 'Kabul', 'Kabol'),
        (1552, 'Higashiosaka', 'Osaka'),
        (1553, 'Hachioji', 'Tokyo-to'),
        (1554, 'Niigata', 'Niigata'); --
-       
+
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
 VALUES (1555, 'Amagasaki', 'Hyogo'),
        (1556, 'Himeji', 'Hyogo'),
@@ -14494,326 +14521,608 @@ VALUES (3190, 'Yanbu', 'Medina'),
        (4079, 'Rafah', 'Rafah'),
        (4080, 'Otra', 'Otra'); --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`cities_name`, `cities_location`)
-VALUES
-	('Artigas', 'Artigas'),
-	('Bella Unión', 'Artigas'),
-	('Baltasar Brum', 'Artigas'),
-	('Bernabé Rivera', 'Artigas'),
-	('Colonia Palma', 'Artigas'),
-	('Montes Quintela', 'Artigas'),
-	('Paso Campamento', 'Artigas'),
-	('Sequeira', 'Artigas'),
-	('Tomás Gomensoro', 'Artigas'),
-	('Atlántida', 'Canelones'),
-('Barra de Carrasco', 'Canelones'),
-('Canelones', 'Canelones'),
-('Ciudad de la Costa', 'Canelones'),
-('Colonia Nicolich', 'Canelones'),
-('La Paz', 'Canelones'),
-('Las Piedras', 'Canelones'),
-('Pando', 'Canelones'),
-('Paso Carrasco', 'Canelones'),
-('Santa Lucía', 'Canelones'),
-	('Aceguá', 'Cerro Lago'),
-('Fraile Muerto', 'Cerro Lago'),
-('Isidoro Noblía', 'Cerro Lago'),
-('Lago Merín', 'Cerro Lago'),
-('Melo', 'Cerro Lago'),
-('Plácido Rosas', 'Cerro Lago'),
-('Río Branco', 'Cerro Lago'),
-('Tupambaé', 'Cerro Lago'),
-	('Carmelo', 'Colonia'),
-('Colonia de Sacramento', 'Colonia'),
-('Juan Lacaze', 'Colonia'),
-('Nueva Helvecia', 'Colonia'),
-('Nueva Palmira', 'Colonia'),
-('Rosario', 'Colonia'),
-('Tarariras', 'Colonia'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Área Rural','Flores'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Andresito','Flores'  ); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ismael Cortinas','Flores'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('La Casilla','Flores'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Trinidad','Flores'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('25 de Agosto','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('25 de Mayo','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cardal','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Casupá','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cerro Colorado','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Florida','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Fray Marcos','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Nico Pérez','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Sarandí Grande','Florida'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Colón','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Illescas','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('José Batlle y Ordóñez','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('José Pedro Varela','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Mariscala','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Minas','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pirarajá','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Solís de Mataojo','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Zapicán','Lavalleja'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Aiguá','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cerro Pelado','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Gregorio Aznárez','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Hipódromo','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('José Ignacio','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('La Barra','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Maldonado','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pan de Azúcar','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pinares-Las Delicias','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Piriápolis','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Portezuelo','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Punta del Este','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Carlos','Maldonado'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Rafael-El placer','Maldonado'); --
+VALUES ('Artigas', 'Artigas'),
+       ('Bella Unión', 'Artigas'),
+       ('Baltasar Brum', 'Artigas'),
+       ('Bernabé Rivera', 'Artigas'),
+       ('Colonia Palma', 'Artigas'),
+       ('Montes Quintela', 'Artigas'),
+       ('Paso Campamento', 'Artigas'),
+       ('Sequeira', 'Artigas'),
+       ('Tomás Gomensoro', 'Artigas'),
+       ('Atlántida', 'Canelones'),
+       ('Barra de Carrasco', 'Canelones'),
+       ('Canelones', 'Canelones'),
+       ('Ciudad de la Costa', 'Canelones'),
+       ('Colonia Nicolich', 'Canelones'),
+       ('La Paz', 'Canelones'),
+       ('Las Piedras', 'Canelones'),
+       ('Pando', 'Canelones'),
+       ('Paso Carrasco', 'Canelones'),
+       ('Santa Lucía', 'Canelones'),
+       ('Aceguá', 'Cerro Lago'),
+       ('Fraile Muerto', 'Cerro Lago'),
+       ('Isidoro Noblía', 'Cerro Lago'),
+       ('Lago Merín', 'Cerro Lago'),
+       ('Melo', 'Cerro Lago'),
+       ('Plácido Rosas', 'Cerro Lago'),
+       ('Río Branco', 'Cerro Lago'),
+       ('Tupambaé', 'Cerro Lago'),
+       ('Carmelo', 'Colonia'),
+       ('Colonia de Sacramento', 'Colonia'),
+       ('Juan Lacaze', 'Colonia'),
+       ('Nueva Helvecia', 'Colonia'),
+       ('Nueva Palmira', 'Colonia'),
+       ('Rosario', 'Colonia'),
+       ('Tarariras', 'Colonia'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Área Rural', 'Flores'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Andresito', 'Flores'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ismael Cortinas', 'Flores'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('La Casilla', 'Flores'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Trinidad', 'Flores'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('25 de Agosto', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('25 de Mayo', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cardal', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Casupá', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cerro Colorado', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Florida', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Fray Marcos', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Nico Pérez', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Sarandí Grande', 'Florida'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Colón', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Illescas', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('José Batlle y Ordóñez', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('José Pedro Varela', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Mariscala', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Minas', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pirarajá', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Solís de Mataojo', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Zapicán', 'Lavalleja'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Aiguá', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cerro Pelado', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Gregorio Aznárez', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Hipódromo', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('José Ignacio', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('La Barra', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Maldonado', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pan de Azúcar', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pinares-Las Delicias', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Piriápolis', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Portezuelo', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Punta del Este', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Carlos', 'Maldonado'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Rafael-El placer', 'Maldonado'); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Abayubá','Montevideo'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Montevideo','Montevideo'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Montevideo Rural','Montevideo'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pajas Blancas','Montevideo'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santiago Vázquez','Montevideo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Abayubá', 'Montevideo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Montevideo', 'Montevideo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Montevideo Rural', 'Montevideo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pajas Blancas', 'Montevideo'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santiago Vázquez', 'Montevideo'); --
 
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Barrio Norte','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Guichón','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Nuevo Paysandú','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Paysandú','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Porvenir','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Piedras Coloradas','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Quebracho','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Sam Félix','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Tambores','Paysandú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Algorta','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Bellaco','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Colonia Ofir','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('El Ombú','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Gartenal','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Grecco','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('General Borges','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Fray Bentos','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Los Arrayanes','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Las Cañas','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Menafra','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Nuevo Berlín','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Paso de los Mellizos','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Javier','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Sarandí de Navarro','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villa María','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Young','Río Negro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('La Pedrera','Rivera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Masoller','Rivera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Minas de Corrales','Rivera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Rivera','Rivera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santa Teresa','Rivera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Tranqueras','Rivera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Vichadero','Rivera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Albisu','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Belén','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Biassini','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Colonia 18 de Julio','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Colonia Itapebí','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Constitución','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Fernández','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Garibaldi','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pueblo Lavalleja','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Rincón de Valentín','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Salto','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Antonio','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Saucedo','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Sarandí del Arapey','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Termas del Daymán','Salto'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Chuy','Rocha'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Castillos','Rocha'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Lascano','Rocha'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('La Paloma','Rocha'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ciudad de Plata','San José'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ecilda Paullier','San José'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Libertad','San José'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Puntas de Valdez','San José'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Rafael Perazza','San José'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Rodríguez','San José'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San José de Mayo','San José'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cardona','Soriano'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Chacras de Dolores','Soriano'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Dolores','Soriano'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('José Enrique Rodó','Soriano'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('La Pedrera','Soriano'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Mercedes','Soriano'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Palmitas','Soriano'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villa Soriano','Soriano'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Achar','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Balneario Iporá','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cuchilla de Peralta','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Curtina','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cuchilla del Ombú','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Clara','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Chamberlain','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cardozo','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Las Toscas','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Laureles','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Paso de toros','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Paso Bonilla','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Paso del Cerro','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Piedra Sola','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Punta de Cinco Sauces','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pueblo de Barro','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Rincón del Bonete','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Sauce de Batoví','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Gregorio de Polanco','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Tacuarembó','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Tambores','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villa Ansina','Tacuarembó'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cerro Chato','Treinta y tres'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ejido de Treinta y Tres','Treinta y tres'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('General Enrique Martínez','Treinta y tres'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santa Clara de Olimar','Treinta y tres'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Treinta y Tres','Treinta y tres'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Vergara','Treinta y tres'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villa Sara','Treinta y tres'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Asunción','Distrito Capital'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Capitán Bado','Amambay'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pedro Juan Caballero','Amambay'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Zanja Pytá','Amambay'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Fuerte Olimpo','Alto Paraguay'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Puerto Casado','Alto Paraguay'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ciudad del Este','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Doctor Juan León Mallorquín','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Hernandarías','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Itaquyry','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Juan Emilio OʿLeary','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Los Cedrales','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Minga Guazú','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Minga Porá','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Naranjal','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Presidente Franco','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santa Rita','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Alberto','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santa Rosa del Monday','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yguazú','Alto Paraná'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Caaguazú','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Carayaó','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Coronel Oviedo','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Doctor Juan Manuel Frutos','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Doctor Eulogio Estigarribia','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Nueva Londres','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Raúl Arsenio Oviedo','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Repatriación','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San José de los Arroyos','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Joaquín','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santa Rosa de Mbutuy','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Vaquería','Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yhú', 'Caaguazú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Abaí','Caazapá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Caazapá','Caazapá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Juan Nepomuceno','Caazapá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Tavaí','Caazapá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yuty','Caazapá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Doctor Pedro P. Peña','Boquerón'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Filadelfia','Boquerón'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Mariscal Estigarribia','Boquerón'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Corpus Christi','Canindeyú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Curuguaty','Canindeyú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Nueva Esperanza','Canindeyú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Salto del Guairá','Canindeyú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yasi Cañy','Canindeyú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ygatimí','Canindeyú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ybyrarovaná','Canindeyú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yby Pytá','Canindeyú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Azotey','Concepción'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Belén','Concepción'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Concepción','Concepción'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Horqueta','Concepción'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Loreto','Concepción'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Alfredo','Concepción'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Lázaro','Concepción'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yby Yaú','Concepción'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Altos','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Atyrá','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Arroyos y Esteros','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Caacupé','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Caraguatay','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Eusebio Ayala','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Emboscada','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Itacurubí de la Cordillera','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Piribebuy','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Bernardino','Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Tobatí', 'Cordillera'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Areguá','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Capiatá','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Fernando de la Mora','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Guarambaré','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Itauguá','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Itá','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Juan Augusto Saldívar','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Lambaré','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Luque','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Limpio','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Nueva Italia','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ñemby','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Lorenzo','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Antonio','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villa Elisa','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villeta','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ypacaraí','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ypané','Central'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Borja','Guairá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Capitán Mauricio José Troche','Guairá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Independencia','Guairá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Iturbe','Guairá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Paso Yobai','Guairá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villarrica','Guairá'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Alto Verá','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Bella Vista','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Capitán Meza','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Carlos Antonio López','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Cambyreta','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Capitán Miranda','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Coronel Bogado','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Edelira','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Encarnación','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('General Artigas','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Hohenau','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Itapúa Poty','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Mayor Otaño','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Natalio','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Obligado','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Pedro del Paraná','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Rafael del Paraná','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Tomás Romero Pereira','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yatytay','Itapúa'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ayolas','Misiones'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Ignacio','Misiones'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Juan Bautista','Misiones'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santiago','Misiones'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santa María','Misiones'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Santa Rosa','Misiones'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Alberdi','Ñeembucú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pilar','Ñeembucú'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Acahay','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Carapeguá','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Mbuyapey','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Quiindy','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Paraguarí','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Pirayú','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Roque González de Santa Cruz','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yaguarón','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Ybycuí','Paraguarí'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Benjamín Aceval','Presidente Hayes'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Teniente Primero Manuel Irala Fernández','Presidente Hayes'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villa Hayes','Presidente Hayes'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Aguaray','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Capiíbary','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Choré','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('General Isidro Resquín','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Guayaibi','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('General Elizardo Aquino','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Itacurubí del Rosario','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Lima','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Estanislao','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('San Pedro de Ycuamandiyú','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Tacuatí','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Villa del Rosario','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Veinticinco de Diciembre','San Pedro'); --
-INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`) VALUES ('Yataity del Norte','San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Barrio Norte', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Guichón', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Nuevo Paysandú', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Paysandú', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Porvenir', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Piedras Coloradas', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Quebracho', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Sam Félix', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Tambores', 'Paysandú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Algorta', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Bellaco', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Colonia Ofir', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('El Ombú', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Gartenal', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Grecco', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('General Borges', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Fray Bentos', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Los Arrayanes', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Las Cañas', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Menafra', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Nuevo Berlín', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Paso de los Mellizos', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Javier', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Sarandí de Navarro', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villa María', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Young', 'Río Negro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('La Pedrera', 'Rivera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Masoller', 'Rivera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Minas de Corrales', 'Rivera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Rivera', 'Rivera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santa Teresa', 'Rivera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Tranqueras', 'Rivera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Vichadero', 'Rivera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Albisu', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Belén', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Biassini', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Colonia 18 de Julio', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Colonia Itapebí', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Constitución', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Fernández', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Garibaldi', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pueblo Lavalleja', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Rincón de Valentín', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Salto', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Antonio', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Saucedo', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Sarandí del Arapey', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Termas del Daymán', 'Salto'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Chuy', 'Rocha'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Castillos', 'Rocha'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Lascano', 'Rocha'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('La Paloma', 'Rocha'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ciudad de Plata', 'San José'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ecilda Paullier', 'San José'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Libertad', 'San José'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Puntas de Valdez', 'San José'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Rafael Perazza', 'San José'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Rodríguez', 'San José'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San José de Mayo', 'San José'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cardona', 'Soriano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Chacras de Dolores', 'Soriano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Dolores', 'Soriano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('José Enrique Rodó', 'Soriano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('La Pedrera', 'Soriano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Mercedes', 'Soriano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Palmitas', 'Soriano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villa Soriano', 'Soriano'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Achar', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Balneario Iporá', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cuchilla de Peralta', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Curtina', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cuchilla del Ombú', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Clara', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Chamberlain', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cardozo', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Las Toscas', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Laureles', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Paso de toros', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Paso Bonilla', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Paso del Cerro', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Piedra Sola', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Punta de Cinco Sauces', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pueblo de Barro', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Rincón del Bonete', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Sauce de Batoví', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Gregorio de Polanco', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Tacuarembó', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Tambores', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villa Ansina', 'Tacuarembó'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cerro Chato', 'Treinta y tres'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ejido de Treinta y Tres', 'Treinta y tres'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('General Enrique Martínez', 'Treinta y tres'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santa Clara de Olimar', 'Treinta y tres'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Treinta y Tres', 'Treinta y tres'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Vergara', 'Treinta y tres'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villa Sara', 'Treinta y tres'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Asunción', 'Distrito Capital'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Capitán Bado', 'Amambay'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pedro Juan Caballero', 'Amambay'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Zanja Pytá', 'Amambay'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Fuerte Olimpo', 'Alto Paraguay'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Puerto Casado', 'Alto Paraguay'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ciudad del Este', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Doctor Juan León Mallorquín', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Hernandarías', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Itaquyry', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Juan Emilio OʿLeary', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Los Cedrales', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Minga Guazú', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Minga Porá', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Naranjal', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Presidente Franco', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santa Rita', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Alberto', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santa Rosa del Monday', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yguazú', 'Alto Paraná'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Caaguazú', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Carayaó', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Coronel Oviedo', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Doctor Juan Manuel Frutos', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Doctor Eulogio Estigarribia', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Nueva Londres', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Raúl Arsenio Oviedo', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Repatriación', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San José de los Arroyos', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Joaquín', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santa Rosa de Mbutuy', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Vaquería', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yhú', 'Caaguazú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Abaí', 'Caazapá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Caazapá', 'Caazapá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Juan Nepomuceno', 'Caazapá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Tavaí', 'Caazapá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yuty', 'Caazapá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Doctor Pedro P. Peña', 'Boquerón'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Filadelfia', 'Boquerón'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Mariscal Estigarribia', 'Boquerón'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Corpus Christi', 'Canindeyú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Curuguaty', 'Canindeyú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Nueva Esperanza', 'Canindeyú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Salto del Guairá', 'Canindeyú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yasi Cañy', 'Canindeyú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ygatimí', 'Canindeyú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ybyrarovaná', 'Canindeyú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yby Pytá', 'Canindeyú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Azotey', 'Concepción'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Belén', 'Concepción'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Concepción', 'Concepción'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Horqueta', 'Concepción'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Loreto', 'Concepción'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Alfredo', 'Concepción'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Lázaro', 'Concepción'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yby Yaú', 'Concepción'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Altos', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Atyrá', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Arroyos y Esteros', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Caacupé', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Caraguatay', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Eusebio Ayala', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Emboscada', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Itacurubí de la Cordillera', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Piribebuy', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Bernardino', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Tobatí', 'Cordillera'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Areguá', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Capiatá', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Fernando de la Mora', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Guarambaré', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Itauguá', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Itá', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Juan Augusto Saldívar', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Lambaré', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Luque', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Limpio', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Nueva Italia', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ñemby', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Lorenzo', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Antonio', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villa Elisa', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villeta', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ypacaraí', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ypané', 'Central'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Borja', 'Guairá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Capitán Mauricio José Troche', 'Guairá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Independencia', 'Guairá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Iturbe', 'Guairá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Paso Yobai', 'Guairá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villarrica', 'Guairá'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Alto Verá', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Bella Vista', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Capitán Meza', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Carlos Antonio López', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Cambyreta', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Capitán Miranda', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Coronel Bogado', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Edelira', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Encarnación', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('General Artigas', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Hohenau', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Itapúa Poty', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Mayor Otaño', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Natalio', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Obligado', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Pedro del Paraná', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Rafael del Paraná', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Tomás Romero Pereira', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yatytay', 'Itapúa'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ayolas', 'Misiones'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Ignacio', 'Misiones'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Juan Bautista', 'Misiones'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santiago', 'Misiones'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santa María', 'Misiones'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Santa Rosa', 'Misiones'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Alberdi', 'Ñeembucú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pilar', 'Ñeembucú'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Acahay', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Carapeguá', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Mbuyapey', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Quiindy', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Paraguarí', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Pirayú', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Roque González de Santa Cruz', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yaguarón', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Ybycuí', 'Paraguarí'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Benjamín Aceval', 'Presidente Hayes'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Teniente Primero Manuel Irala Fernández', 'Presidente Hayes'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villa Hayes', 'Presidente Hayes'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Aguaray', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Capiíbary', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Choré', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('General Isidro Resquín', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Guayaibi', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('General Elizardo Aquino', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Itacurubí del Rosario', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Lima', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Estanislao', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('San Pedro de Ycuamandiyú', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Tacuatí', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Villa del Rosario', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Veinticinco de Diciembre', 'San Pedro'); --
+INSERT INTO `{$wpdb->prefix}incluyeme_cities`(`cities_name`, `cities_location`)
+VALUES ('Yataity del Norte', 'San Pedro'); --
 
 
 CREATE TABLE `{$wpdb->prefix}incluyeme_provincias`
@@ -19012,11 +19321,12 @@ UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'México'
 WHERE cities_location = 'M?xico'; --
 
-DELETE a FROM `{$wpdb->prefix}incluyeme_provincias` a
-	              INNER JOIN `{$wpdb->prefix}incluyeme_provincias` a2
+DELETE a
+FROM `{$wpdb->prefix}incluyeme_provincias` a
+	     INNER JOIN `{$wpdb->prefix}incluyeme_provincias` a2
 WHERE a.incluyeme_provincias_id < a2.incluyeme_provincias_id
-  AND   a.	cities_provin = a2.	cities_provin
-  AND   a.	cities_provin  = a2.	cities_provin; --
+  AND a.cities_provin = a2.cities_provin
+  AND a.cities_provin = a2.cities_provin; --
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
 SET country_code = 'MX'
@@ -19061,9 +19371,32 @@ SET cities_name = 'San Miguel de Tucumán'
 WHERE cities_name = 'San Miguel de Tucum'; --
 
 DELETE
-  FROM `{$wpdb->prefix}incluyeme_provincias`
+FROM `{$wpdb->prefix}incluyeme_provincias`
 WHERE country_code = 'AR'; --
 
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET country_code = 'CONG'
+WHERE cities_provin in ('Njazidja',
+                        'Brazzaville',
+                        'Kouilou',
+                        'Kinshasa',
+                        'Shaba',
+                        'East Kasai',
+                        'Shaba',
+                        'Haute-Za?re',
+                        'West Kasai',
+                        'Shaba',
+                        'South Kivu',
+                        'Bandundu',
+                        'West Kasai',
+                        'Bas-Za?re',
+                        'Equateur',
+                        'East Kasai',
+                        'Bas-Za?re',
+                        'South Kivu',
+                        'North Kivu',
+                        'North Kivu',
+                        'Shaba'); --
 
 
 INSERT INTO `{$wpdb->prefix}incluyeme_provincias` (cities_provin, country_code)
@@ -19141,3 +19474,66 @@ WHERE cities_name = 'Santa Fe'; --
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_name = 'Morón'
 WHERE cities_name = 'Mor'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Santa Fé'
+WHERE cities_provin = 'Santaf? de Bogot'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Atlántico'
+WHERE cities_provin = 'Atl?ntico'; --
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Nariño'
+WHERE cities_provin = 'Nari'; --
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Quindío'
+WHERE cities_provin = 'Quind'; --
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Córdoba'
+WHERE cities_provin = 'C?rdoba'; --
+UPDATE `{$wpdb->prefix}incluyeme_provincias`
+SET cities_provin = 'Boyacá'
+WHERE cities_provin = 'Boyac'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Atlántico'
+WHERE cities_location = 'Atl?ntico'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Nariño'
+WHERE cities_location = 'Nari'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Quindío'
+WHERE cities_location = 'Quind'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Córdoba'
+WHERE cities_location = 'C?rdoba'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Boyacá'
+WHERE cities_location = 'Boyac'; --
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_location = 'Santa Fé'
+WHERE cities_location = 'Santaf? de Bogot'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Santa Fé'
+WHERE cities_name = 'Santaf? de Bogot'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Medellín'
+WHERE cities_name = 'Medell'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Cúcuta'
+WHERE cities_name = 'C?cuta'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Cúcuta'
+WHERE cities_name = 'C?cuta'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Ibagué'
+WHERE cities_name = 'Ibagu'; --
+
+UPDATE `{$wpdb->prefix}incluyeme_cities`
+SET cities_name = 'Itagüi'
+WHERE cities_name = 'Itag?'; --
