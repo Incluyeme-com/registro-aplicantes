@@ -17392,9 +17392,9 @@ VALUES ('Ningxia', 'CH', 2027),
        ('Osh', 'KG', 2255),
        ('South Tarawa', 'KI', 2256),
        ('South Tarawa', 'KI', 2257),
-       ('Santaf? de Bogot', 'CO', 2258),
-       ('Valle', 'CO', 2259),
-       ('Antioquia', 'CO', 2260),
+       ('Santaf? de Bogot', 'CO', 2260),
+       ('Valle', 'CO', 2275),
+       ('Antioquia', 'CO', 2258),
        ('Atl?ntico', 'CO', 2261),
        ('Bol?var', 'CO', 2262),
        ('Norte de Santander', 'CO', 2263),
@@ -17409,7 +17409,7 @@ VALUES ('Ningxia', 'CH', 2027),
        ('Atl?ntico', 'CO', 2272),
        ('Quind', 'CO', 2273),
        ('Meta', 'CO', 2274),
-       ('Cundinamarca', 'CO', 2275),
+       ('Cundinamarca', 'CO', 2259),
        ('Cesar', 'CO', 2276),
        ('C?rdoba', 'CO', 2277),
        ('Antioquia', 'CO', 2278),
@@ -19469,14 +19469,14 @@ WHERE cities_name = 'General San Mart'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_name = 'Santa F'
-WHERE cities_name = 'Santa Fe'; --
+WHERE cities_name = 'Santa Fé'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_name = 'Morón'
 WHERE cities_name = 'Mor'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
-SET cities_provin = 'Santa Fé'
+SET cities_provin = 'Santafé de Bogotá'
 WHERE cities_provin = 'Santaf? de Bogot'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
@@ -19511,11 +19511,11 @@ UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'Boyacá'
 WHERE cities_location = 'Boyac'; --
 UPDATE `{$wpdb->prefix}incluyeme_cities`
-SET cities_location = 'Santa Fé'
+SET cities_location = 'Santafé de Bogotá'
 WHERE cities_location = 'Santaf? de Bogot'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
-SET cities_name = 'Santa Fé'
+SET cities_name = 'Santafé de Bogotá'
 WHERE cities_name = 'Santaf? de Bogot'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
