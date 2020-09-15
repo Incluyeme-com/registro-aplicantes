@@ -19476,8 +19476,8 @@ SET cities_name = 'Morón'
 WHERE cities_name = 'Mor'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
-SET cities_provin = 'Santafé de Bogotá'
-WHERE cities_provin = 'Santaf? de Bogot'; --
+SET cities_provin = 'Distrito Capital'
+WHERE cities_provin = 'Distrito Capital'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
 SET cities_provin = 'Atlántico'
@@ -19511,12 +19511,12 @@ UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location = 'Boyacá'
 WHERE cities_location = 'Boyac'; --
 UPDATE `{$wpdb->prefix}incluyeme_cities`
-SET cities_location = 'Santafé de Bogotá'
-WHERE cities_location = 'Santaf? de Bogot'; --
+SET cities_location = 'Distrito Capital'
+WHERE cities_location = 'Distrito Capital'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
-SET cities_name = 'Santafé de Bogotá'
-WHERE cities_name = 'Santaf? de Bogot'; --
+SET cities_name = 'Bogotá DC'
+WHERE cities_name = 'Bogotá DC'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_name = 'Medellín'

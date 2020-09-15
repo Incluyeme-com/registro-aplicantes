@@ -1448,15 +1448,8 @@ WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id
 		if (get_option(self::$incluyemeLoginCountry) == 'CO') {
 			return $wpdb->get_results("SELECT
 										  *
-										FROM " . self::$provinciasTable . "
-										WHERE country_code = 'CO'
-										AND cities_provin IN('Antioquia', 'Cundinamarca')
-										  UNION
-										  SELECT
-										  *
-										FROM " . self::$provinciasTable . "
-										WHERE country_code = 'CO'
-										AND cities_provin NOT IN('Antioquia', 'Cundinamarca')");
+										FROM  " . self::$provinciasTable . "
+										WHERE country_code = 'CO' ORDER BY cities_provin");
 		}
 		return $wpdb->get_results("SELECT * from " . self::$provinciasTable . ' where country_code = "' . get_option(self::$incluyemeLoginCountry) . '" ');
 	}
