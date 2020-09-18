@@ -322,12 +322,13 @@ abstract class WP_Incluyeme_Countries_Abs
 			'resume_id' => $id,
 		]);
 		if ($noDis === true) {
+			error_log(print_r($noDis, true));
 			self::updateDiscapacidades($id, ['Sin Discapacidad'], "Sin Discapacidad");
 		}
 		return $wpdb->insert_id;
 	}
 	
-	public static function registerUser($email, $password, $first_name, $last_name, $social = false, $haveDiscap = noDIS)
+	public static function registerUser($email, $password, $first_name, $last_name, $social = false, $haveDiscap = false)
 	{
 		self::$userName = $first_name;
 		self::$userLastName = $last_name;
