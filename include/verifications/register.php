@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$name = sanitize_text_field($_POST['name']);
 		$lastName = sanitize_text_field($_POST['lastName']);
 		$haveDiscap = $_POST['haveDiscap'];
-		$response = $verifications::registerUser($email, $password, $name, $lastName);
+		$response = $verifications::registerUser($email, $password, $name, $lastName, $haveDiscap);
 		
 		echo $verifications->json_response(200, $response);
 		return;

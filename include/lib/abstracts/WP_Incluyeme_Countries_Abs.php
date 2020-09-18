@@ -295,7 +295,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		exit;
 	}
 	
-	private static function userRegisterWPBJ()
+	private static function userRegisterWPBJ($noDis = false)
 	{
 		global $wpdb;
 		$registerTime = current_time('mysql');
@@ -321,10 +321,13 @@ abstract class WP_Incluyeme_Countries_Abs
 			'details_all' => '',
 			'resume_id' => $id,
 		]);
+		if ($noDis === true) {
+			self::updateDiscapacidades($id, ['Sin Discapacidad'], "Sin Discapacidad");
+		}
 		return $wpdb->insert_id;
 	}
 	
-	public static function registerUser($email, $password, $first_name, $last_name, $social = false)
+	public static function registerUser($email, $password, $first_name, $last_name, $social = false, $haveDiscap = noDIS)
 	{
 		self::$userName = $first_name;
 		self::$userLastName = $last_name;
@@ -341,7 +344,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		$temp = wpjb_upload_dir("resume", "", null, "basedir");
 		$finl = dirname($temp) . "/" . self::$userID;
 		wpjb_rename_dir($temp, $finl);
-		self::userRegisterWPBJ();
+		self::userRegisterWPBJ($haveDiscap == 'noDIS');
 		if ($social) {
 			self::auto_login_new_userSocial();
 		} else {
@@ -955,7 +958,7 @@ abstract class WP_Incluyeme_Countries_Abs
 					$disca = 'Lenguaje';
 					break;
 				default:
-					$disca = null;
+					$disca = 'Ninguna';
 					break;
 			}
 			if ($disca != null) {
