@@ -295,7 +295,7 @@ abstract class WP_Incluyeme_Countries_Abs
 		exit;
 	}
 	
-	private static function userRegisterWPBJ($noDis = false)
+	private static function userRegisterWPBJ($haveDiscap)
 	{
 		global $wpdb;
 		$registerTime = current_time('mysql');
@@ -321,9 +321,8 @@ abstract class WP_Incluyeme_Countries_Abs
 			'details_all' => '',
 			'resume_id' => $id,
 		]);
-		if ($noDis === true) {
-			error_log(print_r($noDis, true));
-			self::updateDiscapacidades($id, ['Sin Discapacidad'], "Sin Discapacidad");
+		if ($haveDiscap == true) {
+			self::updateDiscapacidades($id, ['Ninguna'], 'Ninguna');
 		}
 		return $wpdb->insert_id;
 	}
@@ -933,8 +932,18 @@ abstract class WP_Incluyeme_Countries_Abs
 		}
 		
 		for ($i = 0; $i < count($discaps); $i++) {
+			if($discaps[$i] === 'Ninguna'){
+
+				if (count($result2) > 0) {
+					self::$wp->insert(self::$dataPrefix . "wpjb_meta_value", [
+						'value' => 'Ninguna',
+						'object_id' => $userID,
+						'meta_id' => $result2[0]->id
+					]);
+				}
+				return true;
+			}
 			$result = self::$wp->get_results('SELECT * from ' . self::$usersDiscapTable . ' where resume_id = ' . $userID . '  AND discap_id = ' . $discaps[$i]);
-			
 			$disca = null;
 			switch ($discaps[$i]) {
 				case 1:
@@ -959,7 +968,7 @@ abstract class WP_Incluyeme_Countries_Abs
 					$disca = 'Lenguaje';
 					break;
 				default:
-					$disca = 'Ninguna';
+					$disca = null;
 					break;
 			}
 			if ($disca != null) {
@@ -977,6 +986,7 @@ abstract class WP_Incluyeme_Countries_Abs
 					'resume_id' => $userID
 				]);
 			}
+			
 		}
 		
 		self::$wp->get_results('UPDATE ' . self::$incluyemeUsersInformation . ' SET  	moreDis  = "' . $moreDis . '" WHERE resume_id = ' . $userID);
