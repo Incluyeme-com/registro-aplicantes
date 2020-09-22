@@ -13,11 +13,13 @@ function incluyeme_login_load()
 	incluyeme_login_files2();
 }
 
-function incluyeme_login_files_research(){
+function incluyeme_login_files_research()
+{
 	incluyeme_login_files();
 	incluyeme_login_files1();
 	incluyeme_login_files2();
 }
+
 function incluyeme_login_files()
 {
 	$template = plugin_dir_path(__FILE__) . '/templates/resumes/register.php';
@@ -29,10 +31,10 @@ function incluyeme_login_files()
 	} else {
 		$templateSize = filesize(plugin_dir_path(__FILE__) . '/templates/resumes/register.php');
 		$templateExist = filesize($route . '/wpjobboard/resumes/register.php');
-		if ($templateExist !== $templateSize) {
-			rmdir($route . '/wpjobboard/resumes/register.php');
-			copy($template, $route . '/wpjobboard/resumes/register.php');
-		}
+		
+		rmdir($route . '/wpjobboard/resumes/register.php');
+		copy($template, $route . '/wpjobboard/resumes/register.php');
+		
 	}
 }
 
