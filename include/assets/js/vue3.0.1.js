@@ -1065,7 +1065,7 @@ let app = new Vue({
             });
         },
         confirmStep6: async function (step) {
-            if (!this.motriz && !this.visceral && !this.auditiva && !this.visual && !this.intelectual) {
+            if (!this.motriz && !this.visceral && !this.auditiva && !this.visual && !this.intelectual && !this.psiquica && !this.habla) {
                 jQuery("#disSelects").css('color', "red");
                 this.validation = 12
             } else {
