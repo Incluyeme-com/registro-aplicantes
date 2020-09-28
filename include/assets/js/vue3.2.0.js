@@ -242,6 +242,7 @@ let app = new Vue({
                         this.getProvincias().finally();
                         this.currentStep = step;
                         this.goToTop();
+
                     }
                     this.goToTop();
                     break;
@@ -252,6 +253,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step;
                         this.goToTop();
+
                     }
                     this.goToTop();
                     break;
@@ -263,6 +265,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step;
                         this.goToTop();
+
                     }
                     this.goToTop();
                     break;
@@ -274,12 +277,14 @@ let app = new Vue({
                     } else {
                         this.currentStep = step;
                         this.goToTop();
+
                     }
                     this.goToTop();
                     break;
                 case 6:
                     await this.confirmStep6(step);
                     this.goToTop();
+
                     break;
                 case 7:
                     if (this.currentStep <= 7) {
@@ -288,7 +293,9 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+
                     this.goToTop();
+
                     break;
                 case 8:
                     if (this.currentStep <= 8) {
@@ -297,6 +304,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+
                     this.goToTop();
                     break;
                 case 9:
@@ -306,6 +314,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+
                     this.goToTop();
                     break;
                 case 10:
@@ -315,6 +324,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+
                     this.goToTop();
                     break;
                 case 11:
@@ -324,6 +334,7 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+
                     this.goToTop();
                     break;
                 case 12:
@@ -333,10 +344,12 @@ let app = new Vue({
                     } else {
                         this.currentStep = step
                     }
+
                     this.goToTop();
                     break;
                 default:
                     this.currentStep = step;
+
                     this.goToTop();
             }
 
@@ -651,6 +664,7 @@ let app = new Vue({
             this.awaitChange = false;
             this.currentStep = step;
             this.goToTop();
+            this.renderPickers();
         },
         confirmStep5: async function (step) {
 
@@ -905,6 +919,7 @@ let app = new Vue({
             } else {
                 this.university_edu[id] = null;
             }
+
         },
         changeUniversity: function (id, changes) {
             if (changes === true) {
@@ -912,6 +927,7 @@ let app = new Vue({
             } else {
                 Vue.set(app.university_edu, id, false);
             }
+
         },
         getUniver: async function (id) {
             return axios.get(this.url + '/incluyeme-login-extension/include/search/countries.php?countries=' + this.country_edu[id], {})
@@ -921,6 +937,7 @@ let app = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
+
         },
         getCities: async function (id) {
             let cities = await jQuery.ajax({
@@ -931,6 +948,7 @@ let app = new Vue({
                 return success;
             });
             this.cities = cities.message;
+
         },
         getCountries: async function (url) {
             let countries = await jQuery.ajax({
@@ -982,6 +1000,7 @@ let app = new Vue({
                 return success;
             });
             this.provincias = provincias.message
+
         },
         getLevelsIdioms: async function (url) {
             let levels = await jQuery.ajax({
@@ -1005,12 +1024,21 @@ let app = new Vue({
         },
         addStudies: async function () {
             this.formFields.push(1);
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            })
         },
         addExp: async function () {
             this.formFields2.push(1);
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            })
         },
         addIdioms: async function () {
             this.formFields3.push(1);
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            })
         },
         goToTop: function () {
             jQuery('html, body').animate({
@@ -1074,7 +1102,87 @@ let app = new Vue({
                 this.validation = null;
             }
             this.goToTop();
+        },
+        renderPickers: function () {
+            jQuery('.selectpicker').selectpicker('refresh');
+
         }
+    },
+    watch: {
+        currentStep: function (val, old) {
+            if (val === 4) {
+                this.$nextTick(function () {
+                    jQuery('#city').selectpicker('refresh');
+                    jQuery('#state').selectpicker('refresh');
+                });
+            }
+            if (val === 8) {
+                this.$nextTick(function () {
+                    jQuery('#university_edu').selectpicker('refresh');
+                    jQuery('#country_edu').selectpicker('refresh');
+                    jQuery('#studies').selectpicker('refresh');
+                });
+            }
+            if (val === 9) {
+                jQuery('#country_edu').css('display', 'none');
+                this.$nextTick(function () {
+                    jQuery("[data-id='country_edu']").css("display", "none");
+                    jQuery("[data-id='university_edu']").css("display", "none")
+                    jQuery('#studies').selectpicker('refresh');
+                });
+            }
+            if (val === 10) {
+                this.$nextTick(function () {
+                    jQuery('#studies').selectpicker('hide');
+                    jQuery('#lecLevel').selectpicker('refresh');
+                    jQuery('#redLevel').selectpicker('refresh');
+                    jQuery('#idioms').selectpicker('refresh');
+                    jQuery('#oralLevel').selectpicker('refresh');
+                });
+            }
+            if (val === 11) {
+                this.$nextTick(function () {
+                    jQuery('#studies').selectpicker('hide');
+                    jQuery('#preferJobs').selectpicker('refresh');
+                    jQuery('#redLevel').selectpicker('hide');
+                    jQuery('#idioms').selectpicker('hide');
+                    jQuery('#oralLevel').selectpicker('hide');
+                });
+            }
+
+            console.log({val, old})
+        },
+        cities: function () {
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            });
+        }, universities: function () {
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            });
+        }, study: function () {
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            });
+        }, experiences: function () {
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            });
+        }, idiom: function () {
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            });
+        }, levels: function () {
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            });
+        },
+        country_edu: function () {
+            this.$nextTick(function () {
+                jQuery('.selectpicker').selectpicker('refresh');
+            });
+        },
+
     }
 });
 startApp();

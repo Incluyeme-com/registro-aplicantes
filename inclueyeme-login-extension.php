@@ -5,7 +5,7 @@ Plugin Name: Incluyeme Login Extension
 Plugin URI: https://github.com/Cro22
 Description: Extension de funciones (Registro) para el Plugin WPJob Board
 Author: Jesus Nuñez
-Version: 3.1.1
+Version: 3.2.0
 Author URI: https://github.com/Cro22
 Text Domain: incluyeme-login-extension
 Domain Path: /languages
@@ -35,8 +35,6 @@ function incluyeme_requirements_Login_Extension()
 	if (is_admin() && current_user_can('activate_plugins') && is_plugin_active('wpjobboard/index.php')) {
 		incluyeme_login_load();
 	}
-	incluyeme_login_files_research();
-	
 }
 
 function incluyemeLogin_notice()
@@ -46,6 +44,26 @@ function incluyemeLogin_notice()
 	                      active.', 'incluyeme'); ?> </p></div>
 	<?php
 }
+function incluyemeLogin_loaderCheck()
+{
+    $version = '3.2.0';
+    if (get_option('incluyemeLoginVersion') != $version) {
+        $template = plugin_dir_path(__FILE__) . '/include/templates/resumes/register.php';
+        $route = get_template_directory();
+        if (!file_exists($route . '/wpjobboard/resumes/register.php')) {
+            mkdir($route . '/wpjobboard');
+            mkdir($route . '/wpjobboard/resumes');
+            copy($template, $route . '/wpjobboard/resumes/register.php');
+        } else {
+            rmdir($route . '/wpjobboard/resumes/register.php');
+            copy($template, $route . '/wpjobboard/resumes/register.php');
+        }
+        update_option('incluyemeLoginVersion', $version);
+    }
+}
+
+add_action('plugins_loaded', 'incluyemeFilters_loaderCheck');
+
 require 'plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/Incluyeme-com/registro-aplicantes',

@@ -2,31 +2,37 @@
 $js = plugins_url() . '/incluyeme-login-extension/include/assets/js/';
 $img = plugins_url() . '/incluyeme-login-extension/include/assets/img/incluyeme-place.svg';
 $css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
-wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
+wp_register_script('popper', $js . 'popper.js', ['jquery'], '1.0.0');
 wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('dropZ', $js . 'dropzone.min.js', ['jquery', 'popper'], '1.0.0');
 wp_register_script('FAwesome', $js . 'fAwesome.js', [], '1.0.0', false);
 wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs'], '1.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
+wp_register_script('selectJS', $js.'bootstrap-select.min.js', ['bootstrapJs'], '2.0.0');
 wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
+wp_register_script('defaults-es_ES', $js . 'defaults-es_ES.js', ['selectJS'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');
 
 wp_register_style('bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false);
 wp_register_style('bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false);
 wp_register_style('dropzone-css', $css . 'dropzone.min.css', [], '1.0.0', false);
+wp_register_style('selectB-css', $css. 'bootstrap-select.min.css', ['bootstrap-css'], '1.0.0', false);
 
 wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vue3.0.1.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vue3.2.0.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
+wp_enqueue_script('selectJS');
+wp_enqueue_script('defaults-es_ES');
 //wp_enqueue_script('materializeJS');
 
 wp_enqueue_style('bootstrap-css');
 wp_enqueue_style('dropzone-css');
 wp_enqueue_style('bootstrap-notify-css');
+wp_enqueue_style('selectB-css');
 $baseurl = wp_upload_dir();
 $baseurl = $baseurl['baseurl'];
 $incluyemeNames = 'incluyemeNamesCV';
@@ -493,7 +499,7 @@ $FBversion = 'v7.0';
 							<x-incluyeme class="form-group col">
 								<label id="labelState"
 								       for="state"><?php _e((get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-								<select v-model="state" type="text" class="form-control" id="state"
+								<select v-model="state" type="text" data-live-search="true" class="form-control selectpicker" id="state"
 								        v-on:change="getCities()">
 									<option v-for="provincias in provincias"
 									        :value="provincias.cities_provin" class="text-capitalize">
@@ -513,7 +519,7 @@ $FBversion = 'v7.0';
 							<x-incluyeme class="form-group col">
 								<label id="labelCity"
 								       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-								<select v-model="city" type="text" class="form-control" id="city">
+								<select v-model="city" type="text" data-live-search="true" class="form-control selectpicker" id="city">
 									<option v-for="citiy in cities"
 									        v-bind:value="citiy.cities_name" class="text-capitalize">
 										{{citiy.cities_name}}
@@ -1562,7 +1568,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<div class="row">
 						<x-incluyeme class="col">
 							<label for="country_edu"><?php _e("Pais", "incluyeme-login-extension"); ?></label>
-							<select id="country_edu" v-model="country_edu[pos]" class="form-control"
+							<select id="country_edu" v-model="country_edu[pos]" data-live-search="true" class="form-control selectpicker"
 							        v-on:change="getUniversities(pos)">
 								<option v-for="(countries, index) of countries" :value="countries.country_code">
 									{{countries.country_name}}
@@ -1573,7 +1579,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<div class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
-							<select id="university_edu" v-model="university_edu[pos]" class="form-control">
+							<select id="university_edu" v-model="university_edu[pos]" data-live-search="true" class="form-control selectpicker">
 								<option v-for="university in universities[pos]"
 								        :value="university.university" v-on:change="changeUniversity(pos, true)">
 									{{university.university}}
@@ -1601,7 +1607,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 						<x-incluyeme class="col">
 							<label
 									for="studies"><?php _e("Area de Estudio", "incluyeme-login-extension"); ?></label>
-							<select id="studies" v-model="studies[pos]" class="form-control">
+							<select id="studies" v-model="studies[pos]" data-live-search="true" class="form-control selectpicker">
 								<option v-for="(studies, index) of study"
 								        :value="studies.id" class="text-capitalize">
 									{{studies.name_inc_area}}
@@ -1722,7 +1728,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col-lg-6 col-md-12">
 							<label for="studies" class="">Area</label>
-							<select id="studies" v-model="areaEmployed[pos]" class="form-control">
+							<select id="studies" v-model="areaEmployed[pos]" data-live-search="true" class="form-control selectpicker">
 								<option v-for="(estudies, index) of study"
 								        :value="estudies.id" class="text-capitalize">
 									{{estudies.name_inc_area}}
@@ -1738,7 +1744,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col-lg-6 col-md-12">
 							<label for="studies" class="">Nivel de Experiencia</label>
-							<select id="studies" v-model="levelExperience[pos]" class="form-control">
+							<select id="studies" v-model="levelExperience[pos]" data-live-search="true" class="form-control selectpicker">
 								<option v-for="(experiences, index) of experiences"
 								        :value="experiences.id" class="text-capitalize">
 									{{experiences.name_incluyeme_exp}}
@@ -1836,7 +1842,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row">
 						<x-incluyeme class="col">
 							<label for="idioms">Idioma</label>
-							<select v-model="idioms[pos]" type="text" class="form-control" id="idioms"
+							<select v-model="idioms[pos]" type="text" data-live-search="true" class="form-control selectpicker" id="idioms"
 							        placeholder="Idiomas">
 								<option v-for="(idioms, index) of idiom"
 								        :value="idioms.id" class="text-capitalize">
@@ -1857,7 +1863,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="lecLevel" class="">Nivel de Lectura</label>
-							<select id="lecLevel" v-model="lecLevel[pos]" class="form-control mt-2">
+							<select id="lecLevel" v-model="lecLevel[pos]" data-live-search="true" class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1868,7 +1874,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="redLevel" class="">Nivel Escrito</label>
-							<select id="redLevel" v-model="redLevel[pos]" class="form-control mt-2">
+							<select id="redLevel" v-model="redLevel[pos]" data-live-search="true" class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1879,7 +1885,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="oralLevel" class="">Nivel Oral</label>
-							<select id="oralLevel" v-model="oralLevel[pos]" class="form-control mt-2">
+							<select id="oralLevel" v-model="oralLevel[pos]" data-live-search="true" class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1920,7 +1926,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row">
 						<x-incluyeme class="col text-center">
 							<h1>¿En que área te gustaría trabajar?</h1>
-							<select v-model="preferJobs" type="text" class="form-control" id="preferJobs">
+							<select v-model="preferJobs" type="text" data-live-search="true" class="form-control selectpicker" id="preferJobs">
 								<option v-for="(preferJobs, index) of preferJob"
 								        :value="preferJobs.id" class="text-capitalize">
 									{{preferJobs.jobs_prefers}}

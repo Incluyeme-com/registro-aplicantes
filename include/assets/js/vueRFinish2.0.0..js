@@ -907,6 +907,7 @@ let app = new Vue({
             } else {
                 this.university_edu[id] = null;
             }
+            this.renderPickers();
         },
         changeUniversity: function (id, changes) {
             if (changes === true) {
