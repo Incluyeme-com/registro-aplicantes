@@ -62,7 +62,7 @@ function incluyemeLogin_loaderCheck()
     }
 }
 
-add_action('plugins_loaded', 'incluyemeFilters_loaderCheck');
+add_action('plugins_loaded', 'incluyemeLogin_loaderCheck');
 
 require 'plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
