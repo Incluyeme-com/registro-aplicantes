@@ -159,6 +159,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		echo $verifications->json_response(200, 'COMPLETADO');
 		return;
 	}
+	if (isset($_POST['userID']) && isset($_POST['meetingIncluyeme'])) {
+		$verifications::meetingIncluyeme($_POST['userID'], $_POST['meetingIncluyeme']);
+		echo $verifications->json_response(200, 'COMPLETADO');
+		return;
+	}
 	echo $verifications->json_response(200, 'COMPLETADO');
 }
 return;

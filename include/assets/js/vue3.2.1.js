@@ -93,6 +93,14 @@ Vue.component('step12', {
         'step2'
     ]
 });
+Vue.component('step13', {
+    template: '#step13',
+    props: [
+        'currentStep',
+        'step1',
+        'step2'
+    ]
+});
 let app = new Vue({
     el: '#incluyeme-login-wpjb',
     data: {
@@ -210,7 +218,8 @@ let app = new Vue({
         facebook: false,
         provincias: [],
         inteTrabajarOP: null,
-        noDisPage: false
+        noDisPage: false,
+        meetingIncluyeme: null
     },
     ready: function () {
         console.log('ready');
@@ -222,14 +231,14 @@ let app = new Vue({
     },
     methods: {
         goToStep: async function (step, url = false) {
-            if (this.currentStep === 12) {
+            if (this.currentStep === 13) {
                 return;
             }
             this.url = url;
             if (this.awaitChange === true) {
                 return;
             }
-            switch (step) {
+            switch (Number(step)) {
                 case 2:
                     this.awaitChange = true;
                     if (await this.confirmStep2(step) === true && this.currentStep <= 2) {
@@ -347,7 +356,19 @@ let app = new Vue({
 
                     this.goToTop();
                     break;
+                case 13:
+                    console.log('kj')
+                    if (this.currentStep <= 13) {
+                        this.awaitChange = true;
+                        await this.confirmStep13(step)
+                    } else {
+                        this.currentStep = step
+                    }
+
+                    this.goToTop();
+                    break;
                 default:
+                    console.log('default')
                     this.currentStep = step;
 
                     this.goToTop();
@@ -895,17 +916,36 @@ let app = new Vue({
             this.goToTop();
         },
         confirmStep12: async function (step) {
-            this.pleaseAwait();
-            await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
-                userID: this.userID,
-                preferJobs: this.preferJobs
-            })
-                .then(function (response) {
-                    return response
+                this.pleaseAwait();
+                await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                    userID: this.userID,
+                    preferJobs: this.preferJobs
                 })
-                .catch(function (error) {
-                    return true;
-                });
+                    .then(function (response) {
+                        return response
+                    })
+                    .catch(function (error) {
+                        return true;
+                    });
+
+            this.awaitChange = false;
+            this.currentStep = step;
+            this.goToTop();
+        },
+        confirmStep13: async function (step) {
+            if (this.meetingIncluyeme !== null && this.meetingIncluyeme !== "") {
+                this.pleaseAwait();
+                await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                    userID: this.userID,
+                    meetingIncluyeme: this.meetingIncluyeme
+                })
+                    .then(function (response) {
+                        return response
+                    })
+                    .catch(function (error) {
+                        return true;
+                    });
+            }
             this.awaitChange = false;
             this.currentStep = step;
             window.location.href = '/thank-you';
@@ -1114,6 +1154,8 @@ let app = new Vue({
                 this.$nextTick(function () {
                     jQuery('#city').selectpicker('refresh');
                     jQuery('#state').selectpicker('refresh');
+                    jQuery("[data-id='country_edu']").css("display", "none");
+                    jQuery("[data-id='university_edu']").css("display", "none");
                 });
             }
             if (val === 8) {
@@ -1127,7 +1169,7 @@ let app = new Vue({
                 jQuery('#country_edu').css('display', 'none');
                 this.$nextTick(function () {
                     jQuery("[data-id='country_edu']").css("display", "none");
-                    jQuery("[data-id='university_edu']").css("display", "none")
+                    jQuery("[data-id='university_edu']").css("display", "none");
                     jQuery('#studies').selectpicker('refresh');
                 });
             }
@@ -1138,6 +1180,7 @@ let app = new Vue({
                     jQuery('#redLevel').selectpicker('refresh');
                     jQuery('#idioms').selectpicker('refresh');
                     jQuery('#oralLevel').selectpicker('refresh');
+                    jQuery("[data-id='preferJobs']").css("display", "none");
                 });
             }
             if (val === 11) {
@@ -1149,8 +1192,13 @@ let app = new Vue({
                     jQuery('#oralLevel').selectpicker('hide');
                 });
             }
+            if (val === 12) {
+                this.$nextTick(function () {
+                    jQuery('#preferJobs').selectpicker('hide');
+                });
+            }
 
-            console.log({val, old})
+
         },
         cities: function () {
             this.$nextTick(function () {

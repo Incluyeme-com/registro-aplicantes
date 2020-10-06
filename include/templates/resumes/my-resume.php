@@ -19,7 +19,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vueRFinish2.0.0..js', ['vueJS', 'FAwesome', 'dropZ'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vueRFinish2.0.1.js', ['vueJS', 'FAwesome', 'dropZ'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 //wp_enqueue_script('materializeJS');
@@ -39,71 +39,71 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry';
 $incluyemeLoginEstado = 'incluyemeLoginEstado';
 ?>
 <style>
-	.dropzone {
-		border: 2px dashed rgba(0, 0, 0, .3) !important;
-		border-radius: 20px !important;
-		color: rgba(0, 0, 0, .3) !important;
-		margin-top: 2em !important;
-		margin-bottom: 2em !important;
-	}
-	.deleteIncluyeme {
-		background-color: #ee7566 !important;
-		border-color: #ee7566 !important;
-	}
-	/* Chrome, Safari, Edge, Opera */
-	input::-webkit-outer-spin-button,
-	input::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-	
-	/* Firefox */
-	input[type=number] {
-		-moz-appearance: textfield;
-	}
-	.myButton {
-		box-shadow: 2px 2px 4px 0px #bfbfbf;
-		background-color: #ffffff;
-		border-radius: 4px;
-		border: 1px solid #ffffff;
-		display: inline-block;
-		cursor: pointer;
-		color: #bababa;
-		padding: 16px 31px;
-		height: 2.5rem;
-	}
-	
-	.myButton:hover,
-	.myButton:focus,
-	.myButton:active,
-	.myButton.active {
-		background-color: #bababa !important;
-	}
-	
-	.myButton2:hover,
-	.myButton2:focus,
-	.myButton2:active,
-	.myButton2.active {
-		background-color: #000BFF !important;
-	}
-	
-	.btn-info:hover,
-	.btn-info:focus,
-	.btn-info:active,
-	.btn-info.active {
-		background-color: #0079b8 !important;
-	}
-	
-	.btn-link {
-		color: black !important;
-	}
-	
-	.btn-link:hover,
-	.btn-link:focus,
-	.btn-link:active,
-	.btn-link.active {
-		background: none !important;
-	}
+    .dropzone {
+        border: 2px dashed rgba(0, 0, 0, .3) !important;
+        border-radius: 20px !important;
+        color: rgba(0, 0, 0, .3) !important;
+        margin-top: 2em !important;
+        margin-bottom: 2em !important;
+    }
+    .deleteIncluyeme {
+        background-color: #ee7566 !important;
+        border-color: #ee7566 !important;
+    }
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    .myButton {
+        box-shadow: 2px 2px 4px 0px #bfbfbf;
+        background-color: #ffffff;
+        border-radius: 4px;
+        border: 1px solid #ffffff;
+        display: inline-block;
+        cursor: pointer;
+        color: #bababa;
+        padding: 16px 31px;
+        height: 2.5rem;
+    }
+
+    .myButton:hover,
+    .myButton:focus,
+    .myButton:active,
+    .myButton.active {
+        background-color: #bababa !important;
+    }
+
+    .myButton2:hover,
+    .myButton2:focus,
+    .myButton2:active,
+    .myButton2.active {
+        background-color: #000BFF !important;
+    }
+
+    .btn-info:hover,
+    .btn-info:focus,
+    .btn-info:active,
+    .btn-info.active {
+        background-color: #0079b8 !important;
+    }
+
+    .btn-link {
+        color: black !important;
+    }
+
+    .btn-link:hover,
+    .btn-link:focus,
+    .btn-link:active,
+    .btn-link.active {
+        background: none !important;
+    }
 
 </style>
 <div id="incluyeme-login-wpjb">
@@ -225,7 +225,7 @@ $incluyemeLoginEstado = 'incluyemeLoginEstado';
 				</x-incluyeme>
 			
 			</div>
-			<?php if(!get_option($incluyemeLoginCountry)){?>
+            <?php if(!get_option($incluyemeLoginCountry)){?>
 				<div class="container mt-3 mb-sm-0">
 					<x-incluyeme class="row align-items-center">
 						<x-incluyeme class="form-group col">
@@ -246,7 +246,7 @@ $incluyemeLoginEstado = 'incluyemeLoginEstado';
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
-			<?php }else {?>
+            <?php }else {?>
 				<div class="container mt-3 mb-sm-0">
 					<x-incluyeme class="row align-items-center">
 						<x-incluyeme class="form-group col">
@@ -279,7 +279,7 @@ $incluyemeLoginEstado = 'incluyemeLoginEstado';
 						</x-incluyeme>
 					</x-incluyeme>
 				</div>
-			<?php } ?>
+            <?php } ?>
 			<div class="container mt-3 mb-sm-0">
 				<x-incluyeme class="row align-items-center">
 					<x-incluyeme class="form-group col">
@@ -1523,7 +1523,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 							</option>
 						</select>
 						<div class="pt-2">
-						<input placeholder="Por favor, escriba el nombre del idioma" id="idioms" v-model="idiomsOther[pos]" class="form-control" type="text" v-if="idioms[pos] == 'Otro'">
+							<input placeholder="Por favor, escriba el nombre del idioma" id="idioms" v-model="idiomsOther[pos]" class="form-control" type="text" v-if="idioms[pos] == 'Otro'">
 						</div>
 					</x-incluyeme>
 				</x-incluyeme>
@@ -1591,6 +1591,16 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 								{{preferJobs.jobs_prefers}}
 							</option>
 						</select>
+					</x-incluyeme>
+				</x-incluyeme>
+			</div>
+		</template>
+		<template id="step12">
+			<div class="container">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col text-center">
+						<h1>¿Como conociste Incluyeme.com?</h1>
+						<textarea placeholder="Cuéntanos como nos conociste" v-model="meetingIncluyeme" rows="3" type="text" class="form-control" id="meetingIncluyeme"></textarea>
 					</x-incluyeme>
 				</x-incluyeme>
 			</div>

@@ -22,7 +22,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vue3.2.0.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vue3.2.1.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 wp_enqueue_script('selectJS');
@@ -236,7 +236,7 @@ $FBversion = 'v7.0';
 					<h1>Regístrate</h1>
 					<p>Accede a oportunidades laborales para personas con disCAPACIDAD</p>
 				</x-incluyeme>
-				<?php if (get_option($incluyemeLoginGoogle)) { ?>
+                <?php if (get_option($incluyemeLoginGoogle)) { ?>
 					<x-incluyeme class="row text-center justify-content-center">
 						<x-incluyeme id='gSignInWrapper' class="col-lg-6 col-sm-12">
 							<button id="customBtn" type="button" class="btn myButton w-100">
@@ -245,8 +245,8 @@ $FBversion = 'v7.0';
 							</button>
 						</x-incluyeme>
 					</x-incluyeme>
-				<?php } ?>
-				<?php if (get_option($incluyemeLoginFB) && get_option($incluyemeLoginFBSECRET)) { ?>
+                <?php } ?>
+                <?php if (get_option($incluyemeLoginFB) && get_option($incluyemeLoginFBSECRET)) { ?>
 					<x-incluyeme class="row text-center justify-content-center">
 						<x-incluyeme class="col-lg-6 col-sm-12 mt-2">
 							<button scope="public_profile,email" onclick="FBLogin()"
@@ -257,7 +257,7 @@ $FBversion = 'v7.0';
 							</button>
 						</x-incluyeme>
 					</x-incluyeme>
-				<?php } ?>
+                <?php } ?>
 				<hr class="w-100">
 				<x-incluyeme class="row">
 					<x-incluyeme class="form-group col-12">
@@ -471,7 +471,7 @@ $FBversion = 'v7.0';
 					</x-incluyeme>
 				
 				</div>
-				<?php if (!get_option($incluyemeLoginCountry)) { ?>
+                <?php if (!get_option($incluyemeLoginCountry)) { ?>
 					<div class="container mt-3 mb-sm-0">
 						<x-incluyeme class="row align-items-center">
 							<x-incluyeme class="form-group col">
@@ -493,7 +493,7 @@ $FBversion = 'v7.0';
 							</x-incluyeme>
 						</x-incluyeme>
 					</div>
-				<?php } else { ?>
+                <?php } else { ?>
 					<div class="container mt-3 mb-sm-0">
 						<x-incluyeme class="row align-items-center">
 							<x-incluyeme class="form-group col">
@@ -505,9 +505,9 @@ $FBversion = 'v7.0';
 									        :value="provincias.cities_provin" class="text-capitalize">
 										{{provincias.cities_provin}}
 									</option>
-									<?php if (get_option($incluyemeLoginCountry) !== 'AR') { ?>
+                                    <?php if (get_option($incluyemeLoginCountry) !== 'AR') { ?>
 										<option value="Otra">Otro</option>
-									<?php } ?>
+                                    <?php } ?>
 								</select>
 								<p v-if="validation === 10" style="color: red">Por favor, ingrese
 								                                               su <?php (get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') ?></p>
@@ -530,7 +530,7 @@ $FBversion = 'v7.0';
 							</x-incluyeme>
 						</x-incluyeme>
 					</div>
-				<?php } ?>
+                <?php } ?>
 				<div class="container mt-3 mb-sm-0">
 					<x-incluyeme class="row align-items-center">
 						<x-incluyeme class="form-group col">
@@ -1926,7 +1926,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row">
 						<x-incluyeme class="col text-center">
 							<h1>¿En que área te gustaría trabajar?</h1>
-							<select v-model="preferJobs" type="text" data-live-search="true" class="form-control selectpicker" id="preferJobs">
+							<select v-if="currentStep == 11" v-model="preferJobs" type="text" data-live-search="true" class="form-control selectpicker" id="preferJobs">
 								<option v-for="(preferJobs, index) of preferJob"
 								        :value="preferJobs.id" class="text-capitalize">
 									{{preferJobs.jobs_prefers}}
@@ -1951,6 +1951,24 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 				</x-incluyeme>
 			</template>
 			<template id="step12" v-if="currentStep == 12">
+				<div class="container">
+					<div class="row">
+						<div class="col text-center">
+							<h1>¿Como conociste Incluyeme.com?</h1>
+							<textarea  placeholder="Cuéntanos como nos conociste" class="form-control" id="meetingIncluyeme" v-model="meetingIncluyeme"
+							           rows="3"></textarea>
+						</div>
+					</div>
+				</div>
+				<x-incluyeme class="row mt-2">
+					<x-incluyeme class="col">
+						<button type="submit" class="btn btn-info w-100"
+						        @click.prevent="goToStep(13, '<?php echo plugins_url() ?>')">Finalizar
+						</button>
+					</x-incluyeme>
+				</x-incluyeme>
+			</template>
+			<template id="step13" v-if="currentStep == 13">
 				<div class="container">
 					<x-incluyeme class="row">
 						<x-incluyeme class="col-12 text-center">

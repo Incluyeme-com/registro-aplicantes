@@ -60,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$_POST['mPhone'],
 				$_POST['state'],
 				$_POST['street'],
-				$_POST['phone']);
+                $_POST['phone'],
+				$_POST['meetingIncluyeme']);
 			
 		}
 		if (isset($_POST['userID']) && isset($_POST['discaps']) && isset($_POST['moreDis'])) {
@@ -114,6 +115,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		}
 		if (isset($_POST['userID']) && count($_POST['idioms'])>0) {
 			$verifications::updateIdioms($_POST['userID'], $_POST['idioms'], $_POST['oLevel'], $_POST['wLevel'], $_POST['sLevel'], $_POST['idiomsOther']);
+		}
+		if (isset($_POST['userID']) && isset($_POST['preferJobs'])) {
+			$verifications::updatePrefersJobs($_POST['userID'], $_POST['preferJobs']);
 		}
 		if (isset($_POST['userID']) && isset($_POST['preferJobs'])) {
 			$verifications::updatePrefersJobs($_POST['userID'], $_POST['preferJobs']);

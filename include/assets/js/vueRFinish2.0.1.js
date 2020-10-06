@@ -122,7 +122,8 @@ let app = new Vue({
         myIMG: null,
         provincias: [],
         cities: [],
-        aFluida: null
+        aFluida: null,
+        meetingIncluyeme: null
     },
     ready: function () {
         console.log('ready');
@@ -163,6 +164,7 @@ let app = new Vue({
             const idioms = data.message.idioms;
             const discap = data.message.discap;
             const assets = data.message.assets;
+            this.meetingIncluyeme = information.meeting_incluyeme;
             this.myCV = assets[2];
             this.myCUD = assets[1];
             this.myIMG = assets[0];
@@ -763,6 +765,7 @@ let app = new Vue({
                 Object.assign(data, five);
                 Object.assign(data, seven);
                 Object.assign(data, eight);
+                data.meetingIncluyeme = this.meetingIncluyeme;
                 await this.pleaseAwait2();
                 await axios.post(this.url + '/incluyeme-login-extension/include/verifications/resume.php', data)
                     .then(function (response) {
