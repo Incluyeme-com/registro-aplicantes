@@ -1954,7 +1954,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 				<div class="container">
 					<div class="row">
 						<div class="col text-center">
-							<h1>¿Como conociste Incluyeme.com?</h1>
+							<h1>¿Cómo conociste Incluyeme.com?</h1>
 							<textarea  placeholder="Cuéntanos como nos conociste" class="form-control" id="meetingIncluyeme" v-model="meetingIncluyeme"
 							           rows="3"></textarea>
 						</div>

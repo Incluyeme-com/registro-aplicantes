@@ -1599,7 +1599,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 			<div class="container">
 				<x-incluyeme class="row">
 					<x-incluyeme class="col text-center">
-						<h1>¿Como conociste Incluyeme.com?</h1>
+						<h1>¿Cómo conociste Incluyeme.com?</h1>
 						<textarea placeholder="Cuéntanos como nos conociste" v-model="meetingIncluyeme" rows="3" type="text" class="form-control" id="meetingIncluyeme"></textarea>
 					</x-incluyeme>
 				</x-incluyeme>
