@@ -499,7 +499,7 @@ $FBversion = 'v7.0';
 							<x-incluyeme class="form-group col">
 								<label id="labelState"
 								       for="state"><?php _e((get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-								<select v-model="state" type="text" data-live-search="true" class="form-control selectpicker" id="state"
+								<select v-model="state" type="text"  data-live-search="true" data-container="body"  class="form-control selectpicker" id="state"
 								        v-on:change="getCities()">
 									<option v-for="provincias in provincias"
 									        :value="provincias.cities_provin" class="text-capitalize">
@@ -519,7 +519,7 @@ $FBversion = 'v7.0';
 							<x-incluyeme class="form-group col">
 								<label id="labelCity"
 								       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-								<select v-model="city" type="text" data-live-search="true" class="form-control selectpicker" id="city">
+								<select v-model="city" type="text"  data-live-search="true" data-container="body"  class="form-control selectpicker" id="city">
 									<option v-for="citiy in cities"
 									        v-bind:value="citiy.cities_name" class="text-capitalize">
 										{{citiy.cities_name}}
@@ -1568,7 +1568,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<div class="row">
 						<x-incluyeme class="col">
 							<label for="country_edu"><?php _e("Pais", "incluyeme-login-extension"); ?></label>
-							<select id="country_edu" v-model="country_edu[pos]" data-live-search="true" class="form-control selectpicker"
+							<select id="country_edu" v-model="country_edu[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker"
 							        v-on:change="getUniversities(pos)">
 								<option v-for="(countries, index) of countries" :value="countries.country_code">
 									{{countries.country_name}}
@@ -1579,7 +1579,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<div class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
-							<select id="university_edu" v-model="university_edu[pos]" data-live-search="true" class="form-control selectpicker">
+							<select id="university_edu" v-model="university_edu[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker">
 								<option v-for="university in universities[pos]"
 								        :value="university.university" v-on:change="changeUniversity(pos, true)">
 									{{university.university}}
@@ -1607,7 +1607,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 						<x-incluyeme class="col">
 							<label
 									for="studies"><?php _e("Area de Estudio", "incluyeme-login-extension"); ?></label>
-							<select id="studies" v-model="studies[pos]" data-live-search="true" class="form-control selectpicker">
+							<select id="studies" v-model="studies[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker">
 								<option v-for="(studies, index) of study"
 								        :value="studies.id" class="text-capitalize">
 									{{studies.name_inc_area}}
@@ -1728,7 +1728,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col-lg-6 col-md-12">
 							<label for="studies" class="">Area</label>
-							<select id="studies" v-model="areaEmployed[pos]" data-live-search="true" class="form-control selectpicker">
+							<select id="studies" v-model="areaEmployed[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker">
 								<option v-for="(estudies, index) of study"
 								        :value="estudies.id" class="text-capitalize">
 									{{estudies.name_inc_area}}
@@ -1744,7 +1744,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col-lg-6 col-md-12">
 							<label for="studies" class="">Nivel de Experiencia</label>
-							<select id="studies" v-model="levelExperience[pos]" data-live-search="true" class="form-control selectpicker">
+							<select id="studies" v-model="levelExperience[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker">
 								<option v-for="(experiences, index) of experiences"
 								        :value="experiences.id" class="text-capitalize">
 									{{experiences.name_incluyeme_exp}}
@@ -1842,7 +1842,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row">
 						<x-incluyeme class="col">
 							<label for="idioms">Idioma</label>
-							<select v-model="idioms[pos]" type="text" data-live-search="true" class="form-control selectpicker" id="idioms"
+							<select v-model="idioms[pos]" type="text"  data-live-search="true" data-container="body"  class="form-control selectpicker" id="idioms"
 							        placeholder="Idiomas">
 								<option v-for="(idioms, index) of idiom"
 								        :value="idioms.id" class="text-capitalize">
@@ -1863,7 +1863,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="lecLevel" class="">Nivel de Lectura</label>
-							<select id="lecLevel" v-model="lecLevel[pos]" data-live-search="true" class="form-control selectpicker mt-2">
+							<select id="lecLevel" v-model="lecLevel[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1874,7 +1874,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="redLevel" class="">Nivel Escrito</label>
-							<select id="redLevel" v-model="redLevel[pos]" data-live-search="true" class="form-control selectpicker mt-2">
+							<select id="redLevel" v-model="redLevel[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1885,7 +1885,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="oralLevel" class="">Nivel Oral</label>
-							<select id="oralLevel" v-model="oralLevel[pos]" data-live-search="true" class="form-control selectpicker mt-2">
+							<select id="oralLevel" v-model="oralLevel[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1926,7 +1926,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row">
 						<x-incluyeme class="col text-center">
 							<h1>¿En que área te gustaría trabajar?</h1>
-							<select v-if="currentStep == 11" v-model="preferJobs" type="text" data-live-search="true" class="form-control selectpicker" id="preferJobs">
+							<select v-if="currentStep == 11" v-model="preferJobs" type="text"  data-live-search="true" data-container="body"  class="form-control selectpicker" id="preferJobs">
 								<option v-for="(preferJobs, index) of preferJob"
 								        :value="preferJobs.id" class="text-capitalize">
 									{{preferJobs.jobs_prefers}}
