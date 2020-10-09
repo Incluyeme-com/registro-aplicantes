@@ -897,7 +897,7 @@ if (count($query) < 1) {
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="mRueda"
-												       value="No" v-model="mBrazo" name="mRueda" disabled>
+												       value="No" v-model="mRueda" name="mRueda" disabled>
 												<label class="form-check-label"
 												       for="mRueda"
 												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1275,7 +1275,7 @@ distancia próxima?</span>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vObservarS"
-												       value="No" v-model="vTemp" name="vObservar" disabled>
+												       value="No" v-model="vObservar" name="vObservar" disabled>
 												<label class="form-check-label"
 												       for="vObservarS"
 												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>

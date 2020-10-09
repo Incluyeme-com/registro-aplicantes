@@ -778,7 +778,7 @@ $FBversion = 'v7.0';
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
 												       style="transform: scale(1.4) !important;" id="mRueda"
-												       value="No" v-model="mBrazo" name="mRueda">
+												       value="No" v-model="mRueda" name="mRueda">
 												<label class="form-check-label"
 												       for="mRueda"
 												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
@@ -1196,7 +1196,7 @@ distancia próxima?</span><br>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
 												       style="transform: scale(1.4) !important;" id="vObservarS"
-												       value="No" v-model="vTemp" name="vObservar">
+												       value="No" v-model="vObservar" name="vObservar">
 												<label class="form-check-label"
 												       for="vObservarS"
 												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
