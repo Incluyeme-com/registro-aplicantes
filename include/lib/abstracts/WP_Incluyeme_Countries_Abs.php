@@ -1316,6 +1316,7 @@ abstract class WP_Incluyeme_Countries_Abs
     
     public static function getUserInformation($id)
     {
+        $prefixSearch = self::$dataPrefix;
         if (!self::userSessionVerificate($id)) {
             return 'DONT HAVE ACCESS';
         }
@@ -1327,23 +1328,31 @@ FROM 	' . self::$dataPrefix . 'incluyeme_users_information
     ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id);
         $works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
         $education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
-        $discaps = self::$wp->get_results('SELECT
-  	' . self::$dataPrefix . 'incluyeme_users_questions.question_id,
-  	' . self::$dataPrefix . 'incluyeme_users_questions.answer,
-  	' . self::$dataPrefix . 'incluyeme_discapacities_questions.discapacities_questions,
-  	' . self::$dataPrefix . 'incluyeme_discapacities.discap_name,
-  	' . self::$dataPrefix . 'incluyeme_discapacities.id
-FROM 	' . self::$dataPrefix . 'incluyeme_users_questions
-  INNER JOIN 	' . self::$dataPrefix . 'incluyeme_discapacities_questions
-    ON 	' . self::$dataPrefix . 'incluyeme_users_questions.question_id = 	' . self::$dataPrefix . 'incluyeme_discapacities_questions.id
-  RIGHT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_discapacities
-    ON 	' . self::$dataPrefix . 'incluyeme_discapacities_questions.incluyeme_discapacities_id = 	' . self::$dataPrefix . 'incluyeme_discapacities.id
-  LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_users_dicapselect
-    ON 	' . self::$dataPrefix . 'incluyeme_discapacities.id = 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.discap_id
-WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id);
+        $discaps = self::$wp->get_results("SELECT
+  {$prefixSearch}incluyeme_users_questions.question_id,
+  {$prefixSearch}incluyeme_users_questions.answer,
+  {$prefixSearch}incluyeme_discapacities_questions.discapacities_questions,
+  {$prefixSearch}incluyeme_discapacities.discap_name,
+  {$prefixSearch}incluyeme_discapacities.id
+FROM {$prefixSearch}incluyeme_users_questions
+  INNER JOIN {$prefixSearch}incluyeme_discapacities_questions
+    ON {$prefixSearch}incluyeme_users_questions.question_id = {$prefixSearch}incluyeme_discapacities_questions.id
+  RIGHT OUTER JOIN {$prefixSearch}incluyeme_discapacities
+    ON {$prefixSearch}incluyeme_discapacities_questions.incluyeme_discapacities_id = {$prefixSearch}incluyeme_discapacities.id
+  LEFT OUTER JOIN {$prefixSearch}incluyeme_users_dicapselect
+    ON {$prefixSearch}incluyeme_discapacities.id = {$prefixSearch}incluyeme_users_dicapselect.discap_id
+    AND {$prefixSearch}incluyeme_users_questions.resume_id = {$prefixSearch}incluyeme_users_dicapselect.resume_id
+WHERE  {$prefixSearch}incluyeme_users_dicapselect.resume_id = {$id}
+GROUP BY {$prefixSearch}incluyeme_users_questions.question_id,
+         {$prefixSearch}incluyeme_users_questions.answer,
+         {$prefixSearch}incluyeme_discapacities_questions.discapacities_questions,
+         {$prefixSearch}incluyeme_discapacities.discap_name,
+         {$prefixSearch}incluyeme_discapacities.id");
         $idioms = self::$wp->get_results('SELECT * FROM ' . self::$wp->prefix . 'incluyeme_users_idioms WHERE ' . self::$wp->prefix . 'incluyeme_users_idioms.resume_id = ' . $id);
-        
-        return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta(get_current_user_id(), 'first_name')[0], 'last_name' => get_user_meta(get_current_user_id(), 'last_name')[0]];
+        $discapsSelected = self::$wp->get_results("SELECT
+  wp_incluyeme_users_dicapselect.discap_id as id
+FROM wp_incluyeme_users_dicapselect where resume_id ={$id}");
+        return (object)['discapsSelected'=> $discapsSelected, 'assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta(get_current_user_id(), 'first_name')[0], 'last_name' => get_user_meta(get_current_user_id(), 'last_name')[0]];
     }
     
     private static function getCV($id)
@@ -1423,20 +1432,29 @@ FROM 	' . self::$dataPrefix . 'incluyeme_users_information
         $works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
         $education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
         $userID = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume where id = ' . $id);
-        $discaps = self::$wp->get_results('SELECT
-  	' . self::$dataPrefix . 'incluyeme_users_questions.question_id,
-  	' . self::$dataPrefix . 'incluyeme_users_questions.answer,
-  	' . self::$dataPrefix . 'incluyeme_discapacities_questions.discapacities_questions,
-  	' . self::$dataPrefix . 'incluyeme_discapacities.discap_name,
-  	' . self::$dataPrefix . 'incluyeme_discapacities.id
-FROM 	' . self::$dataPrefix . 'incluyeme_users_questions
-  INNER JOIN 	' . self::$dataPrefix . 'incluyeme_discapacities_questions
-    ON 	' . self::$dataPrefix . 'incluyeme_users_questions.question_id = 	' . self::$dataPrefix . 'incluyeme_discapacities_questions.id
-  RIGHT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_discapacities
-    ON 	' . self::$dataPrefix . 'incluyeme_discapacities_questions.incluyeme_discapacities_id = 	' . self::$dataPrefix . 'incluyeme_discapacities.id
-  LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_users_dicapselect
-    ON 	' . self::$dataPrefix . 'incluyeme_discapacities.id = 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.discap_id
-WHERE 	' . self::$dataPrefix . 'incluyeme_users_dicapselect.resume_id =  ' . $id);
+        $discapsSelected = self::$wp->get_results("SELECT
+  wp_incluyeme_users_dicapselect.discap_id as id
+FROM wp_incluyeme_users_dicapselect where resume_id ={$id}");
+        $discaps = self::$wp->get_results("SELECT
+  {$prefixSearch}incluyeme_users_questions.question_id,
+  {$prefixSearch}incluyeme_users_questions.answer,
+  {$prefixSearch}incluyeme_discapacities_questions.discapacities_questions,
+  {$prefixSearch}incluyeme_discapacities.discap_name,
+  {$prefixSearch}incluyeme_discapacities.id
+FROM {$prefixSearch}incluyeme_users_questions
+  INNER JOIN {$prefixSearch}incluyeme_discapacities_questions
+    ON {$prefixSearch}incluyeme_users_questions.question_id = {$prefixSearch}incluyeme_discapacities_questions.id
+  RIGHT OUTER JOIN {$prefixSearch}incluyeme_discapacities
+    ON {$prefixSearch}incluyeme_discapacities_questions.incluyeme_discapacities_id = {$prefixSearch}incluyeme_discapacities.id
+  LEFT OUTER JOIN {$prefixSearch}incluyeme_users_dicapselect
+    ON {$prefixSearch}incluyeme_discapacities.id = {$prefixSearch}incluyeme_users_dicapselect.discap_id
+    AND {$prefixSearch}incluyeme_users_questions.resume_id = {$prefixSearch}incluyeme_users_dicapselect.resume_id
+WHERE  {$prefixSearch}incluyeme_users_dicapselect.resume_id = {$id}
+GROUP BY {$prefixSearch}incluyeme_users_questions.question_id,
+         {$prefixSearch}incluyeme_users_questions.answer,
+         {$prefixSearch}incluyeme_discapacities_questions.discapacities_questions,
+         {$prefixSearch}incluyeme_discapacities.discap_name,
+         {$prefixSearch}incluyeme_discapacities.id");
         $idioms = self::$wp->get_results('SELECT * FROM ' . self::$wp->prefix . 'incluyeme_users_idioms WHERE ' . self::$wp->prefix . 'incluyeme_users_idioms.resume_id = ' . $id);
         
         return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta($userID[0]->user_id, 'first_name'), 'last_name' => get_user_meta($userID[0]->user_id, 'last_name')];

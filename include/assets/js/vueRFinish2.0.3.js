@@ -164,6 +164,7 @@ let app = new Vue({
             const idioms = data.message.idioms;
             const discap = data.message.discap;
             const assets = data.message.assets;
+            const discapsSelected = data.message.discapsSelected
             this.meetingIncluyeme = information.meeting_incluyeme;
             this.myCV = assets[2];
             this.myCUD = assets[1];
@@ -224,7 +225,7 @@ let app = new Vue({
                 this.oralLevel[i] = idioms[i].olevel;
                 this.formFields3[i] = i + 1;
             }
-            discap.map(disabilities => {
+            discapsSelected.map(disabilities => {
                 if (disabilities.id == 1 && !this.motriz) {
                     this.motriz = true;
                 }
@@ -246,7 +247,8 @@ let app = new Vue({
                 if (disabilities.id == 7 && !this.habla) {
                     this.habla = true;
                 }
-
+            })
+            discap.map(disabilities=>{
                 if (disabilities.question_id == 1) {
                     this.mPie = disabilities.answer;
                 } else if (disabilities.question_id == 2) {
@@ -315,7 +317,6 @@ let app = new Vue({
                 else if (disabilities.question_id == 33) {
                     this.inteTrabajarOP = disabilities.answer;
                 }
-
             })
             this.state = information.province;
             this.getCities().finally();

@@ -160,6 +160,7 @@ let app = new Vue({
             const idioms = data.message.idioms;
             const discap = data.message.discap;
             const assets = data.message.assets;
+            const discapsSelected = data.message.discapsSelected
             this.myCV = assets[2];
             this.myCUD = assets[1];
             this.myIMG = assets[0];
@@ -219,7 +220,7 @@ let app = new Vue({
                 this.oralLevel[i] = idioms[i].olevel;
                 this.formFields3[i] = i + 1;
             }
-            discap.map(disabilities => {
+            discapsSelected.map(disabilities => {
                 if (disabilities.id == 1 && !this.motriz) {
                     this.motriz = true;
                 }
@@ -241,7 +242,8 @@ let app = new Vue({
                 if (disabilities.id == 7 && !this.habla) {
                     this.habla = true;
                 }
-
+            })
+            discap.map(disabilities=>{
                 if (disabilities.question_id == 1) {
                     this.mPie = disabilities.answer;
                 } else if (disabilities.question_id == 2) {
@@ -304,12 +306,12 @@ let app = new Vue({
                     this.inteMolesto = disabilities.answer;
                 } else if (disabilities.question_id == 31) {
                     this.inteActividad = disabilities.answer;
-                } else if (disabilities.question_id == 32) {
+                }else if (disabilities.question_id == 32) {
                     this.aFluida = disabilities.answer;
-                } else if (disabilities.question_id == 33) {
+                }
+                else if (disabilities.question_id == 33) {
                     this.inteTrabajarOP = disabilities.answer;
                 }
-
             })
             jQuery("#incluyeme-login-wpjb :input").prop("disabled", true);
         },
