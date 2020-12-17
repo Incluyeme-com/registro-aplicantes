@@ -48,7 +48,7 @@ function incluyemeLogin_notice()
 
 function incluyemeLogin_loaderCheck()
 {
-    $version = '3.2.5';
+    $version = '3.2.6';
     $check = strcmp(get_option('incluyemeLoginVersion'), $version);
     if ($check === 0) {
         $template = plugin_dir_path(__FILE__) . '/include/templates/resumes/register.php';
