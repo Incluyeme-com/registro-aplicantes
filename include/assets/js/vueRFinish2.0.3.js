@@ -262,9 +262,9 @@ let app = new Vue({
                 } else if (disabilities.question_id == 6) {
                     this.mRueda = disabilities.answer;
                 } else if (disabilities.question_id == 7) {
-                    this.mPie = disabilities.answer;
-                } else if (disabilities.question_id == 8) {
                     this.mDigi = disabilities.answer;
+                } else if (disabilities.question_id == 8) {
+                    this.desplazarte = disabilities.answer;
                 } else if (disabilities.question_id == 9) {
                     this.aAmbient = disabilities.answer;
                 } else if (disabilities.question_id == 10) {
