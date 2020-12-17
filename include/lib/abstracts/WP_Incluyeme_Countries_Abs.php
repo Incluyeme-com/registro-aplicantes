@@ -348,7 +348,10 @@ abstract class WP_Incluyeme_Countries_Abs
         }
         
         self::$wp->get_results('UPDATE ' . self::$incluyemeUsersInformation . ' SET  	moreDis  = "' . $moreDis . '" WHERE resume_id = ' . $userID);
-        self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN (' . implode(',', $discaps) . ')');
+        if(count($discaps)!==0){
+            self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN (' . implode(',', $discaps) . ')');
+        }
+        
         
         if ($moreDis !== null) {
             $result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name =  ' . "'" . self::$discapMore . "'");
@@ -541,8 +544,9 @@ abstract class WP_Incluyeme_Countries_Abs
     
     public static function meetingIncluyeme($userID, $meetingIncluyeme)
     {
+        error_log(print_r([$userID, $meetingIncluyeme], true));
         $prefix = self::$wp->prefix;
-        $row = self::$wp->get_results("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = {$prefix}incluyeme_users_information AND column_name = 'meeting_incluyeme'");
+        $row = self::$wp->get_results("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{$prefix}incluyeme_users_information' AND column_name = 'meeting_incluyeme'");
         
         if (empty($row)) {
             self::$wp->query("alter table {$prefix}incluyeme_users_information add meeting_incluyeme text null;");
@@ -1062,6 +1066,7 @@ abstract class WP_Incluyeme_Countries_Abs
             $sessions->destroy_all();
             return false;
         }
+        error_log(print_r($resume, true));
         $verifications = self::$wp->get_results('SELECT
 										  *
 										FROM ' . self::$dataPrefix . 'wpjb_resume
