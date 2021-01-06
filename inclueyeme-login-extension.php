@@ -38,9 +38,6 @@ function incluyeme_requirements_Login_Extension()
     if (is_admin() && current_user_can('activate_plugins') && is_plugin_active('wpjobboard/index.php')) {
         incluyeme_login_load();
     }
-    incluyemeLogin_loaderCheck();
-    incluyeme_loadResume();
-    incluyeme_loadMyResume();
 }
 
 function incluyemeLogin_notice()
