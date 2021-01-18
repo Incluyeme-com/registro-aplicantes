@@ -8,7 +8,7 @@ wp_register_script('dropZ', $js . 'dropzone.min.js', ['jquery', 'popper'], '1.0.
 wp_register_script('FAwesome', $js . 'fAwesome.js', [], '1.0.0', false);
 wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs'], '1.0.0');
 wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
-wp_register_script('selectJS', $js.'bootstrap-select.min.js', ['bootstrapJs'], '2.0.0');
+wp_register_script('selectJS', $js . 'bootstrap-select.min.js', ['bootstrapJs'], '2.0.0');
 wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 wp_register_script('defaults-es_ES', $js . 'defaults-es_ES.js', ['selectJS'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');
@@ -16,13 +16,13 @@ wp_register_script('defaults-es_ES', $js . 'defaults-es_ES.js', ['selectJS'], '2
 wp_register_style('bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false);
 wp_register_style('bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false);
 wp_register_style('dropzone-css', $css . 'dropzone.min.css', [], '1.0.0', false);
-wp_register_style('selectB-css', $css. 'bootstrap-select.min.css', ['bootstrap-css'], '1.0.0', false);
+wp_register_style('selectB-css', $css . 'bootstrap-select.min.css', ['bootstrap-css'], '1.0.0', false);
 
 wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vue3.2.1.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vue3.2.2.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 wp_enqueue_script('selectJS');
@@ -44,6 +44,7 @@ $incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
 $FBappId = get_option($incluyemeLoginFB);
 $incluyemeLoginFBSECRET = 'incluyemeLoginFBSECRET';
 $FBversion = 'v7.0';
+$defaultCheckTerminos = 'defaultCheckTerminos';
 ?>
 <?php if (get_option($incluyemeLoginGoogle)) { ?>
 	<script src="https://apis.google.com/js/api:client.js"></script>
@@ -283,6 +284,28 @@ $FBversion = 'v7.0';
 						       placeholder="Repite tu contraseña">
 						<p v-if="validation === 4" style="color: red">Su contraseña no coincide</p>
 					</x-incluyeme>
+					<x-incluyeme class="form-group col-12 ml-3">
+						<input class="form-check-input" type="checkbox" value="" v-model="defaultCheckDiscapacidad"
+						       id="defaultCheckDiscapacidad">
+						<label id="defaultCheckDiscapacidadLabel" class="form-check-label"
+						       for="defaultCheckDiscapacidad">
+							Comprendo que <?php echo
+                            ucwords($_SERVER['HTTP_HOST']) ?> es una plataforma para <b>personas con discapacidad</b>
+							<p v-if="validation === 'discapacidadTerms'" style="color: red">¿Comprende que <?php echo
+                                ucwords($_SERVER['HTTP_HOST']) ?> es una plataforma para <b>personas con
+							                                                                discapacidad</b>? </p>
+						</label>
+							<input class="form-check-input" type="checkbox" value="" v-model="defaultCheckTerminos"
+							       id="defaultCheckTerminos">
+							<label id="defaultCheckTerminosLabel" class="form-check-label" for="defaultCheckTerminos">
+								Al registrarte estas de acuerdo con nuestros <a
+										href="<?php echo get_option($defaultCheckTerminos); ?>" target="_blank">Términos y
+								                                                                            Condiciones</a>
+								y nuestra política de privacidad
+								<p v-if="validation === 'terms'" style="color: red">Debe aceptar nuestros Términos y
+								                                                    Condiciones</p>
+							</label>
+					</x-incluyeme>
 					<x-incluyeme class="form-group col-12">
 						<button type="submit" class="btn btn-info w-100 w-100"
 						        @click.prevent="goToStep(2, '<?php echo plugins_url() ?>')">Registrarse con
@@ -499,7 +522,8 @@ $FBversion = 'v7.0';
 							<x-incluyeme class="form-group col">
 								<label id="labelState"
 								       for="state"><?php _e((get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado') . "<span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-								<select v-model="state" type="text"  data-live-search="true" data-container="body"  class="form-control selectpicker" id="state"
+								<select v-model="state" type="text" data-live-search="true" data-container="body"
+								        class="form-control selectpicker" id="state"
 								        v-on:change="getCities()">
 									<option v-for="provincias in provincias"
 									        :value="provincias.cities_provin" class="text-capitalize">
@@ -519,7 +543,8 @@ $FBversion = 'v7.0';
 							<x-incluyeme class="form-group col">
 								<label id="labelCity"
 								       for="city"><?php _e("Ciudad <span style='font-size: 2em;color: black;'>*<span>", "incluyeme-login-extension"); ?></label>
-								<select v-model="city" type="text"  data-live-search="true" data-container="body"  class="form-control selectpicker" id="city">
+								<select v-model="city" type="text" data-live-search="true" data-container="body"
+								        class="form-control selectpicker" id="city">
 									<option v-for="citiy in cities"
 									        v-bind:value="citiy.cities_name" class="text-capitalize">
 										{{citiy.cities_name}}
@@ -1568,7 +1593,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<div class="row">
 						<x-incluyeme class="col">
 							<label for="country_edu"><?php _e("Pais", "incluyeme-login-extension"); ?></label>
-							<select id="country_edu" v-model="country_edu[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker"
+							<select id="country_edu" v-model="country_edu[pos]" data-live-search="true"
+							        data-container="body" class="form-control selectpicker"
 							        v-on:change="getUniversities(pos)">
 								<option v-for="(countries, index) of countries" :value="countries.country_code">
 									{{countries.country_name}}
@@ -1579,7 +1605,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<div class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
-							<select id="university_edu" v-model="university_edu[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker">
+							<select id="university_edu" v-model="university_edu[pos]" data-live-search="true"
+							        data-container="body" class="form-control selectpicker">
 								<option v-for="university in universities[pos]"
 								        :value="university.university" v-on:change="changeUniversity(pos, true)">
 									{{university.university}}
@@ -1607,7 +1634,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 						<x-incluyeme class="col">
 							<label
 									for="studies"><?php _e("Area de Estudio", "incluyeme-login-extension"); ?></label>
-							<select id="studies" v-model="studies[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker">
+							<select id="studies" v-model="studies[pos]" data-live-search="true" data-container="body"
+							        class="form-control selectpicker">
 								<option v-for="(studies, index) of study"
 								        :value="studies.id" class="text-capitalize">
 									{{studies.name_inc_area}}
@@ -1728,7 +1756,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col-lg-6 col-md-12">
 							<label for="studies" class="">Area</label>
-							<select id="studies" v-model="areaEmployed[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker">
+							<select id="studies" v-model="areaEmployed[pos]" data-live-search="true"
+							        data-container="body" class="form-control selectpicker">
 								<option v-for="(estudies, index) of study"
 								        :value="estudies.id" class="text-capitalize">
 									{{estudies.name_inc_area}}
@@ -1744,7 +1773,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col-lg-6 col-md-12">
 							<label for="studies" class="">Nivel de Experiencia</label>
-							<select id="studies" v-model="levelExperience[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker">
+							<select id="studies" v-model="levelExperience[pos]" data-live-search="true"
+							        data-container="body" class="form-control selectpicker">
 								<option v-for="(experiences, index) of experiences"
 								        :value="experiences.id" class="text-capitalize">
 									{{experiences.name_incluyeme_exp}}
@@ -1842,7 +1872,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row">
 						<x-incluyeme class="col">
 							<label for="idioms">Idioma</label>
-							<select v-model="idioms[pos]" type="text"  data-live-search="true" data-container="body"  class="form-control selectpicker" id="idioms"
+							<select v-model="idioms[pos]" type="text" data-live-search="true" data-container="body"
+							        class="form-control selectpicker" id="idioms"
 							        placeholder="Idiomas">
 								<option v-for="(idioms, index) of idiom"
 								        :value="idioms.id" class="text-capitalize">
@@ -1863,7 +1894,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="lecLevel" class="">Nivel de Lectura</label>
-							<select id="lecLevel" v-model="lecLevel[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker mt-2">
+							<select id="lecLevel" v-model="lecLevel[pos]" data-live-search="true" data-container="body"
+							        class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1874,7 +1906,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="redLevel" class="">Nivel Escrito</label>
-							<select id="redLevel" v-model="redLevel[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker mt-2">
+							<select id="redLevel" v-model="redLevel[pos]" data-live-search="true" data-container="body"
+							        class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1885,7 +1918,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col">
 							<label for="oralLevel" class="">Nivel Oral</label>
-							<select id="oralLevel" v-model="oralLevel[pos]"  data-live-search="true" data-container="body"  class="form-control selectpicker mt-2">
+							<select id="oralLevel" v-model="oralLevel[pos]" data-live-search="true"
+							        data-container="body" class="form-control selectpicker mt-2">
 								<option v-for="(levels, index) of levels"
 								        :value="levels.id" class="text-capitalize">
 									{{levels.name_level}}
@@ -1926,7 +1960,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<x-incluyeme class="row">
 						<x-incluyeme class="col text-center">
 							<h1>¿En que área te gustaría trabajar?</h1>
-							<select v-if="currentStep == 11" v-model="preferJobs" type="text"  data-live-search="true" data-container="body"  class="form-control selectpicker" id="preferJobs">
+							<select v-if="currentStep == 11" v-model="preferJobs" type="text" data-live-search="true"
+							        data-container="body" class="form-control selectpicker" id="preferJobs">
 								<option v-for="(preferJobs, index) of preferJob"
 								        :value="preferJobs.id" class="text-capitalize">
 									{{preferJobs.jobs_prefers}}
@@ -1955,8 +1990,9 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					<div class="row">
 						<div class="col text-center">
 							<h1>¿Cómo conociste Incluyeme.com?</h1>
-							<textarea  placeholder="Cuéntanos como nos conociste" class="form-control" id="meetingIncluyeme" v-model="meetingIncluyeme"
-							           rows="3"></textarea>
+							<textarea placeholder="Cuéntanos como nos conociste" class="form-control"
+							          id="meetingIncluyeme" v-model="meetingIncluyeme"
+							          rows="3"></textarea>
 						</div>
 					</div>
 				</div>
@@ -2002,3 +2038,4 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 	</script>
 
 <?php } ?>
+

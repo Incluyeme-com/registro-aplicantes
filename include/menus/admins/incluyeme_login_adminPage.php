@@ -19,6 +19,7 @@ function incluyeme_login_adminPage()
 	$incluyemeLoginCountry = 'incluyemeLoginCountry';
 	$incluyemeLoginEstado = 'incluyemeLoginEstado';
 	$incluyemeLoginFBSECRET = 'incluyemeLoginFBSECRET';
+    $defaultCheckTerminos = 'defaultCheckTerminos';
 	if (isset($_POST['incluyemeLoginFB'])) {
 		$value = $_POST['incluyemeLoginFB'];
 		update_option($incluyemeLoginFB, sanitize_text_field($value));
@@ -43,6 +44,11 @@ function incluyeme_login_adminPage()
 		$value = $_POST['incluyemeLoginFBSECRET'];
 		update_option($incluyemeLoginFBSECRET, sanitize_text_field($value));
 		update_option($incluyemeLoginFBSECRET, sanitize_text_field($value));
+	}
+	if (isset($_POST['defaultCheckTerminos'])) {
+		$value = $_POST['defaultCheckTerminos'];
+		update_option($defaultCheckTerminos, sanitize_text_field($value));
+		update_option($defaultCheckTerminos, sanitize_text_field($value));
 	}
 	if (isset($_POST['deleteIncluyeme'])) {
 		global $wpdb;
@@ -145,6 +151,15 @@ WHERE resume_id NOT IN (SELECT
 										</option>
 									
 									</select>
+								</div>
+								<div class="col-12 mt-2">
+									<label for="defaultCheckTerminos"><b><?php _e("Ingrese la URL para los terminos y condiciones de Incluyeme", "wpjobboard"); ?></b></label>
+									<input type="text"
+									       class="form-control"
+									       id="defaultCheckTerminos"
+									       name="defaultCheckTerminos"
+									       value="<?php echo get_option($defaultCheckTerminos) ? get_option($defaultCheckTerminos) : ''; ?>"
+									       placeholder="<?php _e("https://incluyeme.com/terminos", "wpjobboard"); ?>">
 								</div>
 							
 							</div>

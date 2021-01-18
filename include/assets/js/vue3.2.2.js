@@ -219,7 +219,9 @@ let app = new Vue({
         provincias: [],
         inteTrabajarOP: null,
         noDisPage: false,
-        meetingIncluyeme: null
+        meetingIncluyeme: null,
+        defaultCheckDiscapacidad: false,
+        defaultCheckTerminos: false,
     },
     ready: function () {
         console.log('ready');
@@ -501,6 +503,8 @@ let app = new Vue({
                 jQuery("#labelPassword4").removeAttr("style");
                 jQuery("#repostP").removeAttr("style");
                 jQuery("#repostPLabel").removeAttr("style");
+                jQuery("#defaultCheckTerminosLabel").css('color', "black");
+                jQuery("#defaultCheckDiscapacidadLabel").css('color', "black");
                 return false;
             } else if (this.password === null || !this.password) {
                 this.validation = 3;
@@ -508,12 +512,15 @@ let app = new Vue({
                 jQuery("#labelPassword4").css('color', "red");
                 jQuery("#emil").removeAttr("style");
                 jQuery("#emilLabel").removeAttr("style");
-
+                jQuery("#defaultCheckTerminosLabel").css('color', "black");
+                jQuery("#defaultCheckDiscapacidadLabel").css('color', "black");
                 return false;
             } else if (this.password.length < 5) {
                 this.validation = 3;
                 jQuery("#inputPassword4").css('border-color', "red");
                 jQuery("#labelPassword4").css('color', "red");
+                jQuery("#defaultCheckTerminosLabel").css('color', "black");
+                jQuery("#defaultCheckDiscapacidadLabel").css('color', "black");
                 this.awaitChange = false;
                 return false;
             } else if (this.password !== this.passwordConfirm) {
@@ -524,6 +531,32 @@ let app = new Vue({
                 jQuery("#labelPassword4").removeAttr("style");
                 jQuery("#emil").removeAttr("style");
                 jQuery("#emilLabel").removeAttr("style");
+                jQuery("#defaultCheckTerminosLabel").css('color', "black");
+                jQuery("#defaultCheckDiscapacidadLabel").css('color', "black");
+                this.awaitChange = false;
+                return false;
+            } else if (!this.defaultCheckDiscapacidad) {
+                jQuery("#repostP").removeAttr("style");
+                jQuery("#repostPLabel").removeAttr("style");
+                jQuery("#inputPassword4").removeAttr("style");
+                jQuery("#labelPassword4").removeAttr("style");
+                jQuery("#emil").removeAttr("style");
+                jQuery("#emilLabel").removeAttr("style");
+                jQuery("#defaultCheckDiscapacidadLabel").css('color', "red");
+                jQuery("#defaultCheckTerminosLabel").css('color', "black");
+                this.validation = 'discapacidadTerms';
+                this.awaitChange = false;
+                return false;
+            } else if (!this.defaultCheckTerminos) {
+                jQuery("#repostP").removeAttr("style");
+                jQuery("#repostPLabel").removeAttr("style");
+                jQuery("#inputPassword4").removeAttr("style");
+                jQuery("#labelPassword4").removeAttr("style");
+                jQuery("#emil").removeAttr("style");
+                jQuery("#emilLabel").removeAttr("style");
+                jQuery("#defaultCheckTerminosLabel").css('color', "red");
+                jQuery("#defaultCheckDiscapacidadLabel").css('color', "black");
+                this.validation = 'terms';
                 this.awaitChange = false;
                 return false;
             }
@@ -546,6 +579,8 @@ let app = new Vue({
                 jQuery("#labelPassword4").removeAttr("style");
                 jQuery("#emil").css('border-color', "red");
                 jQuery("#emilLabel").css('color', "red");
+                jQuery("#defaultCheckTerminosLabel").css('color', "black");
+                jQuery("#defaultCheckDiscapacidadLabel").css('color', "black");
                 this.awaitChange = false;
                 return false;
             } else if (verifications.data.message === false) {
@@ -916,17 +951,17 @@ let app = new Vue({
             this.goToTop();
         },
         confirmStep12: async function (step) {
-                this.pleaseAwait();
-                await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
-                    userID: this.userID,
-                    preferJobs: this.preferJobs
+            this.pleaseAwait();
+            await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
+                userID: this.userID,
+                preferJobs: this.preferJobs
+            })
+                .then(function (response) {
+                    return response
                 })
-                    .then(function (response) {
-                        return response
-                    })
-                    .catch(function (error) {
-                        return true;
-                    });
+                .catch(function (error) {
+                    return true;
+                });
 
             this.awaitChange = false;
             this.currentStep = step;
