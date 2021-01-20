@@ -22,7 +22,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vue3.2.2.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vue3.2.3.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 wp_enqueue_script('selectJS');
@@ -295,16 +295,16 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
                                 ucwords($_SERVER['HTTP_HOST']) ?> es una plataforma para <b>personas con
 							                                                                discapacidad</b>? </p>
 						</label>
-							<input class="form-check-input" type="checkbox" value="" v-model="defaultCheckTerminos"
+						<!--	<input class="form-check-input" type="checkbox" value="" v-model="defaultCheckTerminos"
 							       id="defaultCheckTerminos">
 							<label id="defaultCheckTerminosLabel" class="form-check-label" for="defaultCheckTerminos">
 								Al registrarte estas de acuerdo con nuestros <a
-										href="<?php echo get_option($defaultCheckTerminos); ?>" target="_blank">Términos y
+										href="<?php //echo get_option($defaultCheckTerminos); ?>" target="_blank">Términos y
 								                                                                            Condiciones</a>
 								y nuestra política de privacidad
 								<p v-if="validation === 'terms'" style="color: red">Debe aceptar nuestros Términos y
 								                                                    Condiciones</p>
-							</label>
+							</label> -->
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-12">
 						<button type="submit" class="btn btn-info w-100 w-100"

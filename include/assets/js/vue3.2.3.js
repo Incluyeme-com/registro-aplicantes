@@ -543,11 +543,11 @@ let app = new Vue({
                 jQuery("#emil").removeAttr("style");
                 jQuery("#emilLabel").removeAttr("style");
                 jQuery("#defaultCheckDiscapacidadLabel").css('color', "red");
-                jQuery("#defaultCheckTerminosLabel").css('color', "black");
+              //  jQuery("#defaultCheckTerminosLabel").css('color', "black");
                 this.validation = 'discapacidadTerms';
                 this.awaitChange = false;
                 return false;
-            } else if (!this.defaultCheckTerminos) {
+            } /*else if (!this.defaultCheckTerminos) {
                 jQuery("#repostP").removeAttr("style");
                 jQuery("#repostPLabel").removeAttr("style");
                 jQuery("#inputPassword4").removeAttr("style");
@@ -559,7 +559,7 @@ let app = new Vue({
                 this.validation = 'terms';
                 this.awaitChange = false;
                 return false;
-            }
+            }*/
             this.pleaseAwait();
             let verifications = await axios.post(this.url + '/incluyeme-login-extension/include/verifications/register.php', {
                 email: this.email,
@@ -579,7 +579,7 @@ let app = new Vue({
                 jQuery("#labelPassword4").removeAttr("style");
                 jQuery("#emil").css('border-color', "red");
                 jQuery("#emilLabel").css('color', "red");
-                jQuery("#defaultCheckTerminosLabel").css('color', "black");
+            //    jQuery("#defaultCheckTerminosLabel").css('color', "black");
                 jQuery("#defaultCheckDiscapacidadLabel").css('color', "black");
                 this.awaitChange = false;
                 return false;
