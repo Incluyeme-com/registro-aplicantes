@@ -1421,12 +1421,15 @@ FROM wp_incluyeme_users_dicapselect where resume_id ={$id}");
         if (!self::sessionVerificated($id)) {
             return 'DONT HAVE ACCESS';
         }
+        $prefixSearch = self::$dataPrefix;
         $information = self::$wp->get_results('SELECT
   	' . self::$dataPrefix . 'incluyeme_prefersjobs.jobs_prefers,
   	' . self::$dataPrefix . 'incluyeme_users_information.*
 FROM 	' . self::$dataPrefix . 'incluyeme_users_information
   LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
     ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id);
+        error_log(print_r($information, true));
+        error_log(print_r($id, true));
         $works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
         $education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
         $userID = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume where id = ' . $id);
