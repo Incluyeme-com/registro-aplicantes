@@ -563,15 +563,21 @@ if (count($query) < 1) {
         .myButton2:focus,
         .myButton2:active,
         .myButton2.active {
-            background-color: #000BFF !important;
+            background-color: #318de6 !important;
+        }
+        .myButton2 {
+            background-color: #318de6 !important;
         }
 
         .btn-info:hover,
         .btn-info:focus,
         .btn-info:active,
         .btn-info.active {
-            background-color: #0079b8 !important;
+            background-color: #318de6 !important;
         }
+        .btn-info {
+            background-color: #318de6 !important;
+        },
 
         .btn-link {
             color: black !important;

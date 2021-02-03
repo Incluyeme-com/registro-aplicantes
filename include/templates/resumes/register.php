@@ -206,15 +206,21 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
     .myButton2:focus,
     .myButton2:active,
     .myButton2.active {
-        background-color: #000BFF !important;
+        background-color: #318de6 !important;
+    }
+    .myButton2 {
+        background-color: #318de6 !important;
     }
 
     .btn-info:hover,
     .btn-info:focus,
     .btn-info:active,
     .btn-info.active {
-        background-color: #0079b8 !important;
+        background-color: #318de6 !important;
     }
+    .btn-info {
+        background-color: #318de6 !important;
+    },
 
     .btn-link {
         color: black !important;
@@ -252,7 +258,7 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
 						<x-incluyeme class="col-lg-6 col-sm-12 mt-2">
 							<button scope="public_profile,email" onclick="FBLogin()"
 							        class="btn btn-primary w-100 myButton2" style="box-shadow: 2px 2px 4px 0px #bfbfbf; border-radius: 4px;
-		border: 1px solid #007bff;height: 2.5rem; background-color: #455892 !important;">
+		border: 1px solid #007bff;height: 2.5rem; background-color: #318de6 !important;">
 								<i class="fa fa-facebook mr-2"></i>
 								<span class="text-gray">Sign with Facebook</span>
 							</button>
