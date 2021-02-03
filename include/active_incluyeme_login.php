@@ -96,16 +96,18 @@ function Update334()
     $created = $files . '3.3.4.sql';
     
     $table_name = $wpdb->prefix . 'incluyeme_cities';
-    $query = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($table_name));
     $queries = explode("; --", file_get_contents($created));
     foreach ($queries as $query) {
+        $wpdb->show_errors();
         $query = trim($query);
-        error_log(print_r($query, true));
         if (!empty($query)) {
             $query = str_replace('{$wpdb->prefix}', $wpdb->prefix, $query);
             $query = str_replace('{$wpjb->prefix}', $wpdb->prefix, $query);
             
             $wpdb->query($query);
+            if($wpdb->last_error !== '') :
+                $wpdb->print_error();
+            endif;
         }
     }
     

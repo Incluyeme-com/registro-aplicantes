@@ -1,10 +1,5 @@
-/*
- * Copyright (c) 2021
- *
- * Developer by Jesus Nuñez <jesus.nunez2050@gmail.com> .
- */
-/*Ecuador*/
-/*INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
+
+INSERT INTO `{$wpdb->prefix}incluyeme_cities` (`incluyeme_cities_id`, `cities_name`, `cities_location`)
 VALUES (51, 'Ech-Chleff (el-Asnam)', 'Chlef'),
        (52, 'Gharda', 'Gharda'),
        (53, 'Tafuna', 'Tutuila'),
@@ -1508,7 +1503,7 @@ VALUES (51, 'Ech-Chleff (el-Asnam)', 'Chlef'),
        (1551, 'Funabashi', 'Chiba'),
        (1552, 'Higashiosaka', 'Osaka'),
        (1553, 'Hachioji', 'Tokyo-to'),
-       (1554, 'Niigata', 'Niigata'); -- */
+       (1554, 'Niigata', 'Niigata'); --
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
 SET cities_provin = 'Los Rios'
 WHERE cities_provin = 'Los R?os'; --
@@ -1533,7 +1528,7 @@ WHERE cities_name = 'Ciudad de Panam'; --
 DELETE
 from `{$wpdb->prefix}incluyeme_provincias`
 WHERE country_code = 'PA'
-  AND cities_provin IN ('Baluchistan', 'Islamabad', 'Nothwest Border Prov', 'Punjab', 'Sind', 'Sindh');--
+  AND cities_provin IN ('Baluchistan', 'Islamabad', 'Nothwest Border Prov', 'Punjab', 'Sind', 'Sindh'); --
 
 INSERT INTO `{$wpdb->prefix}incluyeme_provincias`
 set cities_provin = 'Colón',
