@@ -208,6 +208,7 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
     .myButton2.active {
         background-color: #318de6 !important;
     }
+
     .myButton2 {
         background-color: #318de6 !important;
     }
@@ -218,9 +219,12 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
     .btn-info.active {
         background-color: #318de6 !important;
     }
+
     .btn-info {
         background-color: #318de6 !important;
-    },
+    }
+
+    ,
 
     .btn-link {
         color: black !important;
@@ -233,6 +237,9 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
         background: none !important;
     }
 
+    body:not(.et-tb) #main-content .container, body:not(.et-tb-has-header) #main-content .container {
+        padding-top: 0 !important;
+    }
 </style>
 <div class="container m-auto">
 	<div id="incluyeme-login-wpjb">
