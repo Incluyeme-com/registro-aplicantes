@@ -5,7 +5,7 @@ Plugin Name: Incluyeme Login Extension
 Plugin URI: https://github.com/Cro22
 Description: Extension de funciones (Registro) para el Plugin WPJob Board
 Author: Jesus Nuñez
-Version: 3.3.3
+Version: 3.3.4
 Author URI: https://github.com/Cro22
 Text Domain: incluyeme-login-extension
 Domain Path: /languages
@@ -52,7 +52,7 @@ function incluyemeLogin_loaderCheck()
 {
     $version = '3.3.1';
     $check = strcmp(get_option('incluyemeLoginVersion'), $version);
-    if ($check  !== 0) {
+    if ($check !== 0) {
         $template = plugin_dir_path(__FILE__) . '/include/templates/resumes/register.php';
         $route = get_template_directory();
         if (!file_exists($route . '/wpjobboard/resumes/register.php')) {
@@ -100,6 +100,17 @@ function incluyeme_loadMyResume()
         }
         update_option('loadResumeMy', $version);
     }
+    
+}
+
+function incluyeme_updateDatabase()
+{
+    $version = '3.3.4';
+    $check = strcmp(get_option('IncluyemeDataBaseUpdate'), $version);
+    if ($check !== 0) {
+        Update334();
+    }
+    update_option('IncluyemeDataBaseUpdate', $version);
     
 }
 
