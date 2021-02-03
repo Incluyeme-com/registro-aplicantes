@@ -5,7 +5,7 @@ Plugin Name: Incluyeme Login Extension
 Plugin URI: https://github.com/Cro22
 Description: Extension de funciones (Registro) para el Plugin WPJob Board
 Author: Jesus Nuñez
-Version: 3.3.7
+Version: 3.3.8
 Author URI: https://github.com/Cro22
 Text Domain: incluyeme-login-extension
 Domain Path: /languages
@@ -50,7 +50,7 @@ function incluyemeLogin_notice()
 
 function incluyemeLogin_loaderCheck()
 {
-    $version = '3.3.7';
+    $version = '3.3.8';
     $check = strcmp(get_option('incluyemeLoginVersion'), $version);
     if ($check !== 0) {
         $template = plugin_dir_path(__FILE__) . '/include/templates/resumes/register.php';
@@ -68,7 +68,7 @@ function incluyemeLogin_loaderCheck()
 
 function incluyeme_loadResume()
 {
-    $version = '3.3.6';
+    $version = '3.3.8';
     $check = strcmp(get_option('incluyeme_loadResume'), $version);
     if ($check !== 0) {
         $template = plugin_dir_path(__FILE__) . '/include/templates/resumes/resume.php';
@@ -86,7 +86,7 @@ function incluyeme_loadResume()
 
 function incluyeme_loadMyResume()
 {
-    $version = '3.3.6';
+    $version = '3.3.8';
     $check = strcmp(get_option('loadResumeMy'), $version);
     if ($check !== 0) {
         $template = plugin_dir_path(__FILE__) . '/include/templates/resumes/my-resume.php';
@@ -99,6 +99,25 @@ function incluyeme_loadMyResume()
             copy($template, $route . '/wpjobboard/resumes/my-resume.php');
         }
         update_option('loadResumeMy', $version);
+    }
+    
+}
+
+function incluyeme_MyHome()
+{
+    $version = '3.3.8';
+    $check = strcmp(get_option('loadMyHome'), $version);
+    if ($check !== 0) {
+        $template = plugin_dir_path(__FILE__) . '/include/templates/resumes/my-home.php';
+        $route = get_template_directory();
+        if (!file_exists($route . '/wpjobboard/resumes/my-home.php')) {
+            mkdir($route . '/wpjobboard');
+            mkdir($route . '/wpjobboard/resumes');
+            copy($template, $route . '/wpjobboard/resumes/my-home.php');
+        } else {
+            copy($template, $route . '/wpjobboard/resumes/my-home.php');
+        }
+        update_option('loadMyHome', $version);
     }
     
 }

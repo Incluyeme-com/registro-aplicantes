@@ -2029,7 +2029,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 			</template>
 		</div>
 		<h1 v-if="noDisPage!==false">Nos enfocamos en la inclusión de personas con disCapacidad</h1>
-		<div class="container mt-5">
+		<div class="container">
 			<h5>Los campos marcados con un <span
 						style="font-size: 2em;color: black;">* </span>
 			    son obligatorios
