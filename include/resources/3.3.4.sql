@@ -1576,3 +1576,10 @@ INSERT INTO `{$wpdb->prefix}incluyeme_cities` set cities_name = 'Las Tablas', ci
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` set cities_name = 'La Villa de Los Santos', cities_location =  'Los Santos'; --
 INSERT INTO `{$wpdb->prefix}incluyeme_cities` set cities_name = 'La Villa de Los Santos', cities_location =  'Los Santos'; --
 
+DELETE t1 FROM `{$wpdb->prefix}incluyeme_cities` t1
+	               INNER JOIN `{$wpdb->prefix}incluyeme_cities` t2
+WHERE t1.incluyeme_cities_id > t2.incluyeme_cities_id AND t1.cities_name = t2.cities_name; --
+
+DELETE t1 FROM `{$wpdb->prefix}incluyeme_provincias` t1
+	               INNER JOIN `{$wpdb->prefix}incluyeme_provincias` t2
+WHERE t1.incluyeme_provincias_id > t2.incluyeme_provincias_id AND t1.cities_provin = t2.cities_provin; --
