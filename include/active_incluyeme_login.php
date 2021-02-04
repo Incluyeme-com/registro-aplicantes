@@ -11,6 +11,7 @@ function incluyeme_login_load()
     incluyeme_login_sql_Start();
     incluyeme_login_files1();
     incluyeme_login_files2();
+    incluyeme_login_file_myHome();
     incluyeme_updateDatabase();
 }
 
