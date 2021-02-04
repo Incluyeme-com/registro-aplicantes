@@ -88,6 +88,24 @@ function incluyeme_login_sql_Start()
         }
     }
 }
+function incluyeme_login_file_myHome()
+{
+    
+    $template = plugin_dir_path(__FILE__) . '/templates/resumes/my-home.php';
+    $route = get_template_directory();
+    if (!file_exists($route . '/wpjobboard/resumes/my-home.php')) {
+        mkdir($route . '/wpjobboard');
+        mkdir($route . '/wpjobboard/resumes');
+        copy($template, $route . '/wpjobboard/resumes/my-home.php');
+    } else {
+        $templateSize = filesize(plugin_dir_path(__FILE__) . '/templates/resumes/my-home.php');
+        $templateExist = filesize($route . '/wpjobboard/resumes/my-home.php');
+        if ($templateExist !== $templateSize) {
+            
+            copy($template, $route . '/wpjobboard/resumes/my-home.php');
+        }
+    }
+}
 
 function Update334()
 {
