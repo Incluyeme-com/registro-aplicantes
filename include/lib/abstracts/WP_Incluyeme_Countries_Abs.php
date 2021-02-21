@@ -474,7 +474,6 @@ abstract class WP_Incluyeme_Countries_Abs
     
     public static function updateUsersWorks($actuWork, $areaEmployed, $dateStudiesDLaboral, $dateStudiesHLaboral, $employed, $jobs, $jobsDescript, $levelExperience, $userID)
     {
-        error_log(print_r($dateStudiesHLaboral, true));
         self::$wp->get_results('DELETE from ' . self::$wp->prefix . 'wpjb_resume_detail' . ' WHERE resume_id = ' . $userID . '  AND type = 1');
         for ($i = 0; $i < count($jobs); $i++) {
             self::$wp->insert(self::$wp->prefix . 'wpjb_resume_detail', [
@@ -1429,8 +1428,6 @@ FROM wp_incluyeme_users_dicapselect where resume_id ={$id}");
 FROM 	' . self::$dataPrefix . 'incluyeme_users_information
   LEFT OUTER JOIN 	' . self::$dataPrefix . 'incluyeme_prefersjobs
     ON 	' . self::$dataPrefix . 'incluyeme_users_information.preferjob_id = 	' . self::$dataPrefix . 'incluyeme_prefersjobs.id WHERE ' . self::$incluyemeUsersInformation . '.resume_id = ' . $id);
-        error_log(print_r($information, true));
-        error_log(print_r($id, true));
         $works = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 1 and resume_id = ' . $id);
         $education = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume_detail where type = 2 and resume_id = ' . $id);
         $userID = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume where id = ' . $id);

@@ -359,7 +359,6 @@ let app = new Vue({
                     this.goToTop();
                     break;
                 case 13:
-                    console.log('kj')
                     if (this.currentStep <= 13) {
                         this.awaitChange = true;
                         await this.confirmStep13(step)
