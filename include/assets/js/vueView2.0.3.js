@@ -164,6 +164,7 @@ let app = new Vue({
             this.myCV = assets[2];
             this.myCUD = assets[1];
             this.myIMG = assets[0];
+            data.message.name = data.message.name + " " + data.message.last_name
             this.name = data.message.name || '';
             this.moreDis = information.moreDis || '';
             this.lastName = data.message.last_name || '';
@@ -190,7 +191,7 @@ let app = new Vue({
                 this.jobs.push(works[i].detail_title);
                 this.actuWork.push(works[i].is_current == 1);
                 this.dateStudiesDLaboral.push(works[i].started_at);
-                this.dateStudiesHLaboral.push(works[i.completed_at]);
+                this.dateStudiesHLaboral.push(works[i].completed_at);
 
                 this.formFields2.push(i + 1);
             }
@@ -208,7 +209,7 @@ let app = new Vue({
                 this.titleEdu.push(studies[i].detail_title);
                 this.dateStudieB.push(studies[i].is_current == 1);
                 this.dateStudiesD.push(studies[i].started_at);
-                this.dateStudiesH.push(studies[i.completed_at]);
+                this.dateStudiesH.push(studies[i].completed_at);
 
                 this.formFields.push(i + 1);
 
@@ -243,7 +244,7 @@ let app = new Vue({
                     this.habla = true;
                 }
             })
-            discap.map(disabilities=>{
+            discap.map(disabilities => {
                 if (disabilities.question_id == 1) {
                     this.mPie = disabilities.answer;
                 } else if (disabilities.question_id == 2) {
@@ -306,10 +307,9 @@ let app = new Vue({
                     this.inteMolesto = disabilities.answer;
                 } else if (disabilities.question_id == 31) {
                     this.inteActividad = disabilities.answer;
-                }else if (disabilities.question_id == 32) {
+                } else if (disabilities.question_id == 32) {
                     this.aFluida = disabilities.answer;
-                }
-                else if (disabilities.question_id == 33) {
+                } else if (disabilities.question_id == 33) {
                     this.inteTrabajarOP = disabilities.answer;
                 }
             })
@@ -435,6 +435,66 @@ let app = new Vue({
             let country = area[1];
             area = area[0];
             return [Number(level), Number(area), country]
+        },
+        getNameCountry: function (countryCode) {
+            let name = "Sin información";
+            for (let i = 0; i < this.countries.length; i++) {
+                if (countryCode == this.countries[i].country_code) {
+                    name = this.countries[i].country_name
+                    break;
+                }
+            }
+            return name;
+        },
+        getNameArea: function (areaID) {
+            let name = "Sin información";
+            for (let i = 0; i < this.study.length; i++) {
+                if (areaID == this.study[i].id) {
+                    name = this.study[i].name_inc_area
+                    break;
+                }
+            }
+            return name;
+        },
+        getLevelName: function (levelID) {
+            let name = "Sin información";
+            for (let i = 0; i < this.experiences.length; i++) {
+                if (levelID == this.experiences[i].id) {
+                    name = this.experiences[i].name_incluyeme_exp
+                    break;
+                }
+            }
+            return name;
+        },
+        getIdiomName: function (idiomID) {
+            let name = "Sin información";
+            for (let i = 0; i < this.idiom.length; i++) {
+                if (idiomID == this.idiom[i].id) {
+                    name = this.idiom[i].name_idioms
+                    break;
+                }
+            }
+            return name;
+        },
+        getIdiomNameL: function (levelID) {
+            let name = "Sin información";
+            for (let i = 0; i < this.experiences.length; i++) {
+                if (levelID == this.experiences[i].id) {
+                    name = this.experiences[i].name_incluyeme_exp
+                    break;
+                }
+            }
+            return name;
+        },
+        getPrefersJobsName: function (jobdID) {
+            let name = "Sin información";
+            for (let i = 0; i < this.preferJob.length; i++) {
+                if (jobdID == this.preferJob[i].id) {
+                    name = this.preferJob[i].jobs_prefers
+                    break;
+                }
+            }
+            return name;
         }
     }
 });

@@ -21,24 +21,24 @@ $query = "SELECT
   wp_incluyeme_users_dicapselect.resume_id
 FROM wp_incluyeme_users_dicapselect
 WHERE wp_incluyeme_users_dicapselect.resume_id = $resume->id";
-$query =  	$wpdb->get_results($query);
+$query = $wpdb->get_results($query);
 if (count($query) < 1) {
-	?>
+    ?>
 	
 	<div class="wpjb wpjr-page-resume">
-		
-		<?php wpjb_flash() ?>
-		<?php $image_size = apply_filters("wpjb_singular_logo_size", "64x64", "resume") ?>
+        
+        <?php wpjb_flash() ?>
+        <?php $image_size = apply_filters("wpjb_singular_logo_size", "64x64", "resume") ?>
 		
 		<div class="wpjb-top-header <?php echo apply_filters("wpjb_top_header_classes", "wpjb-use-round-image", "resume", $resume->id) ?>">
 			<div class="wpjb-top-header-image">
-				<?php if ($resume->doScheme("image")): ?>
-				<?php elseif ($resume->getAvatarUrl()): ?>
+                <?php if ($resume->doScheme("image")): ?>
+                <?php elseif ($resume->getAvatarUrl()): ?>
 					<img src="<?php echo esc_attr($resume->getAvatarUrl($image_size)) ?>"
 					     alt="<?php echo esc_attr($resume->headline) ?>"/>
-				<?php else: ?>
+                <?php else: ?>
 					<span class="wpjb-glyphs wpjb-icon-user wpjb-logo-default-size"></span>
-				<?php endif; ?>
+                <?php endif; ?>
 			</div>
 			
 			<div class="wpjb-top-header-content">
@@ -46,17 +46,17 @@ if (count($query) < 1) {
                 <span class="wpjb-top-header-title">
                     <?php if ($resume->doScheme("headline")): ?>
                     <?php elseif ($resume->headline): ?>
-	                    <?php echo esc_html($resume->headline) ?>
+                        <?php echo esc_html($resume->headline) ?>
                     <?php else: ?>
 	                    —
                     <?php endif; ?>
                 </span>
 					
 					<ul class="wpjb-top-header-subtitle">
-						
-						<?php do_action("wpjb_template_resume_meta_pre", $resume) ?>
-						
-						<?php if (wpjb_conf("show_maps")): ?>
+                        
+                        <?php do_action("wpjb_template_resume_meta_pre", $resume) ?>
+                        
+                        <?php if (wpjb_conf("show_maps")): ?>
 							<li class="wpjb-resume-location">
 								<span class="wpjb-glyphs wpjb-icon-map"></span>
 								<span>
@@ -65,18 +65,18 @@ if (count($query) < 1) {
 	                               title="<?php echo esc_attr("show on map", "wpjobboard") ?>"><?php echo esc_html($resume->locationToString()) ?><span
 				                            class="wpjb-glyphs wpjb-icon-down-open"></span></a>
                             <?php else: ?>
-	                            <?php echo esc_html($resume->locationToString()) ?>
+                                <?php echo esc_html($resume->locationToString()) ?>
                             <?php endif; ?>
                         </span>
 							</li>
-						<?php endif; ?>
+                        <?php endif; ?>
 						
 						<li class="wpjb-resume-modified-at">
 							<span class="wpjb-glyphs wpjb-icon-clock"></span>
-							<?php echo wpjb_date_display(get_option('date_format'), $resume->modified_at) ?>
+                            <?php echo wpjb_date_display(get_option('date_format'), $resume->modified_at) ?>
 						</li>
-						
-						<?php do_action("wpjb_template_resume_meta", $resume) ?>
+                        
+                        <?php do_action("wpjb_template_resume_meta", $resume) ?>
 					
 					</ul>
 					
@@ -86,253 +86,253 @@ if (count($query) < 1) {
 				</div>
 			</div>
 		</div>
-		
-		<?php if (wpjb_conf("show_maps") && $resume->getGeo()->status == 2): ?>
+        
+        <?php if (wpjb_conf("show_maps") && $resume->getGeo()->status == 2): ?>
 			<div class="wpjb-none wpjb-map-slider">
 				<iframe style="width:100%;height:350px;margin:0;padding:0;" width="100%" height="350" frameborder="0"
 				        scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
 			</div>
-		<?php endif; ?>
-		
-		<?php if ($resume->description): ?>
+        <?php endif; ?>
+        
+        <?php if ($resume->description): ?>
 			<div class="wpjb-text-box" style="margin: 1em 0 1em 0; font-size: 1.1em">
-				<?php if ($resume->doScheme("description")): else: ?>
+                <?php if ($resume->doScheme("description")): else: ?>
 					<div class="wpjb-text"><?php echo wpjb_rich_text($resume->description, "html") ?></div>
-				<?php endif; ?>
+                <?php endif; ?>
 			</div>
-		<?php endif; ?>
+        <?php endif; ?>
 		
 		<div class="wpjb-grid wpjb-grid-closed-top">
-			
-			<?php if (!empty($resume->getTag()->category)): ?>
+            
+            <?php if (!empty($resume->getTag()->category)): ?>
 				<div class="wpjb-grid-row">
 					<div class="wpjb-grid-col wpjb-col-30"><?php _e("Category", "wpjobboard"); ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs wpjb-icon-tags">
-						<?php foreach ($resume->getTag()->category as $category): ?>
+                        <?php foreach ($resume->getTag()->category as $category): ?>
 							<a href="<?php esc_attr_e(wpjr_link_to("category", $category)) ?>"><?php esc_html_e($category->title) ?></a>
-						<?php endforeach; ?>
+                        <?php endforeach; ?>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<?php if ($resume->getUser(true)): ?>
+            <?php endif; ?>
+            
+            <?php if ($resume->getUser(true)): ?>
 				<div class="wpjb-grid-row">
 					<div class="wpjb-grid-col wpjb-col-30"><?php _e("E-mail", "wpjobboard"); ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs wpjb-icon-mail-alt">
-						<?php if ($resume->doScheme("user_email")): ?>
-						<?php elseif (in_array("user_email", $tolock) && !$can_browse): ?>
+                        <?php if ($resume->doScheme("user_email")): ?>
+                        <?php elseif (in_array("user_email", $tolock) && !$can_browse): ?>
 							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e("Locked", "wpjobboard") ?></em></span>
-						<?php else: ?>
-							<?php esc_html_e($resume->getUser()->user_email) ?>
-						<?php endif; ?>
+                        <?php else: ?>
+                            <?php esc_html_e($resume->getUser()->user_email) ?>
+                        <?php endif; ?>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<?php if ($resume->phone): ?>
+            <?php endif; ?>
+            
+            <?php if ($resume->phone): ?>
 				<div class="wpjb-grid-row">
 					<div class="wpjb-grid-col wpjb-col-30"><?php _e("Phone Number", "wpjobboard") ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs wpjb-icon-phone">
-						<?php if ($resume->doScheme("phone")): ?>
-						<?php elseif (in_array("phone", $tolock) && !$can_browse): ?>
+                        <?php if ($resume->doScheme("phone")): ?>
+                        <?php elseif (in_array("phone", $tolock) && !$can_browse): ?>
 							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e("Locked", "wpjobboard") ?></em></span>
-						<?php else: ?>
-							<?php esc_html_e($resume->phone) ?>
-						<?php endif; ?>
+                        <?php else: ?>
+                            <?php esc_html_e($resume->phone) ?>
+                        <?php endif; ?>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<?php if ($resume->getUser(true)->user_url): ?>
+            <?php endif; ?>
+            
+            <?php if ($resume->getUser(true)->user_url): ?>
 				<div class="wpjb-grid-row">
 					<div class="wpjb-grid-col wpjb-col-30"><?php _e("Website", "wpjobboard") ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs wpjb-icon-link-ext-alt">
-						<?php if ($resume->doScheme("user_url")): ?>
-						<?php elseif (in_array("user_url", $tolock) && !$can_browse): ?>
+                        <?php if ($resume->doScheme("user_url")): ?>
+                        <?php elseif (in_array("user_url", $tolock) && !$can_browse): ?>
 							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e("Locked", "wpjobboard") ?></em></span>
-						<?php else: ?>
+                        <?php else: ?>
 							<a href="<?php esc_attr_e($resume->getUser()->user_url) ?>"><?php esc_html_e($resume->getUser()->user_url) ?></a>
-						<?php endif; ?>
+                        <?php endif; ?>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<?php foreach ($resume->getMeta(["visibility" => 0, "meta_type" => 3, "empty" => false, "field_type_exclude" => "ui-input-textarea"]) as $k => $value): ?>
+            <?php endif; ?>
+            
+            <?php foreach ($resume->getMeta(["visibility" => 0, "meta_type" => 3, "empty" => false, "field_type_exclude" => "ui-input-textarea"]) as $k => $value): ?>
 				<div class="wpjb-grid-row <?php esc_attr_e("wpjb-row-meta-" . $value->conf("name")) ?>">
 					<div class="wpjb-grid-col wpjb-col-30"><?php esc_html_e($value->conf("title")); ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs <?php esc_attr_e($value->conf("render_icon", "wpjb-icon-empty")) ?>">
-						<?php if ($resume->doScheme($k)): ?>
-						<?php elseif (in_array($k, $tolock) && !$can_browse): ?>
+                        <?php if ($resume->doScheme($k)): ?>
+                        <?php elseif (in_array($k, $tolock) && !$can_browse): ?>
 							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e("Locked", "wpjobboard") ?></em></span>
-						<?php elseif ($value->conf("render_callback")): ?>
-							<?php call_user_func($value->conf("render_callback")); ?>
-						<?php elseif ($value->conf("type") == "ui-input-file"): ?>
-							<?php foreach ($resume->file->{$value->name} as $file): ?>
+                        <?php elseif ($value->conf("render_callback")): ?>
+                            <?php call_user_func($value->conf("render_callback")); ?>
+                        <?php elseif ($value->conf("type") == "ui-input-file"): ?>
+                            <?php foreach ($resume->file->{$value->name} as $file): ?>
 								<a href="<?php esc_attr_e($file->url) ?>"
 								   rel="nofollow"><?php esc_html_e($file->basename) ?></a>
-								<?php echo wpjb_format_bytes($file->size) ?><br/>
-							<?php endforeach ?>
-						<?php else: ?>
-							<?php if ($value->conf("url_target")): ?>
+                                <?php echo wpjb_format_bytes($file->size) ?><br/>
+                            <?php endforeach ?>
+                        <?php else: ?>
+                            <?php if ($value->conf("url_target")): ?>
 								<a href="<?php echo esc_html($value->value()); ?>"
 								   target="<?php echo $value->conf("url_target"); ?>"><?php echo esc_html($value->value()); ?></a>
-							<?php else: ?>
-								<?php esc_html_e(join(", ", (array)$value->values())) ?>
-							<?php endif; ?>
-						<?php endif; ?>
+                            <?php else: ?>
+                                <?php esc_html_e(join(", ", (array)$value->values())) ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
 					</div>
 				</div>
-			<?php endforeach; ?>
-			
-			<?php do_action("wpjb_template_resume_meta_text", $resume) ?>
+            <?php endforeach; ?>
+            
+            <?php do_action("wpjb_template_resume_meta_text", $resume) ?>
 		</div>
-		
-		<?php
-		$dList = [
-			__("Education", "wpjobboard") => $resume->getEducation(),
-			__("Experience", "wpjobboard") => $resume->getExperience()
-		];
-		?>
-		
-		<?php foreach ($dList as $title => $details): ?>
-			<?php if (!empty($details)): ?>
+        
+        <?php
+        $dList = [
+            __("Education", "wpjobboard") => $resume->getEducation(),
+            __("Experience", "wpjobboard") => $resume->getExperience()
+        ];
+        ?>
+        
+        <?php foreach ($dList as $title => $details): ?>
+            <?php if (!empty($details)): ?>
 				<div class="wpjb-text-box">
 					<h3><?php esc_html_e($title) ?></h3>
-					<?php foreach ($details as $detail): ?>
+                    <?php foreach ($details as $detail): ?>
 						
 						<div class="wpjb-resume-detail">
 							<div class="wpjb-column-left">
 								
 								<strong><?php esc_html_e($detail->detail_title) ?></strong>
-								<?php if ($detail->grantor): ?>
+                                <?php if ($detail->grantor): ?>
 									<span> @ <?php esc_html_e($detail->grantor) ?></span>
-								<?php endif; ?>
+                                <?php endif; ?>
 							
 							</div>
 							<div class="wpjb-column-right wpjb-motif">
-								<?php $glue = "" ?>
-								<?php if ($detail->started_at != "0000-00-00"): ?>
-									<?php esc_html_e(wpjb_date_display("M Y", $detail->started_at)) ?>
-									<?php $glue = "—"; ?>
-								<?php endif; ?>
-								
-								<?php if ($detail->is_current): ?>
-									<?php echo $glue . " ";
-									esc_html_e("Current", "wpjobboard") ?>
-								<?php elseif ($detail->completed_at != "0000-00-00"): ?>
-									<?php echo $glue . " ";
-									esc_html_e(wpjb_date_display("M Y", $detail->completed_at)) ?>
-								<?php endif; ?>
+                                <?php $glue = "" ?>
+                                <?php if ($detail->started_at != "0000-00-00"): ?>
+                                    <?php esc_html_e(wpjb_date_display("M Y", $detail->started_at)) ?>
+                                    <?php $glue = "—"; ?>
+                                <?php endif; ?>
+                                
+                                <?php if ($detail->is_current): ?>
+                                    <?php echo $glue . " ";
+                                    esc_html_e("Current", "wpjobboard") ?>
+                                <?php elseif ($detail->completed_at != "0000-00-00"): ?>
+                                    <?php echo $glue . " ";
+                                    esc_html_e(wpjb_date_display("M Y", $detail->completed_at)) ?>
+                                <?php endif; ?>
 							</div>
-							<?php if ($detail->detail_description): ?>
+                            <?php if ($detail->detail_description): ?>
 								<div class="wpjb-clear"><?php echo wpjb_rich_text($detail->detail_description) ?></div>
-							<?php endif; ?>
-							
-							<?php do_action("wpjb_template_resume_detail_meta_text", $detail) ?>
+                            <?php endif; ?>
+                            
+                            <?php do_action("wpjb_template_resume_detail_meta_text", $detail) ?>
 						</div>
-					
-					<?php endforeach; ?>
+                    
+                    <?php endforeach; ?>
 				</div>
-			<?php endif; ?>
-		<?php endforeach; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
 		
 		<div class="wpjb-text-box">
-			<?php foreach ($resume->getMeta(["visibility" => 0, "meta_type" => 3, "empty" => false, "field_type" => "ui-input-textarea"]) as $k => $value): ?>
+            <?php foreach ($resume->getMeta(["visibility" => 0, "meta_type" => 3, "empty" => false, "field_type" => "ui-input-textarea"]) as $k => $value): ?>
 				
 				<h3><?php esc_html_e($value->conf("title")); ?></h3>
 				<div class="wpjb-text">
-					<?php if ($resume->doScheme($k)): else: ?>
-						<?php wpjb_rich_text($value->value(), $value->conf("textarea_wysiwyg") ? "html" : "text"); ?>
-					<?php endif; ?>
+                    <?php if ($resume->doScheme($k)): else: ?>
+                        <?php wpjb_rich_text($value->value(), $value->conf("textarea_wysiwyg") ? "html" : "text"); ?>
+                    <?php endif; ?>
 				</div>
-			
-			<?php endforeach; ?>
-			
-			<?php do_action("wpjb_template_resume_meta_richtext", $resume) ?>
+            
+            <?php endforeach; ?>
+            
+            <?php do_action("wpjb_template_resume_meta_richtext", $resume) ?>
 		</div>
 		
 		<div id="wpjb-scroll" class="wpjb-job-content">
 			<h3><?php _e("Contact Candidate", "wpjobboard") ?></h3>
-			
-			<?php if ($c_message): ?>
+            
+            <?php if ($c_message): ?>
 				<div class="wpjb-flash-info"><?php esc_html_e($c_message) ?></div><?php endif; ?>
 			
 			<div>
-				<?php if ($button->contact): ?>
+                <?php if ($button->contact): ?>
 					<a class="wpjb-button wpjb-form-toggle wpjb-form-resume-contact"
 					   data-wpjb-form="wpjb-form-resume-contact"
 					   href="<?php esc_attr_e(wpjr_link_to("resume", $resume, ["form" => "contact"])) ?>#wpjb-scroll"
 					   rel="nofollow"><?php _e("Contact Candidate", "wpjobboard") ?> <span
 								class="wpjb-glyphs wpjb-icon-down-open"></span></a>
-				<?php endif; ?>
-				
-				<?php if ($button->login): ?>
+                <?php endif; ?>
+                
+                <?php if ($button->login): ?>
 					<a class="wpjb-button"
 					   href="<?php esc_attr_e(wpjb_link_to("employer_login", null, ["redirect_to" => base64_encode($current_url)])) ?>"><?php _e("Login", "wpjobboard") ?></a>
-				<?php endif; ?>
-				
-				<?php if ($button->register): ?>
+                <?php endif; ?>
+                
+                <?php if ($button->register): ?>
 					<a class="wpjb-button"
 					   href="<?php esc_attr_e(wpjb_link_to("employer_new", null, ["redirect_to" => base64_encode($current_url)])) ?>"><?php _e("Register", "wpjobboard") ?></a>
-				<?php endif; ?>
-				
-				<?php if ($button->purchase): ?>
+                <?php endif; ?>
+                
+                <?php if ($button->purchase): ?>
 					<a class="wpjb-button wpjb-form-toggle wpjb-form-resume-purchase"
 					   data-wpjb-form="wpjb-form-resume-purchase"
 					   href="<?php esc_attr_e(wpjr_link_to("resume", $resume, ["form" => "purchase"])) ?>#wpjb-scroll"
 					   rel="nofollow"><?php _e("Purchase", "wpjobboard") ?> <span
 								class="wpjb-glyphs wpjb-icon-down-open">&nbsp;</span></a>
-				<?php endif; ?>
-				
-				<?php if ($button->verify): ?>
+                <?php endif; ?>
+                
+                <?php if ($button->verify): ?>
 					<a class="wpjb-button"
 					   href="<?php esc_attr_e(wpjb_link_to("employer_verify")) ?>"><?php _e("Request verification", "wpjobboard") ?></a>
-				<?php endif; ?>
+                <?php endif; ?>
 			</div>
-			
-			<?php foreach ($f as $k => $form): ?>
+            
+            <?php foreach ($f as $k => $form): ?>
 				<div id="wpjb-form-resume-<?php echo $k ?>"
 				     class="wpjb-form-resume wpjb-form-slider wpjb-layer-inside <?php if (!$show->$k): ?>wpjb-none<?php endif; ?>">
-					
-					<?php if ($form_error): ?>
+                    
+                    <?php if ($form_error): ?>
 						<div class="wpjb-flash-error wpjb-flash-small">
 							<span class="wpjb-glyphs wpjb-icon-attention"><?php esc_html_e($form_error) ?></span>
 						</div>
-					<?php endif; ?>
+                    <?php endif; ?>
 					
 					<form class="wpjb-form wpjb-form-nolines"
 					      action="<?php esc_attr_e(wpjr_link_to("resume", $resume)) ?>#wpjb-scroll" method="post">
-						
-						<?php echo $form->renderHidden() ?>
-						<?php foreach ($form->getReordered() as $group): ?>
-							<?php /* @var $group stdClass */ ?>
-							
-							<?php if ($group->title): ?>
+                        
+                        <?php echo $form->renderHidden() ?>
+                        <?php foreach ($form->getReordered() as $group): ?>
+                            <?php /* @var $group stdClass */ ?>
+                            
+                            <?php if ($group->title): ?>
 								<div class="wpjb-legend"><?php esc_html_e($group->title) ?></div>
-							<?php endif; ?>
+                            <?php endif; ?>
 							
 							<fieldset class="wpjb-fieldset-<?php esc_attr_e($group->getName()) ?>">
-								<?php foreach ($group->getReordered() as $name => $field): ?>
-									<?php /* @var $field Daq_Form_Element */ ?>
+                                <?php foreach ($group->getReordered() as $name => $field): ?>
+                                    <?php /* @var $field Daq_Form_Element */ ?>
 									<div class="<?php wpjb_form_input_features($field) ?>">
 										
 										<label class="wpjb-label">
-											<?php esc_html_e($field->getLabel()) ?>
-											<?php if ($field->isRequired()): ?><span
+                                            <?php esc_html_e($field->getLabel()) ?>
+                                            <?php if ($field->isRequired()): ?><span
 													class="wpjb-required">*</span><?php endif; ?>
 										</label>
 										
 										<div class="wpjb-field">
-											<?php wpjb_form_render_input($form, $field) ?>
-											<?php wpjb_form_input_hint($field) ?>
-											<?php wpjb_form_input_errors($field) ?>
+                                            <?php wpjb_form_render_input($form, $field) ?>
+                                            <?php wpjb_form_input_hint($field) ?>
+                                            <?php wpjb_form_input_errors($field) ?>
 										</div>
 									
 									</div>
-								
-								<?php endforeach; ?>
+                                
+                                <?php endforeach; ?>
 							</fieldset>
-						<?php endforeach; ?>
+                        <?php endforeach; ?>
 						
 						<div class="wpjb-legend"></div>
 						
@@ -343,49 +343,53 @@ if (count($query) < 1) {
 					
 					</form>
 				</div>
-			<?php endforeach; ?>
+            <?php endforeach; ?>
 		
 		</div>
 	
 	</div>
-	
-	
-	<?php
+    
+    
+    <?php
 } else {
-	$js = plugins_url() . '/incluyeme-login-extension/include/assets/js/';
-	$img = plugins_url() . '/incluyeme-login-extension/include/assets/img/incluyeme-place.svg';
-	$css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
-	wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
-	wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
-	wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
-	wp_register_script('vueD', $js . 'vueView2.0.2.js', ['vueJS', 'Axios'], '2.0.0');
-	wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
-	wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
+    $js = plugins_url() . '/incluyeme-login-extension/include/assets/js/';
+    $img = plugins_url() . '/incluyeme-login-extension/include/assets/img/incluyeme-place.svg';
+    $css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
+    wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
+    wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
+    wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
+    wp_register_script('vueD', $js . 'vueView2.0.3.js', ['vueJS', 'Axios'], '2.0.0');
+    wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
+    wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');
-	
-	wp_register_style('bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false);
-	wp_register_style('bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false);
-	wp_register_script('FAwesome', 'https://kit.fontawesome.com/65c018cf75.js', [], '1.0.0', false);
-	wp_enqueue_script('bootstrapJs');
-	wp_enqueue_script('bootstrap-notify');
-	wp_enqueue_script('vueD');
-	
-	wp_enqueue_style('bootstrap-css');
-	wp_enqueue_style('bootstrap-notify-css');
-	wp_enqueue_script('fAwesome');
-	$baseurl = wp_upload_dir();
-	$baseurl = $baseurl['baseurl'];
-	$incluyemeNames = 'incluyemeNamesCV';
-	$incluyemeLoginFB = 'incluyemeLoginFB';
-	$incluyemeLoginGoogle = 'incluyemeLoginGoogle';
-	$incluyemeLoginCountry = 'incluyemeLoginCountry';
-	$incluyemeLoginEstado = 'incluyemeLoginEstado';
-	$incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
-	$FBappId = get_option($incluyemeLoginFB);
-	$FBversion = 'v7';
-
-	?>
+    
+    wp_register_style('bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false);
+    wp_register_style('bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false);
+    wp_register_script('FAwesome', 'https://kit.fontawesome.com/65c018cf75.js', [], '1.0.0', false);
+    wp_enqueue_script('bootstrapJs');
+    wp_enqueue_script('bootstrap-notify');
+    wp_enqueue_script('vueD');
+    
+    wp_enqueue_style('bootstrap-css');
+    wp_enqueue_style('bootstrap-notify-css');
+    wp_enqueue_script('fAwesome');
+    $baseurl = wp_upload_dir();
+    $baseurl = $baseurl['baseurl'];
+    $incluyemeNames = 'incluyemeNamesCV';
+    $incluyemeLoginFB = 'incluyemeLoginFB';
+    $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+    $incluyemeLoginCountry = 'incluyemeLoginCountry';
+    $incluyemeLoginEstado = 'incluyemeLoginEstado';
+    $incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
+    $FBappId = get_option($incluyemeLoginFB);
+    $FBversion = 'v7';
+    
+    ?>
 	<style>
+        #main-content .container:before {
+            background: none !important;
+        }
+
         .form-control {
             border: none !important;
         }
@@ -565,6 +569,7 @@ if (count($query) < 1) {
         .myButton2.active {
             background-color: #318de6 !important;
         }
+
         .myButton2 {
             background-color: #318de6 !important;
         }
@@ -575,9 +580,12 @@ if (count($query) < 1) {
         .btn-info.active {
             background-color: #318de6 !important;
         }
+
         .btn-info {
             background-color: #318de6 !important;
-        },
+        }
+
+        ,
 
         .btn-link {
             color: black !important;
@@ -592,186 +600,62 @@ if (count($query) < 1) {
 	
 	</style>
 	<div id="incluyeme-login-wpjb">
-		<div class="container">
-			<template id="step1">
-				<x-incluyeme class="container text-center">
-					<h2 class='mt-2'>Perfil</h2>
-				</x-incluyeme>
-			</template>
-			<template id="step2">
-				<x-incluyeme class="container text-center">
-					<h2 class='mt-2'>Informacion Personal</h2>
-				</x-incluyeme>
-				<x-incluyeme class="row">
-					<x-incluyeme class="form-group col-12">
-						<label for="names">Nombres </label>
-						<input v-model="name" type="text" class="form-control" id="names" >
-					</x-incluyeme>
-					<x-incluyeme class="form-group col-12">
-						<label for="lastNames">Apellidos </label>
-						<input v-model="lastName" type="text" class="form-control" id="lastNames">
-					</x-incluyeme>
-				</x-incluyeme>
-			</template>
-			<template id="step3">
-				<x-incluyeme class="container text-center">
-					<h2 class='mt-2'>Género y fecha de nacimiento</h2>
-				</x-incluyeme>
-				<x-incluyeme class="row">
-					<x-incluyeme class="form-group col-12">
-						<p>Género </p>
-						<x-incluyeme class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" id="inlineCheckbox1"
-							       value="Masculino" v-model="genre">
-							<label class="form-check-label"
-							       for="inlineCheckbox1"
-							       style="color: black"><?php _e("Masculino", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" id="inlineCheckbox2"
-							       name="inlineCheckbox1"
-							       value="Femenino" v-model="genre">
-							<label class="form-check-label"
-							       for="inlineCheckbox2"
-							       style="color: black"><?php _e("Femenino", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" id="inlineCheckbox3"
-							       name="inlineCheckbox1"
-							       value="No Binario" v-model="genre">
-							<label class="form-check-label"
-							       for="inlineCheckbox3"
-							       style="color: black"><?php _e("No Binario", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-					</x-incluyeme>
-					<x-incluyeme class="form-group">
-						<label for="dateBirthDay"><?php _e("Fecha de Nacimiento ", "incluyeme-login-extension"); ?></label>
-						<input type="date" v-model="dateBirthDay" name="dateBirthDay" class="form-control"
-						       id="dateBirthDay">
-					</x-incluyeme>
-				</x-incluyeme>
-			</template>
-			<template id="step4">
-				<x-incluyeme class="container text-center">
-					<h2 class='mt-2'>Datos de contacto</h2>
-				</x-incluyeme>
-				<div class="container">
-					<label for="mPhone"><?php _e("Teléfono Celular ", "incluyeme-login-extension"); ?></label>
-					<x-incluyeme class="row align-items-center">
-						<x-incluyeme class="form-group col-4">
-							<input type="number" v-model="mPhone" class="form-control" id="mPhone">
-						</x-incluyeme>
-						<x-incluyeme class="form-group col-1 text-center">
-							<span><b>-</b></span>
-						</x-incluyeme>
-						<x-incluyeme class="form-group col">
-							<label for="Phone" style="display: none"></label>
-							<input type="number" v-model="phone" class="form-control" id="Phone">
-						</x-incluyeme>
-					</x-incluyeme>
-				</div>
-				<div class="container">
-					<label for="fPhone"><?php _e("Teléfono Fijo", "incluyeme-login-extension"); ?></label>
-					<x-incluyeme class="row align-items-center">
-						<x-incluyeme class="form-group col-4">
-							<input type="number" v-model="fPhone" class="form-control" id="fPhone">
-						</x-incluyeme>
-						<x-incluyeme class="form-group col-1 text-center">
-							<span><b>-</b></span>
-						</x-incluyeme>
-						<x-incluyeme class="form-group col">
-							<label for="Phone" style="display: none"></label>
-							<input type="number" v-model="fiPhone" class="form-control" id="Phone">
-						</x-incluyeme>
-					</x-incluyeme>
-				</div>
-				<div class="container mt-2">
-					<x-incluyeme class="row align-items-center">
-						<x-incluyeme class="col-6">
-							<label for="state"><?php _e((get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado'), "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="form-group col-6">
-							<input v-model="state" type="text" class="form-control" id="state">
-						</x-incluyeme>
-					</x-incluyeme>
-				</div>
-				<div class="container mt-2">
-					<x-incluyeme class="row align-items-center">
-						<x-incluyeme class="col-6">
-							<label for="city"><?php _e("Ciudad ", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="form-group col-6">
-							<input v-model="city" type="text" class="form-control" id="city">
-						</x-incluyeme>
-					</x-incluyeme>
-				</div>
-				<div class="container mt-2">
-					<x-incluyeme class="row align-items-center">
+		<div class="container pt-0">
+			<x-incluyeme class="row">
+				<x-incluyeme class="col-md-6" id="step2">
+					<x-incluyeme class="row">
 						<x-incluyeme class="col-12">
-							<label for="street"><?php _e("Calle", "incluyeme-login-extension"); ?></label>
+							<label for="names"><b>Nombre y apellido:</b> {{name}}</label>
 						</x-incluyeme>
-						<x-incluyeme class="form-group col-12">
-							<input v-model="street" type="text" class="form-control" id="street">
+						<x-incluyeme class="col-12">
+							<label><b>Género:</b> {{genre}} </label>
 						</x-incluyeme>
+						<x-incluyeme class="col-12">
+							<label for="dateBirthDay"> <b>Fecha de Nacimiento:</b> {{dateBirthDay}}</label>
+						</x-incluyeme>
+						<div class="col-12">
+							<label for="mPhone"><b>Teléfono Celular:</b> {{mPhone}} {{phone}}</label>
+						</div>
+						<div class="col-12">
+							<label for="mPhone"><b>Teléfono Fijo:</b> {{fPhone}} {{fiPhone}}</label>
+						</div>
+						<div class="col-12">
+							<label for="mPhone"><b><?php _e((get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado'), "incluyeme-login-extension"); ?>
+									:</b> {{state}}</label>
+						</div>
+						<div class="col-12">
+							<label for="mPhone"><b>Ciudad:</b> {{city || 'Sin datos'}}</label>
+						</div>
+						<div class="col-12">
+							<label for="mPhone"><b>Calle:</b> {{street || 'Sin datos'}}</label>
+						</div>
+						<div class="col-12">
+							<label><b>Area Preferida:</b> {{getPrefersJobsName(preferJobs)}}<label>
+						</div>
+						<div class="col-12" v-if="myCUD">
+							<a v-if="myCUD"
+							   :href="myCUD"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
+						</div>
+						<div class="col-12" v-if="myCV">
+							<a v-if="myCV" :href="myCV">Curriculum Vitae</a>
+						</div>
 					</x-incluyeme>
-				</div>
-			</template>
-			<template id="step5">
-				<x-incluyeme class="container text-center">
-					<h2 class='mt-2'>disCapacidad </h2>
 				</x-incluyeme>
-				<div class="container">
-					<h5>Indica cuales</h5>
-					<div class="container m-auto">
-						<x-incluyeme class="row ml-5">
-							<x-incluyeme class="col">
-								<input class="form-check-input" type="checkbox" v-model="motriz" id="Motriz">
-								<label class="form-check-label" for="Motriz">
-									Motriz
-								</label>
-							</x-incluyeme>
-							<x-incluyeme class="col-6">
-								<input class="form-check-input" type="checkbox" v-model="visceral" id="Visceral"
-								       name="Visceral">
-								<label class="form-check-label" for="Visceral">
-									Visceral
-								</label>
-							</x-incluyeme>
-							<x-incluyeme class="col-6">
-								<input class="form-check-input" type="checkbox" v-model="auditiva" id="Auditiva">
-								<label class="form-check-label" for="Auditiva">
-									Auditiva
-								</label>
-							</x-incluyeme>
-							<x-incluyeme class="col-6">
-								<input class="form-check-input" type="checkbox" v-model="psiquica" id="Psíquica">
-								<label class="form-check-label" for="Psíquica">
-									Psíquica
-								</label>
-							</x-incluyeme>
-							<x-incluyeme class="col-6">
-								<input class="form-check-input" type="checkbox" v-model="visual" id="Visual">
-								<label class="form-check-label" for="Visual">
-									Visual
-								</label>
-							</x-incluyeme>
-							<x-incluyeme class="col-6">
-								<input class="form-check-input" type="checkbox" v-model="habla" id="Habla">
-								<label class="form-check-label" for="Habla">
-									Habla
-								</label>
-							</x-incluyeme>
-							<x-incluyeme class="col-6">
-								<input class="form-check-input" type="checkbox" v-model="intelectual" id="Intelectual">
-								<label class="form-check-label" for="Intelectual">
-									Intelectual
-								</label>
-							</x-incluyeme>
-						</x-incluyeme>
-					</div>
-				</div>
-			</template>
+				
+				<x-incluyeme class="col-md-6" v-if="myIMG" id="step7">
+					<x-incluyeme class="row">
+						<div class="col-12 text-center">
+							<img style="max-height: 17rem;" v-if="myIMG" :src="myIMG" alt="Imagen de perfil">
+						</div>
+					</x-incluyeme>
+				</x-incluyeme>
+			</x-incluyeme>
 			<template id="step6">
+				<x-incluyeme class="row">
+					<div class="col-12">
+						<label class=''><b>disCapacidad</b></label>
+					</div>
+				</x-incluyeme>
 				<x-incluyeme id="accordion">
 					<x-incluyeme v-if="motriz" class="card">
 						<x-incluyeme class="card-header p-0 m-0" id="headingOne">
@@ -783,11 +667,10 @@ if (count($query) < 1) {
 								</button>
 							</h5>
 						</x-incluyeme>
-						
 						<x-incluyeme id="collapseOne" class="collapse show" aria-labelledby="headingOne"
 						             data-parent="#accordion">
 							<x-incluyeme class="card-body">
-								<div class="container">
+								<div class="container pt-0">
 									<x-incluyeme class="row">
 										<x-incluyeme class="col-12">
 											<span>¿Puedes permanecer de pie?</span>
@@ -970,7 +853,7 @@ if (count($query) < 1) {
 						<x-incluyeme id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 						             data-parent="#accordion">
 							<div class="card-body">
-								<div class="container">
+								<div class="container pt-0">
 									<x-incluyeme class="row">
 										<x-incluyeme class="col-12">
 											<span> ¿Tienes alguna dificultad en trabajar en ambientes húmedos?</span>
@@ -1097,7 +980,7 @@ dificultad?
 						<x-incluyeme id="collapseThree" class="collapse" aria-labelledby="headingThree"
 						             data-parent="#accordion">
 							<x-incluyeme class="card-body">
-								<div class="container">
+								<div class="container pt-0">
 									<x-incluyeme class="row">
 										<x-incluyeme class="col-12">
 											<span>¿Puedes discriminar distintos sonidos del ambiente?</span>
@@ -1250,7 +1133,7 @@ dificultad?
 						<x-incluyeme id="collapseFive" class="collapse" aria-labelledby="headingFive"
 						             data-parent="#accordion">
 							<x-incluyeme class="card-body">
-								<div class="container">
+								<div class="container pt-0">
 									<x-incluyeme class="row">
 										<x-incluyeme class="col-12">
 											<span> ¿Tienes dificultades para distinguir objetos que estén lejos?</span>
@@ -1379,7 +1262,7 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 						<x-incluyeme id="collatseFourt" class="collapse" aria-labelledby="headingFourt"
 						             data-parent="#accordion">
 							<x-incluyeme class="card-body">
-								<div class="container">
+								<div class="container pt-0">
 									<x-incluyeme class="row">
 										<x-incluyeme class="col-12">
 											<span>¿Sabes leer y escribir?</span>
@@ -1524,320 +1407,145 @@ exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluye
 							</x-incluyeme>
 						</x-incluyeme>
 					</x-incluyeme>
-				</x-incluyeme>
-				<div class="container mt-1">
-					<x-incluyeme class="w-100 ">
-						<label for="exampleFormControlTextarea1">Por favor cuéntanos más sobre tu discapacidad y todo lo
-						                                         que quieras agregar para conocerte más</label>
-						<textarea class="form-control" id="exampleFormControlTextarea1" v-model="moreDis"
-						          rows="3"></textarea>
-					</x-incluyeme>
-				</div>
-			</template>
-			<template v-if="myIMG||myCV||myCUD" id="step7">
-				<div class="container">
-					<h2 class='mt-2'>Adjunta tu Foto, CV
-					                 y <?php echo get_option($incluyemeNames) ? ' ' . get_option($incluyemeNames) : ' Certificado Único de Discapacidad'; ?> </h2>
-					<div v-if="myIMG" class="container">
-						<a :href="myIMG">Foto de Perfil</a>
-						<x-incluyeme class="row m-auto  py-4">
-							<x-incluyeme class="col-lg-6 col-sm-12">
-								<img :src="myIMG" class="" alt="Imagen"
-								     v-if="myIMG!==null">
-							</x-incluyeme>
+					<x-incluyeme v-if="psiquica" class="card">
+						<x-incluyeme class="card-header m-0 p-0" id="headingFive">
+							<h5 class="mb-0">
+								<button class="btn btn-link collapsed" data-toggle="collapse"
+								        data-target="#collatseFive"
+								        aria-expanded="false" aria-controls="collatseFive">
+									<i class="fas fa-arrow-down"></i>
+									<h5 style="display:inline;">Psíquica</h5>
+								</button>
+							</h5>
 						</x-incluyeme>
+					</x-incluyeme>
+					<x-incluyeme v-if="habla" class="card">
+						<x-incluyeme class="card-header m-0 p-0" id="headingSix">
+							<h5 class="mb-0">
+								<button class="btn btn-link collapsed" data-toggle="collapse"
+								        data-target="#collatseSix"
+								        aria-expanded="false" aria-controls="collatseSix">
+									<i class="fas fa-arrow-down"></i>
+									<h5 style="display:inline;">Habla</h5>
+								</button>
+							</h5>
+						</x-incluyeme>
+					</x-incluyeme>
+				</x-incluyeme>
+				<x-incluyeme class="row mt-3">
+					<div class="col-12">
+						<label for="exampleFormControlTextarea1"><b>Mas informacion:</b></label>
+						<label>{{moreDis}}</label>
 					</div>
-					<div v-if="myCV" class="container">
-						<a :href="myCV">Curriculum Vitae</a>
-					</div>
-					<div v-if="myCUD" class="container">
-						<a :href="myCUD"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
-					</div>
-				</div>
+				</x-incluyeme>
 			</template>
 			<template id="step8" v-if="titleEdu.length > 0">
-				<div class="container">
-					<h2 class='mt-2'>Educación</h2>
-				</div>
-				<div v-for="(fieldName, pos) in formFields" class="container">
-					<div class="row">
-						<x-incluyeme class="col">
-							<label for="country_edu"><?php _e("Pais", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<select id="country_edu" v-model="country_edu[pos]" class="form-control"
-							        v-on:change="getUniversities(pos)">
-								<option v-for="(countries, index) of countries" :value="countries.country_code">
-									{{countries.country_name}}
-								</option>
-							</select>
-						</x-incluyeme>
-					</div>
-					<div class="row mt-2">
-						<x-incluyeme class="col">
-							<label
-									for="university_edu"><?php _e("Institución Educativa", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<select id="university_edu" v-model="university_edu[pos]" class="form-control">
-								<option v-for="(university, index) of universities[pos]"
-								        :value="university.university" v-on:change="changeUniversity(pos, true)">
-									{{university.university}}
-								</option>
-							</select>
-						</x-incluyeme>
-					</div>
-					<div class="row mt-2">
-						<x-incluyeme class="col">
-							<label for="university_eduText"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input type="text" v-model="university_otro[pos]" class="form-control"
-							       id="university_eduText"
-							       v-on:change="changeUniversity(pos, false)">
-						</x-incluyeme>
-					</div>
-					<div class="row mt-2">
-						<x-incluyeme class="col">
-							<label
-									for="studies"><?php _e("Area de Estudio", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<select id="studies" v-model="studies[pos]" class="form-control">
-								<option v-for="(studies, index) of study"
-								        :value="studies.id" class="text-capitalize">
-									{{studies.name_inc_area}}
-								</option>
-							</select>
-						</x-incluyeme>
-					</div>
-					<div class="row mt-2">
-						<x-incluyeme class="col">
-							<label for="titleEdu"><?php _e("Título", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input type="text" v-model="titleEdu[pos]" class="form-control" id="titleEdu">
-						</x-incluyeme>
-					</div>
-					<div class="row mt-2">
-						<x-incluyeme class="col">
-							<label for="eduLevel"><?php _e("Nivel Educativo", "incluyeme-login-extension"); ?></label>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<input type="text" v-model="eduLevel[pos]" class="form-control" id="eduLevel">
-						</x-incluyeme>
-					</div>
-					<div class="row mt-2">
-						<x-incluyeme class="col-6">
-							<x-incluyeme class="row">
+				<x-incluyeme class="row">
+					<x-incluyeme class="col-12">
+						<label><b>Educación</b><label>
+					</x-incluyeme>
+				</x-incluyeme>
+				<ul class="pb-0">
+					<div v-for="(fieldName, pos) in formFields">
+						<li v-if="titleEdu[pos]">
+							<div class="row">
 								<x-incluyeme class="col-12">
-									<x-incluyeme class="form-group">
-										<label for="dateStudiesD"><?php _e("Desde", "incluyeme-login-extension"); ?></label>
-									</x-incluyeme>
+									<label for="country_edu"><b>Pais:</b> {{getNameCountry(country_edu[pos])}}</label>
 								</x-incluyeme>
 								<x-incluyeme class="col-12">
-									<x-incluyeme class="form-group">
-										<input type="date" v-model="dateStudiesD[pos]" name="dateStudiesD"
-										       class="form-control"
-										       id="dateStudiesD">
-									</x-incluyeme>
-								</x-incluyeme>
-							</x-incluyeme>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<x-incluyeme class="row">
-								<x-incluyeme class="col-12">
-									<x-incluyeme class="form-group">
-										<label for="dateStudiesH"><?php _e("Hasta", "incluyeme-login-extension"); ?></label>
-									</x-incluyeme>
+									<label for="university_edu"><b>Institución Educativa:</b>
+										{{university_edu[pos] || "Sin información"}}</label>
 								</x-incluyeme>
 								<x-incluyeme class="col-12">
-									<x-incluyeme class="form-group">
-										<input type="date" v-model="dateStudiesH[pos]" name="dateStudiesH"
-										       class="form-control"
-										       id="dateStudiesH" :disabled="dateStudieB[pos]===true"
-										       v-on:change='dateStudieB[pos] = false'>
-									</x-incluyeme>
+									<label for="university_eduText"><b>Otro:</b>
+										{{university_otro[pos] || "Sin información"}}</label>
 								</x-incluyeme>
 								<x-incluyeme class="col-12">
-									<div class="container">
-										<input class="form-check-input" type="checkbox" :id="dateStudieB[pos]"
-										       :name="dateStudieB[pos]"
-										       v-model="dateStudieB[pos]" v-on:change='dateStudiesH[pos] = false'>
-										<label class="form-check-label"
-										       :for="dateStudieB[pos]"
-										       style="color: black"><?php _e("¿En curso?", "incluyeme-login-extension"); ?></label>
-									</div>
+									<label for="studies"><b>Area de Estudio</b> {{getNameArea(studies[pos])}}</label>
 								</x-incluyeme>
-							</x-incluyeme>
-						</x-incluyeme>
+								<x-incluyeme class="col-12">
+									<label for="titleEdu"><b>Título:</b> {{titleEdu[pos]}}</label>
+								</x-incluyeme>
+								<x-incluyeme class="col-12">
+									<label for="eduLevel"><b>Nivel Educativo:</b> {{eduLevel[pos]}}</label>
+								</x-incluyeme>
+								<x-incluyeme class="col-12">
+									<label for="dateStudiesD"><b>Desde:</b> {{dateStudiesD[pos]}}</label>
+								</x-incluyeme>
+								<x-incluyeme class="col-12">
+									<label for="dateStudiesH"><b>Hasta:</b> {{dateStudieB[pos] ? "En curso" :
+									                                        dateStudiesH[pos] }}</label>
+								</x-incluyeme>
+							</div>
+							<hr class="w-100" v-if="formFields.length !== 1">
+						</li>
 					</div>
-					<hr class="w-100" v-if="formFields.length !== 1">
-				</div>
+				</ul>
 			</template>
 			<template id="step9" v-if="employed.length > 0">
-				<div class="container">
-					<h2 class='mt-2'>Experiencia Laboral</h2>
-				</div>
-				<div class="container" v-for="(formFields2, pos) in formFields2" :key="pos">
-					<x-incluyeme class="row">
-						<x-incluyeme class="col">
-							<label for="companies">Empresa</label>
-							<input v-model="employed[pos]" type="text" class="form-control" id="companies">
-						</x-incluyeme>
+				<x-incluyeme class="row">
+					<x-incluyeme class="col-12">
+						<label><b>Experiencia Laboral</b><label>
 					</x-incluyeme>
-					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-6">
-							<label for="studies" class="">Area</label>
-							<select id="studies" v-model="areaEmployed[pos]" class="form-control mt-2">
-								<option v-for="(estudies, index) of study"
-								        :value="estudies.id" class="text-capitalize">
-									{{estudies.name_inc_area}}
-								</option>
-							</select>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<label for="names">Puesto </label>
-							<input v-model="jobs[pos]" type="text" class="form-control" id="names">
-						</x-incluyeme>
-					</x-incluyeme>
-					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-6">
-							<label for="studies" class="">Nivel de Experiencia</label>
-							<select id="studies" v-model="levelExperience[pos]" class="form-control">
-								<option v-for="(experiences, index) of experiences"
-								        :value="experiences.id" class="text-capitalize">
-									{{experiences.name_incluyeme_exp}}
-								</option>
-							</select>
-						</x-incluyeme>
-						<x-incluyeme class="col-6" style="margin: auto; float: left;">
-							<div style="position: relative;  top: 3px;">
-								<input class="form-check-input" type="checkbox" :id="actuWork[pos]"
-								       :name="actuWork[pos]"
-								       v-model="actuWork[pos]">
-								<label class="form-check-label"
-								       :for="actuWork[pos]"
-								       style="color: black"><?php _e("¿Actualmente trabajas aquí?", "incluyeme-login-extension"); ?></label>
-							</div>
-						</x-incluyeme>
-					</x-incluyeme>
-					<div class="row mt-2">
-						<x-incluyeme class="col-6">
-							<x-incluyeme class="row">
-								<x-incluyeme class="col-12">
-									<x-incluyeme class="form-group">
-										<label for="dateStudiesDLaboral"><?php _e("Desde", "incluyeme-login-extension"); ?></label>
-									</x-incluyeme>
-								</x-incluyeme>
-								<x-incluyeme class="col-12">
-									<x-incluyeme class="form-group">
-										<input type="date" v-model="dateStudiesDLaboral[pos]" name="dateStudiesDLaboral"
-										       class="form-control"
-										       id="dateStudiesDLaboral">
-									</x-incluyeme>
-								</x-incluyeme>
+				</x-incluyeme>
+				<ul v-for="(formFields2, pos) in formFields2" :key="pos" class="pb-0">
+					<li v-if="employed[pos] || jobs[pos]">
+						<x-incluyeme class="row">
+							<x-incluyeme class="col-12">
+								<label for="companies"><b>Empresa:</b> {{employed[pos]}}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="studies"><b>Area:</b> {{getNameArea(areaEmployed[pos])}}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="studies"><b>Puesto:</b> {{jobs[pos]}}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="studies"><b>Nivel de Experiencia:</b> {{getLevelName(levelExperience[pos])}}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="dateStudiesD"><b>Desde:</b> {{dateStudiesDLaboral[pos]}}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="dateStudiesH"><b>Hasta:</b> {{actuWork[pos] ? "Actualmente trabajo aqui" :
+								                                        dateStudiesHLaboral[pos] }}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="dateStudiesH"><b>Descripción del Puesto:</b> {{jobsDescript[pos] }}</label>
 							</x-incluyeme>
 						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<x-incluyeme class="row">
-								<x-incluyeme class="col-12">
-									<x-incluyeme class="form-group">
-										<label for="dateStudiesHLaboral"><?php _e("Hasta", "incluyeme-login-extension"); ?></label>
-									</x-incluyeme>
-								</x-incluyeme>
-								<x-incluyeme class="col-12">
-									<x-incluyeme class="form-group">
-										<input type="date" v-model="dateStudiesHLaboral[pos]" name="dateStudiesHLaboral"
-										       class="form-control"
-										       id="dateStudiesHLaboral" :disabled="actuWork[pos]===true">
-									</x-incluyeme>
-								</x-incluyeme>
-							</x-incluyeme>
-						</x-incluyeme>
-					</div>
-					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-12">
-							<label for="jobsDescript">Descripción del Puesto</label>
-							<textarea class="form-control" id="jobsDescript" v-model="jobsDescript[pos]"
-							          rows="3"></textarea>
-						</x-incluyeme>
-					</x-incluyeme>
-					<hr class="w-100" v-if="formFields2.length !== 1">
-				</div>
+						<hr class="w-100" v-if="formFields2.length !== 1">
+					</li>
+				</ul>
 			</template>
 			<template id="step10" v-if="idioms.length > 0">
-				<div class="container">
-					<h2 class='mt-2'>Idiomas</h2>
-				</div>
-				<div class="container" v-for="(formFields3, pos) in formFields3">
-					<x-incluyeme class="row">
-						<x-incluyeme class="col">
-							<label for="idioms">Idioma</label>
-							<select v-model="idioms[pos]" type="text" class="form-control" id="idioms">
-								<option v-for="(idioms, index) of idiom"
-								        :value="idioms.id" class="text-capitalize">
-									{{idioms.name_idioms}}
-								</option>
-							</select>
-						</x-incluyeme>
+				<x-incluyeme class="row">
+					<x-incluyeme class="col-12">
+						<label><b>Idiomas</b><label>
 					</x-incluyeme>
-					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-6">
-							<label for="lecLevel" class="">Nivel de Lectura</label>
+				</x-incluyeme>
+				<ul class="pb-0" v-for="(formFields3, pos) in formFields3">
+					<li v-if="idioms[pos]">
+						<x-incluyeme class="row">
+							<x-incluyeme class="col-12">
+								<label for="idioms"><b>Idioma:</b> {{getIdiomName(idioms[pos])}}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="lecLevel" class=""><b>Nivel de Lectura:</b>
+									{{getIdiomNameL(lecLevel[pos])}}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="lecLevel" class=""><b>Nivel de Escrito:</b>
+									{{getIdiomNameL(redLevel[pos])}}</label>
+							</x-incluyeme>
+							<x-incluyeme class="col-12">
+								<label for="lecLevel" class=""><b>Nivel Oral:</b>
+									{{getIdiomNameL(oralLevel[pos])}}</label>
+							</x-incluyeme>
 						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<select id="lecLevel" v-model="lecLevel[pos]" class="form-control mt-2">
-								<option v-for="(levels, index) of levels"
-								        :value="levels.id" class="text-capitalize">
-									{{levels.name_level}}
-								</option>
-							</select>
-						</x-incluyeme>
-					</x-incluyeme>
-					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-6">
-							<label for="redLevel" class="">Nivel Escrito</label>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<select id="redLevel" v-model="redLevel[pos]" class="form-control mt-2">
-								<option v-for="(levels, index) of levels"
-								        :value="levels.id" class="text-capitalize">
-									{{levels.name_level}}
-								</option>
-							</select>
-						</x-incluyeme>
-					</x-incluyeme>
-					<x-incluyeme class="row mt-2">
-						<x-incluyeme class="col-6">
-							<label for="oralLevel" class="">Nivel Oral</label>
-						</x-incluyeme>
-						<x-incluyeme class="col-6">
-							<select id="oralLevel" v-model="oralLevel[pos]" class="form-control mt-2">
-								<option v-for="(levels, index) of levels"
-								        :value="levels.id" class="text-capitalize">
-									{{levels.name_level}}
-								</option>
-							</select>
-						</x-incluyeme>
-					</x-incluyeme>
-					<hr class="w-100" v-if="formFields3.length !== 1">
-				</div>
-			</template>
-			<template id="step11">
-				<div class="container">
-					<x-incluyeme class="row">
-						<x-incluyeme class="col text-center">
-							<h2 class='mt-2'>Area Preferida</h2>
-							<select v-model="preferJobs" type="text" class="form-control" id="preferJobs">
-								<option v-for="(preferJobs, index) of preferJob"
-								        :value="preferJobs.id" class="text-capitalize">
-									{{preferJobs.jobs_prefers}}
-								</option>
-							</select>
-						</x-incluyeme>
-					</x-incluyeme>
-				</div>
+						<hr class="w-100" v-if="formFields3.length !== 1">
+					</li>
+				</ul>
 			</template>
 		</div>
 	</div>

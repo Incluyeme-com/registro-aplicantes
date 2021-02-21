@@ -39,6 +39,9 @@ $incluyemeLoginCountry = 'incluyemeLoginCountry';
 $incluyemeLoginEstado = 'incluyemeLoginEstado';
 ?>
 	<style>
+        #main-content .container:before {
+            background: none !important;
+        }
         .dropzone {
             border: 2px dashed rgba(0, 0, 0, .3) !important;
             border-radius: 20px !important;

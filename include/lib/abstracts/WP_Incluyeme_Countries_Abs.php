@@ -472,15 +472,16 @@ abstract class WP_Incluyeme_Countries_Abs
         return $userID;
     }
     
-    public static function updateUsersWorks($actuWork, $areaEmployed, $dateStudiesDLaboral, $dateStudiesHLabor, $employed, $jobs, $jobsDescript, $levelExperience, $userID)
+    public static function updateUsersWorks($actuWork, $areaEmployed, $dateStudiesDLaboral, $dateStudiesHLaboral, $employed, $jobs, $jobsDescript, $levelExperience, $userID)
     {
+        error_log(print_r($dateStudiesHLaboral, true));
         self::$wp->get_results('DELETE from ' . self::$wp->prefix . 'wpjb_resume_detail' . ' WHERE resume_id = ' . $userID . '  AND type = 1');
         for ($i = 0; $i < count($jobs); $i++) {
             self::$wp->insert(self::$wp->prefix . 'wpjb_resume_detail', [
                 'resume_id' => $userID,
                 'type' => 1,
                 'started_at' => $dateStudiesDLaboral[$i] ?? $dateStudiesDLaboral[$i] ?? date("Y-m-d H:i:s"),
-                'completed_at' => $dateStudiesHLabor[$i] ?? $dateStudiesHLabor[$i] ?? '',
+                'completed_at' => $dateStudiesHLaboral[$i] ?? $dateStudiesHLaboral[$i] ?? date("Y-m-d H:i:s"),
                 'is_current' => $actuWork[$i] ?? $actuWork[$i] ?? '',
                 'grantor' => $employed[$i] ?? ($employed[$i] ?? ''),
                 'detail_title' => $jobs[$i] ?? $jobs[$i] ?? '',
@@ -1458,7 +1459,7 @@ GROUP BY {$prefixSearch}incluyeme_users_questions.question_id,
          {$prefixSearch}incluyeme_discapacities.id");
         $idioms = self::$wp->get_results('SELECT * FROM ' . self::$wp->prefix . 'incluyeme_users_idioms WHERE ' . self::$wp->prefix . 'incluyeme_users_idioms.resume_id = ' . $id);
         
-        return (object)['assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta($userID[0]->user_id, 'first_name'), 'last_name' => get_user_meta($userID[0]->user_id, 'last_name')];
+        return (object)["discapsSelected" =>$discapsSelected ,'assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta($userID[0]->user_id, 'first_name'), 'last_name' => get_user_meta($userID[0]->user_id, 'last_name')];
     }
     
     public static function sessionVerificated($resume)

@@ -22,7 +22,7 @@ wp_enqueue_script('popper');
 wp_enqueue_script('bootstrapJs');
 wp_enqueue_script('vueJS');
 wp_enqueue_script('bootstrap-notify');
-wp_enqueue_script('vueH', $js . 'vue3.2.3.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
+wp_enqueue_script('vueH', $js . 'vue3.2.5.js', ['vueJS', 'FAwesome'], date("h:i:s"), true);
 wp_enqueue_script('dropZ');
 wp_enqueue_script('Axios');
 wp_enqueue_script('selectJS');
@@ -127,6 +127,9 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
 	</script>
 <?php } ?>
 <style>
+    #main-content .container:before {
+        background: none !important;
+    }
     .deleteIncluyeme {
         background-color: #ee7566 !important;
         border-color: #ee7566 !important;
@@ -1785,8 +1788,8 @@ como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 					</x-incluyeme>
 					<x-incluyeme class="row mt-2">
 						<x-incluyeme class="col-lg-6 col-md-12">
-							<label for="studies" class="">Nivel de Experiencia</label>
-							<select id="studies" v-model="levelExperience[pos]" data-live-search="true"
+							<label for="levelExperience" class="">Nivel de Experiencia</label>
+							<select id="levelExperience" v-model="levelExperience[pos]" data-live-search="true"
 							        data-container="body" class="form-control selectpicker">
 								<option v-for="(experiences, index) of experiences"
 								        :value="experiences.id" class="text-capitalize">

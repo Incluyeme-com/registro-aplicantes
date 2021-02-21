@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		echo $verifications->json_response(200, $verifications::updateUsersWorks($_POST['actuWork'],
 			$_POST['areaEmployed'],
 			$_POST['dateStudiesDLaboral'],
-			$_POST['dateStudiesHLabor'],
+			$_POST['dateStudiesHLaboral'],
 			$_POST['employed'],
 			$_POST['jobs'],
 			$_POST['jobsDescript'],

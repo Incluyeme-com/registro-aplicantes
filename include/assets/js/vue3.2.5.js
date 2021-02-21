@@ -1116,8 +1116,9 @@ let app = new Vue({
             })
         },
         goToTop: function () {
-            jQuery('html, body').animate({
-                scrollTop: jQuery('#content').offset().top - 20
+            const content = jQuery('#content').offset() ? jQuery('#content').offset() : jQuery('#main-content').offset();
+            jQuery('html, bfody').animate({
+                scrollTop: content.top - 20
             }, 500);
         },
         deleteStudies: async function (index) {
