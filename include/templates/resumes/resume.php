@@ -634,10 +634,13 @@ if (count($query) < 1) {
 						</div>
 						<div class="col-12" v-if="myCUD">
 							<a v-if="myCUD"
+							   target="_blank"
 							   :href="myCUD"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
 						</div>
 						<div class="col-12" v-if="myCV">
-							<a v-if="myCV" :href="myCV">Curriculum Vitae</a>
+							<a v-if="myCV"
+							   target="_blank"
+							   :href="myCV">Curriculum Vitae</a>
 						</div>
 					</x-incluyeme>
 				</x-incluyeme>
