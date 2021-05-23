@@ -205,7 +205,14 @@ let app = new Vue({
                 } catch (e) {
 
                 }
-                this.university_edu.push(studies[i].grantor);
+                const find = this.findWord(studies[i].grantor);
+                if (find.length > 1) {
+                    this.university_edu.push("Otro");
+                    this.university_otro.push(find[1]);
+                } else {
+                    this.university_edu.push(studies[i].grantor);
+                    this.university_otro.push(null);
+                }
                 this.titleEdu.push(studies[i].detail_title);
                 this.dateStudieB.push(studies[i].is_current == 1);
                 this.dateStudiesD.push(studies[i].started_at);
@@ -354,6 +361,10 @@ let app = new Vue({
                 return success;
             });
             this.experiences = experiences.message
+        },
+        findWord: function (str) {
+            const a = str.split("Otra institución: ");
+            return a
         },
         getPrefersJobs: async function (url) {
             let preferJob = await jQuery.ajax({

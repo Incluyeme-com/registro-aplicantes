@@ -348,7 +348,7 @@ abstract class WP_Incluyeme_Countries_Abs
         }
         
         self::$wp->get_results('UPDATE ' . self::$incluyemeUsersInformation . ' SET  	moreDis  = "' . $moreDis . '" WHERE resume_id = ' . $userID);
-        if(count($discaps)!==0){
+        if (count($discaps) !== 0) {
             self::$wp->get_results('DELETE from ' . self::$usersDiscapTable . ' WHERE resume_id = ' . $userID . '  AND discap_id NOT IN (' . implode(',', $discaps) . ')');
         }
         
@@ -464,7 +464,7 @@ abstract class WP_Incluyeme_Countries_Abs
                 'started_at' => $dateStudiesD[$i] ?? $dateStudiesD[$i] ?? date("Y-m-d H:i:s"),
                 'completed_at' => $dateStudiesH[$i] ?? $dateStudiesH[$i] ?? '',
                 'is_current' => $dateStudieB[$i] ?? $dateStudieB[$i] ?? '',
-                'grantor' => $university_edu[$i] ?? $university_edu[$i] ?? ($university_otro[$i] ?? $university_otro[$i] ?? ''),
+                'grantor' => $university_edu[$i]  &&$university_edu[$i] !== 'Otro' ?  $university_edu[$i] :  "Otra institución: ". $university_otro[$i],
                 'detail_title' => $titleEdu[$i] ?? $titleEdu[$i] ?? '',
                 'detail_description' => 'Nivel: ' . ($eduLevel[$i] ?? $eduLevel[$i] ?? ' No Posee. ') . ' Area de Estudio: ' . ($studies[$i] ?? $studies[$i] ?? 'No Posee. ') . ' Pais de estudio: ' . ($country_edu[$i] ?? $country_edu[$i] ?? ' No Posee. ')
             ]);
@@ -1350,7 +1350,7 @@ GROUP BY {$prefixSearch}incluyeme_users_questions.question_id,
         $discapsSelected = self::$wp->get_results("SELECT
   wp_incluyeme_users_dicapselect.discap_id as id
 FROM wp_incluyeme_users_dicapselect where resume_id ={$id}");
-        return (object)['discapsSelected'=> $discapsSelected, 'assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta(get_current_user_id(), 'first_name')[0], 'last_name' => get_user_meta(get_current_user_id(), 'last_name')[0]];
+        return (object)['discapsSelected' => $discapsSelected, 'assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta(get_current_user_id(), 'first_name')[0], 'last_name' => get_user_meta(get_current_user_id(), 'last_name')[0]];
     }
     
     private static function getCV($id)
@@ -1456,7 +1456,7 @@ GROUP BY {$prefixSearch}incluyeme_users_questions.question_id,
          {$prefixSearch}incluyeme_discapacities.id");
         $idioms = self::$wp->get_results('SELECT * FROM ' . self::$wp->prefix . 'incluyeme_users_idioms WHERE ' . self::$wp->prefix . 'incluyeme_users_idioms.resume_id = ' . $id);
         
-        return (object)["discapsSelected" =>$discapsSelected ,'assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta($userID[0]->user_id, 'first_name'), 'last_name' => get_user_meta($userID[0]->user_id, 'last_name')];
+        return (object)["discapsSelected" => $discapsSelected, 'assets' => self::getCV($id), 'idioms' => $idioms, 'discap' => $discaps, 'work' => $works, 'education' => $education, 'information' => $information[0], 'name' => get_user_meta($userID[0]->user_id, 'first_name'), 'last_name' => get_user_meta($userID[0]->user_id, 'last_name')];
     }
     
     public static function sessionVerificated($resume)

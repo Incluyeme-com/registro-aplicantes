@@ -210,7 +210,15 @@ let app = new Vue({
                 } catch (e) {
 
                 }
-                this.university_edu.push(studies[i].grantor);
+                const find = this.findWord(studies[i].grantor);
+                if (find.length > 1) {
+                    this.university_edu.push("Otro");
+                    this.university_otro.push(find[1]);
+                } else {
+                    this.university_edu.push(studies[i].grantor);
+                    this.university_otro.push(null);
+                }
+
                 this.titleEdu.push(studies[i].detail_title);
                 this.dateStudieB.push(studies[i].is_current == 1);
                 this.dateStudiesD.push(studies[i].started_at);
@@ -248,7 +256,7 @@ let app = new Vue({
                     this.habla = true;
                 }
             })
-            discap.map(disabilities=>{
+            discap.map(disabilities => {
                 if (disabilities.question_id == 1) {
                     this.mPie = disabilities.answer;
                 } else if (disabilities.question_id == 2) {
@@ -311,10 +319,9 @@ let app = new Vue({
                     this.inteMolesto = disabilities.answer;
                 } else if (disabilities.question_id == 31) {
                     this.inteActividad = disabilities.answer;
-                }else if (disabilities.question_id == 32) {
+                } else if (disabilities.question_id == 32) {
                     this.aFluida = disabilities.answer;
-                }
-                else if (disabilities.question_id == 33) {
+                } else if (disabilities.question_id == 33) {
                     this.inteTrabajarOP = disabilities.answer;
                 }
             })
@@ -322,6 +329,10 @@ let app = new Vue({
             this.getCities().finally();
             this.city = information.city;
 
+        },
+        findWord: function (str) {
+            const a = str.split("Otra institución: ");
+            return a
         },
         drop: async function () {
             this.currentStep = 7;
@@ -801,7 +812,7 @@ let app = new Vue({
             jQuery("#demo-upload").dropzone({
                 init: function () {
                     const dropzone = this;
-                    clearDropzone = function(){
+                    clearDropzone = function () {
                         dropzone.removeAllFiles(true);
                     };
                 },
