@@ -1,20 +1,18 @@
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location ='São Paulo'
-WHERE cities_location = 'S?o Paulo' ; --
+WHERE cities_location = 'S?o Paulo'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location ='Rondônia'
-WHERE cities_location = 'Rond?nia' ; --
+WHERE cities_location = 'Rond?nia'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location ='Paraíba'
-WHERE cities_location = 'Para?ba' ; --
+WHERE cities_location = 'Para?ba'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_location ='Espírito Santo'
-WHERE cities_location = 'Esp?rito Santo' ; --
-
-
+WHERE cities_location = 'Esp?rito Santo'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_cities`
 SET cities_name = 'São Paulo'
@@ -199,19 +197,19 @@ WHERE cities_name = 'Luzi?nia'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
 SET cities_provin ='Espírito Santo'
-WHERE cities_provin = 'Esp?rito Santo' ; --
+WHERE cities_provin = 'Esp?rito Santo'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
 SET cities_provin ='Rondônia'
-WHERE cities_provin = 'Rond?nia' ; 
+WHERE cities_provin = 'Rond?nia';
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
 SET cities_provin ='Paraíba'
-WHERE cities_provin = 'Para?ba' ; --
+WHERE cities_provin = 'Para?ba'; --
 
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
 SET cities_provin ='São Paulo'
-WHERE cities_provin = 'S?o Paulo' ; --
+WHERE cities_provin = 'S?o Paulo'; --
 UPDATE `{$wpdb->prefix}incluyeme_provincias`
 SET cities_provin ='Goiás'
-WHERE cities_provin = 'Goi' ; --
+WHERE cities_provin = 'Goi'; --
