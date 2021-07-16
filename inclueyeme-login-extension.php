@@ -130,6 +130,12 @@ function incluyeme_updateDatabase()
         Update334();
     }
     update_option('IncluyemeDataBaseUpdate', $version);
+    $version = '3.4.4';
+    $check = strcmp(get_option('IncluyemeDataBaseUpdate'), $version);
+    if ($check !== 0) {
+        Update334();
+    }
+    update_option('IncluyemeDataBaseUpdate', $version);
     
 }
 
