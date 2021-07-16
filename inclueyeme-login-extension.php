@@ -127,7 +127,7 @@ function incluyeme_updateDatabase()
     $version = '3.4.4';
     $check = strcmp(get_option('IncluyemeDataBaseUpdate'), $version);
     if ($check !== 0) {
-        Update334();
+        Update344();
     }
     update_option('IncluyemeDataBaseUpdate', $version);
     
