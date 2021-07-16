@@ -294,7 +294,7 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
 						                                              mas</p>
 					</x-incluyeme>
 					<x-incluyeme class="form-group col-12">
-						<label id="repostPLabel" for="repostP">Repite contraseña <span
+						<label id="repostPLabel" for="repostP">Repite tu contraseña <span
 									style="font-size: 2em;color: black;">*<span></label>
 						<input type="password" v-model="passwordConfirm" class="form-control" id="repostP"
 						       placeholder="Repite tu contraseña">
@@ -304,9 +304,7 @@ $defaultCheckTerminos = 'defaultCheckTerminos';
 						<input class="form-check-input" type="checkbox" value="" v-model="defaultCheckDiscapacidad"
 						       id="defaultCheckDiscapacidad">
 						<label id="defaultCheckDiscapacidadLabel" class="form-check-label"
-						       for="defaultCheckDiscapacidad">
-							Comprendo que <?php echo
-                            ucwords($_SERVER['HTTP_HOST']) ?> es una plataforma para <b>personas con discapacidad</b>
+						       for="defaultCheckDiscapacidad">Comprendo que me estoy registrando en una plataforma para <b>personas con discapacidad</b>
 							<p v-if="validation === 'discapacidadTerms'" style="color: red">¿Comprende que <?php echo
                                 ucwords($_SERVER['HTTP_HOST']) ?> es una plataforma para <b>personas con
 							                                                                discapacidad</b>? </p>
