@@ -489,9 +489,9 @@ let app = new Vue({
         },
         getIdiomNameL: function (levelID) {
             let name = "Sin información";
-            for (let i = 0; i < this.experiences.length; i++) {
-                if (levelID == this.experiences[i].id) {
-                    name = this.experiences[i].name_incluyeme_exp
+            for (let i = 0; i < this.levels.length; i++) {
+                if (levelID == this.levels[i].id) {
+                    name = this.levels[i].name_level
                     break;
                 }
             }
