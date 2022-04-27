@@ -155,3 +155,28 @@ function Update344()
     }
     
 }
+
+
+function Update354()
+{
+    global $wpdb;
+    $files = plugin_dir_path(__FILE__) . '/resources/';
+    $created = $files . '3.5.4.sql';
+
+    $table_name = $wpdb->prefix . 'incluyeme_cities';
+    $queries = explode("; --", file_get_contents($created));
+    foreach ($queries as $query) {
+        $wpdb->show_errors();
+        $query = trim($query);
+        if (!empty($query)) {
+            $query = str_replace('{$wpdb->prefix}', $wpdb->prefix, $query);
+            $query = str_replace('{$wpjb->prefix}', $wpdb->prefix, $query);
+
+            $wpdb->query($query);
+            if($wpdb->last_error !== '') :
+                $wpdb->print_error();
+            endif;
+        }
+    }
+
+}
