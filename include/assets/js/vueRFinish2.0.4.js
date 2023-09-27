@@ -709,7 +709,8 @@ let app = new Vue({
         },
         confirmStep10: async function () {
             return {
-				userID: this.userID,
+
+                userID: this.userID,
                 employed: this.employed,
                 areaEmployed: this.areaEmployed,
                 jobs: this.jobs,
@@ -767,14 +768,13 @@ let app = new Vue({
                 eight = await this.confirmStep12()
             }
 
-            if (one !== false && two && three && fourth && five && six && seven && eight) {
+            if (one !== false && two && three && fourth && five && seven && eight) {
                 const data = {}
                 Object.assign(data, one);
                 Object.assign(data, two);
                 Object.assign(data, three);
                 Object.assign(data, fourth);
                 Object.assign(data, five);
-                Object.assign(data, six);
                 Object.assign(data, seven);
                 Object.assign(data, eight);
                 data.meetingIncluyeme = this.meetingIncluyeme;
