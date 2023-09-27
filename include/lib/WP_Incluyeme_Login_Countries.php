@@ -12,7 +12,7 @@ class WP_Incluyeme_Login_Countries extends WP_Incluyeme_Countries_Abs
 		// set the actual code
 		http_response_code($code);
 		// set the header to make sure cache is forced
-		header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+		header("Cache-Control: no-transform,public");
 		// treat this as json
 		header('Content-Type: application/json; charset=utf-8');
 		$status = [
