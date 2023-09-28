@@ -63,7 +63,6 @@ let app = new Vue({
         passwordConfirm: null,
         genre: null,
         livingZone: null,
-        cudOption: null,
         name: null,
         cities: [],
         email: null,
@@ -161,6 +160,7 @@ let app = new Vue({
         state: null,
         edu_levelMaxSec: null,
         currentStep: 1,
+        cudOption: null,
         country_edu: [],
         edu_levelMax: [
             "Primaria / Enseñanza básica incompleta",
@@ -855,9 +855,9 @@ let app = new Vue({
             this.goToTop();
         },
         confirmStep8: async function (step) {
-             if (!this.cudOption) {
+            if (!this.cudOption) {
                 this.validation = 29;
-               jQuery("#OptionCVLabel").css("border-color", "#A90000");
+                jQuery("#OptionCVLabel").css("border-color", "#A90000");
                 this.awaitChange = false;
                 return;
             }
@@ -1304,6 +1304,7 @@ let app = new Vue({
             }
             if (val === 8) {
                 this.$nextTick(function () {
+                    jQuery("#edu_levelMax").selectpicker("refresh");
                     jQuery("#university_edu").selectpicker("refresh");
                     jQuery("#country_edu").selectpicker("refresh");
                     jQuery("#studies").selectpicker("refresh");
