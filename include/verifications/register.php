@@ -194,6 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['workingNow'])) {
             $update->setMetaData('workingNow', $_POST['workingNow']);
         }
+         $update->setMetaData('area_interes', $_POST['preferJobs']);
         echo $verifications->json_response(200, 'COMPLETADO');
         
         return;
