@@ -16,70 +16,67 @@
 
 
 global $wpdb;
-$query        = "SELECT
+$query = "SELECT
   wp_incluyeme_users_dicapselect.id,
   wp_incluyeme_users_dicapselect.resume_id
 FROM wp_incluyeme_users_dicapselect
 WHERE wp_incluyeme_users_dicapselect.resume_id = $resume->id";
-$query        = $wpdb->get_results( $query );
-$current_user = wp_get_current_user();
-
-if ( count( $query ) < 1 ) {
-	?>
+$query = $wpdb->get_results($query);
+if (count($query) < 1) {
+    ?>
 	
 	<div class="wpjb wpjr-page-resume">
+        
+        <?php wpjb_flash() ?>
+        <?php $image_size = apply_filters("wpjb_singular_logo_size", "64x64", "resume") ?>
 		
-		
-		<?php wpjb_flash() ?>
-		<?php $image_size = apply_filters( "wpjb_singular_logo_size", "64x64", "resume" ) ?>
-		
-		<div class="wpjb-top-header <?php echo apply_filters( "wpjb_top_header_classes", "wpjb-use-round-image", "resume", $resume->id ) ?>">
+		<div class="wpjb-top-header <?php echo apply_filters("wpjb_top_header_classes", "wpjb-use-round-image", "resume", $resume->id) ?>">
 			<div class="wpjb-top-header-image">
-				<?php if ( $resume->doScheme( "image" ) ): ?>
-				<?php elseif ( $resume->getAvatarUrl() ): ?>
-					<img src="<?php echo esc_attr( $resume->getAvatarUrl( $image_size ) ) ?>"
-					     alt="<?php echo esc_attr( $resume->headline ) ?>"/>
-				<?php else: ?>
+                <?php if ($resume->doScheme("image")): ?>
+                <?php elseif ($resume->getAvatarUrl()): ?>
+					<img src="<?php echo esc_attr($resume->getAvatarUrl($image_size)) ?>"
+					     alt="<?php echo esc_attr($resume->headline) ?>"/>
+                <?php else: ?>
 					<span class="wpjb-glyphs wpjb-icon-user wpjb-logo-default-size"></span>
-				<?php endif; ?>
+                <?php endif; ?>
 			</div>
 			
 			<div class="wpjb-top-header-content">
 				<div>
                 <span class="wpjb-top-header-title">
-                    <?php if ( $resume->doScheme( "headline" ) ): ?>
-                    <?php elseif ( $resume->headline ): ?>
-	                    <?php echo esc_html( $resume->headline ) ?>
+                    <?php if ($resume->doScheme("headline")): ?>
+                    <?php elseif ($resume->headline): ?>
+                        <?php echo esc_html($resume->headline) ?>
                     <?php else: ?>
 	                    —
                     <?php endif; ?>
                 </span>
 					
 					<ul class="wpjb-top-header-subtitle">
-						
-						<?php do_action( "wpjb_template_resume_meta_pre", $resume ) ?>
-						
-						<?php if ( wpjb_conf( "show_maps" ) ): ?>
+                        
+                        <?php do_action("wpjb_template_resume_meta_pre", $resume) ?>
+                        
+                        <?php if (wpjb_conf("show_maps")): ?>
 							<li class="wpjb-resume-location">
 								<span class="wpjb-glyphs wpjb-icon-map"></span>
 								<span>
-                            <?php if ( $resume->getGeo()->status == 2 ): ?>
-	                            <a href="<?php echo esc_attr( wpjb_google_map_url( $resume ) ) ?>" class="wpjb-tooltip"
-	                               title="<?php echo esc_attr( "show on map", "wpjobboard" ) ?>"><?php echo esc_html( $resume->locationToString() ) ?><span
+                            <?php if ($resume->getGeo()->status == 2): ?>
+	                            <a href="<?php echo esc_attr(wpjb_google_map_url($resume)) ?>" class="wpjb-tooltip"
+	                               title="<?php echo esc_attr("show on map", "wpjobboard") ?>"><?php echo esc_html($resume->locationToString()) ?><span
 				                            class="wpjb-glyphs wpjb-icon-down-open"></span></a>
                             <?php else: ?>
-	                            <?php echo esc_html( $resume->locationToString() ) ?>
+                                <?php echo esc_html($resume->locationToString()) ?>
                             <?php endif; ?>
                         </span>
 							</li>
-						<?php endif; ?>
+                        <?php endif; ?>
 						
 						<li class="wpjb-resume-modified-at">
 							<span class="wpjb-glyphs wpjb-icon-clock"></span>
-							<?php echo wpjb_date_display( get_option( 'date_format' ), $resume->modified_at ) ?>
+                            <?php echo wpjb_date_display(get_option('date_format'), $resume->modified_at) ?>
 						</li>
-						
-						<?php do_action( "wpjb_template_resume_meta", $resume ) ?>
+                        
+                        <?php do_action("wpjb_template_resume_meta", $resume) ?>
 					
 					</ul>
 					
@@ -89,319 +86,305 @@ if ( count( $query ) < 1 ) {
 				</div>
 			</div>
 		</div>
-		
-		<?php if ( wpjb_conf( "show_maps" ) && $resume->getGeo()->status == 2 ): ?>
+        
+        <?php if (wpjb_conf("show_maps") && $resume->getGeo()->status == 2): ?>
 			<div class="wpjb-none wpjb-map-slider">
 				<iframe style="width:100%;height:350px;margin:0;padding:0;" width="100%" height="350" frameborder="0"
 				        scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
 			</div>
-		<?php endif; ?>
-		
-		<?php if ( $resume->description ): ?>
+        <?php endif; ?>
+        
+        <?php if ($resume->description): ?>
 			<div class="wpjb-text-box" style="margin: 1em 0 1em 0; font-size: 1.1em">
-				<?php if ( $resume->doScheme( "description" ) ): else: ?>
-					<div class="wpjb-text"><?php echo wpjb_rich_text( $resume->description, "html" ) ?></div>
-				<?php endif; ?>
+                <?php if ($resume->doScheme("description")): else: ?>
+					<div class="wpjb-text"><?php echo wpjb_rich_text($resume->description, "html") ?></div>
+                <?php endif; ?>
 			</div>
-		<?php endif; ?>
+        <?php endif; ?>
 		
 		<div class="wpjb-grid wpjb-grid-closed-top">
-			
-			<?php if ( ! empty( $resume->getTag()->category ) ): ?>
+            
+            <?php if (!empty($resume->getTag()->category)): ?>
 				<div class="wpjb-grid-row">
-					<div class="wpjb-grid-col wpjb-col-30"><?php _e( "Category", "wpjobboard" ); ?></div>
+					<div class="wpjb-grid-col wpjb-col-30"><?php _e("Category", "wpjobboard"); ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs wpjb-icon-tags">
-						<?php foreach ( $resume->getTag()->category as $category ): ?>
-							<a href="<?php esc_attr_e( wpjr_link_to( "category", $category ) ) ?>"><?php esc_html_e( $category->title ) ?></a>
-						<?php endforeach; ?>
+                        <?php foreach ($resume->getTag()->category as $category): ?>
+							<a href="<?php esc_attr_e(wpjr_link_to("category", $category)) ?>"><?php esc_html_e($category->title) ?></a>
+                        <?php endforeach; ?>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<?php if ( $resume->getUser( true ) ): ?>
+            <?php endif; ?>
+            
+            <?php if ($resume->getUser(true)): ?>
 				<div class="wpjb-grid-row">
-					<div class="wpjb-grid-col wpjb-col-30"><?php _e( "E-mail", "wpjobboard" ); ?></div>
+					<div class="wpjb-grid-col wpjb-col-30"><?php _e("E-mail", "wpjobboard"); ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs wpjb-icon-mail-alt">
-						<?php if ( $resume->doScheme( "user_email" ) ): ?>
-						<?php elseif ( in_array( "user_email", $tolock ) && ! $can_browse ): ?>
-							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e( "Locked", "wpjobboard" ) ?></em></span>
-						<?php else: ?>
-							<?php esc_html_e( $resume->getUser()->user_email ) ?>
-						<?php endif; ?>
+                        <?php if ($resume->doScheme("user_email")): ?>
+                        <?php elseif (in_array("user_email", $tolock) && !$can_browse): ?>
+							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e("Locked", "wpjobboard") ?></em></span>
+                        <?php else: ?>
+                            <?php esc_html_e($resume->getUser()->user_email) ?>
+                        <?php endif; ?>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<?php if ( $resume->phone ): ?>
+            <?php endif; ?>
+            
+            <?php if ($resume->phone): ?>
 				<div class="wpjb-grid-row">
-					<div class="wpjb-grid-col wpjb-col-30"><?php _e( "Phone Number", "wpjobboard" ) ?></div>
+					<div class="wpjb-grid-col wpjb-col-30"><?php _e("Phone Number", "wpjobboard") ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs wpjb-icon-phone">
-						<?php if ( $resume->doScheme( "phone" ) ): ?>
-						<?php elseif ( in_array( "phone", $tolock ) && ! $can_browse ): ?>
-							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e( "Locked", "wpjobboard" ) ?></em></span>
-						<?php else: ?>
-							<?php esc_html_e( $resume->phone ) ?>
-						<?php endif; ?>
+                        <?php if ($resume->doScheme("phone")): ?>
+                        <?php elseif (in_array("phone", $tolock) && !$can_browse): ?>
+							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e("Locked", "wpjobboard") ?></em></span>
+                        <?php else: ?>
+                            <?php esc_html_e($resume->phone) ?>
+                        <?php endif; ?>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<?php if ( $resume->getUser( true )->user_url ): ?>
+            <?php endif; ?>
+            
+            <?php if ($resume->getUser(true)->user_url): ?>
 				<div class="wpjb-grid-row">
-					<div class="wpjb-grid-col wpjb-col-30"><?php _e( "Website", "wpjobboard" ) ?></div>
+					<div class="wpjb-grid-col wpjb-col-30"><?php _e("Website", "wpjobboard") ?></div>
 					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs wpjb-icon-link-ext-alt">
-						<?php if ( $resume->doScheme( "user_url" ) ): ?>
-						<?php elseif ( in_array( "user_url", $tolock ) && ! $can_browse ): ?>
-							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e( "Locked", "wpjobboard" ) ?></em></span>
-						<?php else: ?>
-							<a href="<?php esc_attr_e( $resume->getUser()->user_url ) ?>"><?php esc_html_e( $resume->getUser()->user_url ) ?></a>
-						<?php endif; ?>
+                        <?php if ($resume->doScheme("user_url")): ?>
+                        <?php elseif (in_array("user_url", $tolock) && !$can_browse): ?>
+							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e("Locked", "wpjobboard") ?></em></span>
+                        <?php else: ?>
+							<a href="<?php esc_attr_e($resume->getUser()->user_url) ?>"><?php esc_html_e($resume->getUser()->user_url) ?></a>
+                        <?php endif; ?>
 					</div>
 				</div>
-			<?php endif; ?>
-			
-			<?php foreach (
-				$resume->getMeta( [
-					"visibility"         => 0,
-					"meta_type"          => 3,
-					"empty"              => false,
-					"field_type_exclude" => "ui-input-textarea"
-				] ) as $k => $value
-			): ?>
-				<div class="wpjb-grid-row <?php esc_attr_e( "wpjb-row-meta-" . $value->conf( "name" ) ) ?>">
-					<div class="wpjb-grid-col wpjb-col-30"><?php esc_html_e( $value->conf( "title" ) ); ?></div>
-					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs <?php esc_attr_e( $value->conf( "render_icon", "wpjb-icon-empty" ) ) ?>">
-						<?php if ( $resume->doScheme( $k ) ): ?>
-						<?php elseif ( in_array( $k, $tolock ) && ! $can_browse ): ?>
-							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e( "Locked", "wpjobboard" ) ?></em></span>
-						<?php elseif ( $value->conf( "render_callback" ) ): ?>
-							<?php call_user_func( $value->conf( "render_callback" ) ); ?>
-						<?php elseif ( $value->conf( "type" ) == "ui-input-file" ): ?>
-							<?php foreach ( $resume->file->{$value->name} as $file ): ?>
-								<a href="<?php esc_attr_e( $file->url ) ?>"
-								   rel="nofollow"><?php esc_html_e( $file->basename ) ?></a>
-								<?php echo wpjb_format_bytes( $file->size ) ?><br/>
-							<?php endforeach ?>
-						<?php else: ?>
-							<?php if ( $value->conf( "url_target" ) ): ?>
-								<a href="<?php echo esc_html( $value->value() ); ?>"
-								   target="<?php echo $value->conf( "url_target" ); ?>"><?php echo esc_html( $value->value() ); ?></a>
-							<?php else: ?>
-								<?php esc_html_e( join( ", ", (array) $value->values() ) ) ?>
-							<?php endif; ?>
-						<?php endif; ?>
+            <?php endif; ?>
+            
+            <?php foreach ($resume->getMeta(["visibility" => 0, "meta_type" => 3, "empty" => false, "field_type_exclude" => "ui-input-textarea"]) as $k => $value): ?>
+				<div class="wpjb-grid-row <?php esc_attr_e("wpjb-row-meta-" . $value->conf("name")) ?>">
+					<div class="wpjb-grid-col wpjb-col-30"><?php esc_html_e($value->conf("title")); ?></div>
+					<div class="wpjb-grid-col wpjb-col-65 wpjb-glyphs <?php esc_attr_e($value->conf("render_icon", "wpjb-icon-empty")) ?>">
+                        <?php if ($resume->doScheme($k)): ?>
+                        <?php elseif (in_array($k, $tolock) && !$can_browse): ?>
+							<span class="wpjb-glyphs wpjb-icon-lock"><em><?php _e("Locked", "wpjobboard") ?></em></span>
+                        <?php elseif ($value->conf("render_callback")): ?>
+                            <?php call_user_func($value->conf("render_callback")); ?>
+                        <?php elseif ($value->conf("type") == "ui-input-file"): ?>
+                            <?php foreach ($resume->file->{$value->name} as $file): ?>
+								<a href="<?php esc_attr_e($file->url) ?>"
+								   rel="nofollow"><?php esc_html_e($file->basename) ?></a>
+                                <?php echo wpjb_format_bytes($file->size) ?><br/>
+                            <?php endforeach ?>
+                        <?php else: ?>
+                            <?php if ($value->conf("url_target")): ?>
+								<a href="<?php echo esc_html($value->value()); ?>"
+								   target="<?php echo $value->conf("url_target"); ?>"><?php echo esc_html($value->value()); ?></a>
+                            <?php else: ?>
+                                <?php esc_html_e(join(", ", (array)$value->values())) ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
 					</div>
 				</div>
-			<?php endforeach; ?>
-			
-			<?php do_action( "wpjb_template_resume_meta_text", $resume ) ?>
+            <?php endforeach; ?>
+            
+            <?php do_action("wpjb_template_resume_meta_text", $resume) ?>
 		</div>
-		
-		<?php
-		$dList = [
-			__( "Education", "wpjobboard" )  => $resume->getEducation(),
-			__( "Experience", "wpjobboard" ) => $resume->getExperience()
-		];
-		?>
-		
-		<?php foreach ( $dList as $title => $details ): ?>
-			<?php if ( ! empty( $details ) ): ?>
+        
+        <?php
+        $dList = [
+            __("Education", "wpjobboard") => $resume->getEducation(),
+            __("Experience", "wpjobboard") => $resume->getExperience()
+        ];
+        ?>
+        
+        <?php foreach ($dList as $title => $details): ?>
+            <?php if (!empty($details)): ?>
 				<div class="wpjb-text-box">
-					<h3><?php esc_html_e( $title ) ?></h3>
-					<?php foreach ( $details as $detail ): ?>
+					<h3><?php esc_html_e($title) ?></h3>
+                    <?php foreach ($details as $detail): ?>
 						
 						<div class="wpjb-resume-detail">
 							<div class="wpjb-column-left">
 								
-								<strong><?php esc_html_e( $detail->detail_title ) ?></strong>
-								<?php if ( $detail->grantor ): ?>
-									<span> @ <?php esc_html_e( $detail->grantor ) ?></span>
-								<?php endif; ?>
+								<strong><?php esc_html_e($detail->detail_title) ?></strong>
+                                <?php if ($detail->grantor): ?>
+									<span> @ <?php esc_html_e($detail->grantor) ?></span>
+                                <?php endif; ?>
 							
 							</div>
 							<div class="wpjb-column-right wpjb-motif">
-								<?php $glue = "" ?>
-								<?php if ( $detail->started_at != "0000-00-00" ): ?>
-									<?php esc_html_e( wpjb_date_display( "M Y", $detail->started_at ) ) ?>
-									<?php $glue = "—"; ?>
-								<?php endif; ?>
-								
-								<?php if ( $detail->is_current ): ?>
-									<?php echo $glue . " ";
-									esc_html_e( "Current", "wpjobboard" ) ?>
-								<?php elseif ( $detail->completed_at != "0000-00-00" ): ?>
-									<?php echo $glue . " ";
-									esc_html_e( wpjb_date_display( "M Y", $detail->completed_at ) ) ?>
-								<?php endif; ?>
+                                <?php $glue = "" ?>
+                                <?php if ($detail->started_at != "0000-00-00"): ?>
+                                    <?php esc_html_e(wpjb_date_display("M Y", $detail->started_at)) ?>
+                                    <?php $glue = "—"; ?>
+                                <?php endif; ?>
+                                
+                                <?php if ($detail->is_current): ?>
+                                    <?php echo $glue . " ";
+                                    esc_html_e("Current", "wpjobboard") ?>
+                                <?php elseif ($detail->completed_at != "0000-00-00"): ?>
+                                    <?php echo $glue . " ";
+                                    esc_html_e(wpjb_date_display("M Y", $detail->completed_at)) ?>
+                                <?php endif; ?>
 							</div>
-							<?php if ( $detail->detail_description ): ?>
-								<div class="wpjb-clear"><?php echo wpjb_rich_text( $detail->detail_description ) ?></div>
-							<?php endif; ?>
-							
-							<?php do_action( "wpjb_template_resume_detail_meta_text", $detail ) ?>
+                            <?php if ($detail->detail_description): ?>
+								<div class="wpjb-clear"><?php echo wpjb_rich_text($detail->detail_description) ?></div>
+                            <?php endif; ?>
+                            
+                            <?php do_action("wpjb_template_resume_detail_meta_text", $detail) ?>
 						</div>
-					
-					<?php endforeach; ?>
+                    
+                    <?php endforeach; ?>
 				</div>
-			<?php endif; ?>
-		<?php endforeach; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
 		
 		<div class="wpjb-text-box">
-			<?php foreach (
-				$resume->getMeta( [
-					"visibility" => 0,
-					"meta_type"  => 3,
-					"empty"      => false,
-					"field_type" => "ui-input-textarea"
-				] ) as $k => $value
-			): ?>
+            <?php foreach ($resume->getMeta(["visibility" => 0, "meta_type" => 3, "empty" => false, "field_type" => "ui-input-textarea"]) as $k => $value): ?>
 				
-				<h3><?php esc_html_e( $value->conf( "title" ) ); ?></h3>
+				<h3><?php esc_html_e($value->conf("title")); ?></h3>
 				<div class="wpjb-text">
-					<?php if ( $resume->doScheme( $k ) ): else: ?>
-						<?php wpjb_rich_text( $value->value(), $value->conf( "textarea_wysiwyg" ) ? "html" : "text" ); ?>
-					<?php endif; ?>
+                    <?php if ($resume->doScheme($k)): else: ?>
+                        <?php wpjb_rich_text($value->value(), $value->conf("textarea_wysiwyg") ? "html" : "text"); ?>
+                    <?php endif; ?>
 				</div>
-			
-			<?php endforeach; ?>
-			
-			<?php do_action( "wpjb_template_resume_meta_richtext", $resume ) ?>
+            
+            <?php endforeach; ?>
+            
+            <?php do_action("wpjb_template_resume_meta_richtext", $resume) ?>
 		</div>
 		
 		<div id="wpjb-scroll" class="wpjb-job-content">
-			<h3><?php _e( "Contact Candidate", "wpjobboard" ) ?></h3>
-			
-			<?php if ( $c_message ): ?>
-				<div class="wpjb-flash-info"><?php esc_html_e( $c_message ) ?></div><?php endif; ?>
+			<h3><?php _e("Contact Candidate", "wpjobboard") ?></h3>
+            
+            <?php if ($c_message): ?>
+				<div class="wpjb-flash-info"><?php esc_html_e($c_message) ?></div><?php endif; ?>
 			
 			<div>
-				<?php if ( $button->contact ): ?>
+                <?php if ($button->contact): ?>
 					<a class="wpjb-button wpjb-form-toggle wpjb-form-resume-contact"
 					   data-wpjb-form="wpjb-form-resume-contact"
-					   href="<?php esc_attr_e( wpjr_link_to( "resume", $resume, [ "form" => "contact" ] ) ) ?>#wpjb-scroll"
-					   rel="nofollow"><?php _e( "Contact Candidate", "wpjobboard" ) ?> <span
+					   href="<?php esc_attr_e(wpjr_link_to("resume", $resume, ["form" => "contact"])) ?>#wpjb-scroll"
+					   rel="nofollow"><?php _e("Contact Candidate", "wpjobboard") ?> <span
 								class="wpjb-glyphs wpjb-icon-down-open"></span></a>
-				<?php endif; ?>
-				
-				<?php if ( $button->login ): ?>
+                <?php endif; ?>
+                
+                <?php if ($button->login): ?>
 					<a class="wpjb-button"
-					   href="<?php esc_attr_e( wpjb_link_to( "employer_login", null, [ "redirect_to" => base64_encode( $current_url ) ] ) ) ?>"><?php _e( "Login", "wpjobboard" ) ?></a>
-				<?php endif; ?>
-				
-				<?php if ( $button->register ): ?>
+					   href="<?php esc_attr_e(wpjb_link_to("employer_login", null, ["redirect_to" => base64_encode($current_url)])) ?>"><?php _e("Login", "wpjobboard") ?></a>
+                <?php endif; ?>
+                
+                <?php if ($button->register): ?>
 					<a class="wpjb-button"
-					   href="<?php esc_attr_e( wpjb_link_to( "employer_new", null, [ "redirect_to" => base64_encode( $current_url ) ] ) ) ?>"><?php _e( "Register", "wpjobboard" ) ?></a>
-				<?php endif; ?>
-				
-				<?php if ( $button->purchase ): ?>
+					   href="<?php esc_attr_e(wpjb_link_to("employer_new", null, ["redirect_to" => base64_encode($current_url)])) ?>"><?php _e("Register", "wpjobboard") ?></a>
+                <?php endif; ?>
+                
+                <?php if ($button->purchase): ?>
 					<a class="wpjb-button wpjb-form-toggle wpjb-form-resume-purchase"
 					   data-wpjb-form="wpjb-form-resume-purchase"
-					   href="<?php esc_attr_e( wpjr_link_to( "resume", $resume, [ "form" => "purchase" ] ) ) ?>#wpjb-scroll"
-					   rel="nofollow"><?php _e( "Purchase", "wpjobboard" ) ?> <span
+					   href="<?php esc_attr_e(wpjr_link_to("resume", $resume, ["form" => "purchase"])) ?>#wpjb-scroll"
+					   rel="nofollow"><?php _e("Purchase", "wpjobboard") ?> <span
 								class="wpjb-glyphs wpjb-icon-down-open">&nbsp;</span></a>
-				<?php endif; ?>
-				
-				<?php if ( $button->verify ): ?>
+                <?php endif; ?>
+                
+                <?php if ($button->verify): ?>
 					<a class="wpjb-button"
-					   href="<?php esc_attr_e( wpjb_link_to( "employer_verify" ) ) ?>"><?php _e( "Request verification", "wpjobboard" ) ?></a>
-				<?php endif; ?>
+					   href="<?php esc_attr_e(wpjb_link_to("employer_verify")) ?>"><?php _e("Request verification", "wpjobboard") ?></a>
+                <?php endif; ?>
 			</div>
-			
-			<?php foreach ( $f as $k => $form ): ?>
+            
+            <?php foreach ($f as $k => $form): ?>
 				<div id="wpjb-form-resume-<?php echo $k ?>"
-				     class="wpjb-form-resume wpjb-form-slider wpjb-layer-inside <?php if ( ! $show->$k ): ?>wpjb-none<?php endif; ?>">
-					
-					<?php if ( $form_error ): ?>
+				     class="wpjb-form-resume wpjb-form-slider wpjb-layer-inside <?php if (!$show->$k): ?>wpjb-none<?php endif; ?>">
+                    
+                    <?php if ($form_error): ?>
 						<div class="wpjb-flash-error wpjb-flash-small">
-							<span class="wpjb-glyphs wpjb-icon-attention"><?php esc_html_e( $form_error ) ?></span>
+							<span class="wpjb-glyphs wpjb-icon-attention"><?php esc_html_e($form_error) ?></span>
 						</div>
-					<?php endif; ?>
+                    <?php endif; ?>
 					
 					<form class="wpjb-form wpjb-form-nolines"
-					      action="<?php esc_attr_e( wpjr_link_to( "resume", $resume ) ) ?>#wpjb-scroll" method="post">
-						
-						<?php echo $form->renderHidden() ?>
-						<?php foreach ( $form->getReordered() as $group ): ?>
-							<?php /* @var $group stdClass */ ?>
+					      action="<?php esc_attr_e(wpjr_link_to("resume", $resume)) ?>#wpjb-scroll" method="post">
+                        
+                        <?php echo $form->renderHidden() ?>
+                        <?php foreach ($form->getReordered() as $group): ?>
+                            <?php /* @var $group stdClass */ ?>
+                            
+                            <?php if ($group->title): ?>
+								<div class="wpjb-legend"><?php esc_html_e($group->title) ?></div>
+                            <?php endif; ?>
 							
-							<?php if ( $group->title ): ?>
-								<div class="wpjb-legend"><?php esc_html_e( $group->title ) ?></div>
-							<?php endif; ?>
-							
-							<fieldset class="wpjb-fieldset-<?php esc_attr_e( $group->getName() ) ?>">
-								<?php foreach ( $group->getReordered() as $name => $field ): ?>
-									<?php /* @var $field Daq_Form_Element */ ?>
-									<div class="<?php wpjb_form_input_features( $field ) ?>">
+							<fieldset class="wpjb-fieldset-<?php esc_attr_e($group->getName()) ?>">
+                                <?php foreach ($group->getReordered() as $name => $field): ?>
+                                    <?php /* @var $field Daq_Form_Element */ ?>
+									<div class="<?php wpjb_form_input_features($field) ?>">
 										
 										<label class="wpjb-label">
-											<?php esc_html_e( $field->getLabel() ) ?>
-											<?php if ( $field->isRequired() ): ?><span
+                                            <?php esc_html_e($field->getLabel()) ?>
+                                            <?php if ($field->isRequired()): ?><span
 													class="wpjb-required">*</span><?php endif; ?>
 										</label>
 										
 										<div class="wpjb-field">
-											<?php wpjb_form_render_input( $form, $field ) ?>
-											<?php wpjb_form_input_hint( $field ) ?>
-											<?php wpjb_form_input_errors( $field ) ?>
+                                            <?php wpjb_form_render_input($form, $field) ?>
+                                            <?php wpjb_form_input_hint($field) ?>
+                                            <?php wpjb_form_input_errors($field) ?>
 										</div>
 									
 									</div>
-								
-								<?php endforeach; ?>
+                                
+                                <?php endforeach; ?>
 							</fieldset>
-						<?php endforeach; ?>
+                        <?php endforeach; ?>
 						
 						<div class="wpjb-legend"></div>
 						
 						<fieldset>
-							<input type="submit" class="wpjb-submit" value="<?php _e( "Submit", "wpjobboard" ) ?>"/>
+							<input type="submit" class="wpjb-submit" value="<?php _e("Submit", "wpjobboard") ?>"/>
 						</fieldset>
 					
 					
 					</form>
 				</div>
-			<?php endforeach; ?>
+            <?php endforeach; ?>
 		
 		</div>
 	
 	</div>
-	
-	
-	<?php
+    
+    
+    <?php
 } else {
-	$js  = plugins_url() . '/incluyeme-login-extension/include/assets/js/';
-	$img = plugins_url() . '/incluyeme-login-extension/include/assets/img/incluyeme-place.svg';
-	$css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
-	wp_register_script( 'popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', [ 'jquery' ], '1.0.0' );
-	wp_register_script( 'bootstrapJs', $js . 'bootstrap.min.js', [ 'jquery', 'popper' ], '1.0.0' );
-	wp_register_script( 'vueJS', $js . 'vueDEV.js', [ 'bootstrapJs', 'FAwesome' ], '1.0.0' );
-	wp_register_script( 'vueD', $js . 'vueView2.0.6.js', [ 'vueJS', 'Axios' ], '2.0.0' );
-	wp_register_script( 'Axios', $js . 'axios.min.js', [], '2.0.0' );
-	wp_register_script( 'bootstrap-notify', $js . 'iziToast.js', [ 'bootstrapJs' ], '2.0.0' );
+    $js = plugins_url() . '/incluyeme-login-extension/include/assets/js/';
+    $img = plugins_url() . '/incluyeme-login-extension/include/assets/img/incluyeme-place.svg';
+    $css = plugins_url() . '/incluyeme-login-extension/include/assets/css/';
+    wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', ['jquery'], '1.0.0');
+    wp_register_script('bootstrapJs', $js . 'bootstrap.min.js', ['jquery', 'popper'], '1.0.0');
+    wp_register_script('vueJS', $js . 'vueDEV.js', ['bootstrapJs', 'FAwesome'], '1.0.0');
+    wp_register_script('vueD', $js . 'vueView2.0.5.js', ['vueJS', 'Axios'], '2.0.0');
+    wp_register_script('Axios', $js . 'axios.min.js', [], '2.0.0');
+    wp_register_script('bootstrap-notify', $js . 'iziToast.js', ['bootstrapJs'], '2.0.0');
 //wp_register_script('materializeJS', $js . 'materialize.min.js');
-	
-	wp_register_style( 'bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false );
-	wp_register_style( 'bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false );
-	wp_register_script( 'FAwesome', 'https://kit.fontawesome.com/65c018cf75.js', [], '1.0.0', false );
-	wp_enqueue_script( 'bootstrapJs' );
-	wp_enqueue_script( 'bootstrap-notify' );
-	wp_enqueue_script( 'vueD' );
-	
-	wp_enqueue_style( 'bootstrap-css' );
-	wp_enqueue_style( 'bootstrap-notify-css' );
-	wp_enqueue_script( 'fAwesome' );
-	$baseurl               = wp_upload_dir();
-	$baseurl               = $baseurl['baseurl'];
-	$incluyemeNames        = 'incluyemeNamesCV';
-	$incluyemeLoginFB      = 'incluyemeLoginFB';
-	$incluyemeLoginGoogle  = 'incluyemeLoginGoogle';
-	$incluyemeLoginCountry = 'incluyemeLoginCountry';
-	$incluyemeLoginEstado  = 'incluyemeLoginEstado';
-	$incluyemeGoogleAPI    = get_option( $incluyemeLoginGoogle );
-	$FBappId               = get_option( $incluyemeLoginFB );
-	$FBversion             = 'v7';
-	
-	?>
+    
+    wp_register_style('bootstrap-css', $css . 'bootstrap.min.css', [], '1.0.0', false);
+    wp_register_style('bootstrap-notify-css', $css . 'iziToast.min.css', [], '1.0.0', false);
+    wp_register_script('FAwesome', 'https://kit.fontawesome.com/65c018cf75.js', [], '1.0.0', false);
+    wp_enqueue_script('bootstrapJs');
+    wp_enqueue_script('bootstrap-notify');
+    wp_enqueue_script('vueD');
+    
+    wp_enqueue_style('bootstrap-css');
+    wp_enqueue_style('bootstrap-notify-css');
+    wp_enqueue_script('fAwesome');
+    $baseurl = wp_upload_dir();
+    $baseurl = $baseurl['baseurl'];
+    $incluyemeNames = 'incluyemeNamesCV';
+    $incluyemeLoginFB = 'incluyemeLoginFB';
+    $incluyemeLoginGoogle = 'incluyemeLoginGoogle';
+    $incluyemeLoginCountry = 'incluyemeLoginCountry';
+    $incluyemeLoginEstado = 'incluyemeLoginEstado';
+    $incluyemeGoogleAPI = get_option($incluyemeLoginGoogle);
+    $FBappId = get_option($incluyemeLoginFB);
+    $FBversion = 'v7';
+    
+    ?>
 	<style>
         #main-content .container:before {
             background: none !important;
@@ -614,43 +597,10 @@ if ( count( $query ) < 1 ) {
         .btn-link.active {
             background: none !important;
         }
+	
 	</style>
 	<div id="incluyeme-login-wpjb">
-		<?php
-		if ( in_array( 'administrator', $current_user->roles ) ) {
-			?>
-			<div class="container pt-0">
-				<div v-if="name" class="card">
-					<div class="card-body">
-						<h5 class="card-title">Etiquetas</h5>
-						<form v-if="checkBoxesInpu">
-							<div v-for="tag in tagsData" class="form-check" :key="tag.id">
-								<label class="form-check-label" :for="tag.id">
-									<input class="form-check-input" type="checkbox" v-model="tag.selected" :id="tag.id"
-									       :name="tag.id">
-									{{ tag.label }}
-								</label>
-							</div>
-							<div class="m-2">
-								<button @click="editTags" type="button" class="btn btn-success">Atras</button>
-								<button @click="editTagsSave" type="button" class="btn btn-primary">Guardar</button>
-							</div>
-						</form>
-						<div v-else id="tagsShow" class="d-flex">
-							<div v-for="tag in tagsData" :key="tag.id" class="form-check" v-if="tag.selected">
-								<label class="fw-bold" :for="tag.id">
-									<strong>
-										{{ tag.label }}
-									</strong>
-								</label>
-							</div>
-						</div>
-						<button v-if="!checkBoxesInpu" @click="editTags" class="btn btn-primary m-2">Editar</button>
-					</div>
-				</div>
-			</div>
-		<?php } ?>
-		<div id="incluyeme-login-comments" class="container pt-3">
+		<div class="container pt-0">
 			<x-incluyeme class="row">
 				<x-incluyeme class="col-md-6" id="step2">
 					<x-incluyeme class="row">
@@ -670,7 +620,7 @@ if ( count( $query ) < 1 ) {
 							<label for="mPhone"><b>Teléfono Fijo:</b> {{fPhone}} {{fiPhone}}</label>
 						</div>
 						<div class="col-12">
-							<label for="mPhone"><b><?php _e( ( get_option( $incluyemeLoginEstado ) ? get_option( $incluyemeLoginEstado ) : ' Provincia/Estado' ), "incluyeme-login-extension" ); ?>
+							<label for="mPhone"><b><?php _e((get_option($incluyemeLoginEstado) ? get_option($incluyemeLoginEstado) : ' Provincia/Estado'), "incluyeme-login-extension"); ?>
 									:</b> {{state}}</label>
 						</div>
 						<div class="col-12">
@@ -685,7 +635,7 @@ if ( count( $query ) < 1 ) {
 						<div class="col-12" v-if="myCUD">
 							<a v-if="myCUD"
 							   target="_blank"
-							   :href="myCUD"><?php echo get_option( $incluyemeNames ) ? get_option( $incluyemeNames ) : 'Certificado Único de Discapacidad'; ?></a>
+							   :href="myCUD"><?php echo get_option($incluyemeNames) ? get_option($incluyemeNames) : 'Certificado Único de Discapacidad'; ?></a>
 						</div>
 						<div class="col-12" v-if="myCV">
 							<a v-if="myCV"
@@ -732,14 +682,14 @@ if ( count( $query ) < 1 ) {
 												       value="Si" v-model="mPie" name="mPie" disabled>
 												<label class="form-check-label"
 												       for="mPieS"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="mPie"
 												       value="No" v-model="mPie" name="mPie" disabled>
 												<label class="form-check-label"
 												       for="mPie"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -749,14 +699,14 @@ if ( count( $query ) < 1 ) {
 												       value="Si" v-model="mSen" name="mSen" disabled>
 												<label class="form-check-label"
 												       for="mSenS"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="mSen"
 												       value="No" v-model="mSen" name="mSen" disabled>
 												<label class="form-check-label"
 												       for="mSen"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										
 										</x-incluyeme>
@@ -767,14 +717,14 @@ if ( count( $query ) < 1 ) {
 												       value="Si" v-model="mEsca" name="mEsca" disabled>
 												<label class="form-check-label"
 												       for="mEscaS"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="mEsca"
 												       value="No" v-model="mEsca" name="mEsca" disabled>
 												<label class="form-check-label"
 												       for="mEsca"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -785,14 +735,14 @@ if ( count( $query ) < 1 ) {
 												       value="Si" v-model="mBrazo" name="mBrazo" disabled>
 												<label class="form-check-label"
 												       for="mBrazoS"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="mBrazo"
 												       value="No" v-model="mBrazo" name="mBrazo" disabled>
 												<label class="form-check-label"
 												       for="mBrazo"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -803,28 +753,28 @@ if ( count( $query ) < 1 ) {
 												       value="No" v-model="peso" name="peso" disabled>
 												<label class="form-check-label"
 												       for="peso"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="pesoKg"
 												       value="Hasta 5 Kg" v-model="peso" name="peso" disabled>
 												<label class="form-check-label"
 												       for="pesoKg"
-												       style="color: black"><?php _e( "Hasta 5 Kg", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Hasta 5 Kg", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="peso10"
 												       value="Hasta 10 Kg" v-model="peso" name="peso" disabled>
 												<label class="form-check-label"
 												       for="peso10"
-												       style="color: black"><?php _e( "Hasta 10 Kg", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Hasta 10 Kg", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="peso20"
 												       value="Hasta 20 Kg" v-model="peso" name="peso" disabled>
 												<label class="form-check-label"
 												       for="peso20"
-												       style="color: black"><?php _e( "Hasta 20 Kg", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Hasta 20 Kg", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -835,14 +785,14 @@ if ( count( $query ) < 1 ) {
 												       value="Si" v-model="mRueda" name="mRueda" disabled>
 												<label class="form-check-label"
 												       for="mRuedaS"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="mRueda"
 												       value="No" v-model="mRueda" name="mRueda" disabled>
 												<label class="form-check-label"
 												       for="mRueda"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -852,21 +802,21 @@ if ( count( $query ) < 1 ) {
 											       value="Bastón" v-model="desplazarte" name="desplazarte" disabled>
 											<label class="form-check-label"
 											       for="desplazarte"
-											       style="color: black"><?php _e( "Bastón", "incluyeme-login-extension" ); ?></label>
+											       style="color: black"><?php _e("Bastón", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="Muletas"
 											       value="Muletas" v-model="desplazarte" name="desplazarte" disabled>
 											<label class="form-check-label"
 											       for="Muletas"
-											       style="color: black"><?php _e( "Muletas", "incluyeme-login-extension" ); ?></label>
+											       style="color: black"><?php _e("Muletas", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										<x-incluyeme class="form-check form-check-inline">
 											<input class="form-check-input" type="radio" id="Otros"
 											       value="Otros" v-model="desplazarte" name="desplazarte" disabled>
 											<label class="form-check-label"
 											       for="Otros"
-											       style="color: black"><?php _e( "Otros", "incluyeme-login-extension" ); ?></label>
+											       style="color: black"><?php _e("Otros", "incluyeme-login-extension"); ?></label>
 										</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -877,14 +827,14 @@ if ( count( $query ) < 1 ) {
 												       value="Si" v-model="mDigi" name="mDigi" disabled>
 												<label class="form-check-label"
 												       for="mDigiS"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="mDigi"
 												       value="No" v-model="mDigi" name="mDigi" disabled>
 												<label class="form-check-label"
 												       for="mDigi"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 									</x-incluyeme>
@@ -915,14 +865,14 @@ if ( count( $query ) < 1 ) {
 												       value="Si" v-model="vHumedos" name="vHumedos" disabled>
 												<label class="form-check-label"
 												       for="vHumedos"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vHumedosS"
 												       value="No" v-model="vHumedos" name="vHumedos" disabled>
 												<label class="form-check-label"
 												       for="vHumedosS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -933,14 +883,14 @@ temperatura? </span>
 												       value="Si" v-model="vTemp" name="vTemp" disabled>
 												<label class="form-check-label"
 												       for="vTemp"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vTempN"
 												       value="No" v-model="vTemp" name="vTemp" disabled>
 												<label class="form-check-label"
 												       for="vTempN"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										
 										</x-incluyeme>
@@ -951,14 +901,14 @@ temperatura? </span>
 												       value="Si" v-model="vPolvo" name="vPolvo" disabled>
 												<label class="form-check-label"
 												       for="vPolvo"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vPolvov"
 												       value="No" v-model="vPolvo" name="vPolvo" disabled>
 												<label class="form-check-label"
 												       for="vPolvov"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -970,14 +920,14 @@ dificultad?
 												       value="Si" v-model="vCompleta" name="vCompleta" disabled>
 												<label class="form-check-label"
 												       for="vCompleta"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vCompletaS"
 												       value="No" v-model="vCompleta" name="vCompleta" disabled>
 												<label class="form-check-label"
 												       for="vCompletaS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -988,14 +938,14 @@ dificultad?
 												       value="Jornada Parcial" v-model="vAdap" name="vAdap" disabled>
 												<label class="form-check-label"
 												       for="vAdap"
-												       style="color: black"><?php _e( "Jornada parcial", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Jornada parcial", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vAdapS"
 												       value="Turnos Fijos" v-model="vAdap" name="vAdap" disabled>
 												<label class="form-check-label"
 												       for="vAdapS"
-												       style="color: black"><?php _e( "Turnos fijos", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Turnos fijos", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vAdapAS"
@@ -1003,12 +953,12 @@ dificultad?
 												       name="vAdap" disabled>
 												<label class="form-check-label"
 												       for="vAdapAS"
-												       style="color: black"><?php _e( "Permiso para salidas médicas", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Permiso para salidas médicas", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<label class="form-check-label mr-2"
 												       style="color: black; font-weight: 400"
-												       for='vSalidas'><?php _e( "Otro", "incluyeme-login-extension" ); ?></label>
+												       for='vSalidas'><?php _e("Otro", "incluyeme-login-extension"); ?></label>
 												<input class="form-check-input" type="text" id="vSalidas"
 												       v-model="vAdap" name="vAdap" disabled>
 											</x-incluyeme>
@@ -1042,14 +992,14 @@ dificultad?
 												       value="Si" v-model="aAmbient" name="aAmbient" disabled>
 												<label class="form-check-label"
 												       for="aAmbient"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="aAmbientS"
 												       value="No" v-model="aAmbient" name="aAmbient" disabled>
 												<label class="form-check-label"
 												       for="aAmbientS"
-												       style="color: black"> <?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"> <?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1059,14 +1009,14 @@ dificultad?
 												       value="Si" v-model="aOral" name="aOral" disabled>
 												<label class="form-check-label"
 												       for="aOral"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="aOralN"
 												       value="No" v-model="aOral" name="aOral" disabled>
 												<label class="form-check-label"
 												       for="aOralN"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										
 										</x-incluyeme>
@@ -1077,14 +1027,14 @@ dificultad?
 												       value="Si" v-model="aSennas" name="aSennas" disabled>
 												<label class="form-check-label"
 												       for="aSennas"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="aSennasS"
 												       value="No" v-model="aSennas" name="aSennas" disabled>
 												<label class="form-check-label"
 												       for="aSennasS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1095,14 +1045,14 @@ dificultad?
 												       value="Si" v-model="aLabial" name="aLabial" disabled>
 												<label class="form-check-label"
 												       for="aLabial"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="aLabialS"
 												       value="No" v-model="aLabial" name="aLabial" disabled>
 												<label class="form-check-label"
 												       for="aLabialS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1113,14 +1063,14 @@ dificultad?
 												       value="Si" v-model="aBajo" name="aBajo" disabled>
 												<label class="form-check-label"
 												       for="aBajo"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="aBajoS"
 												       value="No" v-model="aBajo" name="aBajo" disabled>
 												<label class="form-check-label"
 												       for="aBajoS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1131,7 +1081,7 @@ dificultad?
 												       value="Si" v-model="aFluida" name="aFluida" disabled>
 												<label class="form-check-label"
 												       for="aFluida"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
@@ -1139,7 +1089,7 @@ dificultad?
 												       value="No" v-model="aFluida" name="aFluida" disabled>
 												<label class="form-check-label"
 												       for="aFluidaS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1150,19 +1100,19 @@ dificultad?
 												       value="Implante" v-model="aImplante" name="aImplante" disabled>
 												<label class="form-check-label"
 												       for="aImplante"
-												       style="color: black"><?php _e( "Implante", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Implante", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="aImplantes"
 												       value="Audífonos" v-model="aImplante" name="aImplante" disabled>
 												<label class="form-check-label"
 												       for="aImplantes"
-												       style="color: black"><?php _e( "Audífonos", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Audífonos", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<label class="form-check-label mr-2"
 												       style="color: black; font-weight: 400"
-												       for="aImplantesText"><?php _e( "Otro", "incluyeme-login-extension" ); ?></label>
+												       for="aImplantesText"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
 												<input class="form-check-input" type="text" id="aImplantesText"
 												       v-model="aImplante" name="aImplante" placeholder="" disabled>
 											</x-incluyeme>
@@ -1195,14 +1145,14 @@ dificultad?
 												       value="Si" v-model="vLejos" name="vLejos" disabled>
 												<label class="form-check-label"
 												       for="vLejos"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vLejosS"
 												       value="No" v-model="vLejos" name="vLejos" disabled>
 												<label class="form-check-label"
 												       for="vLejosS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1213,14 +1163,14 @@ distancia próxima?</span>
 												       value="Si" v-model="vObservar" name="vObservar" disabled>
 												<label class="form-check-label"
 												       for="vObservar"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vObservarS"
 												       value="No" v-model="vObservar" name="vObservar" disabled>
 												<label class="form-check-label"
 												       for="vObservarS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										
 										</x-incluyeme>
@@ -1231,14 +1181,14 @@ distancia próxima?</span>
 												       value="Si" v-model="vColores" name="vColores" disabled>
 												<label class="form-check-label"
 												       for="vColores"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vColoresS"
 												       value="No" v-model="vColores" name="vColores" disabled>
 												<label class="form-check-label"
 												       for="vColoresS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1250,14 +1200,14 @@ distintos planos, por ejemplo: adelante o atrás (perspectiva)?
 												       value="Si" v-model="vDPlanos" name="vDPlanos" disabled>
 												<label class="form-check-label"
 												       for="vDPlanos"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vDPlanos"
 												       value="No" v-model="vDPlanos" name="vDPlanos" disabled>
 												<label class="form-check-label"
 												       for="vDPlanosS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1269,8 +1219,8 @@ distintos planos, por ejemplo: adelante o atrás (perspectiva)?
 como Jaws o Lupa" v-model="vTecniA" name="vTecniA" disabled>
 												<label class="form-check-label"
 												       for="vTecniA"
-												       style="color: black"><?php _e( "Lectores de pantalla
-como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Lectores de pantalla
+como Jaws o Lupa", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vTecniAS"
@@ -1278,19 +1228,19 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       disabled>
 												<label class="form-check-label"
 												       for="vTecniAS"
-												       style="color: black"><?php _e( "Aumentadores de letras", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Aumentadores de letras", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="vTecniASS"
 												       value="Anteojos" v-model="vTecniA" name="vTecniAS" disabled>
 												<label class="form-check-label"
 												       for="vTecniASS"
-												       style="color: black"><?php _e( "Anteojos", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Anteojos", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<label class="form-check-label mr-2"
 												       style="color: black; font-weight: 400"
-												       for="vTecniAvAS"><?php _e( "Otro", "incluyeme-login-extension" ); ?></label>
+												       for="vTecniAvAS"><?php _e("Otro", "incluyeme-login-extension"); ?></label>
 												<input class="form-check-input" type="text" id="vTecniAvAS"
 												       v-model="vTecniA" name="vTecniAvAS"
 												       disabled>
@@ -1324,14 +1274,14 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       value="Si" v-model="inteEscri" name="inteEscri" disabled>
 												<label class="form-check-label"
 												       for="inteEscri"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="inteEscriS"
 												       value="No" v-model="inteEscri" name="inteEscri" disabled>
 												<label class="form-check-label"
 												       for="inteEscriS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1341,14 +1291,14 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       value="Si" v-model="inteTransla" name="inteTransla" disabled>
 												<label class="form-check-label"
 												       for="inteTransla"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="inteTranslaS"
 												       value="No" v-model="inteTransla" name="inteTransla" disabled>
 												<label class="form-check-label"
 												       for="inteTranslaS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										
 										</x-incluyeme>
@@ -1359,14 +1309,14 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       value="Si" v-model="inteActividad" name="inteActividad" disabled>
 												<label class="form-check-label"
 												       for="inteActividad"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="inteActividadS"
 												       value="No" v-model="inteActividad" name="inteActividad" disabled>
 												<label class="form-check-label"
 												       for="inteActividadS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1376,14 +1326,14 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       value="Si" v-model="inteMolesto" name="inteMolesto" disabled>
 												<label class="form-check-label"
 												       for="inteMolesto"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="inteMolestoS"
 												       value="No" v-model="inteMolesto" name="inteMolesto" disabled>
 												<label class="form-check-label"
 												       for="inteMolestoS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1393,7 +1343,7 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       value="Si" v-model="inteTrabajar" name="inteTrabajar" disabled>
 												<label class="form-check-label"
 												       for="inteTrabajar"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="inteTrabajarS"
@@ -1401,7 +1351,7 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       name="inteTrabajar" disabled>
 												<label class="form-check-label"
 												       for="inteTrabajarS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1412,7 +1362,7 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       disabled>
 												<label class="form-check-label"
 												       for="inteTrabajarOP"
-												       style="color: black"><?php _e( "Si", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Si", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="inteTrabajarOPS"
@@ -1420,7 +1370,7 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       name="inteTrabajarOP" disabled>
 												<label class="form-check-label"
 												       for="inteTrabajarOPS"
-												       style="color: black"><?php _e( "No", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("No", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 										<x-incluyeme class="col-12">
@@ -1434,7 +1384,7 @@ como Jaws o Lupa", "incluyeme-login-extension" ); ?></label>
 												       name="inteTrabajarSolo" disabled>
 												<label class="form-check-label"
 												       for="inteTrabajarSolo"
-												       style="color: black"><?php _e( "Lugares cerrados (por ejemplo oficinas)", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Lugares cerrados (por ejemplo oficinas)", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="inteTrabajarSoloS"
@@ -1443,8 +1393,8 @@ exteriores (por ejemplo jardines, parques, centros deportivos, otros)" v-model="
 												       name="inteTrabajarSolo" disabled>
 												<label class="form-check-label"
 												       for="inteTrabajarSoloS"
-												       style="color: black"><?php _e( "Ambientes
-exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Ambientes
+exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 											<x-incluyeme class="form-check form-check-inline">
 												<input class="form-check-input" type="radio" id="inteTrabajarSoloS2"
@@ -1452,7 +1402,7 @@ exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluye
 												       name="inteTrabajarSolo" disabled>
 												<label class="form-check-label"
 												       for="inteTrabajarSoloS2"
-												       style="color: black"><?php _e( "Me da lo mismo o no lo sé", "incluyeme-login-extension" ); ?></label>
+												       style="color: black"><?php _e("Me da lo mismo o no lo sé", "incluyeme-login-extension"); ?></label>
 											</x-incluyeme>
 										</x-incluyeme>
 									</x-incluyeme>
@@ -1601,34 +1551,12 @@ exteriores (por ejemplo jardines, parques, centros deportivos, otros)", "incluye
 				</ul>
 			</template>
 		</div>
-		<?php if ( $_SERVER["REQUEST_METHOD"] == "GET" && isset( $_GET['application_id'] ) ) { ?>
-			<div class="container pt-0">
-				<div v-if="name" class="card">
-					<div class="card-body">
-						<h5 class="card-title">Comentarios</h5>
-						<form>
-							<div class="form-group">
-								<?php if ( in_array( 'administrator', $current_user->roles ) || in_array( 'employer', $current_user->roles ) ) { ?>
-									<textarea v-model="comments" class="form-control border"
-									          id="exampleFormControlTextarea1"
-									          rows="3"></textarea>
-									<div class="m-2 text-left">
-										<button @click="saveComments" type="button"
-										        class="btn btn-primary">Guardar
-										</button>
-									</div>
-								<?php } ?>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		<?php } ?>
 	</div>
+	
 	<script>
         function startApp() {
-            app.setID('<?php echo $resume->id ?>', '<?php echo plugins_url() ?>', '<?php echo $_GET['application_id'] ?? null?>');
+
+            app.setID('<?php echo $resume->id ?>', '<?php echo plugins_url() ?>');
         }
 	</script>
 <?php }
-
