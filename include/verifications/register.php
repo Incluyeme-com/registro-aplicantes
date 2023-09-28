@@ -185,7 +185,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['userID']) && isset($_POST['preferJobs'])) {
         $update = new UpdateData();
         
-        $update->setMetaData('area_interes', $_POST['preferJobs']);
         
         $verifications::updatePrefersJobs($_POST['userID'], $_POST['preferJobs']);
         if (isset($_POST['workingSearch'])) {
@@ -194,7 +193,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['workingNow'])) {
             $update->setMetaData('workingNow', $_POST['workingNow']);
         }
-         $update->setMetaData('area_interes', $_POST['preferJobs']);
         echo $verifications->json_response(200, 'COMPLETADO');
         
         return;
