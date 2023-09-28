@@ -748,6 +748,7 @@ let app = new Vue({
                         userID: this.userID,
                         phone: this.phone,
                         country_nac: this.country_nac,
+                        livingZone: this.livingZone
                     }
                 )
                 .then(function (response) {

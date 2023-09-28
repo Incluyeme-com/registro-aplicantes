@@ -1,6 +1,6 @@
 <?php
 include_once dirname( __DIR__, 1 ) . '/lib/WP_Incluyeme_Login_Countries.php';
-include_once dirname( __DIR__, 1 ) . '/lib/UpdateData.php';
+include_once dirname( __DIR__, 1 ) . '/lib/updateData.php';
 header( 'Content-type: application/json' );
 if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 	$verifications = new WP_Incluyeme_Login_Countries();
@@ -72,6 +72,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 		
 		if ( isset( $_POST['edu_levelMaxSec'] ) ) {
 			$update->setMetaData( 'edu_levelMaxSec', $_POST['edu_levelMaxSec'] );
+		}
+		if ( isset( $_POST['cudOption'] ) ) {
+			$update->setMetaData( 'cudOption', $_POST['cudOption'] );
 		}
 		if ( isset( $_POST['country_edu'] ) ) {
 			echo $verifications->json_response( 200, $verifications::updateUsersEducation( $_POST['dateStudieB'],
