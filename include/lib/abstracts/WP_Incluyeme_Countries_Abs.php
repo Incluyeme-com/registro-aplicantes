@@ -1033,7 +1033,7 @@ abstract class WP_Incluyeme_Countries_Abs {
 		$table_name = self::$dataPrefix . "incluyeme_prefersjobs";
 		$myrows     = self::$wp->get_results( "SELECT * FROM " . $table_name . " where id=" . $preferJobs . "" );
 		foreach ( $myrows as $details ) {
-			add_user_meta( $userID, 'area_interes', $details->jobs_prefers );
+			update_user_meta( $userID, 'area_interes', $details->jobs_prefers );
 			update_user_meta( $userID, 'area', $details->jobs_prefers );
 		}
 		
