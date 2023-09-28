@@ -1,6 +1,6 @@
 <?php
 include_once dirname( __DIR__, 1 ) . '/lib/WP_Incluyeme_Login_Countries.php';
-include_once dirname( __DIR__, 1 ) . '/lib/updateData.php';
+include_once dirname( __DIR__, 1 ) . '/lib/UpdateData.php';
 header( 'Content-type: application/json' );
 if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 	$verifications = new WP_Incluyeme_Login_Countries();
