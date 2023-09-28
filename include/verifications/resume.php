@@ -17,9 +17,64 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
 	$verifications = new WP_Incluyeme_Login_Countries();
 	$_POST = json_decode(file_get_contents("php://input"), true);
+
+	$current_user = wp_get_current_user();
+	
+
+	if($_POST['userID']=='' && $current_user->user_url=='http://form-typeform'){
+
+
+		$usval=get_user_meta( $current_user->ID, 'insertado', true);
+
+		if($usval=='' || $usval==null){
+			global $wpdb;
+		
+			$registerTime = current_time('mysql');
+			$name = sanitize_text_field($_POST['name']);
+			$lastName = sanitize_text_field($_POST['lastName']);
+			$slug = sanitize_title($current_user->user_email);
+			$post_id = wp_insert_post([
+				"post_title" => trim($name . " " . $lastName),
+				"post_name" => $slug,
+				"post_type" => "resume",
+				"post_status" => 'publish',
+				"comment_status" => "closed"
+			]);
+
+			$wpdb->insert($wpdb->prefix . 'wpjb_resume', [
+				'post_id' => $post_id,
+				'user_id' => $current_user->ID,
+				'candidate_slug' => $slug,
+				'created_at' => $registerTime,
+				'modified_at' => $registerTime
+			]);
+
+			$id = $wpdb->insert_id;
+
+			$wpdb->insert($wpdb->prefix . 'wpjb_resume_search', [
+				'fullname' => $current_user->user_nicename . ' ' . $current_user->user_lastname,
+				'location' => '',
+				'details' => '',
+				'details_all' => '',
+				'resume_id' => $id,
+			]);
+
+			update_user_meta( $current_user->ID, 'insertado', $id);
+
+			$_POST['userID']=$id;
+		}
+		else
+		{
+			$_POST['userID']=$usval;
+		}
+        
+	}
+
 	$verifications::setResumeID($_POST['userID']);
+
 	if (isset($_POST['userID']) && $verifications::userSessionVerificate($verifications::getResumeID())) {
 		if (isset($_POST['name']) && isset($_POST['lastName'])) {
 			$name = sanitize_text_field($_POST['name']);
@@ -37,6 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$_POST['titleEdu'],
 				$_POST['university_edu'],
 				$_POST['university_otro'], $_POST['country_edu'], $_POST['userID']);
+	
 			
 		}
 		if (isset($_POST['userID']) && isset($_POST['areaEmployed'])) {
@@ -51,6 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$_POST['userID']);
 			
 		}
+
 		if (isset($_POST['userID']) && isset($_POST['genre'])) {
 			$verifications::updateUsersInformation($_POST['city'],
 				$_POST['dateBirthDay'],
