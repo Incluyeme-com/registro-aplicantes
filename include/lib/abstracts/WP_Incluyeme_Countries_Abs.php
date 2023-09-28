@@ -1029,12 +1029,14 @@ abstract class WP_Incluyeme_Countries_Abs {
 	}
 	
 	public static function updatePrefersJobs( $userID, $preferJobs ) {
-		
-		$table_name = self::$dataPrefix . "incluyeme_prefersjobs";
-		$myrows     = self::$wp->get_results( "SELECT * FROM " . $table_name . " where id=" . $preferJobs . "" );
+        global $wpdb;
+        
+        $myrows = $wpdb->get_results( "SELECT * from " . self::$prefersJobs . " WHERE id = ".$preferJobs );
+        print_r(error_log($myrows, true));
 		foreach ( $myrows as $details ) {
 			update_user_meta( $userID, 'area_interes', $details->jobs_prefers );
 			update_user_meta( $userID, 'area', $details->jobs_prefers );
+			  print_r(error_log(get_user_meta($userID, 'area_interes'), true));
 		}
 		
 		self::$wp->update( self::$incluyemeUsersInformation, [
