@@ -1315,7 +1315,12 @@ abstract class WP_Incluyeme_Countries_Abs
                 }
             }
             if ($idiomsName === self::$idioma_ingles) {
-                update_user_meta(get_current_user_id(), 'english_level', $level);
+                $user_id = self::$wp->get_results('SELECT * from ' . self::$wp->prefix . 'wpjb_resume where id = ' . $userID);
+                if (count($user_id) > 0) {
+                    update_user_meta($user_id[0]->user_id, 'english_level', $level);
+                } else {
+                    error_log(print_r('User not found' . $user_id, true));
+                }
             }
             if ($idiomsName !== null) {
                 $result = self::$wp->get_results('SELECT * from ' . self::$dataPrefix . 'wpjb_meta where 	meta_type = 3 and name = ' . "'" . $idiomsName . "'");
